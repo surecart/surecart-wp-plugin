@@ -1,12 +1,15 @@
 /**
- * useAdminSpaNavigation — Thin shim over the SureCart admin router.
+ * useAdminSpaNavigation — SPA navigation helper for admin list/edit pages.
  *
- * Existed before the router landed; preserved for components that already
- * call `navigation.goToEdit(id)` etc. New code should use `useHistory`,
- * `useLocation`, and `useLink` from `../router` directly — they're modeled
- * after `@wordpress/router` and used the same way as in @wordpress/edit-site.
+ * Wraps `useHistory` / `useLocation` (modeled after `@wordpress/router`,
+ * same API as `@wordpress/edit-site`) to give list/edit pages a single
+ * `navigation` object with `isList` / `isEdit` flags and `goToList`,
+ * `goToCreate`, `goToEdit` helpers. Every pushed URL keeps `page={pageSlug}`.
  *
- * @param {string} pageSlug - Admin page slug, kept on every URL we push.
+ * Used by `createListEditApp` to route between the list and edit views,
+ * and passed down as `navigation` to both components.
+ *
+ * @param {string} pageSlug Admin page slug (e.g. 'sc-products').
  */
 import { useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from '../router';

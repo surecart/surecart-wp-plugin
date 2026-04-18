@@ -17,14 +17,6 @@ import ListHeader from '../components/ListHeader';
 import './product-collections-list-style.scss';
 
 /**
- * No sortable columns in the original PHP table.
- * Map created to created_at for potential future sorting.
- */
-const SORT_MAP = {
-	created: 'created_at',
-};
-
-/**
  * Column width styles via DataViews layout.styles API.
  */
 const LAYOUT_STYLES = {
@@ -77,8 +69,7 @@ export default function ProductCollectionsList({ navigation }) {
 		invalidateList,
 	} = useDataViewState({
 		entity: 'product-collection',
-		defaultSort: { field: 'created', direction: 'desc' },
-		sortMap: SORT_MAP,
+		defaultSort: { field: 'created_at', direction: 'desc' },
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
 		defaultStatus: null,
@@ -228,6 +219,7 @@ export default function ProductCollectionsList({ navigation }) {
 				id: 'view',
 				label: __('View Collection', 'surecart'),
 				icon: <Icon icon={external} />,
+				isPrimary: true,
 				isEligible: (item) => !!item.permalink,
 				callback: ([item]) => {
 					window.open(item.permalink, '_blank');
@@ -238,9 +230,7 @@ export default function ProductCollectionsList({ navigation }) {
 				icon: <Icon icon={trash} />,
 				label: __('Delete permanently', 'surecart'),
 				isDestructive: true,
-				isPrimary: true,
 				supportsBulk: true,
-				hideModalHeader: true,
 				RenderModal: ({ items, closeModal }) => (
 					<ConfirmDeleteModal
 						items={items}

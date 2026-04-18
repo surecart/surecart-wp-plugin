@@ -4,62 +4,37 @@ import { css, jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useEffect, useState, useRef } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
-import { trash, copy, archive, edit, external } from '@wordpress/icons';
+import {
+	trash,
+	copy,
+	archive,
+	edit,
+	external,
+	starFilled,
+	starEmpty,
+} from '@wordpress/icons';
 import apiFetch from '@wordpress/api-fetch';
 import { ScTag, ScTooltip } from '@surecart/components-react';
 import {
 	DataViewListLayout,
 	useDataViewState,
+	ConfirmDeleteModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
+import ProductThumbnail from '../components/ProductThumbnail';
+import useProductIntegrations from './hooks/useProductIntegrations';
+import { useHistory } from '../router';
 import './product-list-style.scss';
 
-/**
- * Read initial state from URL query params.
- * Supports: ?sc_collection=xxx (from Product Collections page), ?status=archived
- */
-const URL_PARAMS = getQueryArgs(window.location.href);
-
-/**
- * Build initial DataViews filters from URL params.
- * Translates ?sc_collection=xxx and ?status=xxx to native DataViews filters.
- */
-const INITIAL_VIEW_FILTERS = (() => {
-	const filters = [];
-	// Status filter from URL — only add when explicitly set (archived or all).
-	// By default (no param), Active is implicit in buildQueryArgs so no chip shows.
-	const urlStatus = URL_PARAMS.status;
-	if (urlStatus === 'archived' || urlStatus === 'all') {
-		filters.push({
-			field: 'archive_status',
-			operator: 'is',
-			value: urlStatus,
-		});
-	}
-	// Collection filter from URL.
-	if (URL_PARAMS.sc_collection) {
-		filters.push({
-			field: 'product_collections',
-			operator: 'isAny',
-			value: [URL_PARAMS.sc_collection],
-		});
-	}
-	return filters;
-})();
-
-/**
- * Status filter options.
- */
 const STATUS_ELEMENTS = [
 	{ value: 'active', label: __('Active', 'surecart') },
 	{ value: 'archived', label: __('Archived', 'surecart') },
 	{ value: 'all', label: __('All', 'surecart') },
 ];
 
-// Maps view-field ids to API sort field names.
 const SORT_MAP = {
 	name: 'name',
 	created_at: 'cataloged_at',
@@ -80,9 +55,6 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = ['name', 'status', 'price', 'product_collections'];
 const PREFERENCE_KEY = 'products-list-view';
 
-/**
- * URL helpers.
- */
 function getEditUrl(id) {
 	return addQueryArgs('admin.php', {
 		page: 'sc-products',
@@ -91,22 +63,14 @@ function getEditUrl(id) {
 	});
 }
 
-/**
- * Products list DataView component.
- *
- * @param {Object} props
- * @param {Object} props.navigation - SPA navigation from useAdminSpaNavigation.
- */
 export default function ProductsList({ navigation }) {
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
-	// Tracks whether an inline action (archive/unarchive/duplicate) is in-flight.
-	// Passed to isLoading so the table shows a loading state during mutations.
 	const [isMutating, setIsMutating] = useState(false);
 
-	// Fetch product collections for the DataViews filter dropdown.
+	// Collections list for the filter dropdown.
 	const { records: collectionRecords } = useEntityRecords(
 		'surecart',
 		'product-collection',
@@ -121,13 +85,28 @@ export default function ProductsList({ navigation }) {
 		[collectionRecords]
 	);
 
-	// Batch-fetch integrations for all visible products.
-	const [integrationsByProduct, setIntegrationsByProduct] = useState({});
-	const [integrationProviders, setIntegrationProviders] = useState({});
-	const [integrationItemLabels, setIntegrationItemLabels] = useState({});
-	const prevProductIdsRef = useRef('');
+	// Seed filters from URL on mount — supports ?status= and ?sc_collection=.
+	// Read inside the component so remount (e.g. after edit) picks up URL changes.
+	const initialViewFilters = useMemo(() => {
+		const urlParams = getQueryArgs(window.location.href);
+		const filters = [];
+		if (urlParams.status === 'archived' || urlParams.status === 'all') {
+			filters.push({
+				field: 'archive_status',
+				operator: 'is',
+				value: urlParams.status,
+			});
+		}
+		if (urlParams.sc_collection) {
+			filters.push({
+				field: 'product_collections',
+				operator: 'isAny',
+				value: [urlParams.sc_collection],
+			});
+		}
+		return filters;
+	}, []);
 
-	// Reusable data view state hook.
 	const {
 		view,
 		setView,
@@ -141,159 +120,72 @@ export default function ProductsList({ navigation }) {
 		sortMap: SORT_MAP,
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
-		initialViewFilters: INITIAL_VIEW_FILTERS,
+		initialViewFilters,
 		preferenceKey: PREFERENCE_KEY,
 		buildQueryArgs: ({ view: currentView }) => {
 			const args = {
-				// Expand relations needed for the list columns.
 				expand: ['product_collections', 'commission_structure'],
 			};
 
-			// Status filter (from DataViews native filters).
-			// Default: show active (non-archived) products when no filter is set.
-			const statusFilter = currentView.filters?.find(
+			// Status filter — default to active when absent.
+			const statusValue = currentView.filters?.find(
 				(f) => f.field === 'archive_status'
-			);
-			const statusValue = statusFilter?.value;
+			)?.value;
 			if (statusValue === 'archived') {
 				args.archived = true;
-			} else if (statusValue === 'all') {
-				// Show everything — don't set archived param.
-			} else {
-				// No filter or 'active' → default to active products.
+			} else if (statusValue !== 'all') {
 				args.archived = false;
 			}
 
-			// Collection filter (from DataViews native filters).
-			const collectionFilter = currentView.filters?.find(
+			// Collection filter.
+			const collectionIds = currentView.filters?.find(
 				(f) => f.field === 'product_collections'
-			);
-			if (collectionFilter?.value?.length) {
-				args.product_collection_ids = collectionFilter.value;
+			)?.value;
+			if (collectionIds?.length) {
+				args.product_collection_ids = collectionIds;
 			}
 
 			return args;
 		},
 	});
 
-	// Fetch integrations for visible products.
+	// Gate the integrations fetch on column visibility — three round-trips,
+	// column is hidden by default.
+	const integrationsEnabled = view.fields?.includes('integrations') ?? false;
+	const { integrationsByProduct, providers, itemLabels } =
+		useProductIntegrations(records, integrationsEnabled);
+
+	// Mirror the two URL-facing filters back to the query string so the list
+	// is bookmarkable. Defaults (status=active, no collection) stay out of
+	// the URL on purpose — "keep it minimum".
+	const history = useHistory();
 	useEffect(() => {
-		if (!records?.length) return;
-		const productIds = records.map((r) => r.id);
-		const key = productIds.join(',');
-		// Skip if product list hasn't changed.
-		if (key === prevProductIdsRef.current) return;
-		prevProductIdsRef.current = key;
+		const statusValue = view.filters?.find(
+			(f) => f.field === 'archive_status'
+		)?.value;
+		const collectionId = view.filters?.find(
+			(f) => f.field === 'product_collections'
+		)?.value?.[0];
 
-		const controller = new AbortController();
-		(async () => {
-			try {
-				// Fetch integrations for all visible products in one request.
-				const integrations = await apiFetch({
-					path: addQueryArgs('/surecart/v1/integrations', {
-						model_ids: productIds,
-						per_page: 100,
-						context: 'edit',
-					}),
-					signal: controller.signal,
-				});
+		const params = { page: 'sc-products' };
+		if (statusValue && statusValue !== 'active') {
+			params.status = statusValue;
+		}
+		if (collectionId) {
+			params.sc_collection = collectionId;
+		}
+		history.replace(params);
+	}, [view.filters, history]);
 
-				// Group by model_id (product).
-				const grouped = {};
-				for (const integration of integrations) {
-					if (!grouped[integration.model_id]) {
-						grouped[integration.model_id] = [];
-					}
-					grouped[integration.model_id].push(integration);
-				}
-				setIntegrationsByProduct(grouped);
-
-				// Fetch provider metadata if we have integrations.
-				if (integrations.length) {
-					// Get unique provider slugs from the integrations.
-					const uniqueProviders = [
-						...new Set(integrations.map((i) => i.provider)),
-					];
-					// Fetch each provider's metadata.
-					const providerResults = await Promise.all(
-						uniqueProviders.map((slug) =>
-							apiFetch({
-								path: addQueryArgs(
-									`/surecart/v1/integration_providers/${slug}`,
-									{
-										context: 'edit',
-										provider: slug,
-									}
-								),
-								signal: controller.signal,
-							}).catch(() => null)
-						)
-					);
-					const providerMap = {};
-					uniqueProviders.forEach((slug, i) => {
-						if (providerResults[i]) {
-							providerMap[slug] = providerResults[i];
-						}
-					});
-					setIntegrationProviders(providerMap);
-
-					// Fetch individual item labels for each integration.
-					const uniqueItems = integrations.reduce(
-						(acc, integration) => {
-							const key = `${integration.provider}:${integration.integration_id}`;
-							if (!acc.has(key)) {
-								acc.set(key, integration);
-							}
-							return acc;
-						},
-						new Map()
-					);
-					const itemResults = await Promise.all(
-						[...uniqueItems.values()].map((integration) =>
-							apiFetch({
-								path: addQueryArgs(
-									`/surecart/v1/integration_provider_items/${integration.integration_id}`,
-									{
-										context: 'edit',
-										provider: integration.provider,
-									}
-								),
-								signal: controller.signal,
-							}).catch(() => null)
-						)
-					);
-					// Build label map keyed by integration_id.
-					const labelMap = {};
-					[...uniqueItems.values()].forEach((integration, i) => {
-						if (itemResults[i]?.label) {
-							labelMap[integration.integration_id] =
-								itemResults[i].label;
-						}
-					});
-					setIntegrationItemLabels(labelMap);
-				}
-			} catch (err) {
-				if (err?.name !== 'AbortError') {
-					// Silently fail — integrations column just shows '-'.
-				}
-			}
-		})();
-
-		return () => controller.abort();
-	}, [records]);
-
-	// ─── Field definitions ───
 	const fields = useMemo(
 		() => [
-			// Archive status filter (not a visible column — only drives the filter dropdown).
+			// Not a visible column — just drives the filter dropdown.
 			{
 				id: 'archive_status',
 				label: __('Archive status', 'surecart'),
 				enableSorting: false,
 				enableHiding: false,
-				filterBy: {
-					operators: ['is'],
-				},
+				filterBy: { operators: ['is'] },
 				elements: STATUS_ELEMENTS,
 				render: () => null,
 			},
@@ -312,56 +204,7 @@ export default function ProductsList({ navigation }) {
 							white-space: normal;
 						`}
 					>
-						{item?.line_item_image?.src &&
-						item?.line_item_image?.type !== 'fallback' ? (
-							<img
-								src={item.line_item_image.src}
-								alt={item?.name}
-								css={css`
-									width: 40px;
-									height: 40px;
-									border: var(--sc-input-border);
-									border-radius: var(
-										--sc-border-radius-medium
-									);
-									box-shadow: var(--sc-shadow-small);
-									object-fit: cover;
-									flex: 0 0 40px;
-								`}
-							/>
-						) : (
-							<div
-								css={css`
-									width: 40px;
-									height: 40px;
-									background: #f3f3f3;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-									border: var(--sc-input-border);
-									border-radius: var(
-										--sc-border-radius-medium
-									);
-									box-shadow: var(--sc-shadow-small);
-									flex: 0 0 40px;
-								`}
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									style={{ width: '18px', height: '18px' }}
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-									/>
-								</svg>
-							</div>
-						)}
+						<ProductThumbnail product={item} />
 						<div
 							css={css`
 								min-width: 0;
@@ -408,9 +251,7 @@ export default function ProductsList({ navigation }) {
 				label: __('Quantity', 'surecart'),
 				enableSorting: false,
 				render: ({ item }) => {
-					if (!item?.stock_enabled) {
-						return '\u221E';
-					}
+					if (!item?.stock_enabled) return '\u221E';
 					return sprintf(
 						/* translators: %d is the number of available stock */
 						__('%d Available', 'surecart'),
@@ -425,9 +266,7 @@ export default function ProductsList({ navigation }) {
 				render: ({ item }) => {
 					const itemIntegrations =
 						integrationsByProduct[item?.id] || [];
-					if (!itemIntegrations.length) {
-						return '-';
-					}
+					if (!itemIntegrations.length) return '-';
 					return (
 						<div
 							css={css`
@@ -438,14 +277,12 @@ export default function ProductsList({ navigation }) {
 						>
 							{itemIntegrations.map((integration) => {
 								const provider =
-									integrationProviders[integration.provider];
+									providers[integration.provider];
 								const label =
-									integrationItemLabels[
-										integration.integration_id
-									] ||
+									itemLabels[integration.integration_id] ||
 									provider?.label ||
 									integration.provider;
-								return !!provider?.logo ? (
+								return provider?.logo ? (
 									<ScTooltip
 										key={integration.id}
 										text={label}
@@ -454,7 +291,7 @@ export default function ProductsList({ navigation }) {
 										`}
 									>
 										<img
-											src={provider?.logo}
+											src={provider.logo}
 											alt={label}
 											css={css`
 												width: 20px;
@@ -478,16 +315,12 @@ export default function ProductsList({ navigation }) {
 				id: 'product_collections',
 				label: __('Collections', 'surecart'),
 				enableSorting: false,
-				filterBy: {
-					operators: ['isAny'],
-				},
+				filterBy: { operators: ['isAny'] },
 				elements: collectionElements,
 				render: ({ item }) => {
 					const itemCollections =
 						item?.product_collections?.data || [];
-					if (!itemCollections.length) {
-						return '-';
-					}
+					if (!itemCollections.length) return '-';
 					return (
 						<div
 							css={css`
@@ -525,19 +358,10 @@ export default function ProductsList({ navigation }) {
 				label: __('Featured', 'surecart'),
 				enableSorting: false,
 				render: ({ item }) => (
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="14"
-						height="14"
-						viewBox="0 0 24 24"
-						fill={item?.featured ? 'currentColor' : 'none'}
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					>
-						<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-					</svg>
+					<Icon
+						icon={item?.featured ? starFilled : starEmpty}
+						size={18}
+					/>
 				),
 			},
 			{
@@ -550,12 +374,12 @@ export default function ProductsList({ navigation }) {
 		[
 			collectionElements,
 			integrationsByProduct,
-			integrationProviders,
-			integrationItemLabels,
+			providers,
+			itemLabels,
+			navigation,
 		]
 	);
 
-	// ─── Action handlers ───
 	const handleArchiveToggle = useCallback(
 		async (items) => {
 			setIsMutating(true);
@@ -570,7 +394,6 @@ export default function ProductsList({ navigation }) {
 						)
 					)
 				);
-				// Re-fetch the list so archived items disappear from the current tab.
 				invalidateList();
 				createSuccessNotice(
 					items.length === 1
@@ -606,6 +429,45 @@ export default function ProductsList({ navigation }) {
 		]
 	);
 
+	const handleDelete = useCallback(
+		async (items) => {
+			try {
+				await Promise.all(
+					items.map((item) =>
+						deleteEntityRecord('surecart', 'product', item.id, {
+							throwOnError: true,
+						})
+					)
+				);
+				invalidateList();
+				createSuccessNotice(
+					sprintf(
+						_n(
+							'Successfully deleted %d product.',
+							'Successfully deleted %d products.',
+							items.length,
+							'surecart'
+						),
+						items.length
+					),
+					{ type: 'snackbar' }
+				);
+			} catch (error) {
+				createErrorNotice(
+					error?.message ||
+						__('Failed to delete product.', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			}
+		},
+		[
+			deleteEntityRecord,
+			createSuccessNotice,
+			createErrorNotice,
+			invalidateList,
+		]
+	);
+
 	const handleDuplicate = useCallback(
 		async (items) => {
 			setIsMutating(true);
@@ -618,7 +480,6 @@ export default function ProductsList({ navigation }) {
 						})
 					)
 				);
-				// Re-fetch the list so the new duplicate appears.
 				invalidateList();
 				createSuccessNotice(
 					__('Product duplicated successfully.', 'surecart'),
@@ -637,7 +498,6 @@ export default function ProductsList({ navigation }) {
 		[createSuccessNotice, createErrorNotice, invalidateList]
 	);
 
-	// ─── Action definitions ───
 	const actions = useMemo(
 		() => [
 			{
@@ -645,9 +505,7 @@ export default function ProductsList({ navigation }) {
 				label: __('Edit', 'surecart'),
 				icon: <Icon icon={edit} />,
 				isPrimary: true,
-				callback: ([item]) => {
-					navigation.goToEdit(item.id);
-				},
+				callback: ([item]) => navigation.goToEdit(item.id),
 			},
 			{
 				id: 'archive',
@@ -671,9 +529,7 @@ export default function ProductsList({ navigation }) {
 				isPrimary: true,
 				icon: <Icon icon={external} />,
 				isEligible: (item) => !!item.permalink,
-				callback: ([item]) => {
-					window.open(item.permalink, '_blank');
-				},
+				callback: ([item]) => window.open(item.permalink, '_blank'),
 			},
 			{
 				id: 'duplicate',
@@ -688,20 +544,25 @@ export default function ProductsList({ navigation }) {
 				label: __('Delete permanently', 'surecart'),
 				isDestructive: true,
 				supportsBulk: true,
-				// Redirect to the PHP bulk-delete confirmation page (handles both single and bulk).
-				callback: (items) => {
-					const params = new URLSearchParams({
-						page: 'sc-products',
-						action: 'delete',
-					});
-					items.forEach((item, i) =>
-						params.append(`bulk_action_product_ids[${i}]`, item.id)
-					);
-					window.location.href = `admin.php?${params.toString()}`;
-				},
+				RenderModal: ({ items, closeModal }) => (
+					<ConfirmDeleteModal
+						items={items}
+						closeModal={closeModal}
+						onDelete={handleDelete}
+						message={sprintf(
+							_n(
+								'Are you sure you want to permanently delete %d product?',
+								'Are you sure you want to permanently delete %d products?',
+								items.length,
+								'surecart'
+							),
+							items.length
+						)}
+					/>
+				),
 			},
 		],
-		[handleArchiveToggle, handleDuplicate, navigation]
+		[handleArchiveToggle, handleDuplicate, handleDelete, navigation]
 	);
 
 	return (

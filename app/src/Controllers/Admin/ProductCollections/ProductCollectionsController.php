@@ -3,53 +3,14 @@
 namespace SureCart\Controllers\Admin\ProductCollections;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\RendersEnhancedAdminView;
 use SureCart\Models\ProductCollection;
 
 /**
  * Handles product collections admin requests.
  */
 class ProductCollectionsController extends AdminController {
-	/**
-	 * Enqueue the collections SPA bundle. Single entry, owns its own router,
-	 * lazy-loads the heavy edit chunk on first navigation.
-	 *
-	 * @return void
-	 */
-	private function enqueueSpaScripts() {
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductCollectionsScriptsController::class, 'enqueue' ) );
-	}
-
-	/**
-	 * Render the collections SPA view.
-	 *
-	 * @return \SureCartCore\Responses\ResponseInterface
-	 */
-	private function renderSpaView() {
-		$this->withHeader(
-			array(
-				'breadcrumbs' => [
-					'product-collections' => [
-						'title' => __( 'Product Collections', 'surecart' ),
-					],
-				],
-			),
-		);
-
-		return \SureCart::view( 'admin/product-collections/spa' )->with(
-			[
-				'new_link' => \SureCart::getUrl()->edit( 'product_collection' ),
-			]
-		);
-	}
-
-	/**
-	 * Check if the enhanced admin views are enabled.
-	 *
-	 * @return bool
-	 */
-	private function isEnhancedAdminViewsEnabled() {
-		return (bool) get_option( 'surecart_enhanced_admin_views', false );
-	}
+	use RendersEnhancedAdminView;
 
 	/**
 	 * Render the legacy list table view.
@@ -85,8 +46,12 @@ class ProductCollectionsController extends AdminController {
 	 */
 	public function index() {
 		if ( $this->isEnhancedAdminViewsEnabled() ) {
-			$this->enqueueSpaScripts();
-			return $this->renderSpaView();
+			$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
+			return $this->renderSpaView(
+				'admin/product-collections/spa',
+				'product-collections',
+				__( 'Product Collections', 'surecart' )
+			);
 		}
 
 		return $this->renderLegacyView();
@@ -100,7 +65,7 @@ class ProductCollectionsController extends AdminController {
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
-		$this->enqueueSpaScripts();
+		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
 
 		$product_collection = null;
 
@@ -136,7 +101,8 @@ class ProductCollectionsController extends AdminController {
 			}
 		}
 
-		return $this->renderSpaView();
+		// Edit/create — no PHP breadcrumb bar (the detail view renders its own).
+		return $this->renderSpaView( 'admin/product-collections/spa' );
 	}
 
 	/**

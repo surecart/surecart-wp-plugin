@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\RendersEnhancedAdminView;
 use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
 use SureCart\Models\Product;
@@ -11,48 +12,7 @@ use SureCart\Models\Product;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
-	/**
-	 * Enqueue the products SPA bundle. The bundle owns its own router and
-	 * lazy-loads the heavy edit chunk on first navigation — no cross-page
-	 * shell, no sidebar interception.
-	 *
-	 * @return void
-	 */
-	private function enqueueSpaScripts() {
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
-	}
-
-	/**
-	 * Render the products SPA view.
-	 *
-	 * @return \SureCartCore\Responses\ResponseInterface
-	 */
-	private function renderSpaView() {
-		$this->withHeader(
-			array(
-				'breadcrumbs' => [
-					'products' => [
-						'title' => __( 'Products', 'surecart' ),
-					],
-				],
-			),
-		);
-
-		return \SureCart::view( 'admin/products/spa' )->with(
-			[
-				'new_link' => \SureCart::getUrl()->edit( 'product' ),
-			]
-		);
-	}
-
-	/**
-	 * Check if the enhanced admin views are enabled.
-	 *
-	 * @return bool
-	 */
-	private function isEnhancedAdminViewsEnabled() {
-		return (bool) get_option( 'surecart_enhanced_admin_views', false );
-	}
+	use RendersEnhancedAdminView;
 
 	/**
 	 * Render the legacy list table view.
@@ -96,8 +56,8 @@ class ProductsController extends AdminController {
 	 */
 	public function index() {
 		if ( $this->isEnhancedAdminViewsEnabled() ) {
-			$this->enqueueSpaScripts();
-			return $this->renderSpaView();
+			$this->enqueueSpaScripts( ProductScriptsController::class );
+			return $this->renderSpaView( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
 		}
 
 		return $this->renderLegacyView();
@@ -227,7 +187,7 @@ class ProductsController extends AdminController {
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
-		$this->enqueueSpaScripts();
+		$this->enqueueSpaScripts( ProductScriptsController::class );
 
 		// define product.
 		$product = null;
@@ -310,8 +270,8 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		// Use the shared SPA shell view.
-		return $this->renderSpaView();
+		// Edit/create — no PHP breadcrumb bar (EditProduct renders its own).
+		return $this->renderSpaView( 'admin/products/spa' );
 	}
 
 	/**
