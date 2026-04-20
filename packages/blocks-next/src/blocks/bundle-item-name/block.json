@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/bundle-item-name",
+	"title": "Bundle Item Name",
+	"description": "Displays the product name of a bundle item.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/bundle-item-template"],
+	"usesContext": ["surecart/bundleItem"],
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"color": {
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"spacing": {
+			"margin": ["top", "bottom"]
+		}
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js"
+}

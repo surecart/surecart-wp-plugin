@@ -15,41 +15,30 @@ if ( empty( $bundle_items ) ) {
 	<?php endif; ?>
 
 	<ul class="sc-bundle-items__list">
-		<?php foreach ( $bundle_items as $item ) : ?>
-			<?php
-			$component_product = $item->product ?? null;
-			$component_name    = $component_product->name ?? '';
-			$component_image   = $component_product->line_item_image ?? null;
-			$item_quantity     = (int) ( $item->quantity ?? 1 );
+		<?php
+		foreach ( $bundle_items as $item ) :
+			// Get an instance of the current block template.
+			$block_instance = $block->parsed_block;
+
+			// Set the block name to one that does not correspond to an existing registered block.
+			// This ensures that for the inner instances of the block, we do not render any block supports.
+			$block_instance['blockName'] = 'core/null';
+
+			$filter_block_context = static function ( $context ) use ( $item ) {
+				$context['surecart/bundleItem'] = $item;
+				return $context;
+			};
+
+			// Use an early priority so that other 'render_block_context' filters have access to the values.
+			add_filter( 'render_block_context', $filter_block_context, 1 );
+			// Render the inner blocks with `dynamic` set to `false` to prevent calling
+			// `render_callback` and ensure that no wrapper markup is included.
+			$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
+			remove_filter( 'render_block_context', $filter_block_context, 1 );
 			?>
-			<li class="sc-bundle-items__item">
-				<?php if ( ! empty( $component_image->src ) ) : ?>
-					<img
-						class="sc-bundle-items__item-image"
-						src="<?php echo esc_url( $component_image->src ); ?>"
-						alt="<?php echo esc_attr( $component_name ); ?>"
-						loading="lazy"
-					/>
-				<?php else : ?>
-					<div class="sc-bundle-items__item-image-placeholder"></div>
-				<?php endif; ?>
 
-				<div class="sc-bundle-items__item-info">
-					<span class="sc-bundle-items__item-name">
-						<?php echo esc_html( $component_name ); ?>
-					</span>
-					<?php if ( ! empty( $item->variant ) && ! empty( $item->variant->name ) ) : ?>
-						<span class="sc-bundle-items__item-variant">
-							<?php echo esc_html( $item->variant->name ); ?>
-						</span>
-					<?php endif; ?>
-				</div>
-
-				<?php if ( $item_quantity > 1 ) : ?>
-					<span class="sc-bundle-items__item-qty">
-						&times; <?php echo esc_html( $item_quantity ); ?>
-					</span>
-				<?php endif; ?>
+			<li class="sc-bundle-items__item" data-wp-key="bundle-item-<?php echo esc_attr( $item->id ?? '' ); ?>">
+				<?php echo $block_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

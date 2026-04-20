@@ -184,7 +184,40 @@ export default [
 					['surecart/product-description'],
 					[
 						'surecart/product-bundle-items',
-						{ title: 'What\'s Included' },
+						{ title: "What's Included" },
+						[
+							[
+								'surecart/bundle-item-template',
+								{
+									layout: {
+										type: 'flex',
+										justifyContent: 'left',
+										flexWrap: 'nowrap',
+									},
+								},
+								[
+									['surecart/bundle-item-image'],
+									[
+										'core/group',
+										{
+											style: {
+												spacing: { blockGap: '2px' },
+											},
+											layout: {
+												type: 'flex',
+												orientation: 'vertical',
+											},
+										},
+										[
+											['surecart/bundle-item-name'],
+											['surecart/bundle-item-variant'],
+										],
+									],
+									['surecart/bundle-item-price'],
+									['surecart/bundle-item-quantity'],
+								],
+							],
+						],
 					],
 					[
 						'surecart/product-variant-pills',
