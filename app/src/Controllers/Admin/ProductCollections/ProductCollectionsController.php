@@ -84,7 +84,10 @@ class ProductCollectionsController extends AdminController {
 			if ( ! empty( $product_collection ) ) {
 				add_action(
 					'admin_bar_menu',
-					function( $wp_admin_bar ) use ( $product_collection ) {
+					function ( $wp_admin_bar ) use ( $product_collection ) {
+						if ( empty( $product_collection ) ) {
+							return;
+						}
 						$wp_admin_bar->add_node(
 							[
 								'id'    => 'view-product-collection-page',

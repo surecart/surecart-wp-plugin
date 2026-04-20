@@ -11,8 +11,9 @@ import {
  * ConfirmDeleteModal — Reusable delete confirmation modal with built-in busy state.
  *
  * Handles the async delete flow: shows a spinner on the Delete button, disables
- * both buttons while the operation is in-flight, then calls closeModal() only
- * after the promise resolves or rejects.
+ * both buttons while the operation is in-flight, closes the modal on success,
+ * and leaves it open on failure so the user can retry or cancel explicitly.
+ * The caller is expected to surface error messaging via createErrorNotice.
  *
  * @example
  * RenderModal: ({ items, closeModal }) => (
@@ -45,9 +46,12 @@ export default function ConfirmDeleteModal( { items, closeModal, onDelete, messa
 		setIsBusy( true );
 		try {
 			await onDelete( items );
+			closeModal();
+		} catch ( error ) {
+			// Keep modal open so the user can retry or cancel explicitly.
+			// The caller is expected to surface the error via createErrorNotice.
 		} finally {
 			setIsBusy( false );
-			closeModal();
 		}
 	};
 

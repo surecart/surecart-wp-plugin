@@ -47,14 +47,15 @@ $padding-size: 20px;
 		}
 	}
 
-	// ─── Table full-width + padding ───
+	// Column widths are controlled via `layout.styles` on each view so each list can set them per-field.
 	.dataviews-view-table {
 		width: 100%;
-		table-layout: fixed;
 
 		th,
 		td {
 			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		tr {
