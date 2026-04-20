@@ -52,7 +52,7 @@ trait RendersEnhancedAdminView {
 	 *
 	 * @return bool
 	 */
-	protected function isEnhancedAdminViewsEnabled(): bool {
+	public function isEnhancedAdminViewsEnabled(): bool {
 		return (bool) get_option( 'surecart_enhanced_admin_views', false );
 	}
 }
