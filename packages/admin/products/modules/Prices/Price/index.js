@@ -15,6 +15,7 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
+import BundleItemsPreview from './BundleItemsPreview';
 import Swap from '../../../components/price/parts/Swap';
 import Advanced from '../../../components/price/parts/Advanced';
 import BundleItems from '../../../components/price/parts/BundleItems';
@@ -207,6 +208,8 @@ export default ({ price, product, allPrices }) => {
 				onDuplicate={onDuplicate}
 				collapsible={true}
 			/>
+
+			<BundleItemsPreview price={currentPrice} />
 
 			<Error error={savePriceError || error} setError={setError} />
 

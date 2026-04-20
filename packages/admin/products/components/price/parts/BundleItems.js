@@ -4,6 +4,8 @@ import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScCard,
 	ScFormControl,
@@ -16,6 +18,49 @@ import PriceSelector from '@admin/components/PriceSelector';
 import BundleItemRow from './BundleItemRow';
 
 /**
+ * Map known platform error codes to friendly, translated copy.
+ * Falls back to the platform's `message` if the code is unknown.
+ */
+const formatBundleError = (e) => {
+	const code = e?.code || e?.data?.code || e?.error?.code;
+	const message = e?.message || e?.data?.message || e?.error?.message;
+
+	switch (code) {
+		case 'cannot_be_bundle':
+			return __(
+				'A bundle price cannot itself be added as a bundle item.',
+				'surecart'
+			);
+		case 'variant_required':
+		case 'parameter_missing':
+			return (
+				message ||
+				__(
+					'A variant is required for this product. Please pick one.',
+					'surecart'
+				)
+			);
+		case 'interval_mismatch':
+		case 'recurring_interval_mismatch':
+			return __(
+				'Bundle items must share the same recurring interval as the bundle price.',
+				'surecart'
+			);
+		case 'invalid_request_error':
+		case 'parameter_invalid':
+			return (
+				message ||
+				__(
+					'This item cannot be added to the bundle.',
+					'surecart'
+				)
+			);
+		default:
+			return message || __('Something went wrong.', 'surecart');
+	}
+};
+
+/**
  * Bundle Items section shown inside the price editor drawer.
  * Uses PriceSelector dropdown (same as Swap/Price Boost) — no modal needed.
  */
@@ -23,6 +68,8 @@ const BundleItems = ({ price, updatePrice }) => {
 	const [bundleItems, setBundleItems] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [saving, setSaving] = useState(false);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 
 	// Fetch bundle items when bundle is enabled and price has an ID.
 	useEffect(() => {
@@ -51,7 +98,7 @@ const BundleItems = ({ price, updatePrice }) => {
 		}
 	};
 
-	const addBundleItem = async (priceId) => {
+	const addBundleItem = async (priceId, variantId) => {
 		try {
 			setSaving(true);
 			await apiFetch({
@@ -62,12 +109,17 @@ const BundleItems = ({ price, updatePrice }) => {
 						bundle_price: price.id,
 						price: priceId,
 						quantity: 1,
+						...(variantId ? { variant: variantId } : {}),
 					},
 				},
 			});
 			await fetchBundleItems();
+			createSuccessNotice(__('Item added to bundle.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error('Failed to add bundle item:', e);
+			createErrorNotice(formatBundleError(e), { type: 'snackbar' });
 		} finally {
 			setSaving(false);
 		}
@@ -86,6 +138,7 @@ const BundleItems = ({ price, updatePrice }) => {
 			await fetchBundleItems();
 		} catch (e) {
 			console.error('Failed to update bundle item:', e);
+			createErrorNotice(formatBundleError(e), { type: 'snackbar' });
 		} finally {
 			setSaving(false);
 		}
@@ -104,8 +157,12 @@ const BundleItems = ({ price, updatePrice }) => {
 				method: 'DELETE',
 			});
 			await fetchBundleItems();
+			createSuccessNotice(__('Item removed from bundle.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
 			console.error('Failed to remove bundle item:', e);
+			createErrorNotice(formatBundleError(e), { type: 'snackbar' });
 		} finally {
 			setSaving(false);
 		}
@@ -194,17 +251,21 @@ const BundleItems = ({ price, updatePrice }) => {
 									)}
 								>
 									<PriceSelector
-										onSelect={({ price_id }) => {
+										onSelect={({ price_id, variant_id }) => {
 											if (price_id) {
-												addBundleItem(price_id);
+												addBundleItem(price_id, variant_id);
 											}
 										}}
 										requestQuery={{
 											archived: false,
+											bundle: false,
 										}}
-										includeVariants={false}
-										variable={false}
+										includeVariants={true}
+										variable={true}
 										ad_hoc={false}
+										bundle={false}
+										trial={false}
+										setup_fee={false}
 										placement="top-start"
 										position="top-left"
 										exclude={excludedPriceIds}

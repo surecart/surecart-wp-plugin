@@ -12,6 +12,12 @@ export default ({ productId }) => {
 						context: 'edit',
 						product_ids: [productId],
 						per_page: 100,
+						expand: [
+							'bundle_items',
+							'bundle_items.price',
+							'bundle_items.product',
+							'bundle_items.variant',
+						],
 					},
 				];
 

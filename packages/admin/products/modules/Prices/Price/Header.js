@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import {
 	ScTag,
 	ScButton,
@@ -84,6 +84,42 @@ export default ({
 			);
 		}
 		return <sc-tag type="info">{__('One Time', 'surecart')}</sc-tag>;
+	};
+
+	const bundleTag = () => {
+		if (!price?.bundle) return null;
+		return (
+			<>
+				{' '}
+				<sc-tag
+					type="primary"
+					style={{
+						'--sc-tag-primary-background-color': '#dbeafe',
+						'--sc-tag-primary-color': '#1e40af',
+					}}
+				>
+					{__('Bundle', 'surecart')}
+				</sc-tag>
+			</>
+		);
+	};
+
+	const bundleSavings = () => {
+		if (!price?.bundle || !price?.bundle_savings_display_amount) return null;
+		return (
+			<>
+				{' '}
+				<sc-tag type="success">
+					{
+						/* translators: %s: savings amount, e.g. "$7.00" */
+						sprintf(
+							__('Save %s', 'surecart'),
+							price?.bundle_savings_display_amount
+						)
+					}
+				</sc-tag>
+			</>
+		);
 	};
 
 	/** Header name */
@@ -174,6 +210,8 @@ export default ({
 					{priceType()}
 					{trial()}
 					{setupFee()}
+					{bundleTag()}
+					{bundleSavings()}
 				</div>
 			</div>
 		);
