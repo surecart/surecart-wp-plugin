@@ -64,7 +64,21 @@ export class ScSubscription {
       this.busy = true;
       this.subscription = (await apiFetch({
         path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/`, {
-          expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations', 'discount', 'discount.coupon'],
+          expand: [
+            'price',
+            'price.product',
+            'price.bundle_items',
+            'bundle_item.price',
+            'bundle_item.product',
+            'bundle_item.variant',
+            'current_period',
+            'period.checkout',
+            'purchase',
+            'purchase.license',
+            'license.activations',
+            'discount',
+            'discount.coupon',
+          ],
         }),
         method: 'PATCH',
         data: {
@@ -89,7 +103,21 @@ export class ScSubscription {
       this.busy = true;
       this.subscription = (await apiFetch({
         path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/renew`, {
-          expand: ['price', 'price.product', 'current_period', 'period.checkout', 'purchase', 'purchase.license', 'license.activations', 'discount', 'discount.coupon'],
+          expand: [
+            'price',
+            'price.product',
+            'price.bundle_items',
+            'bundle_item.price',
+            'bundle_item.product',
+            'bundle_item.variant',
+            'current_period',
+            'period.checkout',
+            'purchase',
+            'purchase.license',
+            'license.activations',
+            'discount',
+            'discount.coupon',
+          ],
         }),
         method: 'PATCH',
       })) as Subscription;
@@ -106,7 +134,7 @@ export class ScSubscription {
       this.loading = true;
       this.subscription = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId || this.subscription?.id}`, {
-          expand: ['price', 'price.product', 'current_period'],
+          expand: ['price', 'price.product', 'price.bundle_items', 'bundle_item.price', 'bundle_item.product', 'bundle_item.variant', 'current_period'],
           ...(this.query || {}),
         }),
       })) as Subscription;

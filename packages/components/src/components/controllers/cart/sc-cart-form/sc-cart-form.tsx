@@ -11,7 +11,13 @@ const query = {
   expand: [
     'line_items',
     'line_item.price',
+    'line_item.bundle_parent',
+    'line_item.bundle_components',
     'price.product',
+    'price.bundle_items',
+    'bundle_item.price',
+    'bundle_item.product',
+    'bundle_item.variant',
     'customer',
     'customer.shipping_address',
     'payment_intent',

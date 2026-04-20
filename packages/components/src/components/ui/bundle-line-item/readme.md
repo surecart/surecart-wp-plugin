@@ -49,6 +49,8 @@ Renders a bundle parent line item with its component items nested inside.
 ### Used by
 
  - [sc-line-items](../../controllers/checkout-form/line-items)
+ - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirmation-line-items](../../controllers/confirmation/order-confirmation-line-items)
 
 ### Depends on
 
@@ -62,6 +64,8 @@ graph TD;
   sc-bundle-line-item --> sc-quantity-select
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-bundle-line-item
+  sc-order --> sc-bundle-line-item
+  sc-order-confirmation-line-items --> sc-bundle-line-item
   style sc-bundle-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

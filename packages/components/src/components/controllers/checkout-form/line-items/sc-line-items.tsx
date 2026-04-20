@@ -2,34 +2,11 @@ import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { state as checkoutState } from '@store/checkout';
-import { LineItem, Price, Product, Variant } from '../../../../types';
+import { LineItem, Product, Variant } from '../../../../types';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
-
-/**
- * Separate line items into regular items, bundle parents, and components grouped by parent.
- */
-const groupLineItems = (items: LineItem[]) => {
-  const regular: LineItem[] = [];
-  const bundleParents: LineItem[] = [];
-  const componentsByParent: Record<string, LineItem[]> = {};
-
-  items.forEach(item => {
-    if (item.bundle_parent_id) {
-      if (!componentsByParent[item.bundle_parent_id]) {
-        componentsByParent[item.bundle_parent_id] = [];
-      }
-      componentsByParent[item.bundle_parent_id].push(item);
-    } else if ((item.price as Price)?.bundle) {
-      bundleParents.push(item);
-    } else {
-      regular.push(item);
-    }
-  });
-
-  return { regular, bundleParents, componentsByParent };
-};
+import { groupBundleLineItems } from '../../../../functions/line-items';
 
 /**
  * @part base - The component base
@@ -102,7 +79,7 @@ export class ScLineItems {
     });
 
     // Group bundle parents and their components.
-    const { regular, bundleParents, componentsByParent } = groupLineItems(sortedItems);
+    const { regular, bundleParents, componentsByParent } = groupBundleLineItems(sortedItems as LineItem[]);
 
     return (
       <div class="line-items" part="base" tabindex="0">

@@ -49,11 +49,14 @@ export class ScBundleLineItem {
 
   /** Get the bundle price display amount. */
   private getBundleAmount(): string {
-    // Use the price amount from the bundle price, or sum component totals.
+    // The parent line item's subtotal is 0 on the API (the bundle price is
+    // distributed across components). Show the bundle price's display amount
+    // multiplied by quantity — that is what the customer pays for this line.
     if (this.item?.ad_hoc_display_amount) {
       return this.item.ad_hoc_display_amount;
     }
-    return this.item?.subtotal_display_amount || '';
+    const price = this.item?.price as Price;
+    return price?.display_amount || this.item?.subtotal_display_amount || '';
   }
 
   render() {

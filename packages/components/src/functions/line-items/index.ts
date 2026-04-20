@@ -1,6 +1,32 @@
 import { getQueryArg } from '@wordpress/url';
 
-import { Bump, Checkout, ChoiceType, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+import { Bump, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+
+/**
+ * Separate line items into bundle parents, their components, and everything
+ * else. Used by any surface that needs to render bundle line items grouped
+ * (checkout, cart, order confirmation, receipts).
+ */
+export const groupBundleLineItems = (items: LineItem[] = []) => {
+  const regular: LineItem[] = [];
+  const bundleParents: LineItem[] = [];
+  const componentsByParent: Record<string, LineItem[]> = {};
+
+  (items || []).forEach(item => {
+    if (item?.bundle_parent_id) {
+      if (!componentsByParent[item.bundle_parent_id]) {
+        componentsByParent[item.bundle_parent_id] = [];
+      }
+      componentsByParent[item.bundle_parent_id].push(item);
+    } else if ((item?.price as Price)?.bundle) {
+      bundleParents.push(item);
+    } else {
+      regular.push(item);
+    }
+  });
+
+  return { regular, bundleParents, componentsByParent };
+};
 
 // Get only enabled price choices.
 export const getEnabledPriceChoices = (choices: Array<PriceChoice>): Array<PriceChoice> => {

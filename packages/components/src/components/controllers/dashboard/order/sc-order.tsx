@@ -5,7 +5,8 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
+import { groupBundleLineItems } from '../../../../functions/line-items';
+import { Checkout, LineItem, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -79,8 +80,14 @@ export class ScOrder {
           'line_item.price',
           'line_item.fees',
           'line_item.variant',
+          'line_item.bundle_parent',
+          'line_item.bundle_components',
           'variant.image',
           'price.product',
+          'price.bundle_items',
+          'bundle_item.price',
+          'bundle_item.product',
+          'bundle_item.variant',
           'checkout.manual_payment_method',
           'checkout.payment_method',
           'checkout.selected_shipping_choice',
@@ -158,9 +165,25 @@ export class ScOrder {
     const shippingMethod = (checkout?.selected_shipping_choice as ShippingChoice)?.shipping_method as ShippingMethod;
     const shippingMethodName = shippingMethod?.name;
 
+    const items = (checkout?.line_items?.data || []) as LineItem[];
+    const { regular, bundleParents, componentsByParent } = groupBundleLineItems(items);
+
     return (
       <Fragment>
-        {(checkout?.line_items?.data || []).map(item => {
+        {bundleParents.map(parent => {
+          const components = componentsByParent[parent.id] || [];
+          return (
+            <sc-bundle-line-item
+              key={parent.id}
+              item={parent}
+              components={components}
+              editable={false}
+              removable={false}
+            />
+          );
+        })}
+
+        {regular.map(item => {
           const product = item?.price?.product as Product;
 
           return (

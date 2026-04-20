@@ -1,7 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Checkout, Product } from '../../../../types';
+import { Checkout, LineItem, Product } from '../../../../types';
+import { groupBundleLineItems } from '../../../../functions/line-items';
 
 @Component({
   tag: 'sc-order-confirmation-line-items',
@@ -25,10 +26,29 @@ export class ScOrderConfirmationLineItems {
       );
     }
 
+    const items = (this.order?.line_items?.data || []) as LineItem[];
+    const { regular, bundleParents, componentsByParent } = groupBundleLineItems(items);
+
     return (
       <div class={{ 'confirmation-summary': true }}>
         <div class="line-items" part="line-items">
-          {this.order?.line_items?.data.map(item => {
+          {/* Bundle parents with nested, read-only components */}
+          {bundleParents.map(parent => {
+            const components = componentsByParent[parent.id] || [];
+            return (
+              <div class="line-item" key={parent.id}>
+                <sc-bundle-line-item
+                  item={parent}
+                  components={components}
+                  editable={false}
+                  removable={false}
+                />
+              </div>
+            );
+          })}
+
+          {/* Regular (non-bundle) line items */}
+          {regular.map(item => {
             return (
               <div class="line-item">
                 <sc-product-line-item

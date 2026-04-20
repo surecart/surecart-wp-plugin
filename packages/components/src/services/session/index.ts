@@ -46,6 +46,8 @@ export const expand = [
   'bundle_item.price',
   'bundle_item.product',
   'bundle_item.variant',
+  'line_item.bundle_parent',
+  'line_item.bundle_components',
 ];
 
 /** Default data we send with every request. */

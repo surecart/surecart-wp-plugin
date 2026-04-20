@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { License, Price, Product, Purchase, Subscription } from '../../../../types';
+import { BundleItem, License, Price, Product, Purchase, Subscription, Variant } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 import { formatNumber } from '../../../../../../admin/util';
 @Component({
@@ -20,6 +20,7 @@ export class ScSubscriptionDetails {
   @State() activationsModal: boolean;
   @State() loading: boolean;
   @State() hasPendingUpdate: boolean;
+  @State() bundleExpanded: boolean = false;
 
   renderName() {
     if (typeof this.subscription?.price?.product !== 'string') {
@@ -188,6 +189,70 @@ export class ScSubscriptionDetails {
     );
   }
 
+  /** Bundle items attached to the subscription's price (if it is a bundle). */
+  getBundleItems(): BundleItem[] {
+    const price = this.subscription?.price as Price;
+    if (!price?.bundle) return [];
+    return (price?.bundle_items?.data || []) as BundleItem[];
+  }
+
+  renderBundleComponents() {
+    const items = this.getBundleItems();
+    if (!items.length) return null;
+
+    return (
+      <div>
+        <button
+          type="button"
+          class="subscription-details__bundle-toggle"
+          aria-expanded={this.bundleExpanded ? 'true' : 'false'}
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.bundleExpanded = !this.bundleExpanded;
+          }}
+        >
+          <sc-icon name={this.bundleExpanded ? 'chevron-up' : 'chevron-down'}></sc-icon>
+          {sprintf(
+            /* translators: %d: number of bundle component items */
+            __('Includes %d items', 'surecart'),
+            items.length,
+          )}
+        </button>
+        {this.bundleExpanded && (
+          <div class="subscription-details__bundle-components">
+            {items.map(item => {
+              const itemPrice = item?.price as Price;
+              const itemProduct = (itemPrice?.product || item?.product) as Product;
+              const itemVariant = item?.variant as Variant;
+              const variantLabel =
+                (itemVariant as any)?.name ||
+                [itemVariant?.option_1, itemVariant?.option_2, itemVariant?.option_3].filter(Boolean).join(' / ');
+              return (
+                <div class="subscription-details__bundle-component" key={item?.id}>
+                  <sc-icon name="chevron-right" />
+                  <span>
+                    {itemProduct?.name}
+                    {variantLabel ? ` — ${variantLabel}` : ''}
+                  </span>
+                  {item?.quantity > 1 && (
+                    <span class="subscription-details__bundle-qty">
+                      {sprintf(
+                        /* translators: %d: quantity */
+                        __('× %d', 'surecart'),
+                        item.quantity,
+                      )}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   showWarning() {
     // no payment method.
     if (this.subscription?.payment_method || this.subscription?.manual_payment) {
@@ -231,6 +296,8 @@ export class ScSubscriptionDetails {
         </sc-flex>
 
         {!this.hideRenewalText && <div>{this.renderRenewalText()} </div>}
+
+        {this.renderBundleComponents()}
 
         <slot />
 
