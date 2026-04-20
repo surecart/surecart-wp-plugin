@@ -8,10 +8,12 @@ import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScCard,
+	ScFormatNumber,
 	ScFormControl,
 	ScSpinner,
 	ScStackedList,
 	ScSwitch,
+	ScTag,
 } from '@surecart/components-react';
 import DrawerSection from '../../../../ui/DrawerSection';
 import PriceSelector from '@admin/components/PriceSelector';
@@ -50,10 +52,7 @@ const formatBundleError = (e) => {
 		case 'parameter_invalid':
 			return (
 				message ||
-				__(
-					'This item cannot be added to the bundle.',
-					'surecart'
-				)
+				__('This item cannot be added to the bundle.', 'surecart')
 			);
 		default:
 			return message || __('Something went wrong.', 'surecart');
@@ -178,6 +177,18 @@ const BundleItems = ({ price, updatePrice }) => {
 		excludedPriceIds.push(price.id);
 	}
 
+	// Compute bundle savings: (sum of component prices × qty) − bundle price.
+	// Prefer the platform-computed value when the price record exposes it.
+	const computedSum = bundleItems.reduce(
+		(sum, item) => sum + (item?.price?.amount || 0) * (item?.quantity || 1),
+		0
+	);
+	const savingsAmount =
+		typeof price?.bundle_savings_amount === 'number'
+			? price.bundle_savings_amount
+			: computedSum - (price?.amount || 0);
+	const hasSavings = !!price?.bundle && savingsAmount > 0;
+
 	return (
 		<DrawerSection
 			title={__('Bundle', 'surecart')}
@@ -193,14 +204,34 @@ const BundleItems = ({ price, updatePrice }) => {
 					gap: var(--sc-spacing-medium);
 				`}
 			>
-				<ScSwitch
-					checked={!!price?.bundle}
-					onScChange={(e) => {
-						updatePrice({ bundle: e.target.checked });
-					}}
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						gap: var(--sc-spacing-medium);
+					`}
 				>
-					{__('This is a bundle price', 'surecart')}
-				</ScSwitch>
+					<ScSwitch
+						checked={!!price?.bundle}
+						onScChange={(e) => {
+							updatePrice({ bundle: e.target.checked });
+						}}
+					>
+						{__('This is a bundle price', 'surecart')}
+					</ScSwitch>
+
+					{hasSavings && (
+						<ScTag type="success" size="small">
+							{__('Discount', 'surecart')}{' '}
+							<ScFormatNumber
+								type="currency"
+								currency={price?.currency || 'usd'}
+								value={savingsAmount}
+							/>
+						</ScTag>
+					)}
+				</div>
 
 				{!!price?.bundle && (
 					<>
@@ -251,9 +282,15 @@ const BundleItems = ({ price, updatePrice }) => {
 									)}
 								>
 									<PriceSelector
-										onSelect={({ price_id, variant_id }) => {
+										onSelect={({
+											price_id,
+											variant_id,
+										}) => {
 											if (price_id) {
-												addBundleItem(price_id, variant_id);
+												addBundleItem(
+													price_id,
+													variant_id
+												);
 											}
 										}}
 										requestQuery={{
