@@ -1,16 +1,8 @@
-// Vendor CSS — @wordpress/dataviews base styles.
-// Imported here (SCSS) instead of JS to avoid the DependencyExtractionPlugin
-// treating it as a script handle (wp-dataviews/build-style/style.css),
-// which breaks wp_enqueue_script.
 @import "@wordpress/dataviews/build-style/style.css";
-
-// ─── Shared variables ───
 $padding-size: 20px;
 
-// ─── DataView list wrapper ───
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
-	// ─── Checkbox visibility: hide on rows, show on hover/check/focus ───
 	.dataviews-view-table {
 		tr td .components-checkbox-control__input-container {
 			opacity: 0;
@@ -77,7 +69,6 @@ $padding-size: 20px;
 		overflow-x: auto;
 	}
 
-	// ─── Search, footer and filter container padding ───
 	.dataviews__view-actions,
 	.dataviews-footer,
 	.dataviews-filters__container {
@@ -85,7 +76,6 @@ $padding-size: 20px;
 		padding-right: $padding-size;
 	}
 
-	// ─── Hover row color ───
 	.dataviews-wrapper {
 		--wp-components-color-gray-100: var(--sc-color-brand-main-background);
 	}
@@ -94,7 +84,6 @@ $padding-size: 20px;
 		background-color: var(--sc-color-brand-main-background);
 	}
 
-	// ─── Primary action icons: visible on row hover / focus-within ───
 	// Actions with `isPrimary: true` + `icon` are rendered as always-visible
 	// icon buttons by @wordpress/dataviews. We hide them by default and only
 	// reveal on row hover / focus so the table stays clean. The kebab menu
@@ -145,7 +134,6 @@ $padding-size: 20px;
 	}
 }
 
-// ─── Settings / View options popover: constrain width ───
 // NOTE: This is OUTSIDE the wrapper because WP Popover renders as a portal
 // at the body level, not inside the DataView wrapper DOM.
 .dataviews-view-config {
