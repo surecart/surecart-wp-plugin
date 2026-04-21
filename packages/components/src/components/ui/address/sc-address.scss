@@ -35,7 +35,6 @@
     position: absolute;
     transform: translateY(-8px);
     width: 100%;
-    z-index: 1;
 
     > * {
       margin-bottom: var(--sc-address-column-spacing, -1px);
@@ -47,6 +46,11 @@
       position: relative;
       transform: translateY(0);
       transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+      z-index: var(--sc-address-collapsible-z-index, 9);
+    }
+
+    &:focus-within {
+      z-index: var(--sc-address-collapsible-focus-z-index, 10);
     }
   }
 
