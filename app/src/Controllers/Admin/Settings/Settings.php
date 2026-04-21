@@ -7,8 +7,8 @@ use SureCart\Controllers\Admin\AdminController;
 /**
  * Settings controller — standalone SPA entry.
  *
- * The settings-root.js bundle mounts SettingsPage on `#sc-settings-app`.
- * SettingsPage owns its RouterProvider and lazy-loads each tab.
+ * The settings-root.js bundle mounts SettingsApp on `#sc-settings-app`.
+ * SettingsApp owns its RouterProvider and lazy-loads each tab.
  */
 class Settings extends AdminController {
 	/**
@@ -60,8 +60,6 @@ class Settings extends AdminController {
 			$asset_file['version'],
 			true
 		);
-
-		wp_register_script( 'suretriggers-sdk', 'https://app.ottokit.com/js/v2/embed.js', array(), '1.0.0', false );
 
 		wp_set_script_translations( $handle, 'surecart' );
 

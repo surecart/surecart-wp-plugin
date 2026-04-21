@@ -154,7 +154,7 @@ export default function ProductCollectionsList({ navigation }) {
 				render: ({ item }) => item?.created_at_date_time || '-',
 			},
 		],
-		[]
+		[navigation]
 	);
 
 	const handleDelete = useCallback(
