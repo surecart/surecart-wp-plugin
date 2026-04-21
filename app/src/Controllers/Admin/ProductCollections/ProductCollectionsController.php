@@ -14,10 +14,8 @@ class ProductCollectionsController extends AdminController {
 
 	/**
 	 * Render the legacy list table view.
-	 *
-	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
-	private function renderLegacyView() {
+	private function renderWpListView() {
 		$table = new ProductCollectionsListTable();
 		$table->prepare_items();
 
@@ -39,22 +37,15 @@ class ProductCollectionsController extends AdminController {
 	}
 
 	/**
-	 * Index — list view.
-	 *
-	 * Renders the SPA view if enhanced admin views are enabled,
-	 * otherwise falls back to the legacy list table view.
+	 * Product collections Dataview.
 	 */
-	public function index() {
-		if ( $this->isEnhancedAdminViewsEnabled() ) {
-			$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
-			return $this->renderSpaView(
+	public function renderSpaView() {
+		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
+			return $this->render(
 				'admin/product-collections/spa',
 				'product-collections',
 				__( 'Product Collections', 'surecart' )
 			);
-		}
-
-		return $this->renderLegacyView();
 	}
 
 	/**

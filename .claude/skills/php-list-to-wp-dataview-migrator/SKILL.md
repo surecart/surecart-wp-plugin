@@ -54,23 +54,23 @@ app/src/Controllers/Admin/{Entity}/
 
 `packages/admin/components/`:
 
-| File                              | Purpose                                                                                                       |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `createListEditApp.js`            | Factory producing the App root — wires RouterProvider + ErrorBoundary + lazy edit chunk                       |
-| `ListHeader.js`                   | Shared `<h1>` + "Add New" button header, matches WP `wp-heading-inline` / `wp-header-end` chrome              |
-| `PageLoader.js`                   | Spinner shown while the lazy edit chunk loads                                                                 |
-| `ProductThumbnail.js`             | 40×40 product image with SVG placeholder fallback                                                             |
-| `error-boundary/`                 | Error boundary wrapper                                                                                        |
+| File                   | Purpose                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `createListEditApp.js` | Factory producing the App root — wires RouterProvider + ErrorBoundary + lazy edit chunk          |
+| `ListHeader.js`        | Shared `<h1>` + "Add New" button header, matches WP `wp-heading-inline` / `wp-header-end` chrome |
+| `PageLoader.js`        | Spinner shown while the lazy edit chunk loads                                                    |
+| `ProductThumbnail.js`  | 40×40 product image with SVG placeholder fallback                                                |
+| `error-boundary/`      | Error boundary wrapper                                                                           |
 
 `packages/admin/components/dataview-list/`:
 
-| File                        | Purpose                                                                                                               |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| File                        | Purpose                                                                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `useDataViewState.js`       | Hook: view state, query building, data fetching, status tabs, custom filters. Persists view to `@wordpress/preferences` under scope `surecart/dataview-lists` |
-| `DataViewListLayout.js`     | Component: tabs, header controls, card-wrapped DataViews table                                                        |
-| `ConfirmDeleteModal.js`     | Modal: reusable deletion confirmation with async busy state — accepts `items` array, works for both single row and bulk |
-| `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover, `.sc-list-header`           |
-| `index.js`                  | Barrel export — also imports `@wordpress/dataviews/build-style/style.css` so each consuming bundle ships its own copy |
+| `DataViewListLayout.js`     | Component: tabs, header controls, card-wrapped DataViews table                                                                                                |
+| `ConfirmDeleteModal.js`     | Modal: reusable deletion confirmation with async busy state — accepts `items` array, works for both single row and bulk                                       |
+| `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover, `.sc-list-header`                                                   |
+| `index.js`                  | Barrel export — also imports `@wordpress/dataviews/build-style/style.css` so each consuming bundle ships its own copy                                         |
 
 `packages/admin/router/` (already established, used by Settings):
 
@@ -127,92 +127,132 @@ import { Icon } from '@wordpress/components';
 import { trash, edit, external } from '@wordpress/icons';
 
 import {
-    DataViewListLayout,
-    useDataViewState,
-    ConfirmDeleteModal,
+	DataViewListLayout,
+	useDataViewState,
+	ConfirmDeleteModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import './entity-list-style.scss';
 
 const SORT_MAP = { name: 'name', date: 'cataloged_at' };
 const STATUS_TABS = [
-    { value: 'active', label: __('Active', 'surecart') },
-    { value: 'archived', label: __('Archived', 'surecart') },
-    { value: 'all', label: __('All', 'surecart') },
+	{ value: 'active', label: __('Active', 'surecart') },
+	{ value: 'archived', label: __('Archived', 'surecart') },
+	{ value: 'all', label: __('All', 'surecart') },
 ];
 const LAYOUT_STYLES = { name: { width: '25%' }, featured: { width: '60px' } };
 const DEFAULT_FIELDS = ['name', 'price', 'date'];
 const PREFERENCE_KEY = 'entity-list-view';
 
 export default function EntityList({ navigation }) {
-    const { deleteEntityRecord } = useDispatch(coreStore);
-    const { createSuccessNotice, createErrorNotice } = useDispatch(noticesStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 
-    const {
-        view, setView, status, setStatus, filters, setFilter,
-        records, hasResolved, paginationInfo, invalidateList,
-    } = useDataViewState({
-        entity: 'entity',
-        defaultSort: { field: 'date', direction: 'desc' },
-        sortMap: SORT_MAP,                                  // omit if no sort-field rename needed
-        defaultFields: DEFAULT_FIELDS,
-        layoutStyles: LAYOUT_STYLES,
-        preferenceKey: PREFERENCE_KEY,                      // persists view to @wordpress/preferences
-        initialFilters: INITIAL_FILTERS,                    // see step 7
-        buildQueryArgs: ({ status, filters }) => {
-            const args = {};
-            if (status === 'active') args.archived = false;
-            else if (status === 'archived') args.archived = true;
-            return args;
-        },
-    });
+	const {
+		view,
+		setView,
+		status,
+		setStatus,
+		filters,
+		setFilter,
+		records,
+		hasResolved,
+		paginationInfo,
+		invalidateList,
+	} = useDataViewState({
+		entity: 'entity',
+		defaultSort: { field: 'date', direction: 'desc' },
+		sortMap: SORT_MAP, // omit if no sort-field rename needed
+		defaultFields: DEFAULT_FIELDS,
+		layoutStyles: LAYOUT_STYLES,
+		preferenceKey: PREFERENCE_KEY, // persists view to @wordpress/preferences
+		initialFilters: INITIAL_FILTERS, // see step 7
+		buildQueryArgs: ({ status, filters }) => {
+			const args = {};
+			if (status === 'active') args.archived = false;
+			else if (status === 'archived') args.archived = true;
+			return args;
+		},
+	});
 
-    const fields = useMemo(() => [/* see step 9 */], []);
+	const fields = useMemo(
+		() => [
+			/* see step 9 */
+		],
+		[]
+	);
 
-    const handleDelete = useCallback(async (items) => {
-        try {
-            await Promise.all(
-                items.map((item) =>
-                    deleteEntityRecord('surecart', 'entity', item.id, { throwOnError: true })
-                )
-            );
-            invalidateList();
-            createSuccessNotice(
-                sprintf(
-                    _n('Successfully deleted %d item.', 'Successfully deleted %d items.', items.length, 'surecart'),
-                    items.length
-                ),
-                { type: 'snackbar' }
-            );
-        } catch (error) {
-            createErrorNotice(error?.message || __('Failed to delete.', 'surecart'), { type: 'snackbar' });
-        }
-    }, [deleteEntityRecord, createSuccessNotice, createErrorNotice, invalidateList]);
+	const handleDelete = useCallback(
+		async (items) => {
+			try {
+				await Promise.all(
+					items.map((item) =>
+						deleteEntityRecord('surecart', 'entity', item.id, {
+							throwOnError: true,
+						})
+					)
+				);
+				invalidateList();
+				createSuccessNotice(
+					sprintf(
+						_n(
+							'Successfully deleted %d item.',
+							'Successfully deleted %d items.',
+							items.length,
+							'surecart'
+						),
+						items.length
+					),
+					{ type: 'snackbar' }
+				);
+			} catch (error) {
+				createErrorNotice(
+					error?.message || __('Failed to delete.', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			}
+		},
+		[
+			deleteEntityRecord,
+			createSuccessNotice,
+			createErrorNotice,
+			invalidateList,
+		]
+	);
 
-    const actions = useMemo(() => [/* see step 11 — includes handleDelete via ConfirmDeleteModal */], [handleDelete, navigation]);
+	const actions = useMemo(
+		() => [
+			/* see step 11 — includes handleDelete via ConfirmDeleteModal */
+		],
+		[handleDelete, navigation]
+	);
 
-    return (
-        <>
-            <ListHeader
-                title={__('Entities', 'surecart')}
-                actionLabel={__('Add Entity', 'surecart')}
-                actionHref={addQueryArgs('admin.php', { page: 'sc-entity', action: 'edit' })}
-                onAction={() => navigation.goToCreate()}
-            />
-            <DataViewListLayout
-                tabs={STATUS_TABS}
-                activeTab={status}
-                onTabChange={setStatus}
-                data={records}
-                fields={fields}
-                view={view}
-                onChangeView={setView}
-                paginationInfo={paginationInfo}
-                actions={actions}
-                isLoading={!hasResolved}
-            />
-        </>
-    );
+	return (
+		<>
+			<ListHeader
+				title={__('Entities', 'surecart')}
+				actionLabel={__('Add Entity', 'surecart')}
+				actionHref={addQueryArgs('admin.php', {
+					page: 'sc-entity',
+					action: 'edit',
+				})}
+				onAction={() => navigation.goToCreate()}
+			/>
+			<DataViewListLayout
+				tabs={STATUS_TABS}
+				activeTab={status}
+				onTabChange={setStatus}
+				data={records}
+				fields={fields}
+				view={view}
+				onChangeView={setView}
+				paginationInfo={paginationInfo}
+				actions={actions}
+				isLoading={!hasResolved}
+			/>
+		</>
+	);
 }
 ```
 
@@ -249,7 +289,7 @@ import '../store/add-entities';
 
 const container = document.getElementById('sc-{entity}-app');
 if (container) {
-    createRoot(container).render(<EntityApp />);
+	createRoot(container).render(<EntityApp />);
 }
 ```
 
@@ -295,7 +335,7 @@ class {Entity}Controller extends AdminController {
         );
     }
 
-    private function renderLegacyView() {
+    private function renderWpListView() {
         $table = new {Entity}ListTable();
         $table->prepare_items();
 
@@ -314,7 +354,7 @@ class {Entity}Controller extends AdminController {
             return $this->render{Entity}Spa();
         }
 
-        return $this->renderLegacyView();
+        return $this->renderWpListView();
     }
 
     public function edit( $request ) {
@@ -346,8 +386,8 @@ import { getQueryArgs } from '@wordpress/url';
 
 const URL_PARAMS = getQueryArgs(window.location.href);
 const INITIAL_FILTERS = URL_PARAMS.sc_collection
-    ? { collectionId: URL_PARAMS.sc_collection }
-    : {};
+	? { collectionId: URL_PARAMS.sc_collection }
+	: {};
 ```
 
 Pass `INITIAL_FILTERS` to `useDataViewState` so the `ModelSelector` reflects the pre-selected value on first render.
@@ -357,43 +397,62 @@ Pass `INITIAL_FILTERS` to `useDataViewState` so the `ModelSelector` reflects the
 For each column in the legacy `get_columns()`, define a field:
 
 ```js
-const fields = useMemo(() => [
-    {
-        id: 'name',
-        label: __('Name', 'surecart'),
-        enableSorting: true,
-        enableGlobalSearch: true,
-        render: ({ item }) => (
-            <div css={css`display:flex;align-items:center;gap:12px;`}>
-                <ProductThumbnail product={item} />
-                <a
-                    href={addQueryArgs('admin.php', { page: 'sc-products', action: 'edit', id: item.id })}
-                    onClick={(e) => { e.preventDefault(); navigation.goToEdit(item.id); }}
-                >
-                    {item?.name}
-                </a>
-            </div>
-        ),
-    },
-    {
-        id: 'featured',
-        label: __('Featured', 'surecart'),
-        render: ({ item }) => (
-            <Icon icon={item?.featured ? starFilled : starEmpty} size={18} />
-        ),
-    },
-    {
-        id: 'price',
-        label: __('Price', 'surecart'),
-        render: ({ item }) => item?.range_display_amount || '-',
-    },
-    {
-        id: 'date',
-        label: __('Created', 'surecart'),
-        enableSorting: true,
-        render: ({ item }) => item?.cataloged_at_date_time || '-',
-    },
-], []);
+const fields = useMemo(
+	() => [
+		{
+			id: 'name',
+			label: __('Name', 'surecart'),
+			enableSorting: true,
+			enableGlobalSearch: true,
+			render: ({ item }) => (
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 12px;
+					`}
+				>
+					<ProductThumbnail product={item} />
+					<a
+						href={addQueryArgs('admin.php', {
+							page: 'sc-products',
+							action: 'edit',
+							id: item.id,
+						})}
+						onClick={(e) => {
+							e.preventDefault();
+							navigation.goToEdit(item.id);
+						}}
+					>
+						{item?.name}
+					</a>
+				</div>
+			),
+		},
+		{
+			id: 'featured',
+			label: __('Featured', 'surecart'),
+			render: ({ item }) => (
+				<Icon
+					icon={item?.featured ? starFilled : starEmpty}
+					size={18}
+				/>
+			),
+		},
+		{
+			id: 'price',
+			label: __('Price', 'surecart'),
+			render: ({ item }) => item?.range_display_amount || '-',
+		},
+		{
+			id: 'date',
+			label: __('Created', 'surecart'),
+			enableSorting: true,
+			render: ({ item }) => item?.cataloged_at_date_time || '-',
+		},
+	],
+	[]
+);
 ```
 
 Rules:
@@ -415,47 +474,50 @@ Use SureCart's `ModelSelector`, never a native `<select>`. Pass as `headerContro
 The same `ConfirmDeleteModal` handles both single-row delete and bulk delete. It takes an `items` array; the row action passes `[item]`, bulk passes the whole selection. Wire one `handleDelete` callback that maps over `items` — don't branch between single and bulk paths.
 
 ```js
-const actions = useMemo(() => [
-    {
-        id: 'edit',
-        label: __('Edit', 'surecart'),
-        icon: <Icon icon={edit} />,
-        isPrimary: true,
-        callback: ([item]) => navigation.goToEdit(item.id),
-    },
-    {
-        id: 'view',
-        label: __('View', 'surecart'),
-        icon: <Icon icon={external} />,
-        isEligible: (item) => !!item.permalink,
-        callback: ([item]) => window.open(item.permalink, '_blank'),
-    },
-    {
-        id: 'delete',
-        icon: <Icon icon={trash} />,
-        label: __('Delete permanently', 'surecart'),
-        isDestructive: true,
-        isPrimary: true,
-        supportsBulk: true,
-        hideModalHeader: true,
-        RenderModal: ({ items, closeModal }) => (
-            <ConfirmDeleteModal
-                items={items}
-                closeModal={closeModal}
-                onDelete={handleDelete}
-                message={sprintf(
-                    _n(
-                        'Are you sure you want to permanently delete %d item?',
-                        'Are you sure you want to permanently delete %d items?',
-                        items.length,
-                        'surecart'
-                    ),
-                    items.length
-                )}
-            />
-        ),
-    },
-], [handleDelete, navigation]);
+const actions = useMemo(
+	() => [
+		{
+			id: 'edit',
+			label: __('Edit', 'surecart'),
+			icon: <Icon icon={edit} />,
+			isPrimary: true,
+			callback: ([item]) => navigation.goToEdit(item.id),
+		},
+		{
+			id: 'view',
+			label: __('View', 'surecart'),
+			icon: <Icon icon={external} />,
+			isEligible: (item) => !!item.permalink,
+			callback: ([item]) => window.open(item.permalink, '_blank'),
+		},
+		{
+			id: 'delete',
+			icon: <Icon icon={trash} />,
+			label: __('Delete permanently', 'surecart'),
+			isDestructive: true,
+			isPrimary: true,
+			supportsBulk: true,
+			hideModalHeader: true,
+			RenderModal: ({ items, closeModal }) => (
+				<ConfirmDeleteModal
+					items={items}
+					closeModal={closeModal}
+					onDelete={handleDelete}
+					message={sprintf(
+						_n(
+							'Are you sure you want to permanently delete %d item?',
+							'Are you sure you want to permanently delete %d items?',
+							items.length,
+							'surecart'
+						),
+						items.length
+					)}
+				/>
+			),
+		},
+	],
+	[handleDelete, navigation]
+);
 ```
 
 After any mutation, **call `invalidateList()`** — `saveEntityRecord` / `deleteEntityRecord` / `apiFetch` do not refresh the list query on their own.
@@ -476,29 +538,29 @@ The shared SCSS provides viewport-fit layout, checkbox visibility, padding, hove
 
 ```js
 const {
-    view,
-    setView,
-    status,
-    setStatus, // resets page to 1
-    filters,
-    setFilter, // setFilter('key', value) — resets page to 1
-    records,
-    hasResolved,
-    paginationInfo,
-    invalidateList, // call after mutations
-    queryArgs, // for debugging
+	view,
+	setView,
+	status,
+	setStatus, // resets page to 1
+	filters,
+	setFilter, // setFilter('key', value) — resets page to 1
+	records,
+	hasResolved,
+	paginationInfo,
+	invalidateList, // call after mutations
+	queryArgs, // for debugging
 } = useDataViewState({
-    entity: 'product',
-    kind: 'surecart', // default
-    defaultSort: { field: 'date', direction: 'desc' },
-    sortMap: { name: 'name', date: 'cataloged_at' }, // optional — view field → API field
-    defaultFields: ['name', 'price', 'date'],
-    perPage: 20,
-    defaultStatus: 'active',
-    layoutStyles: { name: { width: '25%' } },
-    initialFilters: {},
-    buildQueryArgs: ({ view, status, filters }) => ({}),
-    preferenceKey: 'products-list-view', // persists { fields, layout, perPage, sort, filters }
+	entity: 'product',
+	kind: 'surecart', // default
+	defaultSort: { field: 'date', direction: 'desc' },
+	sortMap: { name: 'name', date: 'cataloged_at' }, // optional — view field → API field
+	defaultFields: ['name', 'price', 'date'],
+	perPage: 20,
+	defaultStatus: 'active',
+	layoutStyles: { name: { width: '25%' } },
+	initialFilters: {},
+	buildQueryArgs: ({ view, status, filters }) => ({}),
+	preferenceKey: 'products-list-view', // persists { fields, layout, perPage, sort, filters }
 });
 ```
 

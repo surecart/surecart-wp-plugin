@@ -19,7 +19,7 @@ class ProductsController extends AdminController {
 	 *
 	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
-	private function renderLegacyView() {
+	protected function renderWpListView() {
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
 
@@ -49,18 +49,11 @@ class ProductsController extends AdminController {
 	}
 
 	/**
-	 * Products index.
-	 *
-	 * Renders the SPA view if enhanced admin views are enabled,
-	 * otherwise falls back to the legacy list table view.
+	 * Products Dataview.
 	 */
-	public function index() {
-		if ( $this->isEnhancedAdminViewsEnabled() ) {
-			$this->enqueueSpaScripts( ProductScriptsController::class );
-			return $this->renderSpaView( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
-		}
-
-		return $this->renderLegacyView();
+	protected function renderSpaView() {
+		$this->enqueueSpaScripts( ProductScriptsController::class );
+		return $this->render( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
 	}
 
 	/**
