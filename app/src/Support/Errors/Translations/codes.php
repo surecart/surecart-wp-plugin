@@ -40,6 +40,7 @@ return array(
 	'checkout.discount.coupon.blank'                       => __( 'This coupon code is invalid.', 'surecart' ),
 	'discount.not_redeemable'                              => __( 'This discount is not redeemable.', 'surecart' ),
 	'customer_notification_protocol.abandoned_checkout_enabled.invalid_address' => __( 'You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding.', 'surecart' ),
+	'abandoned_checkout_protocol.enabled.invalid_brand_address' => __( 'Notification Settings cannot be enabled until you set an address in your store settings. Please add an address to your store branding.', 'surecart' ),
 	'checkout.shipping_address.postal_code.invalid'        => __( 'Your postal code is not valid.', 'surecart' ),
 	'checkout.shipping_address.inaccurate'                 => __( 'Please enter additional shipping address information.', 'surecart' ),
 	'checkout.discount.coupon.expired'                     => __( 'This coupon has expired.', 'surecart' ),
