@@ -24,7 +24,7 @@ import {
 	ConfirmDeleteModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
-import ProductThumbnail from '../components/ProductThumbnail';
+import ProductThumbnail from './components/ProductThumbnail';
 import useProductIntegrations from './hooks/useProductIntegrations';
 import { useHistory } from '../router';
 import './product-list-style.scss';

@@ -19,6 +19,7 @@
  * @param {Function} config.loadEditComponent  Dynamic import returning the edit component.
  */
 import { Suspense, lazy, useEffect } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 
 import { RouterProvider } from '../router';
 import ErrorBoundary from './error-boundary';
@@ -67,6 +68,13 @@ export default function createListEditApp({
 		}, []);
 
 		if (navigation.isList) {
+			if (!window.scData?.enhanced_admin_views_enabled) {
+				window.location.href = addQueryArgs('admin.php', {
+					page: pageSlug,
+				});
+				return null;
+			}
+
 			return (
 				<div className="wrap">
 					<ListComponent navigation={navigation} />

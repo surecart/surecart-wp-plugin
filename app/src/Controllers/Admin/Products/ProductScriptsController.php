@@ -37,9 +37,10 @@ class ProductScriptsController extends AdminModelEditController {
 	}
 
 	public function enqueue() {
-		$available_templates              = wp_get_theme()->get_page_templates( null, 'sc_product' );
-		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' );
-		$this->data['availableTemplates'] = $available_templates;
+		$available_templates                        = wp_get_theme()->get_page_templates( null, 'sc_product' );
+		$available_templates['']                    = apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' );
+		$this->data['availableTemplates']           = $available_templates;
+		$this->data['enhanced_admin_views_enabled'] = (bool) get_option( 'surecart_enhanced_admin_views', false );
 		parent::enqueue();
 	}
 
