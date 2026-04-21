@@ -1144,7 +1144,6 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 		}
 		// if the query builder has a method, start building query.
 		if ( method_exists( Query::class, $method ) ) {
-			$params = $this->filterWhereColumns( $method, $params );
 			$result = $this->getQuery()->{$method}( ...$params );
 			if ( in_array( $method, [ 'count' ] ) ) {
 				return $result;
@@ -1170,38 +1169,11 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 		// if the query builder has a method, start building query.
 		if ( method_exists( Query::class, $method ) ) {
 			$item   = new static();
-			$params = $item->filterWhereColumns( $method, $params );
 			$result = $item->getQuery()->{$method}( ...$params );
 			if ( in_array( $method, [ 'count' ] ) ) {
 				return $result;
 			}
 			return $item;
 		}
-	}
-
-	/**
-	 * Filter out non-fillable column names from an associative `where()` argument.
-	 *
-	 * The query builder uses array keys as raw SQL column identifiers in its
-	 * `where( [ 'col' => 'value' ] )` form. `$wpdb->prepare()` cannot escape
-	 * identifiers, so untrusted keys must be restricted to known fields before
-	 * reaching the builder.
-	 *
-	 * @param string $method Forwarded method name.
-	 * @param array  $params Forwarded parameters.
-	 * @return array
-	 */
-	protected function filterWhereColumns( $method, $params ) {
-		if ( 'where' !== $method ) {
-			return $params;
-		}
-		if ( empty( $params ) || ! is_array( $params[0] ) ) {
-			return $params;
-		}
-		if ( [ '*' ] === $this->fillable ) {
-			return $params;
-		}
-		$params[0] = array_intersect_key( $params[0], array_flip( $this->fillable ) );
-		return $params;
 	}
 }
