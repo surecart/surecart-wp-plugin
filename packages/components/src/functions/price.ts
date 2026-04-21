@@ -14,8 +14,9 @@ export const getHumanDiscount = (coupon: Coupon) => {
     return getFormattedPrice({ amount: coupon.amount_off, currency: coupon.currency });
   }
   if (coupon?.percent_off) {
-    // Translators: Percent off.
-    return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off | 0);
+    const percent = `${coupon.percent_off | 0}%`;
+    // translators: %s is the discount percentage (e.g. "10%").
+    return sprintf(__('%s off', 'surecart'), percent);
   }
   return '';
 };
