@@ -51,8 +51,9 @@ class Coupon extends Model {
 		}
 
 		if ( ! empty( $this->percent_off ) ) {
-			// translators: %1d is the percentage discount.
-			return sprintf( __( '%1d%% off', 'surecart' ), $this->percent_off | 0 );
+			$percent = sprintf( '%d%%', (int) $this->percent_off );
+			// translators: %s is the discount percentage (e.g. "10%").
+			return sprintf( __( '%s off', 'surecart' ), $percent );
 		}
 
 		return '';

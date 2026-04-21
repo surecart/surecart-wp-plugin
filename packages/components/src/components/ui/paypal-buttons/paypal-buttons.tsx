@@ -79,6 +79,7 @@ export class ScPaypalButtons {
           merchantInitiated: this.merchantInitiated,
           reusable: this.order?.reusable_payment_method_required,
           currency: this.order?.currency,
+          locale: (window as any).scData?.locale,
         }),
       );
       this.renderButtons(paypal);

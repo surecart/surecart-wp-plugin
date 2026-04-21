@@ -168,6 +168,7 @@ return array(
 		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
 		\SureCart\Integrations\NpsSurvey\NpsSurveyServiceProvider::class,
 		\SureCart\Abilities\AbilitiesServiceProvider::class,
+		\SureCart\MCP\McpServerServiceProvider::class,
 	),
 
 	/**

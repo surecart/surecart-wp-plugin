@@ -9,16 +9,17 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useRef } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import Error from '../../../components/Error';
+import { useHistory } from '../../../router';
 
 export default ({ open, onRequestClose }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [profileName, setProfileName] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const history = useHistory();
 	const input = useRef(null);
 
 	// focus on name when opening.
@@ -53,12 +54,12 @@ export default ({ open, onRequestClose }) => {
 
 			if (!!response?.id) {
 				onRequestClose();
-				window.location.assign(
-					addQueryArgs(window.location.href, {
-						type: 'shipping_profile',
-						profile: response.id,
-					})
-				);
+				history.push({
+					page: 'sc-settings',
+					tab: 'shipping_protocol',
+					type: 'shipping_profile',
+					profile: response.id,
+				});
 			}
 		} catch (error) {
 			console.error(error);
