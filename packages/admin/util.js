@@ -46,7 +46,9 @@ export const getHumanDiscount = (coupon, currency = 'usd') => {
 	}
 
 	if (coupon?.percent_off) {
-		return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off || 0);
+		const percent = `${parseInt(coupon.percent_off, 10) || 0}%`;
+		// translators: %s is the discount percentage (e.g. "10%").
+		return sprintf(__('%s off', 'surecart'), percent);
 	}
 
 	return '';
