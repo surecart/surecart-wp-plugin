@@ -36,9 +36,7 @@ export default function useProductIntegrations(records, enabled = true) {
 		// briefly showing data from the last visible set.
 		if (!enabled) {
 			prevKeyRef.current = '';
-			setIntegrationsByProduct((s) =>
-				Object.keys(s).length ? {} : s
-			);
+			setIntegrationsByProduct((s) => (Object.keys(s).length ? {} : s));
 			setProviders((s) => (Object.keys(s).length ? {} : s));
 			setItemLabels((s) => (Object.keys(s).length ? {} : s));
 			return;

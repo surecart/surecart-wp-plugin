@@ -124,9 +124,18 @@ export default function useDataViewState(config) {
 		[totalItems, totalPages]
 	);
 
+	// Keep queryArgs in a ref so invalidateList identity stays stable across
+	// sort/filter/page changes — downstream useCallbacks would otherwise rebuild
+	// on every view change.
+	const queryArgsRef = useRef(queryArgs);
+	queryArgsRef.current = queryArgs;
 	const invalidateList = useCallback(() => {
-		invalidateResolution('getEntityRecords', [kind, entity, queryArgs]);
-	}, [invalidateResolution, kind, entity, queryArgs]);
+		invalidateResolution('getEntityRecords', [
+			kind,
+			entity,
+			queryArgsRef.current,
+		]);
+	}, [invalidateResolution, kind, entity]);
 
 	return {
 		view,

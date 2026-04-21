@@ -181,7 +181,7 @@ export default () => {
 
 	const upgradeRequired = () => {
 		const shippingProfileEntitlements =
-			window.scData?.entitlements?.shipping_profiles;
+			scData?.entitlements.shipping_profiles;
 
 		return (
 			!!shippingProfileEntitlements?.limit &&

@@ -121,7 +121,10 @@ export default () => {
 		try {
 			// The learn menu toggle changes the PHP-rendered admin sidebar,
 			// so we need a page reload for it to take effect.
-			const edits = select(coreStore).getEntityRecordEdits('root', 'site');
+			const edits = select(coreStore).getEntityRecordEdits(
+				'root',
+				'site'
+			);
 			const needsReload = edits && 'surecart_learn_admin_menu' in edits;
 
 			await save({
