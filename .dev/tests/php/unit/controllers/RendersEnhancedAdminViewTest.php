@@ -2,6 +2,8 @@
 
 namespace SureCart\Tests\Controllers;
 
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Controllers\Admin\ProductCollections\ProductCollectionsController;
 use SureCart\Tests\SureCartUnitTestCase;
@@ -10,6 +12,8 @@ use SureCart\Tests\SureCartUnitTestCase;
  * Tests for the RendersEnhancedAdminView trait, which is used by multiple controllers and contains shared logic for the enhanced admin views feature flag.
  */
 class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
+	use MockeryPHPUnitIntegration;
+
 	/**
 	 * @var ProductsController
 	 */
@@ -66,5 +70,43 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 
 		$this->assertFalse( $this->products_controller->isEnhancedAdminViewsEnabled() );
 		$this->assertFalse( $this->product_collections_controller->isEnhancedAdminViewsEnabled() );
+	}
+
+	/**
+	 * When the flag is on, `index()` dispatches to `renderSpaView()` and
+	 * never touches the legacy branch.
+	 *
+	 * @group admin-views
+	 */
+	public function test_index_routes_to_spa_when_flag_is_on() {
+		update_option( 'surecart_enhanced_admin_views', true );
+
+		$controller = Mockery::mock( ProductsController::class )
+			->makePartial()
+			->shouldAllowMockingProtectedMethods();
+
+		$controller->shouldReceive( 'renderSpaView' )->once()->andReturn( 'spa-response' );
+		$controller->shouldNotReceive( 'renderWpListView' );
+
+		$this->assertSame( 'spa-response', $controller->index() );
+	}
+
+	/**
+	 * When the flag is off, `index()` dispatches to `renderWpListView()` and
+	 * never touches the SPA branch.
+	 *
+	 * @group admin-views
+	 */
+	public function test_index_routes_to_legacy_when_flag_is_off() {
+		delete_option( 'surecart_enhanced_admin_views' );
+
+		$controller = Mockery::mock( ProductCollectionsController::class )
+			->makePartial()
+			->shouldAllowMockingProtectedMethods();
+
+		$controller->shouldReceive( 'renderWpListView' )->once()->andReturn( 'legacy-response' );
+		$controller->shouldNotReceive( 'renderSpaView' );
+
+		$this->assertSame( 'legacy-response', $controller->index() );
 	}
 }

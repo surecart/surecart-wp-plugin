@@ -53,7 +53,7 @@ class ProductsController extends AdminController {
 	 */
 	protected function renderSpaView() {
 		$this->enqueueSpaScripts( ProductScriptsController::class );
-		return $this->render( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
+		return $this->renderSpaShell( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
 	}
 
 	/**
@@ -266,8 +266,7 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		// Edit/create — no PHP breadcrumb bar (EditProduct renders its own).
-		return $this->renderSpaView( 'admin/products/spa' );
+		return $this->renderSpaShell( 'admin/products/spa' );
 	}
 
 	/**

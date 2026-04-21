@@ -15,7 +15,7 @@ class ProductCollectionsController extends AdminController {
 	/**
 	 * Render the legacy list table view.
 	 */
-	private function renderWpListView() {
+	protected function renderWpListView() {
 		$table = new ProductCollectionsListTable();
 		$table->prepare_items();
 
@@ -39,13 +39,13 @@ class ProductCollectionsController extends AdminController {
 	/**
 	 * Product collections Dataview.
 	 */
-	public function renderSpaView() {
+	protected function renderSpaView() {
 		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
-			return $this->render(
-				'admin/product-collections/spa',
-				'product-collections',
-				__( 'Product Collections', 'surecart' )
-			);
+		return $this->renderSpaShell(
+			'admin/product-collections/spa',
+			'product-collections',
+			__( 'Product Collections', 'surecart' )
+		);
 	}
 
 	/**
@@ -95,8 +95,7 @@ class ProductCollectionsController extends AdminController {
 			}
 		}
 
-		// Edit/create — no PHP breadcrumb bar (the detail view renders its own).
-		return $this->renderSpaView( 'admin/product-collections/spa' );
+		return $this->renderSpaShell( 'admin/product-collections/spa' );
 	}
 
 	/**

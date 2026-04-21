@@ -22,7 +22,6 @@ import { Suspense, lazy, useEffect } from '@wordpress/element';
 
 import { RouterProvider } from '../router';
 import ErrorBoundary from './error-boundary';
-import PageLoader from './PageLoader';
 import useAdminSpaNavigation from '../hooks/useAdminSpaNavigation';
 
 /**
@@ -59,6 +58,14 @@ export default function createListEditApp({
 
 		useServerHeaderVisibility(navigation.isList);
 
+		// Prefetch the edit chunk as soon as the app mounts — by the time the
+		// user clicks Edit, the module is cached, Suspense resolves
+		// synchronously, and the only loading state visible is the edit
+		// component's own layout-matched skeleton.
+		useEffect(() => {
+			loadEditComponent();
+		}, []);
+
 		if (navigation.isList) {
 			return (
 				<div className="wrap">
@@ -67,8 +74,11 @@ export default function createListEditApp({
 			);
 		}
 
+		// Fallback is `null` on purpose: the edit component renders its own
+		// skeleton that matches its final layout. A generic fallback here
+		// causes a double-skeleton flash and layout shift.
 		return (
-			<Suspense fallback={<PageLoader />}>
+			<Suspense fallback={null}>
 				<EditComponent navigation={navigation} />
 			</Suspense>
 		);

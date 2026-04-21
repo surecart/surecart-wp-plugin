@@ -58,7 +58,6 @@ app/src/Controllers/Admin/{Entity}/
 | ---------------------- | ------------------------------------------------------------------------------------------------ |
 | `createListEditApp.js` | Factory producing the App root — wires RouterProvider + ErrorBoundary + lazy edit chunk          |
 | `ListHeader.js`        | Shared `<h1>` + "Add New" button header, matches WP `wp-heading-inline` / `wp-header-end` chrome |
-| `PageLoader.js`        | Spinner shown while the lazy edit chunk loads                                                    |
 | `ProductThumbnail.js`  | 40×40 product image with SVG placeholder fallback                                                |
 | `error-boundary/`      | Error boundary wrapper                                                                           |
 
@@ -84,15 +83,25 @@ app/src/Controllers/Admin/{Entity}/
 
 `packages/admin/hooks/useProductIntegrations.js` — reference pattern for list columns that need a secondary round-trip (integrations per product). Takes `records`, returns a `{ integrationsByProduct, providers, itemLabels }` tuple. Uses `AbortController` + a `prevKeyRef` to avoid re-fetching on unrelated re-renders. Copy the shape for any column that needs its own fetch.
 
-`app/src/Controllers/Admin/RendersEnhancedAdminView.php` — PHP trait centralizing three things every migrated controller needs:
+`app/src/Controllers/Admin/RendersEnhancedAdminView.php` — PHP trait that owns the dual-render via template method. Children just fill in the two hooks; `index()` picks the branch.
 
 ```php
 trait RendersEnhancedAdminView {
+    // Hooks — child controller implements both.
+    abstract protected function renderSpaView();
+    abstract protected function renderWpListView();
+
+    // Routing — trait-owned, dispatches on the feature flag.
+    public function index();
+
+    // Helpers — used by the child's hook implementations.
     protected function enqueueSpaScripts( string $scriptsController ): void;
-    protected function renderSpaView( string $view, string $breadcrumbKey, string $title );
-    protected function isEnhancedAdminViewsEnabled(): bool;
+    protected function renderSpaShell( string $view, ?string $breadcrumbKey = null, ?string $title = null );
+    public function isEnhancedAdminViewsEnabled(): bool;
 }
 ```
+
+List pages never write their own `index()` — they override `renderSpaView()` (enqueue + `renderSpaShell()` with breadcrumb) and `renderWpListView()` (legacy table). For edit/create routes, call `$this->renderSpaShell( $view )` directly (no breadcrumb args) so the React detail view's own breadcrumb isn't duplicated.
 
 ## Migration Checklist
 
@@ -314,7 +323,7 @@ Leave `views/admin/{entity}/index.php` (the legacy `WP_List_Table` view) in plac
 
 ### 7. Wire the PHP controller
 
-Dual-render via the shared trait. Copy from `ProductsController.php` or `ProductCollectionsController.php`:
+Dual-render via the shared trait. The trait owns `index()` — child only implements the two hooks. Copy from `ProductsController.php` or `ProductCollectionsController.php`:
 
 ```php
 <?php
@@ -327,15 +336,18 @@ use SureCart\Controllers\Admin\RendersEnhancedAdminView;
 class {Entity}Controller extends AdminController {
     use RendersEnhancedAdminView;
 
-    private function render{Entity}Spa() {
-        return $this->renderSpaView(
+    // SPA hook — enqueue + render the shell with a breadcrumb.
+    protected function renderSpaView() {
+        $this->enqueueSpaScripts( {Entity}ScriptsController::class );
+        return $this->renderSpaShell(
             'admin/{entity}/spa',
             '{entity}',
             __( '{Entity}s', 'surecart' )
         );
     }
 
-    private function renderWpListView() {
+    // Legacy hook — WP_List_Table branch.
+    protected function renderWpListView() {
         $table = new {Entity}ListTable();
         $table->prepare_items();
 
@@ -348,19 +360,12 @@ class {Entity}Controller extends AdminController {
         return \SureCart::view( 'admin/{entity}/index' )->with( [ 'table' => $table ] );
     }
 
-    public function index() {
-        if ( $this->isEnhancedAdminViewsEnabled() ) {
-            $this->enqueueSpaScripts( {Entity}ScriptsController::class );
-            return $this->render{Entity}Spa();
-        }
-
-        return $this->renderWpListView();
-    }
-
+    // Edit/create — bypass the SPA hook so the PHP breadcrumb isn't rendered
+    // (the React detail view renders its own).
     public function edit( $request ) {
         $this->enqueueSpaScripts( {Entity}ScriptsController::class );
         // …optional preloadPaths() for the detail view…
-        return $this->render{Entity}Spa();
+        return $this->renderSpaShell( 'admin/{entity}/spa' );
     }
 }
 ```
