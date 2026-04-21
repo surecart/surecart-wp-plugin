@@ -62,8 +62,9 @@ class IncomingWebhooksController {
 		}
 
 		// webhook ids.
-		if ( $request->get_param( 'webhook_ids' ) ) {
-			$webhook = $webhook->whereIn( 'webhook_ids', $request->get_param( 'webhook_ids' ) );
+		$webhook_ids = $request->get_param( 'webhook_ids' );
+		if ( ! empty( $webhook_ids ) ) {
+			$webhook = $webhook->whereIn( 'webhook_ids', array_map( 'sanitize_text_field', (array) $webhook_ids ) );
 		}
 
 		$total    = $webhook->count();
@@ -102,11 +103,12 @@ class IncomingWebhooksController {
 			$webhook = $webhook->whereNotNull( 'processed' );
 		}
 
-		if ( $request->get_param( 'webhook_id' ) ) {
-			$webhook = $webhook->where( 'webhook_id', $request->get_param( 'webhook_id' ) );
+		$webhook_id = $this->sanitizeFilterParam( $request->get_param( 'webhook_id' ) );
+		if ( null !== $webhook_id ) {
+			$webhook = $webhook->where( 'webhook_id', $webhook_id );
 		}
 
-		return $webhook->find( $request['id'] );
+		return $webhook->find( $this->sanitizeFilterParam( $request['id'] ) );
 	}
 
 	/**
@@ -117,7 +119,14 @@ class IncomingWebhooksController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return IncomingWebhook::where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return IncomingWebhook::where(
+			array_filter(
+				[
+					'id'         => $this->sanitizeFilterParam( $request['id'] ),
+					'webhook_id' => $this->sanitizeFilterParam( $request->get_param( 'webhook_id' ) ),
+				]
+			)
+		)->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**
@@ -129,5 +138,21 @@ class IncomingWebhooksController {
 	 */
 	public function delete( \WP_REST_Request $request ) {
 		return IncomingWebhook::delete( $request['id'] );
+	}
+
+	/**
+	 * Coerce a user-supplied scalar filter into a safe string or null.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return string|null
+	 */
+	protected function sanitizeFilterParam( $value ) {
+		if ( null === $value || '' === $value ) {
+			return null;
+		}
+		if ( ! is_scalar( $value ) ) {
+			return null;
+		}
+		return sanitize_text_field( (string) $value );
 	}
 }
