@@ -2,32 +2,29 @@
 
 namespace SureCart\Controllers\Admin\Settings;
 
-use SureCart\Controllers\Admin\AdminController;
+use SureCart\Models\Processor;
+use SureCart\Support\Currency;
+use SureCart\Support\TimeDate;
 
 /**
- * Settings controller — standalone SPA entry.
- *
- * The settings-root.js bundle mounts SettingsApp on `#sc-settings-app`.
- * SettingsApp owns its RouterProvider and lazy-loads each tab.
+ * Settings controller for the client-side routed settings.
  */
-class Settings extends AdminController {
+class Settings {
 	/**
 	 * Show the settings page.
 	 *
-	 * SPA entry point — React handles the settings layout, header, and tabs.
-	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return \SureCartCore\Responses\ResponseInterface
+	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
 		remove_all_actions( 'admin_notices' );
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( SettingsScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
 
 		return \SureCart::view( 'admin/settings-page' )->with(
 			[
+				'breadcrumb'    => '',
 				'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 				'claim_expired' => \SureCart::account()->claim_expired ?? false,
-				'breadcrumb'    => __( 'Settings', 'surecart' ),
 			]
 		);
 	}
@@ -60,6 +57,8 @@ class Settings extends AdminController {
 			$asset_file['version'],
 			true
 		);
+
+		wp_register_script( 'suretriggers-sdk', 'https://app.ottokit.com/js/v2/embed.js', array(), '1.0.0', false );
 
 		wp_set_script_translations( $handle, 'surecart' );
 
