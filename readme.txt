@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 4.1.1
+Stable tag: 4.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -422,7 +422,7 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.2.0 - April 18th, 2026 = 
+= 4.2.0 - April 21st, 2026 = 
 - New: Address autocomplete — Google Maps-powered suggestions at checkout that auto-fill city, state, postal code, and country as customers type.
 - New: Variant downloads — override parent product files on a per-variant basis so each variant can ship its own downloads and licensing.
 - New: MCP Server — dedicated settings page to connect AI clients (Claude, Cursor, VS Code, Continue, and more) to your store.
