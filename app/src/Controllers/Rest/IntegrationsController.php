@@ -38,13 +38,15 @@ class IntegrationsController extends RestController {
 		$integration = new Integration();
 
 		// integration model ids.
-		if ( $request->get_param( 'integration_ids' ) ) {
-			$integration = $integration->whereIn( 'integration_id', $request->get_param( 'integration_ids' ) );
+		$integration_ids = $request->get_param( 'integration_ids' );
+		if ( ! empty( $integration_ids ) ) {
+			$integration = $integration->whereIn( 'integration_id', array_map( 'sanitize_text_field', (array) $integration_ids ) );
 		}
 
 		// model ids.
-		if ( $request->get_param( 'model_ids' ) ) {
-			$integration = $integration->whereIn( 'model_id', $request->get_param( 'model_ids' ) );
+		$model_ids = $request->get_param( 'model_ids' );
+		if ( ! empty( $model_ids ) ) {
+			$integration = $integration->whereIn( 'model_id', array_map( 'sanitize_text_field', (array) $model_ids ) );
 		}
 
 		$total    = $integration->count();
@@ -82,13 +84,13 @@ class IntegrationsController extends RestController {
 		return $model->where(
 			array_filter(
 				[
-					'model_id'       => $request->get_param( 'model_id' ),
-					'integration_id' => $request->get_param( 'integration_id' ),
-					'model_name'     => $request->get_param( 'model_name' ),
-					'provider'       => $request->get_param( 'provider' ),
+					'model_id'       => $this->sanitizeFilterParam( $request->get_param( 'model_id' ) ),
+					'integration_id' => $this->sanitizeFilterParam( $request->get_param( 'integration_id' ) ),
+					'model_name'     => $this->sanitizeFilterParam( $request->get_param( 'model_name' ) ),
+					'provider'       => $this->sanitizeFilterParam( $request->get_param( 'provider' ) ),
 				]
 			)
-		)->find( $request['id'] );
+		)->find( $this->sanitizeFilterParam( $request['id'] ) );
 	}
 
 	/**
@@ -99,11 +101,36 @@ class IntegrationsController extends RestController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		$model = $this->middleware( new $this->class( $request['id'] ), $request );
+		$model = $this->middleware( new $this->class( $this->sanitizeFilterParam( $request['id'] ) ), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->update( $request->get_json_params() );
+		return $model->where(
+			array_filter(
+				[
+					'model_id'       => $this->sanitizeFilterParam( $request->get_param( 'model_id' ) ),
+					'integration_id' => $this->sanitizeFilterParam( $request->get_param( 'integration_id' ) ),
+					'model_name'     => $this->sanitizeFilterParam( $request->get_param( 'model_name' ) ),
+					'provider'       => $this->sanitizeFilterParam( $request->get_param( 'provider' ) ),
+				]
+			)
+		)->update( $request->get_json_params() );
+	}
+
+	/**
+	 * Coerce a user-supplied scalar filter into a safe string or null.
+	 *
+	 * @param mixed $value Raw request value.
+	 * @return string|null
+	 */
+	protected function sanitizeFilterParam( $value ) {
+		if ( null === $value || '' === $value ) {
+			return null;
+		}
+		if ( ! is_scalar( $value ) ) {
+			return null;
+		}
+		return sanitize_text_field( (string) $value );
 	}
 
 	/**
