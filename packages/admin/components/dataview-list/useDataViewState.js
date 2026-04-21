@@ -30,11 +30,9 @@ function readPersistedView(preferenceKey) {
  * @property {Object}   [sortMap]          View field id → API sort name.
  * @property {string[]} [defaultFields]    Initial visible field ids.
  * @property {number}   [perPage]
- * @property {string}   [defaultStatus]
  * @property {Object}   [layoutStyles]
- * @property {Function} [buildQueryArgs]   Receives { view, status, filters }.
- * @property {Object}   [initialFilters]
- * @property {Array}    [initialViewFilters]
+ * @property {Function} [buildQueryArgs]   Receives { view } — read `view.filters` for faceted filtering.
+ * @property {Array}    [initialViewFilters] Seed DataViews `view.filters` (e.g. from URL params).
  * @property {string}   [preferenceKey]    Persistence key under the shared scope.
  */
 export default function useDataViewState(config) {
@@ -45,16 +43,11 @@ export default function useDataViewState(config) {
 		sortMap = {},
 		defaultFields = [],
 		perPage = 20,
-		defaultStatus = 'active',
 		layoutStyles = {},
 		buildQueryArgs,
-		initialFilters = {},
 		initialViewFilters = [],
 		preferenceKey,
 	} = config;
-
-	const [status, setStatus] = useState(defaultStatus);
-	const [filters, setFilters] = useState(initialFilters);
 
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { set: setPreference } = useDispatch(preferencesStore);
@@ -102,16 +95,6 @@ export default function useDataViewState(config) {
 		setPreference(PREFERENCES_SCOPE, preferenceKey, subset);
 	}, [view, preferenceKey, setPreference]);
 
-	const setFilter = useCallback((key, value) => {
-		setFilters((prev) => ({ ...prev, [key]: value }));
-		setView((prev) => ({ ...prev, page: 1 }));
-	}, []);
-
-	const changeStatus = useCallback((newStatus) => {
-		setStatus(newStatus);
-		setView((prev) => ({ ...prev, page: 1 }));
-	}, []);
-
 	const queryArgs = useMemo(() => {
 		const sortField = view.sort?.field
 			? sortMap[view.sort.field] || view.sort.field
@@ -125,10 +108,10 @@ export default function useDataViewState(config) {
 		};
 		if (view.search) args.query = view.search;
 		if (buildQueryArgs) {
-			Object.assign(args, buildQueryArgs({ view, status, filters }));
+			Object.assign(args, buildQueryArgs({ view }));
 		}
 		return args;
-	}, [view, status, filters, sortMap, defaultSort, buildQueryArgs]);
+	}, [view, sortMap, defaultSort, buildQueryArgs]);
 
 	const { records, hasResolved, totalItems, totalPages } = useEntityRecords(
 		kind,
@@ -148,10 +131,6 @@ export default function useDataViewState(config) {
 	return {
 		view,
 		setView,
-		status,
-		setStatus: changeStatus,
-		filters,
-		setFilter,
 		records: records || [],
 		hasResolved,
 		paginationInfo,

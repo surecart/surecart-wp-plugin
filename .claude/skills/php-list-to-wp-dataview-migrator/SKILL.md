@@ -26,8 +26,8 @@ Each migrated admin page is a self-contained React app:
 
 Reference implementations:
 
--   **Products** (tabs + filters + integrations column): `packages/admin/products/`
--   **Product Collections** (simple, no tabs): `packages/admin/product-collections/`
+-   **Products** (faceted filters + integrations column): `packages/admin/products/`
+-   **Product Collections** (simple, no filters): `packages/admin/product-collections/`
 
 Both use the same `createListEditApp` factory and the same `RendersEnhancedAdminView` PHP trait. Read both before migrating a new entity.
 
@@ -65,8 +65,8 @@ app/src/Controllers/Admin/{Entity}/
 
 | File                        | Purpose                                                                                                                                                       |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `useDataViewState.js`       | Hook: view state, query building, data fetching, status tabs, custom filters. Persists view to `@wordpress/preferences` under scope `surecart/dataview-lists` |
-| `DataViewListLayout.js`     | Component: tabs, header controls, card-wrapped DataViews table                                                                                                |
+| `useDataViewState.js`       | Hook: view state, query building, data fetching, filter mirroring. Persists view to `@wordpress/preferences` under scope `surecart/dataview-lists`            |
+| `DataViewListLayout.js`     | Component: card-wrapped DataViews table with a mutation overlay                                                                                               |
 | `ConfirmDeleteModal.js`     | Modal: reusable deletion confirmation with async busy state — accepts `items` array, works for both single row and bulk                                       |
 | `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover, `.sc-list-header`                                                   |
 | `index.js`                  | Barrel export — also imports `@wordpress/dataviews/build-style/style.css` so each consuming bundle ships its own copy                                         |
@@ -144,7 +144,7 @@ import ListHeader from '../components/ListHeader';
 import './entity-list-style.scss';
 
 const SORT_MAP = { name: 'name', date: 'cataloged_at' };
-const STATUS_TABS = [
+const STATUS_ELEMENTS = [
 	{ value: 'active', label: __('Active', 'surecart') },
 	{ value: 'archived', label: __('Archived', 'surecart') },
 	{ value: 'all', label: __('All', 'surecart') },
@@ -158,13 +158,23 @@ export default function EntityList({ navigation }) {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
+	// Seed DataViews filters from URL params (see step 7).
+	const initialViewFilters = useMemo(() => {
+		const urlParams = getQueryArgs(window.location.href);
+		const filters = [];
+		if (urlParams.status === 'archived' || urlParams.status === 'all') {
+			filters.push({
+				field: 'archive_status',
+				operator: 'is',
+				value: urlParams.status,
+			});
+		}
+		return filters;
+	}, []);
+
 	const {
 		view,
 		setView,
-		status,
-		setStatus,
-		filters,
-		setFilter,
 		records,
 		hasResolved,
 		paginationInfo,
@@ -176,11 +186,14 @@ export default function EntityList({ navigation }) {
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
 		preferenceKey: PREFERENCE_KEY, // persists view to @wordpress/preferences
-		initialFilters: INITIAL_FILTERS, // see step 7
-		buildQueryArgs: ({ status, filters }) => {
+		initialViewFilters,
+		buildQueryArgs: ({ view: currentView }) => {
 			const args = {};
-			if (status === 'active') args.archived = false;
-			else if (status === 'archived') args.archived = true;
+			const statusValue = currentView.filters?.find(
+				(f) => f.field === 'archive_status'
+			)?.value;
+			if (statusValue === 'archived') args.archived = true;
+			else if (statusValue !== 'all') args.archived = false;
 			return args;
 		},
 	});
@@ -249,9 +262,6 @@ export default function EntityList({ navigation }) {
 				onAction={() => navigation.goToCreate()}
 			/>
 			<DataViewListLayout
-				tabs={STATUS_TABS}
-				activeTab={status}
-				onTabChange={setStatus}
 				data={records}
 				fields={fields}
 				view={view}
@@ -470,9 +480,9 @@ Rules:
 -   Use `Icon` + `starFilled`/`starEmpty` for featured star — do not render raw SVG
 -   Don't pass `sortMap` if field ids already match API sort names (it defaults to `{}`). Removing a no-op `SORT_MAP = { created: 'created_at' }` is always safe when every field has `enableSorting: false`.
 
-### 10. Map PHP filter dropdowns → ModelSelector
+### 10. Map PHP filter dropdowns → DataViews `filterBy` + `elements`
 
-Use SureCart's `ModelSelector`, never a native `<select>`. Pass as `headerControls` on `DataViewListLayout`.
+Every faceted filter — status tabs, collection pickers, per-taxonomy dropdowns — belongs on a field as `filterBy: { operators: ['is'|'isAny'] }` + an `elements: [{ value, label }]` array. DataViews handles the UI (dropdown, multi-select, chip display), persistence through `view.filters`, i18n, and accessibility. Don't reach for custom tab strips, `ModelSelector` on the page chrome, or native `<select>` — consolidate on the DataViews filter model.
 
 ### 11. Map PHP row actions → DataViews actions (delete unified via `ConfirmDeleteModal`)
 
@@ -575,11 +585,7 @@ View persistence is handled entirely by `@wordpress/preferences` under scope `su
 
 ```jsx
 <DataViewListLayout
-    tabs={[{ value: 'active', label: 'Active' }]}      // optional
-    activeTab="active"
-    onTabChange={(value) => {}}
-    headerControls={<ModelSelector ... />}             // optional
-    header={<Button>Export</Button>}                   // rendered next to gear icon
+    header={<Button>Export</Button>}  // optional — rendered next to gear icon
     data={records}
     fields={fields}
     view={view}
@@ -590,6 +596,8 @@ View persistence is handled entirely by `@wordpress/preferences` under scope `su
     isMutating={isMutating}
 />
 ```
+
+Status/facet filtering lives on the fields themselves via `filterBy` + `elements` — see step 10. `DataViewListLayout` is intentionally a thin shell: it owns the card chrome, the mutation overlay, and the notifications outlet, nothing more.
 
 ## Common Pitfalls
 
@@ -602,7 +610,7 @@ View persistence is handled entirely by `@wordpress/preferences` under scope `su
 7. **Use `range_display_amount`** for price display
 8. **Use `ModelSelector`**, not native `<select>`, for filter dropdowns
 9. **Always check `hasResolved`** (or `isLoading={!hasResolved}`) before rendering
-10. **Tabs are WP-style text links** (`<ul>/<li>/<a>`) — not button groups or `TabPanel`
+10. **No custom tabs** — express status/faceted filters as a DataViews field with `filterBy` + `elements`, not a separate tab strip or `TabPanel`
 11. **Settings popover is a portal** — `.dataviews-view-config` renders at body level. Width constraints belong at global scope in `dataview-list-common.scss`
 12. **Always call `invalidateList()` after mutations** — `saveEntityRecord` / `deleteEntityRecord` / `apiFetch` don't refresh the list on their own
 13. **Seed filters from URL params at module scope** — `getQueryArgs(window.location.href)` outside the component, pass as `initialFilters`
@@ -610,7 +618,7 @@ View persistence is handled entirely by `@wordpress/preferences` under scope `su
 15. **`spa.php` has no `<h1>` or "Add New" button** — the React `ListHeader` renders them. Don't port the legacy page header into the spa view
 16. **One `handleDelete` for single + bulk** — `ConfirmDeleteModal` takes `items`; the row action wraps one item in an array. Don't branch into two code paths
 17. **`useAdminSpaNavigation` is consumed by `createListEditApp`** — don't call it again in the list/edit component; read the `navigation` prop that the factory passes in
-18. **Don't touch DOM outside the app root** — `createListEditApp` deliberately doesn't sync sidebars, menu items, or external headers. If the design wants a toolbar control, render it inside `DataViewListLayout` via `header` or `headerControls`
+18. **Don't touch DOM outside the app root** — `createListEditApp` deliberately doesn't sync sidebars, menu items, or external headers. If the design wants a toolbar control, render it inside `DataViewListLayout` via `header` (next to the gear icon) or add it as a DataViews `action`
 19. **Keep the `@deprecated` annotation current** — when a legacy list table is removed, bump the target version or drop the annotation in the same PR
 20. **Each page is its own webpack entry, PHP controller, view, and React root** — there is no shared shell or page registry. Keep the file layout strictly per-entity
 
@@ -618,7 +626,7 @@ View persistence is handled entirely by `@wordpress/preferences` under scope `su
 
 To migrate Orders:
 
-1. **`packages/admin/orders/OrdersList.js`** — copy `ProductsList.js`; update entity, sort map, tabs, fields, `handleDelete`, actions
+1. **`packages/admin/orders/OrdersList.js`** — copy `ProductsList.js`; update entity, sort map, status/filter `elements`, fields, `handleDelete`, actions
 2. **`packages/admin/orders/OrdersApp.js`** — 10-line `createListEditApp({ pageSlug: 'sc-orders', ListComponent: OrdersList, loadEditComponent: () => import('./Order') })`
 3. **`packages/admin/orders/index.js`** — mount `<OrdersApp />` on `#sc-orders-app`
 4. **`packages/admin/orders/order-list-style.scss`** — `@import "../components/dataview-list/dataview-list-common.scss";`

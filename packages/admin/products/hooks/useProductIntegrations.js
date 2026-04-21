@@ -115,8 +115,12 @@ export default function useProductIntegrations(records, enabled = true) {
 				});
 				setItemLabels(labelMap);
 			} catch (err) {
-				// Silently ignore — integrations column falls back to '-'.
-				if (err?.name !== 'AbortError') return;
+				// Aborts fire on cleanup/refetch — expected, swallow silently.
+				if (err?.name === 'AbortError') return;
+				console.error(
+					'[SureCart] Failed to load product integrations:',
+					err
+				);
 			}
 		})();
 

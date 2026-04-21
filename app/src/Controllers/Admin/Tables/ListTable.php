@@ -178,23 +178,36 @@ abstract class ListTable extends \WP_List_Table {
 				continue;
 			}
 			if ( ! empty( $item->label ) ) {
+				// Tooltip surfaces both the provider ("Zapier") and the item ("New order → Slack")
+				// so keyboard + screen-reader users aren't limited to the native `title` hover.
+				$tooltip_text = trim(
+					sprintf(
+						'%s%s%s',
+						! empty( $provider->label ) ? $provider->label : '',
+						! empty( $provider->label ) && ! empty( $item->label ) ? ' — ' : '',
+						$item->label ?? ''
+					)
+				);
 				ob_start();
-				if ( ! empty( $provider->logo ) ) {
-					?>
-					<img
-						src="<?php echo esc_url( $provider->logo ); ?>"
-						alt="<?php echo esc_attr( $item->label ); ?>"
-						title="<?php echo esc_attr( $item->label ); ?>"
-						style="width: 20px; height: 20px; cursor: help; display: inline-block; margin: 2px;"
-					/>
-					<?php
-				} else {
-					?>
-					<span title="<?php echo esc_attr( $item->label ); ?>" style="cursor: help;">
-						<?php echo wp_kses_post( $item->label ); ?>
-					</span>
-					<?php
-				}
+				?>
+				<sc-tooltip
+					text="<?php echo esc_attr( $tooltip_text ); ?>"
+					type="text"
+					style="display: inline-block; cursor: help; margin: 2px;"
+				>
+					<?php if ( ! empty( $provider->logo ) ) : ?>
+						<img
+							src="<?php echo esc_url( $provider->logo ); ?>"
+							alt="<?php echo esc_attr( $tooltip_text ); ?>"
+							style="width: 20px; height: 20px; display: inline-block; vertical-align: middle;"
+						/>
+					<?php else : ?>
+						<span aria-label="<?php echo esc_attr( $tooltip_text ); ?>">
+							<?php echo wp_kses_post( $item->label ); ?>
+						</span>
+					<?php endif; ?>
+				</sc-tooltip>
+				<?php
 				$output .= ob_get_clean();
 			}
 		}

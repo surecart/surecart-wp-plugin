@@ -458,6 +458,9 @@ export default function ProductsList({ navigation }) {
 						__('Failed to delete product.', 'surecart'),
 					{ type: 'snackbar' }
 				);
+
+				// Rethrow so ConfirmDeleteModal keeps itself open on failure.
+				throw error;
 			}
 		},
 		[

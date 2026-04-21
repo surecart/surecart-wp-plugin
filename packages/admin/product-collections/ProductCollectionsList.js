@@ -72,9 +72,7 @@ export default function ProductCollectionsList({ navigation }) {
 		defaultSort: { field: 'created_at', direction: 'desc' },
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
-		defaultStatus: null,
 		preferenceKey: PREFERENCE_KEY,
-		buildQueryArgs: () => ({}),
 	});
 
 	const fields = useMemo(
@@ -194,6 +192,9 @@ export default function ProductCollectionsList({ navigation }) {
 						__('Failed to delete collection.', 'surecart'),
 					{ type: 'snackbar' }
 				);
+
+				// Rethrow so ConfirmDeleteModal keeps itself open on failure.
+				throw error;
 			}
 		},
 		[
