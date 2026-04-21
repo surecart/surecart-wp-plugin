@@ -1,9 +1,22 @@
+/**
+ * External dependencies.
+ */
 import { createRoot } from '@wordpress/element';
 
-import ProductCollectionsApp from './ProductCollectionsApp';
+/**
+ * register store and entities.
+ */
 import '../store/add-entities';
 
-const container = document.getElementById( 'sc-product-collections-app' );
-if ( container ) {
-	createRoot( container ).render( <ProductCollectionsApp /> );
+/**
+ * App
+ */
+import ProductCollectionsApp from './ProductCollectionsApp';
+
+/**
+ * Render
+ */
+const container = document.getElementById('sc-product-collections-app');
+if (container) {
+	createRoot(container).render(<ProductCollectionsApp />);
 }

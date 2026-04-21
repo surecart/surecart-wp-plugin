@@ -13,7 +13,7 @@ class ProductCollectionsController extends AdminController {
 	use RendersEnhancedAdminView;
 
 	/**
-	 * Render the legacy list table view.
+	 * Render the WP List Table view.
 	 */
 	protected function renderWpListView() {
 		$table = new ProductCollectionsListTable();
@@ -37,7 +37,7 @@ class ProductCollectionsController extends AdminController {
 	}
 
 	/**
-	 * Product collections Dataview.
+	 * Render the SPA view for product collections.
 	 */
 	protected function renderSpaView() {
 		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
@@ -48,14 +48,11 @@ class ProductCollectionsController extends AdminController {
 		);
 	}
 
-	/**
-	 * Edit a product collection.
-	 *
-	 * SPA entry point — uses the same shell view. Preloads data for the specific collection.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	/*
+	 * @param \WP_REST_Request $request Request.
 	 */
 	public function edit( $request ) {
+		// enqueue needed script.
 		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
 
 		$product_collection = null;

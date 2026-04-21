@@ -1,26 +1,3 @@
-/**
- * useProductIntegrations — Batch-fetch integrations for a list of products.
- *
- * Three coordinated round-trips on the surecart API:
- *   1. /integrations?model_ids=[...] — integrations for visible products
- *   2. /integration_providers/{slug} — provider metadata (label, logo)
- *   3. /integration_provider_items/{id} — per-item display labels
- *
- * Deduped by joined product-id key so re-renders don't refetch when the list
- * is the same. In-flight requests are aborted when the product set changes or
- * the consumer unmounts.
- *
- * Skips all three round-trips when `enabled` is false — use it to gate the
- * fetch on whether the Integrations column is visible in the DataView.
- *
- * @param {Array}   records   Product records (uses `.id` only).
- * @param {boolean} [enabled] Fetch only when true. Defaults to true.
- * @return {{
- *   integrationsByProduct: Object<string, Array>,
- *   providers:             Object<string, Object>,
- *   itemLabels:            Object<string, string>,
- * }}
- */
 import { useEffect, useRef, useState } from 'react';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '@wordpress/api-fetch';

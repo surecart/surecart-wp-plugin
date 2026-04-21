@@ -27,6 +27,10 @@ export default ({ navigation }) => {
 	/**
 	 * Replaces the browser URL with a edit link for a given id ID.
 	 *
+	 * Note it is important that, since this function may be called when the
+	 * editor first loads, the result generated `getPostEditURL` matches that
+	 * produced by the server. Otherwise, the URL will change unexpectedly.
+	 *
 	 * @param {number} id id for the model for which to generate edit URL.
 	 */
 	const setBrowserURL = (id) => {

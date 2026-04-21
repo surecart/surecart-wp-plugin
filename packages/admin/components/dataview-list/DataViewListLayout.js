@@ -4,36 +4,9 @@ import { DataViews } from '@wordpress/dataviews/wp';
 import { Spinner } from '@wordpress/components';
 import Notifications from '../Notifications';
 
-/**
- * DataViewListLayout — Reusable wrapper for SureCart admin list pages.
- *
- * Renders a card-wrapped DataViews table with an optional mutation overlay
- * and the shared Notifications outlet. Status/faceted filtering belongs to
- * DataViews itself — define a field with `filterBy` + `elements` instead of
- * custom tabs.
- *
- * @example
- * <DataViewListLayout
- *   data={records}
- *   fields={fields}
- *   view={view}
- *   onChangeView={setView}
- *   paginationInfo={paginationInfo}
- *   actions={actions}
- *   isLoading={!hasResolved}
- * />
- *
- * @param {Object}          props
- * @param {React.ReactNode} [props.header]    - Content rendered next to the gear icon inside DataViews.
- * @param {string}          [props.className] - Additional CSS class for the wrapper.
- * @param {boolean}         [props.isMutating] - When true, shows a dimming spinner over the table.
- *
- * All remaining props are forwarded to <DataViews>.
- */
 export default function DataViewListLayout({
 	header,
 	className = '',
-	// DataViews props.
 	data,
 	fields,
 	view,

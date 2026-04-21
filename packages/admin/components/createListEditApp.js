@@ -1,23 +1,3 @@
-/**
- * createListEditApp — SPA root factory for admin pages that follow the
- * `list + lazy-loaded edit` shape (Products, Product Collections, …).
- *
- * The list is bundled eagerly (first paint); the edit view is split off into
- * its own webpack chunk and fetched on first navigation.
- *
- * @example
- *   export default createListEditApp({
- *     pageSlug: 'sc-products',
- *     ListComponent: ProductsList,
- *     loadEditComponent: () =>
- *       import(\/* webpackChunkName: "sc-products-detail" *\/ './Product'),
- *   });
- *
- * @param {Object}   config
- * @param {string}   config.pageSlug           WP admin page slug (e.g. 'sc-products').
- * @param {Function} config.ListComponent      React component for the list view.
- * @param {Function} config.loadEditComponent  Dynamic import returning the edit component.
- */
 import { Suspense, lazy, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 

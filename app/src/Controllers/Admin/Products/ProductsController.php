@@ -15,17 +15,18 @@ class ProductsController extends AdminController {
 	use RendersEnhancedAdminView;
 
 	/**
-	 * Render the legacy list table view.
-	 *
-	 * @return \SureCartCore\Responses\ResponseInterface
+	 * Render the WP List Table view.
 	 */
 	protected function renderWpListView() {
+		// instantiate the bulk actions service.
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
 
+		// instantiate the products list table.
 		$table = new ProductsListTable( $bulk_action_service );
 		$table->prepare_items();
 
+		// add header.
 		$this->withHeader(
 			array(
 				'breadcrumbs' => [
@@ -33,9 +34,11 @@ class ProductsController extends AdminController {
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
+				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
 			),
 		);
 
+		// add notices.
 		$this->withNotices(
 			array(
 				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
@@ -45,11 +48,12 @@ class ProductsController extends AdminController {
 			)
 		);
 
+		// return view.
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
 
 	/**
-	 * Products Dataview.
+	 * Render the SPA view for products.
 	 */
 	protected function renderSpaView() {
 		$this->enqueueSpaScripts( ProductScriptsController::class );
@@ -174,12 +178,10 @@ class ProductsController extends AdminController {
 	/**
 	 * Edit a product.
 	 *
-	 * Handled by the SPA — use the same index view so the React app
-	 * picks up the action=edit URL param and renders the edit/create view.
-	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
 	public function edit( $request ) {
+		// enqueue needed script.
 		$this->enqueueSpaScripts( ProductScriptsController::class );
 
 		// define product.

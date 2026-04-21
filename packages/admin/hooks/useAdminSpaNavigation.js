@@ -1,20 +1,7 @@
-/**
- * useAdminSpaNavigation — SPA navigation helper for admin list/edit pages.
- *
- * Wraps `useHistory` / `useLocation` (modeled after `@wordpress/router`,
- * same API as `@wordpress/edit-site`) to give list/edit pages a single
- * `navigation` object with `isList` / `isEdit` flags and `goToList`,
- * `goToCreate`, `goToEdit` helpers. Every pushed URL keeps `page={pageSlug}`.
- *
- * Used by `createListEditApp` to route between the list and edit views,
- * and passed down as `navigation` to both components.
- *
- * @param {string} pageSlug Admin page slug (e.g. 'sc-products').
- */
 import { useCallback, useMemo } from 'react';
 import { useHistory, useLocation } from '../router';
 
-export default function useAdminSpaNavigation(pageSlug) {
+export default function (pageSlug) {
 	const history = useHistory();
 	const location = useLocation();
 

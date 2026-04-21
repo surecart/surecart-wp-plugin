@@ -1,10 +1,3 @@
-/**
- * useDataViewState — View state, query args, and fetch for DataView admin lists.
- *
- * Persists the view (fields, layout, perPage, sort, filters) via
- * @wordpress/preferences under the shared scope `surecart/dataview-lists`.
- * Transient state (page, search) is not persisted.
- */
 import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect, select } from '@wordpress/data';
@@ -22,19 +15,6 @@ function readPersistedView(preferenceKey) {
 	return stored && typeof stored === 'object' ? stored : null;
 }
 
-/**
- * @typedef {Object} DataViewStateConfig
- * @property {string}   entity             Entity registered in core-data.
- * @property {string}   [kind]             Defaults to 'surecart'.
- * @property {Object}   [defaultSort]      { field, direction }.
- * @property {Object}   [sortMap]          View field id → API sort name.
- * @property {string[]} [defaultFields]    Initial visible field ids.
- * @property {number}   [perPage]
- * @property {Object}   [layoutStyles]
- * @property {Function} [buildQueryArgs]   Receives { view } — read `view.filters` for faceted filtering.
- * @property {Array}    [initialViewFilters] Seed DataViews `view.filters` (e.g. from URL params).
- * @property {string}   [preferenceKey]    Persistence key under the shared scope.
- */
 export default function useDataViewState(config) {
 	const {
 		entity,
@@ -63,7 +43,13 @@ export default function useDataViewState(config) {
 
 	const [view, setView] = useState(() =>
 		mergeView(
-			buildBaseView({ perPage, defaultSort, defaultFields, layoutStyles, initialViewFilters }),
+			buildBaseView({
+				perPage,
+				defaultSort,
+				defaultFields,
+				layoutStyles,
+				initialViewFilters,
+			}),
 			readPersistedView(preferenceKey),
 			{ layoutStyles, initialViewFilters }
 		)
@@ -75,7 +61,10 @@ export default function useDataViewState(config) {
 		if (hydratedRef.current) return;
 		if (!persistedFromStore) return;
 		setView((prev) =>
-			mergeView(prev, persistedFromStore, { layoutStyles, initialViewFilters })
+			mergeView(prev, persistedFromStore, {
+				layoutStyles,
+				initialViewFilters,
+			})
 		);
 		hydratedRef.current = true;
 	}, [persistedFromStore, layoutStyles, initialViewFilters]);
@@ -148,7 +137,13 @@ export default function useDataViewState(config) {
 	};
 }
 
-function buildBaseView({ perPage, defaultSort, defaultFields, layoutStyles, initialViewFilters }) {
+function buildBaseView({
+	perPage,
+	defaultSort,
+	defaultFields,
+	layoutStyles,
+	initialViewFilters,
+}) {
 	return {
 		type: 'table',
 		perPage,
