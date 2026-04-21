@@ -32,9 +32,15 @@ export default function useProductIntegrations(records, enabled = true) {
 	const prevKeyRef = useRef('');
 
 	useEffect(() => {
-		// Reset dedupe key so a re-enable refetches instead of returning stale data.
+		// Reset dedupe key + cached state so a re-enable refetches instead of
+		// briefly showing data from the last visible set.
 		if (!enabled) {
 			prevKeyRef.current = '';
+			setIntegrationsByProduct((s) =>
+				Object.keys(s).length ? {} : s
+			);
+			setProviders((s) => (Object.keys(s).length ? {} : s));
+			setItemLabels((s) => (Object.keys(s).length ? {} : s));
 			return;
 		}
 		if (!records?.length) return;
