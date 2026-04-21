@@ -248,9 +248,6 @@ class ProductsController extends AdminController {
 			add_action(
 				'admin_bar_menu',
 				function ( $wp_admin_bar ) use ( $product ) {
-					if ( empty( $product ) ) {
-						return;
-					}
 					$wp_admin_bar->add_node(
 						[
 							'id'    => 'view-product-page',
