@@ -1192,7 +1192,7 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 	 * @return array
 	 */
 	protected function filterWhereColumns( $method, $params ) {
-		if ( 'where' !== $method ) {
+		if ( ! in_array( $method, ['where', 'orWhere', 'andWhere'], true ) ) {
 			return $params;
 		}
 		if ( empty( $params ) || ! is_array( $params[0] ) ) {
