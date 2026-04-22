@@ -15,6 +15,7 @@ interface Store {
     manualPaymentMethods: string[];
     paymentMethods: {
       mollie: string[];
+      razorpay: string[];
     };
   };
   instances: {
@@ -41,6 +42,7 @@ const { state, onChange, on, dispose } = createStore<Store>(
       manualPaymentMethods: [],
       paymentMethods: {
         mollie: ['creditcard', 'paypal'],
+        razorpay: ['card', 'upi'],
       },
     },
     instances: {

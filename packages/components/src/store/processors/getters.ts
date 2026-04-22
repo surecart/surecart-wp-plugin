@@ -1,6 +1,17 @@
 import { sortByArray } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
+import { state as selectedProcessor } from '@store/selected-processor';
+
+/**
+ * Processors that use the method-types endpoint and expose a method selector.
+ */
+export const METHOD_AWARE_PROCESSORS = ['mollie', 'razorpay'] as const;
+
+/**
+ * Type guard for method-aware processors.
+ */
+export const isMethodAwareProcessor = (id?: string | null): id is (typeof METHOD_AWARE_PROCESSORS)[number] => !!id && (METHOD_AWARE_PROCESSORS as readonly string[]).includes(id);
 
 /**
  * Gets a sorted array of available processors based on
@@ -43,15 +54,19 @@ export const availableManualPaymentMethods = () =>
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.reusable : true)); // recurring.
 
 /**
- * Get a sorted array of mollie payment method types.
+ * Get a sorted array of payment method types for the currently selected method-aware processor
+ * (e.g. mollie, razorpay).
  */
-export const availableMethodTypes = () =>
-  sortByArray(state.methods, 'id', state.sortOrder.paymentMethods.mollie).filter(method => {
+export const availableMethodTypes = () => {
+  const processorId = selectedProcessor?.id;
+  const sortKey = isMethodAwareProcessor(processorId) ? state.sortOrder.paymentMethods[processorId] : [];
+  return sortByArray(state.methods, 'id', sortKey || []).filter(method => {
     if (method.id === 'applepay') {
       return (window as any)?.ApplePaySession && (window as any)?.ApplePaySession?.canMakePayments?.();
     }
     return true;
   });
+};
 
 /**
  * Get a combined available processor choices (processors + manual payment methods)

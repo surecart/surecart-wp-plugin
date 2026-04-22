@@ -317,6 +317,13 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-razorpay-payment": {
+    "processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-razorpay-payment-provider": {
     "style": true,
     "id": true,

@@ -21,7 +21,7 @@ import { Customer, RazorpayConstructor } from 'src/types';
   shadow: true,
 })
 export class ScCheckoutRazorpayPaymentProvider {
-  private unlistenToFormState: () => void;
+  private unlistenToFormState?: () => void;
   private razorpayInstance: RazorpayConstructor | null = null;
   private confirming: boolean = false;
 
@@ -41,7 +41,11 @@ export class ScCheckoutRazorpayPaymentProvider {
   }
 
   disconnectedCallback() {
-    this.unlistenToFormState();
+    // Guarded: Stencil can disconnect before componentWillLoad fires if the element is reparented
+    // mid-render (e.g. when the Razorpay recurring tiles flip from combined → split after the
+    // payment_method_types fetch resolves). Calling an undefined listener would crash and wedge
+    // sc-payment in a render loop.
+    this.unlistenToFormState?.();
   }
 
   async confirm() {
