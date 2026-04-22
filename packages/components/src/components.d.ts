@@ -565,21 +565,25 @@ export namespace Components {
         "selectorTitle": string;
     }
     /**
-     * Headless fetcher — keeps Razorpay's available payment methods in sync with the checkout.
-     * Razorpay requires an explicit `payment_method_type` when creating a recurring order; it
-     * can't fan methods out automatically the way one-time checkouts do. This component calls
-     * the same `processors/:id/payment_method_types` endpoint Mollie uses and writes the filtered
-     * list into `processorsState.methods`. The actual `sc-payment-method-choice` elements are
-     * rendered by `sc-payment` itself so they stay as direct siblings of the other processors
-     * (stripe/mock/etc.) — that's what keeps the sibling-detection-driven toggle behaviour
-     * correct. If we rendered them inside this component's shadow root, each choice would lose
-     * sight of its siblings and fall back to an always-open `div`.
-     * Intentionally renders nothing.
+     * Razorpay checkout driver.
+     * Renders nothing. Does three things:
+     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
+     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
+     *    to the form state machine.
+     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
+     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
+     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
+     *    "Razorpay" tile into per-method tiles (Card / UPI).
+     * Fetch was previously a second, top-level component. It was folded in here because both
+     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
+     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
+     * fetcher's disconnect callback wiped state that fed its parent's render.
      */
-    interface ScCheckoutRazorpayPayment {
-        "processorId": string;
-    }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id (from `availableProcessors`). Required for the recurring `payment_method_types` fetch; unused for one-time checkouts.
+         */
+        "processorId": string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -4903,23 +4907,20 @@ declare global {
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
     /**
-     * Headless fetcher — keeps Razorpay's available payment methods in sync with the checkout.
-     * Razorpay requires an explicit `payment_method_type` when creating a recurring order; it
-     * can't fan methods out automatically the way one-time checkouts do. This component calls
-     * the same `processors/:id/payment_method_types` endpoint Mollie uses and writes the filtered
-     * list into `processorsState.methods`. The actual `sc-payment-method-choice` elements are
-     * rendered by `sc-payment` itself so they stay as direct siblings of the other processors
-     * (stripe/mock/etc.) — that's what keeps the sibling-detection-driven toggle behaviour
-     * correct. If we rendered them inside this component's shadow root, each choice would lose
-     * sight of its siblings and fall back to an always-open `div`.
-     * Intentionally renders nothing.
+     * Razorpay checkout driver.
+     * Renders nothing. Does three things:
+     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
+     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
+     *    to the form state machine.
+     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
+     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
+     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
+     *    "Razorpay" tile into per-method tiles (Card / UPI).
+     * Fetch was previously a second, top-level component. It was folded in here because both
+     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
+     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
+     * fetcher's disconnect callback wiped state that fed its parent's render.
      */
-    interface HTMLScCheckoutRazorpayPaymentElement extends Components.ScCheckoutRazorpayPayment, HTMLStencilElement {
-    }
-    var HTMLScCheckoutRazorpayPaymentElement: {
-        prototype: HTMLScCheckoutRazorpayPaymentElement;
-        new (): HTMLScCheckoutRazorpayPaymentElement;
-    };
     interface HTMLScCheckoutRazorpayPaymentProviderElement extends Components.ScCheckoutRazorpayPaymentProvider, HTMLStencilElement {
     }
     var HTMLScCheckoutRazorpayPaymentProviderElement: {
@@ -6955,7 +6956,6 @@ declare global {
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
-        "sc-checkout-razorpay-payment": HTMLScCheckoutRazorpayPaymentElement;
         "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-test-complete": HTMLScCheckoutTestCompleteElement;
@@ -7751,21 +7751,25 @@ declare namespace LocalJSX {
         "selectorTitle"?: string;
     }
     /**
-     * Headless fetcher — keeps Razorpay's available payment methods in sync with the checkout.
-     * Razorpay requires an explicit `payment_method_type` when creating a recurring order; it
-     * can't fan methods out automatically the way one-time checkouts do. This component calls
-     * the same `processors/:id/payment_method_types` endpoint Mollie uses and writes the filtered
-     * list into `processorsState.methods`. The actual `sc-payment-method-choice` elements are
-     * rendered by `sc-payment` itself so they stay as direct siblings of the other processors
-     * (stripe/mock/etc.) — that's what keeps the sibling-detection-driven toggle behaviour
-     * correct. If we rendered them inside this component's shadow root, each choice would lose
-     * sight of its siblings and fall back to an always-open `div`.
-     * Intentionally renders nothing.
+     * Razorpay checkout driver.
+     * Renders nothing. Does three things:
+     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
+     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
+     *    to the form state machine.
+     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
+     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
+     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
+     *    "Razorpay" tile into per-method tiles (Card / UPI).
+     * Fetch was previously a second, top-level component. It was folded in here because both
+     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
+     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
+     * fetcher's disconnect callback wiped state that fed its parent's render.
      */
-    interface ScCheckoutRazorpayPayment {
-        "processorId"?: string;
-    }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id (from `availableProcessors`). Required for the recurring `payment_method_types` fetch; unused for one-time checkouts.
+         */
+        "processorId"?: string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -11865,7 +11869,6 @@ declare namespace LocalJSX {
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
-        "sc-checkout-razorpay-payment": ScCheckoutRazorpayPayment;
         "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-test-complete": ScCheckoutTestComplete;
@@ -12112,18 +12115,20 @@ declare module "@stencil/core" {
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
             /**
-             * Headless fetcher — keeps Razorpay's available payment methods in sync with the checkout.
-             * Razorpay requires an explicit `payment_method_type` when creating a recurring order; it
-             * can't fan methods out automatically the way one-time checkouts do. This component calls
-             * the same `processors/:id/payment_method_types` endpoint Mollie uses and writes the filtered
-             * list into `processorsState.methods`. The actual `sc-payment-method-choice` elements are
-             * rendered by `sc-payment` itself so they stay as direct siblings of the other processors
-             * (stripe/mock/etc.) — that's what keeps the sibling-detection-driven toggle behaviour
-             * correct. If we rendered them inside this component's shadow root, each choice would lose
-             * sight of its siblings and fall back to an always-open `div`.
-             * Intentionally renders nothing.
+             * Razorpay checkout driver.
+             * Renders nothing. Does three things:
+             * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
+             * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
+             *    to the form state machine.
+             * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
+             *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
+             *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
+             *    "Razorpay" tile into per-method tiles (Card / UPI).
+             * Fetch was previously a second, top-level component. It was folded in here because both
+             * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
+             * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
+             * fetcher's disconnect callback wiped state that fed its parent's render.
              */
-            "sc-checkout-razorpay-payment": LocalJSX.ScCheckoutRazorpayPayment & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentElement>;
             "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.

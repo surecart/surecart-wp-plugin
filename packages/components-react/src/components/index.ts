@@ -39,7 +39,6 @@ export const ScCheckoutFormErrors = /*@__PURE__*/createReactComponent<JSX.ScChec
 export const ScCheckoutMolliePayment = /*@__PURE__*/createReactComponent<JSX.ScCheckoutMolliePayment, HTMLScCheckoutMolliePaymentElement>('sc-checkout-mollie-payment');
 export const ScCheckoutPaystackPaymentProvider = /*@__PURE__*/createReactComponent<JSX.ScCheckoutPaystackPaymentProvider, HTMLScCheckoutPaystackPaymentProviderElement>('sc-checkout-paystack-payment-provider');
 export const ScCheckoutProductPriceVariantSelector = /*@__PURE__*/createReactComponent<JSX.ScCheckoutProductPriceVariantSelector, HTMLScCheckoutProductPriceVariantSelectorElement>('sc-checkout-product-price-variant-selector');
-export const ScCheckoutRazorpayPayment = /*@__PURE__*/createReactComponent<JSX.ScCheckoutRazorpayPayment, HTMLScCheckoutRazorpayPaymentElement>('sc-checkout-razorpay-payment');
 export const ScCheckoutRazorpayPaymentProvider = /*@__PURE__*/createReactComponent<JSX.ScCheckoutRazorpayPaymentProvider, HTMLScCheckoutRazorpayPaymentProviderElement>('sc-checkout-razorpay-payment-provider');
 export const ScCheckoutStockAlert = /*@__PURE__*/createReactComponent<JSX.ScCheckoutStockAlert, HTMLScCheckoutStockAlertElement>('sc-checkout-stock-alert');
 export const ScCheckoutTestComplete = /*@__PURE__*/createReactComponent<JSX.ScCheckoutTestComplete, HTMLScCheckoutTestCompleteElement>('sc-checkout-test-complete');

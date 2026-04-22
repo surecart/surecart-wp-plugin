@@ -218,18 +218,17 @@ export class ScPayment {
   }
 
   /**
-   * Returns the razorpay processor (if available and currency-supported) so the parent
-   * `render()` can mount `sc-checkout-razorpay-payment` and `sc-checkout-razorpay-payment-provider`
-   * as direct children of `<Host>`.
+   * Returns the razorpay processor (if available and currency-supported) so `render()` can
+   * mount `sc-checkout-razorpay-payment-provider` at `<Host>` level.
    *
-   * Why at Host level? Both are headless (they render nothing visible). Keeping them anchored
-   * to a parent that never changes is critical: `sc-checkout-razorpay-payment`'s
-   * `disconnectedCallback` wipes `processorsState.methods`, which is one of the inputs to
-   * the flipping `<Tag>` wrapper in this component's render. If the fetcher lives inside that
-   * wrapper, a `state.methods` fill triggers `Tag: div → sc-toggles`, Stencil reparents the
-   * fetcher, its disconnect wipes methods, `Tag: sc-toggles → div`, reconnects, refills,
-   * reparents again — an infinite render loop that pegs a checkout lock and wedges the
-   * Purchase button in the disabled state.
+   * Why at Host level? The provider is headless (renders nothing visible) and owns both the
+   * payment-modal lifecycle AND the recurring method-types fetch. Its fetch writes
+   * `processorsState.methods`, which feeds `hasMultipleMethodChoices()` — one of the inputs
+   * to the `<Tag>` wrapper in this component's render. If the provider lived inside that
+   * wrapper, the fill would flip `Tag: div → sc-toggles`, Stencil would reparent the
+   * provider, its disconnect would wipe methods, `Tag` would flip back, the provider would
+   * remount and refetch — an infinite render loop that pegs a checkout lock and wedges
+   * the Purchase button in the disabled state.
    */
   getRazorpayHeadlessProcessor() {
     const razorpay = getAvailableProcessor('razorpay');
@@ -254,13 +253,11 @@ export class ScPayment {
 
     return (
       <Host>
-        {/* Headless Razorpay components live at Host level — their parent never flips,
-            so `processorsState.methods` stays populated and the Tag wrapper can freely
-            change between `div` and `sc-toggles` without re-triggering their lifecycles. */}
-        {razorpayHeadless && checkoutState.checkout?.reusable_payment_method_required && (
-          <sc-checkout-razorpay-payment processor-id={razorpayHeadless.id} />
-        )}
-        {razorpayHeadless && <sc-checkout-razorpay-payment-provider />}
+        {/* Headless Razorpay provider lives at Host level — its parent never flips, so
+            `processorsState.methods` (which it writes on recurring checkouts) stays populated
+            and the Tag wrapper can freely change between `div` and `sc-toggles` without
+            re-triggering its lifecycle. */}
+        {razorpayHeadless && <sc-checkout-razorpay-payment-provider processor-id={razorpayHeadless.id} />}
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>
