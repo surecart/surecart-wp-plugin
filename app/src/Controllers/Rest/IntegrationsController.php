@@ -2,12 +2,15 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\SanitizesRestParams;
 use SureCart\Models\Integration;
 
 /**
  * Handle Price requests through the REST API
  */
 class IntegrationsController extends RestController {
+	use SanitizesRestParams;
+
 	/**
 	 * The model class.
 	 *
@@ -88,7 +91,10 @@ class IntegrationsController extends RestController {
 					'integration_id' => $this->sanitizeFilterParam( $request->get_param( 'integration_id' ) ),
 					'model_name'     => $this->sanitizeFilterParam( $request->get_param( 'model_name' ) ),
 					'provider'       => $this->sanitizeFilterParam( $request->get_param( 'provider' ) ),
-				]
+				],
+				function ( $value ) {
+					return null !== $value;
+				}
 			)
 		)->find( $this->sanitizeFilterParam( $request['id'] ) );
 	}
@@ -112,25 +118,12 @@ class IntegrationsController extends RestController {
 					'integration_id' => $this->sanitizeFilterParam( $request->get_param( 'integration_id' ) ),
 					'model_name'     => $this->sanitizeFilterParam( $request->get_param( 'model_name' ) ),
 					'provider'       => $this->sanitizeFilterParam( $request->get_param( 'provider' ) ),
-				]
+				],
+				function ( $value ) {
+					return null !== $value;
+				}
 			)
 		)->update( $request->get_json_params() );
-	}
-
-	/**
-	 * Coerce a user-supplied scalar filter into a safe string or null.
-	 *
-	 * @param mixed $value Raw request value.
-	 * @return string|null
-	 */
-	protected function sanitizeFilterParam( $value ) {
-		if ( null === $value || '' === $value ) {
-			return null;
-		}
-		if ( ! is_scalar( $value ) ) {
-			return null;
-		}
-		return sanitize_text_field( (string) $value );
 	}
 
 	/**

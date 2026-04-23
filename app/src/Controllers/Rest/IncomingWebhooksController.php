@@ -2,12 +2,15 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\SanitizesRestParams;
 use SureCart\Models\IncomingWebhook;
 
 /**
  * Handle Price requests through the REST API
  */
 class IncomingWebhooksController {
+	use SanitizesRestParams;
+
 	/**
 	 * Create a product integration.
 	 *
@@ -124,7 +127,10 @@ class IncomingWebhooksController {
 				[
 					'id'         => $this->sanitizeFilterParam( $request['id'] ),
 					'webhook_id' => $this->sanitizeFilterParam( $request->get_param( 'webhook_id' ) ),
-				]
+				],
+				function ( $value ) {
+					return null !== $value;
+				}
 			)
 		)->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
@@ -138,21 +144,5 @@ class IncomingWebhooksController {
 	 */
 	public function delete( \WP_REST_Request $request ) {
 		return IncomingWebhook::delete( $request['id'] );
-	}
-
-	/**
-	 * Coerce a user-supplied scalar filter into a safe string or null.
-	 *
-	 * @param mixed $value Raw request value.
-	 * @return string|null
-	 */
-	protected function sanitizeFilterParam( $value ) {
-		if ( null === $value || '' === $value ) {
-			return null;
-		}
-		if ( ! is_scalar( $value ) ) {
-			return null;
-		}
-		return sanitize_text_field( (string) $value );
 	}
 }
