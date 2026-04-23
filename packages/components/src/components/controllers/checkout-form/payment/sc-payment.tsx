@@ -175,20 +175,14 @@ export class ScPayment {
     );
   }
 
-  /**
-   * Split into per-method tiles only on recurring checkouts with ≥2 enabled methods —
-   * Razorpay's recurring API requires an explicit `payment_method_type`, while the
-   * one-time modal fans all methods out itself.
-   */
-  shouldSplitRazorpayMethods(): boolean {
-    return !!checkoutState.checkout?.reusable_payment_method_required && (availableMethodTypes() || []).length > 1;
-  }
-
   renderRazorpay(processor: Processor) {
     if (!processorSupportsCurrentCurrency(processor)) return;
 
-    if (this.shouldSplitRazorpayMethods()) {
-      return (availableMethodTypes() || []).map(method => this.renderRazorpayMethodChoice(method));
+    // Split into per-method tiles on recurring checkouts — Razorpay's recurring API requires
+    // an explicit `payment_method_type`, while the one-time modal fans all methods out itself.
+    const methods = availableMethodTypes() || [];
+    if (checkoutState.checkout?.reusable_payment_method_required && methods.length > 0) {
+      return methods.map(method => this.renderRazorpayMethodChoice(method));
     }
     return this.renderRazorpayCombined(processor);
   }
