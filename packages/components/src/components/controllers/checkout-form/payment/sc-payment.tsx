@@ -15,7 +15,7 @@ import {
 } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 import { MockProcessor } from './MockProcessor';
-import { PaymentMethodType } from '../../../../types';
+import { PaymentMethodType, Processor } from '../../../../types';
 import { getRazorpayMethodIcon, getRazorpayMethodLabel } from '../../../../functions/razorpay';
 
 /**
@@ -106,11 +106,11 @@ export class ScPayment {
     );
   }
 
-  renderMock(processor) {
+  renderMock(processor: Processor) {
     return <MockProcessor processor={processor} />;
   }
 
-  renderPaystack(processor) {
+  renderPaystack(processor: Processor) {
     const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
     // if system currency is not in the supported currency list, then stop.
@@ -136,17 +136,8 @@ export class ScPayment {
     );
   }
 
-  /**
-   * Combined Razorpay tile — single toggle covering all enabled methods.
-   * Used for one-time checkouts (Razorpay fans methods out in its own modal) and
-   * as a fallback for recurring checkouts when the API returns ≤1 method.
-   *
-   * NOTE: This renders ONLY the tile. The `sc-checkout-razorpay-payment-provider`
-   * is rendered by callers at a stable Fragment-level position so that a flip
-   * between combined → split recurring tiles doesn't reparent the provider (which
-   * would trigger a disconnect-before-connect race and crash its lifecycle).
-   */
-  renderRazorpayCombinedTile(processor) {
+  /** Combined Razorpay tile — Razorpay's modal fans out all enabled methods itself. */
+  renderRazorpayCombinedTile(processor: Processor) {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
         <span slot="summary" class="sc-payment-toggle-summary">
@@ -164,11 +155,7 @@ export class ScPayment {
     );
   }
 
-  /**
-   * Single Razorpay method choice (Card / UPI) — rendered as a direct sibling of
-   * other processor choices so `sc-payment-method-choice`'s sibling-detection can
-   * wire it into the `sc-toggles` group correctly.
-   */
+  /** Per-method Razorpay tile. Rendered as a sibling so `sc-payment-method-choice` can wire it into `sc-toggles`. */
   renderRazorpayMethodChoice(method: PaymentMethodType) {
     const label = getRazorpayMethodLabel(method.id) ?? method.id;
     const icon = getRazorpayMethodIcon(method.id);
@@ -190,45 +177,28 @@ export class ScPayment {
     );
   }
 
-  renderRazorpay(processor) {
-    // if system currency is not in the supported currency list, then stop.
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
-      return;
+  /**
+   * Split into per-method tiles only on recurring checkouts with ≥2 enabled methods —
+   * Razorpay's recurring API requires an explicit `payment_method_type`, while the
+   * one-time modal fans all methods out itself.
+   */
+  shouldSplitRazorpayMethods(): boolean {
+    return !!checkoutState.checkout?.reusable_payment_method_required && (availableMethodTypes() || []).length > 1;
+  }
+
+  renderRazorpay(processor: Processor) {
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) return;
+
+    if (this.shouldSplitRazorpayMethods()) {
+      return (availableMethodTypes() || []).map(method => this.renderRazorpayMethodChoice(method));
     }
-
-    // Only render the visible tile(s) here. The headless fetcher and the payment provider
-    // are rendered at the stable `<Host>` level below so the Tag wrapper flipping between
-    // `div` and `sc-toggles` (as `hasMultipleMethodChoices()` flips) can never reparent
-    // them and retrigger their lifecycles.
-
-    // One-time checkouts keep the single combined toggle — Razorpay shows all enabled
-    // methods in its modal automatically.
-    if (!checkoutState.checkout?.reusable_payment_method_required) {
-      return this.renderRazorpayCombinedTile(processor);
-    }
-
-    // Recurring checkouts need an explicit payment_method_type (Razorpay can't auto-offer
-    // all methods on recurring orders). We render one `sc-payment-method-choice` per fetched
-    // method as a direct sibling of the other processors — keeping them inside this component
-    // would break sibling detection and make each choice render as an always-open `div`
-    // instead of a collapsible toggle.
-    const methods = availableMethodTypes() || [];
-    if (methods.length > 1) return methods.map(method => this.renderRazorpayMethodChoice(method));
     return this.renderRazorpayCombinedTile(processor);
   }
 
   /**
-   * Returns the razorpay processor (if available and currency-supported) so `render()` can
-   * mount `sc-checkout-razorpay-payment-provider` at `<Host>` level.
-   *
-   * Why at Host level? The provider is headless (renders nothing visible) and owns both the
-   * payment-modal lifecycle AND the recurring method-types fetch. Its fetch writes
-   * `processorsState.methods`, which feeds `hasMultipleMethodChoices()` — one of the inputs
-   * to the `<Tag>` wrapper in this component's render. If the provider lived inside that
-   * wrapper, the fill would flip `Tag: div → sc-toggles`, Stencil would reparent the
-   * provider, its disconnect would wipe methods, `Tag` would flip back, the provider would
-   * remount and refetch — an infinite render loop that pegs a checkout lock and wedges
-   * the Purchase button in the disabled state.
+   * Razorpay processor for the Host-level provider mount. Host-level is required:
+   * the provider writes `processorsState.methods`, which flips the `Tag` wrapper —
+   * mounting inside that wrapper causes a reparent → refetch → remount loop.
    */
   getRazorpayHeadlessProcessor() {
     const razorpay = getAvailableProcessor('razorpay');
@@ -243,20 +213,13 @@ export class ScPayment {
       return null;
     }
 
-    // Group the choices in a bordered `sc-toggles` container whenever more than one choice
-    // will actually render — either multiple top-level processors/manual methods, PayPal's
-    // own paypal + card fallback pair, or a method-aware processor (razorpay / mollie)
-    // that is about to render multiple `sc-payment-method-choice` tiles as direct siblings.
+    // `sc-toggles` wrapper when >1 choice will render (processors, paypal's card fallback, or per-method tiles).
     const Tag = hasMultipleProcessorChoices() || hasMultipleMethodChoices() || selectedProcessor?.id === 'paypal' ? 'sc-toggles' : 'div';
     const mollie = getAvailableProcessor('mollie');
     const razorpayHeadless = this.getRazorpayHeadlessProcessor();
 
     return (
       <Host>
-        {/* Headless Razorpay provider lives at Host level — its parent never flips, so
-            `processorsState.methods` (which it writes on recurring checkouts) stays populated
-            and the Tag wrapper can freely change between `div` and `sc-toggles` without
-            re-triggering its lifecycle. */}
         {razorpayHeadless && <sc-checkout-razorpay-payment-provider processor-id={razorpayHeadless.id} />}
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">

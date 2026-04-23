@@ -70,9 +70,7 @@ export class ScPaymentMethod {
         );
       }
 
-      // Known Razorpay method types render with a proper label + icon so acronyms stay uppercase
-      // ("UPI", not "Upi") and branding matches the checkout selection UI. Unknown ids fall
-      // through to the capitalized fallback below.
+      // Razorpay method types — explicit label/icon so acronyms stay uppercase ("UPI", not "Upi").
       const razorpayLabel = getRazorpayMethodLabel(type);
       if (razorpayLabel) {
         return (

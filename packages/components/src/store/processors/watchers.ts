@@ -46,8 +46,7 @@ onChangeCheckout('checkout', () => {
 onChangeProcessor('id', () => {
   maybeUpdateProcessor();
 
-  // Reset method when switching to a processor that doesn't use method selection —
-  // e.g. razorpay → stripe, so we don't leak a stale payment_method_type into finalize.
+  // Reset method on processor switch so a stale `payment_method_type` doesn't leak into finalize.
   maybeUpdateMethod();
 });
 

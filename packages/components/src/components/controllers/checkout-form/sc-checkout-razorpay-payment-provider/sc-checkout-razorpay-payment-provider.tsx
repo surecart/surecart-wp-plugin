@@ -21,32 +21,12 @@ import { loadRazorpay } from 'src/functions/razorpay';
 import apiFetch from '../../../../functions/fetch';
 import { Customer, Pagination, PaymentMethodType, RazorpayConstructor, ResponseError } from 'src/types';
 
-/**
- * Razorpay checkout driver.
- *
- * Renders nothing. Does three things:
- * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
- * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
- *    to the form state machine.
- * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
- *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
- *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
- *    "Razorpay" tile into per-method tiles (Card / UPI).
- *
- * Fetch was previously a second, top-level component. It was folded in here because both
- * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
- * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
- * fetcher's disconnect callback wiped state that fed its parent's render.
- */
 @Component({
   tag: 'sc-checkout-razorpay-payment-provider',
   shadow: true,
 })
 export class ScCheckoutRazorpayPaymentProvider {
-  /**
-   * Razorpay processor id (from `availableProcessors`). Required for the recurring
-   * `payment_method_types` fetch; unused for one-time checkouts.
-   */
+  /** Razorpay processor id. Required for the recurring `payment_method_types` fetch. */
   @Prop() processorId: string;
 
   private unlistenToFormState?: () => void;
@@ -74,24 +54,19 @@ export class ScCheckoutRazorpayPaymentProvider {
   }
 
   disconnectedCallback() {
-    // Guarded: Stencil can disconnect before componentWillLoad fires if the element is
-    // reparented mid-render. Calling an undefined listener would throw and wedge sc-payment.
+    // Guarded — Stencil can disconnect before componentWillLoad fires on mid-render reparenting.
     this.unlistenToFormState?.();
     this.unlistenToCheckout?.();
-    // Clear shared methods so a later mollie / non-recurring flow starts clean.
+    // Release shared state so a later mollie / non-recurring flow starts clean.
     processorsState.methods = [];
   }
 
-  /**
-   * Fetch Razorpay's enabled payment_method_types for recurring checkouts.
-   * No-op for one-time checkouts — Razorpay's modal fans all enabled methods out itself.
-   */
+  /** Fetch enabled `payment_method_types` for recurring checkouts. No-op otherwise. */
   async fetchMethods() {
     const checkout = checkoutState.checkout;
     if (!this.processorId || !checkout?.currency) return;
 
-    // Non-recurring checkouts don't need an explicit payment_method_type; Razorpay handles
-    // method selection in its own modal. Clear any stale recurring methods from a prior flip.
+    // One-time — Razorpay handles method selection in its modal. Clear any stale recurring methods.
     if (!checkout?.reusable_payment_method_required) {
       if (processorsState.methods.length) processorsState.methods = [];
       return;

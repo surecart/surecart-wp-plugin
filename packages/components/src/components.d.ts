@@ -564,24 +564,9 @@ export namespace Components {
          */
         "selectorTitle": string;
     }
-    /**
-     * Razorpay checkout driver.
-     * Renders nothing. Does three things:
-     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
-     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
-     *    to the form state machine.
-     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
-     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
-     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
-     *    "Razorpay" tile into per-method tiles (Card / UPI).
-     * Fetch was previously a second, top-level component. It was folded in here because both
-     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
-     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
-     * fetcher's disconnect callback wiped state that fed its parent's render.
-     */
     interface ScCheckoutRazorpayPaymentProvider {
         /**
-          * Razorpay processor id (from `availableProcessors`). Required for the recurring `payment_method_types` fetch; unused for one-time checkouts.
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
          */
         "processorId": string;
     }
@@ -4906,21 +4891,6 @@ declare global {
         prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
         new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
-    /**
-     * Razorpay checkout driver.
-     * Renders nothing. Does three things:
-     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
-     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
-     *    to the form state machine.
-     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
-     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
-     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
-     *    "Razorpay" tile into per-method tiles (Card / UPI).
-     * Fetch was previously a second, top-level component. It was folded in here because both
-     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
-     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
-     * fetcher's disconnect callback wiped state that fed its parent's render.
-     */
     interface HTMLScCheckoutRazorpayPaymentProviderElement extends Components.ScCheckoutRazorpayPaymentProvider, HTMLStencilElement {
     }
     var HTMLScCheckoutRazorpayPaymentProviderElement: {
@@ -7750,24 +7720,9 @@ declare namespace LocalJSX {
          */
         "selectorTitle"?: string;
     }
-    /**
-     * Razorpay checkout driver.
-     * Renders nothing. Does three things:
-     * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
-     * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
-     *    to the form state machine.
-     * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
-     *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
-     *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
-     *    "Razorpay" tile into per-method tiles (Card / UPI).
-     * Fetch was previously a second, top-level component. It was folded in here because both
-     * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
-     * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
-     * fetcher's disconnect callback wiped state that fed its parent's render.
-     */
     interface ScCheckoutRazorpayPaymentProvider {
         /**
-          * Razorpay processor id (from `availableProcessors`). Required for the recurring `payment_method_types` fetch; unused for one-time checkouts.
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
          */
         "processorId"?: string;
     }
@@ -12114,21 +12069,6 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
-            /**
-             * Razorpay checkout driver.
-             * Renders nothing. Does three things:
-             * 1. Preloads Razorpay's checkout.js SDK so the modal opens instantly on submit.
-             * 2. On `formState === 'paying'`, opens the Razorpay modal and reports the result back
-             *    to the form state machine.
-             * 3. For recurring checkouts, fetches the `payment_method_types` the merchant has enabled
-             *    for mandates and writes them into `processorsState.methods` — the recurring Razorpay
-             *    API requires an explicit `payment_method_type` so `sc-payment` splits the single
-             *    "Razorpay" tile into per-method tiles (Card / UPI).
-             * Fetch was previously a second, top-level component. It was folded in here because both
-             * lifecycles are scoped to "razorpay is an available processor" — splitting them gave us
-             * two places to synchronise, a redundant `kses.json` entry, and a landmine where the
-             * fetcher's disconnect callback wiped state that fed its parent's render.
-             */
             "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
