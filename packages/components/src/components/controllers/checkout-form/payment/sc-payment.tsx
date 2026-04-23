@@ -12,6 +12,7 @@ import {
   availableMethodTypes,
   availableProcessors,
   hasOtherAvailableCreditCardProcessor,
+  processorSupportsCurrentCurrency,
 } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 import { MockProcessor } from './MockProcessor';
@@ -113,10 +114,7 @@ export class ScPayment {
   renderPaystack(processor: Processor) {
     const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
-    // if system currency is not in the supported currency list, then stop.
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
-      return;
-    }
+    if (!processorSupportsCurrentCurrency(processor)) return;
 
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="paystack">
@@ -136,8 +134,8 @@ export class ScPayment {
     );
   }
 
-  /** Combined Razorpay tile — Razorpay's modal fans out all enabled methods itself. */
-  renderRazorpayCombinedTile(processor: Processor) {
+  /** Combined Razorpay — Razorpay's modal fans out all enabled methods itself. */
+  renderRazorpayCombined(processor: Processor) {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
         <span slot="summary" class="sc-payment-toggle-summary">
@@ -187,24 +185,12 @@ export class ScPayment {
   }
 
   renderRazorpay(processor: Processor) {
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) return;
+    if (!processorSupportsCurrentCurrency(processor)) return;
 
     if (this.shouldSplitRazorpayMethods()) {
       return (availableMethodTypes() || []).map(method => this.renderRazorpayMethodChoice(method));
     }
-    return this.renderRazorpayCombinedTile(processor);
-  }
-
-  /**
-   * Razorpay processor for the Host-level provider mount. Host-level is required:
-   * the provider writes `processorsState.methods`, which flips the `Tag` wrapper —
-   * mounting inside that wrapper causes a reparent → refetch → remount loop.
-   */
-  getRazorpayHeadlessProcessor() {
-    const razorpay = getAvailableProcessor('razorpay');
-    if (!razorpay) return null;
-    if (!(razorpay?.supported_currencies ?? []).includes(window?.scData?.currency)) return null;
-    return razorpay;
+    return this.renderRazorpayCombined(processor);
   }
 
   render() {
@@ -216,11 +202,12 @@ export class ScPayment {
     // `sc-toggles` wrapper when >1 choice will render (processors, paypal's card fallback, or per-method tiles).
     const Tag = hasMultipleProcessorChoices() || hasMultipleMethodChoices() || selectedProcessor?.id === 'paypal' ? 'sc-toggles' : 'div';
     const mollie = getAvailableProcessor('mollie');
-    const razorpayHeadless = this.getRazorpayHeadlessProcessor();
+    const razorpay = getAvailableProcessor('razorpay');
 
     return (
       <Host>
-        {razorpayHeadless && <sc-checkout-razorpay-payment-provider processor-id={razorpayHeadless.id} />}
+        {/* Mounted at Host level so the provider isn't reparented when its own `processorsState.methods` write flips the `Tag` wrapper. */}
+        {processorSupportsCurrentCurrency(razorpay) && <sc-checkout-razorpay-payment-provider processor-id={razorpay.id} />}
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>

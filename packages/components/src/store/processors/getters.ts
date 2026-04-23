@@ -2,6 +2,7 @@ import { sortByArray } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
 import { state as selectedProcessor } from '@store/selected-processor';
+import { Processor } from '../../types';
 
 /**
  * Processors that use the method-types endpoint and expose a method selector.
@@ -37,6 +38,12 @@ export const getProcessorByType = (type: string) => availableProcessors().find((
  * Gets an available processor type.
  */
 export const getAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type === type);
+
+/**
+ * True if the processor supports the shop's current currency.
+ */
+export const processorSupportsCurrentCurrency = (processor?: Processor | null): processor is Processor =>
+  !!processor && (processor.supported_currencies ?? []).includes(window?.scData?.currency);
 
 /**
  * Check if there is any available credit card processor except the given processor type.
