@@ -88,7 +88,7 @@ export class ScCustomerLogin {
 
       // Set user as logged in to trigger fetching of customer data like addresses.
       userState.loggedIn = true;
-      userState.name = user?.name || 'N/A';
+      userState.name = user?.name || '';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
