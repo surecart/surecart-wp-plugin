@@ -128,7 +128,7 @@ export default ({ purchase, open, onRequestClose }) => {
 		return purchase?.revoked
 			? __('This action will re-enable associated access.', 'surecart')
 			: __(
-					'This action will remove the associated access and trigger any cancelation automations you have set up.',
+					'This action will remove the associated access and trigger any cancellation automations you have set up.',
 					'surecart'
 			  );
 	};
