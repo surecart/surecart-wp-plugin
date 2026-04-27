@@ -111,7 +111,7 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 		if ( ! is_user_logged_in() ) {
 			return new \WP_Error(
 				'rest_not_logged_in',
-				__( 'You must be logged in to logout.', 'surecart' ),
+				__( 'You must be logged in to perform this action.', 'surecart' ),
 				[ 'status' => 401 ]
 			);
 		}
