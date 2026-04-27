@@ -2,7 +2,6 @@ import { Component, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch
 import { __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import apiFetch from '@wordpress/api-fetch';
-import MD5 from 'crypto-js/md5';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
@@ -130,8 +129,8 @@ export class ScCustomerEmail {
     if (userState.loggedIn) return;
 
     // Feature flag: only proactively send a verification code when the merchant
-    // has opted into the login-at-checkout UX. When off, the checkout stays frictionless.
-    if (!checkoutState.requireLoginEnabled) return;
+    // has opted into the login-prompt UX. When off, the checkout stays frictionless.
+    if (!checkoutState.showLoginPrompt) return;
 
     // Check if a valid email using regex, if not return.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
@@ -248,7 +247,7 @@ export class ScCustomerEmail {
       <div class="email-preview">
         <div class="email-preview__info">
           <sc-avatar
-            image={`https://secure.gravatar.com/avatar/${MD5((userState.email || '').toLowerCase().trim())}?size=48&default=404`}
+            image={userState.avatarUrl}
             initials={(userState?.name || userState?.email).charAt(0)}
           />
           <div class="email-preview__text">

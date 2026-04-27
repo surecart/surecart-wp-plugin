@@ -107,10 +107,10 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
-	const [checkoutRequireLogin, setCheckoutRequireLogin] = useEntityProp(
+	const [showLoginPrompt, setShowLoginPrompt] = useEntityProp(
 		'root',
 		'site',
-		'surecart_checkout_require_login'
+		'surecart_checkout_show_login_prompt'
 	);
 
 	/**
@@ -369,15 +369,15 @@ export default () => {
 					</span>
 				</ScSwitch>
 				<ScSwitch
-					checked={checkoutRequireLogin}
+					checked={showLoginPrompt}
 					onScChange={(e) =>
-						setCheckoutRequireLogin(e.target.checked)
+						setShowLoginPrompt(e.target.checked)
 					}
 				>
-					{__('Require Login at Checkout', 'surecart')}
+					{__('Show Login Prompt at Checkout', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'When enabled, customers will be prompted to log in during checkout. Recommended for subscription-based stores. Disable for impulse-buy or low-cost products where a frictionless checkout experience is preferred.',
+							'When enabled, returning customers will see an inline login prompt at checkout if their email matches an existing account. Recommended for subscription-based stores. Disable for impulse-buy or low-cost products where a frictionless checkout experience is preferred.',
 							'surecart'
 						)}
 					</span>

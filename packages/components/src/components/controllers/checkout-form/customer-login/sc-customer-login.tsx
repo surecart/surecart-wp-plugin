@@ -90,6 +90,7 @@ export class ScCustomerLogin {
       // Update userState and make the user as logged in user.
       userState.loggedIn = true;
       userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
+      userState.avatarUrl = user?.avatar_url || '';
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
 
@@ -196,7 +197,7 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email, nonce } = (await apiFetch({
+      const { name, email, avatar_url, nonce } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
@@ -218,6 +219,7 @@ export class ScCustomerLogin {
       userState.verificationStatus = VERIFIED;
       userState.name = name;
       userState.email = email;
+      userState.avatarUrl = avatar_url || '';
     } catch (e: any) {
       this.error = e?.message || __('Login failed. Please try again.', 'surecart');
     } finally {
