@@ -144,5 +144,8 @@ class ActivationService {
 		delete_option( 'sc_uninstall' );
 		delete_option( NpsSurveyNotice::LAST_SUBMITTED_OPTION );
 		delete_option( NpsSurveyNotice::NPS_SURVEY_ID );
+		delete_option( 'surecart_mcp_abilities_enabled' );
+		delete_option( 'surecart_mcp_edit_abilities_enabled' );
+		delete_option( 'surecart_mcp_delete_abilities_enabled' );
 	}
 }

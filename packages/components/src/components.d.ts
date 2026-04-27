@@ -51,6 +51,30 @@ export namespace Components {
          */
         "showName": boolean;
     }
+    interface ScAddressSuggestions {
+        "address": Partial<Address>;
+        /**
+          * If the address input is disabled
+         */
+        "disabled": boolean;
+        /**
+          * Props for the input element
+         */
+        "inputProps": Record<string, unknown>;
+        /**
+          * The label for the address input
+         */
+        "label": string;
+        "names": Partial<Address>;
+        /**
+          * Holds the regions for a given country.
+         */
+        "regions": Array<{ value: string; label: string }>;
+        /**
+          * If the address is required
+         */
+        "required": boolean;
+    }
     interface ScAlert {
         /**
           * Makes the alert closable.
@@ -1250,6 +1274,7 @@ export namespace Components {
         "heading": string;
         "productId": string;
         "query": any;
+        "variantId": string;
     }
     interface ScDrawer {
         /**
@@ -4267,6 +4292,10 @@ export interface ScAddressCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScAddressElement;
 }
+export interface ScAddressSuggestionsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScAddressSuggestionsElement;
+}
 export interface ScAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScAlertElement;
@@ -4557,6 +4586,25 @@ declare global {
     var HTMLScAddressElement: {
         prototype: HTMLScAddressElement;
         new (): HTMLScAddressElement;
+    };
+    interface HTMLScAddressSuggestionsElementEventMap {
+        "scChangeAddress": Address;
+        "scShowAddressFields": void;
+        "scHideAddressFields": void;
+    }
+    interface HTMLScAddressSuggestionsElement extends Components.ScAddressSuggestions, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLScAddressSuggestionsElementEventMap>(type: K, listener: (this: HTMLScAddressSuggestionsElement, ev: ScAddressSuggestionsCustomEvent<HTMLScAddressSuggestionsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLScAddressSuggestionsElementEventMap>(type: K, listener: (this: HTMLScAddressSuggestionsElement, ev: ScAddressSuggestionsCustomEvent<HTMLScAddressSuggestionsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLScAddressSuggestionsElement: {
+        prototype: HTMLScAddressSuggestionsElement;
+        new (): HTMLScAddressSuggestionsElement;
     };
     interface HTMLScAlertElementEventMap {
         "scHide": void;
@@ -6848,6 +6896,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "sc-address": HTMLScAddressElement;
+        "sc-address-suggestions": HTMLScAddressSuggestionsElement;
         "sc-alert": HTMLScAlertElement;
         "sc-avatar": HTMLScAvatarElement;
         "sc-badge-notice": HTMLScBadgeNoticeElement;
@@ -7127,6 +7176,42 @@ declare namespace LocalJSX {
           * Should we show name field?
          */
         "showName"?: boolean;
+    }
+    interface ScAddressSuggestions {
+        "address"?: Partial<Address>;
+        /**
+          * If the address input is disabled
+         */
+        "disabled"?: boolean;
+        /**
+          * Props for the input element
+         */
+        "inputProps"?: Record<string, unknown>;
+        /**
+          * The label for the address input
+         */
+        "label"?: string;
+        "names"?: Partial<Address>;
+        /**
+          * Address changed — emitted to parent to update address state.
+         */
+        "onScChangeAddress"?: (event: ScAddressSuggestionsCustomEvent<Address>) => void;
+        /**
+          * Event to hide address fields
+         */
+        "onScHideAddressFields"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
+        /**
+          * Event to show address fields manually
+         */
+        "onScShowAddressFields"?: (event: ScAddressSuggestionsCustomEvent<void>) => void;
+        /**
+          * Holds the regions for a given country.
+         */
+        "regions"?: Array<{ value: string; label: string }>;
+        /**
+          * If the address is required
+         */
+        "required"?: boolean;
     }
     interface ScAlert {
         /**
@@ -8470,6 +8555,7 @@ declare namespace LocalJSX {
         "heading"?: string;
         "productId"?: string;
         "query"?: any;
+        "variantId"?: string;
     }
     interface ScDrawer {
         /**
@@ -11708,6 +11794,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "sc-address": ScAddress;
+        "sc-address-suggestions": ScAddressSuggestions;
         "sc-alert": ScAlert;
         "sc-avatar": ScAvatar;
         "sc-badge-notice": ScBadgeNotice;
@@ -11949,6 +12036,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "sc-address": LocalJSX.ScAddress & JSXBase.HTMLAttributes<HTMLScAddressElement>;
+            "sc-address-suggestions": LocalJSX.ScAddressSuggestions & JSXBase.HTMLAttributes<HTMLScAddressSuggestionsElement>;
             "sc-alert": LocalJSX.ScAlert & JSXBase.HTMLAttributes<HTMLScAlertElement>;
             "sc-avatar": LocalJSX.ScAvatar & JSXBase.HTMLAttributes<HTMLScAvatarElement>;
             "sc-badge-notice": LocalJSX.ScBadgeNotice & JSXBase.HTMLAttributes<HTMLScBadgeNoticeElement>;

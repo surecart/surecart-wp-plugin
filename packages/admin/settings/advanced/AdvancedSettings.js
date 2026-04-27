@@ -17,7 +17,8 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import WooCommerceImportModal from './components/WooCommerceImportModal';
-import { useEntityProp } from '@wordpress/core-data';
+import { useEntityProp, store as coreStore } from '@wordpress/core-data';
+import { select } from '@wordpress/data';
 import ProductSyncButton from './components/ProductSyncButton';
 
 export default () => {
@@ -114,9 +115,24 @@ export default () => {
 	const onSubmit = async () => {
 		setError(null);
 		try {
+			// The learn menu toggle changes the PHP-rendered admin sidebar,
+			// so we need a page reload for it to take effect.
+			const edits = select(coreStore).getEntityRecordEdits(
+				'root',
+				'site'
+			);
+			const needsReload = edits && 'surecart_learn_admin_menu' in edits;
+
 			await save({
 				successMessage: __('Settings Updated.', 'surecart'),
+				// Keep save buttons spinning until the page reloads.
+				keepBusy: needsReload,
 			});
+
+			if (needsReload) {
+				window.location.reload();
+				return;
+			}
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -306,6 +322,7 @@ export default () => {
 								<a
 									href="https://www.google.com/recaptcha/admin/create"
 									target="_blank"
+									rel="noopener noreferrer"
 								>
 									{__(
 										'register a new site and choose v3.',
@@ -538,9 +555,7 @@ export default () => {
 							)}
 						/>
 						<div>
-							<ScButton
-								onClick={() => setModal('woo-import')}
-							>
+							<ScButton onClick={() => setModal('woo-import')}>
 								<ScIcon
 									name="download-cloud"
 									slot="prefix"
@@ -565,6 +580,7 @@ export default () => {
 					type="danger"
 					href={`https://app.surecart.com/account/edit?switch_account_id=${scData?.account_id}`}
 					target="_blank"
+					rel="noopener noreferrer"
 					outline
 				>
 					{__('Clear Test Data', 'surecart')}

@@ -62,8 +62,8 @@ export default function DisplayCurrencySettings() {
 		<>
 			<Global
 				styles={css`
-					.sc-content {
-						--sc-settings-content-width: 1000px;
+					.tab-display_currency .sc-content {
+						--sc-settings-content-width: 900px;
 					}
 				`}
 			/>

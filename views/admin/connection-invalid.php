@@ -36,7 +36,7 @@
 						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold); --line-height:1;"><?php esc_html_e( 'Connection Details', 'surecart' ); ?></sc-text>
 						<sc-text style="margin-bottom: 1em; --line-height:1; --color: var(--sc-color-gray-500)"><?php esc_html_e( 'Add your API token to connect to SureCart.', 'surecart' ); ?></sc-text>
 						<sc-card>
-							<sc-input label="<?php echo esc_attr_e( 'Api Token', 'surecart' ); ?>" type="password" value="<?php echo esc_attr( $api_token ); ?>" name="api_token" placeholder="<?php echo esc_attr_e( 'Enter your api token.', 'surecart' ); ?>"></sc-input>
+							<sc-input label="<?php echo esc_attr__( 'Api Token', 'surecart' ); ?>" type="password" value="<?php echo esc_attr( $api_token ); ?>" name="api_token" placeholder="<?php echo esc_attr__( 'Enter your api token.', 'surecart' ); ?>"></sc-input>
 						</sc-card>
 						<?php if ( defined( 'SURECART_APP_URL' ) ) : ?>
 							<sc-flex justify-content="center">

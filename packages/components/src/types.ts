@@ -75,6 +75,7 @@ declare global {
       user_permissions: {
         manage_sc_shop_settings: boolean;
       };
+      google_map_api_key: string;
       current_user_roles: string[];
     };
     ceRegisterIconLibrary: any;
@@ -366,6 +367,13 @@ export interface Variant {
   product: string | Product;
   sku?: string | null;
   display_amount?: string;
+  downloads_enabled?: boolean | null;
+  current_release_download?: string | Download | null;
+  downloads?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Download>;
+  };
   created_at: number;
   updated_at: number;
 }
@@ -964,6 +972,7 @@ export interface Purchase {
   line_item: string | LineItem;
   order: string | Order;
   product: string | Product;
+  variant?: string | Variant;
   refund: string | Refund;
   subscription: string | Subscription;
   license: string | License;
@@ -1264,13 +1273,36 @@ export interface Customer extends Object {
 }
 
 export interface Address extends Object {
-  name?: string;
-  line_1?: string;
-  line_2?: string;
-  city?: string;
-  state?: string;
-  postal_code?: string;
-  country?: string;
+  name?: string | null;
+  line_1?: string | null;
+  line_2?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postal_code?: string | null;
+  country?: string | null;
+}
+
+export interface GoogleMapAddressComponents extends Object {
+  languageCode: string;
+  longText: string;
+  shortText: string;
+  types: string[];
+}
+
+export interface GoogleMapPlace extends Object {
+  id?: string;
+  displayName: {
+    languageCode: string;
+    text: string;
+  };
+  addressComponents: Array<GoogleMapAddressComponents>;
+}
+
+export interface AddressSuggestion extends Object {
+  displayName: string;
+  fullDisplayName: string;
+  placeId: string;
+  addressComponents?: GoogleMapAddressComponents[];
 }
 
 export interface Fulfillment {

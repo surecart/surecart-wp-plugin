@@ -13,12 +13,13 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
 import Error from '../../../components/Error';
-import { removeQueryArgs } from '@wordpress/url';
 import { useDispatch } from '@wordpress/data';
+import { useHistory } from '../../../router';
 
 export default ({ shippingProfileId, open, onRequestClose }) => {
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const history = useHistory();
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -36,9 +37,10 @@ export default ({ shippingProfileId, open, onRequestClose }) => {
 			createSuccessNotice(__('Shipping profile deleted', 'surecart'), {
 				type: 'snackbar',
 			});
-			window.location.assign(
-				removeQueryArgs(window.location.href, 'type', 'profile')
-			);
+			history.push({
+				page: 'sc-settings',
+				tab: 'shipping_protocol',
+			});
 		} catch (error) {
 			console.error(error);
 			setError(error);

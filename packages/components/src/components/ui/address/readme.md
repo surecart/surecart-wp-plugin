@@ -86,19 +86,20 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
-- [sc-form-control](../form-control)
 - [sc-select](../select)
 - [sc-input](../input)
+- [sc-address-suggestions](../address-suggestion)
+- [sc-form-control](../form-control)
 - [sc-block-ui](../block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-address-suggestions
+  sc-address --> sc-form-control
   sc-address --> sc-block-ui
-  sc-form-control --> sc-visually-hidden
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item
@@ -107,7 +108,12 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-form-control --> sc-visually-hidden
   sc-input --> sc-form-control
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-address-suggestions --> sc-input
+  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   sc-customer-edit --> sc-address
   sc-order-billing-address --> sc-address

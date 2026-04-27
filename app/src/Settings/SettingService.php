@@ -92,6 +92,24 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'google_map_api_key_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'google_map_api_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
 			'tracking_confirmation',
 			[
 				'type'              => 'boolean',
@@ -355,7 +373,40 @@ class SettingService {
 				'type'              => 'integer',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'absint',
-				'default'           => 20,
+				'default'           => 24,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_edit_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_delete_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
 				'autoload'          => false,
 			]
 		);
@@ -408,9 +459,9 @@ class SettingService {
 	 * @return int
 	 */
 	public function getLearnRemainingSteps() {
-		$total     = (int) $this->get( 'learn_total_steps', 0 );
+		$total     = (int) $this->get( 'learn_total_steps', 24 );
 		$completed = $this->get( 'learn_completed_steps', [] );
-		return $total ? max( 0, $total - count( (array) $completed ) ) : 0;
+		return max( 0, $total - count( (array) $completed ) );
 	}
 
 	/**

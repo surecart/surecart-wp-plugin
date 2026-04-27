@@ -6,7 +6,7 @@ use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\DownloadsController;
 
 /**
- * Service provider for Price Rest Requests
+ * Service provider for Download Rest Requests
  */
 class DownloadRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
@@ -69,13 +69,31 @@ class DownloadRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_collection_params() {
 		return [
-			'page'     => [
+			'page'        => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page' => [
+			'per_page'    => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
+			],
+			'variant_ids' => [
+				'description'       => esc_html__( 'Filter downloads by variant IDs.', 'surecart' ),
+				'type'              => 'array',
+				'items'             => [ 'type' => 'string' ],
+				'validate_callback' => 'rest_validate_request_arg',
+				'sanitize_callback' => function( $param ) {
+					return array_map( 'sanitize_text_field', (array) $param );
+				},
+			],
+			'product_ids' => [
+				'description'       => esc_html__( 'Filter downloads by product IDs.', 'surecart' ),
+				'type'              => 'array',
+				'items'             => [ 'type' => 'string' ],
+				'validate_callback' => 'rest_validate_request_arg',
+				'sanitize_callback' => function( $param ) {
+					return array_map( 'sanitize_text_field', (array) $param );
+				},
 			],
 		];
 	}
