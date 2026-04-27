@@ -27,7 +27,7 @@ class CheckoutFormModeMiddleware {
 			! current_user_can( 'edit_post', $request->query( 'sc_checkout_post' ) ) ||
 			! current_user_can( 'edit_post', $request->query( 'sc_checkout_change_mode' ) )
 		) {
-			wp_die( esc_html__( 'You do not have permission do this.', 'surecart' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'surecart' ) );
 		}
 
 		return $next( $request );

@@ -25,7 +25,7 @@ class ArchiveModelMiddleware {
 		}
 
 		if ( ! current_user_can( "edit_sc_{$model_name}s" ) ) {
-			wp_die( __( 'You do not have permission do this.', 'surecart' ) );
+			wp_die( __( 'You do not have permission to do this.', 'surecart' ) );
 		}
 
 		return $next( $request );
