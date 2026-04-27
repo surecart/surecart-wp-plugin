@@ -65,6 +65,7 @@ Type: `Promise<boolean>`
 - [sc-customer-login](../customer-login)
 - [sc-input](../../../ui/input)
 - [sc-spinner](../../../ui/spinner)
+- [sc-alert](../../../ui/alert)
 
 ### Graph
 ```mermaid
@@ -78,6 +79,7 @@ graph TD;
   sc-customer-email --> sc-customer-login
   sc-customer-email --> sc-input
   sc-customer-email --> sc-spinner
+  sc-customer-email --> sc-alert
   sc-button --> sc-spinner
   sc-customer-login --> sc-icon
   sc-customer-login --> sc-flex
@@ -87,6 +89,7 @@ graph TD;
   sc-customer-login --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
+  sc-alert --> sc-icon
   style sc-customer-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

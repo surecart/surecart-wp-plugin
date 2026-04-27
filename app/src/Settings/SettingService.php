@@ -215,7 +215,7 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
-			'checkout_auto_login',
+			'checkout_require_login',
 			[
 				'type'              => 'boolean',
 				'show_in_rest'      => true,

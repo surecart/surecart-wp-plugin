@@ -107,10 +107,10 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
-	const [checkoutAutoLogin, setCheckoutAutoLogin] = useEntityProp(
+	const [checkoutRequireLogin, setCheckoutRequireLogin] = useEntityProp(
 		'root',
 		'site',
-		'surecart_checkout_auto_login'
+		'surecart_checkout_require_login'
 	);
 
 	/**
@@ -369,8 +369,10 @@ export default () => {
 					</span>
 				</ScSwitch>
 				<ScSwitch
-					checked={checkoutAutoLogin}
-					onScChange={(e) => setCheckoutAutoLogin(e.target.checked)}
+					checked={checkoutRequireLogin}
+					onScChange={(e) =>
+						setCheckoutRequireLogin(e.target.checked)
+					}
 				>
 					{__('Require Login at Checkout', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>

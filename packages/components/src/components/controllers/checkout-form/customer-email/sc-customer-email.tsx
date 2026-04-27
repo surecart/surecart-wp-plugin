@@ -128,7 +128,10 @@ export class ScCustomerEmail {
   async createLoginCode() {
     if (!this.value) return;
     if (userState.loggedIn) return;
-    if (!checkoutState.autoLoginEnabled) return;
+
+    // Feature flag: only proactively send a verification code when the merchant
+    // has opted into the login-at-checkout UX. When off, the checkout stays frictionless.
+    if (!checkoutState.requireLoginEnabled) return;
 
     // Check if a valid email using regex, if not return.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
@@ -300,7 +303,12 @@ export class ScCustomerEmail {
       return this.renderLoggedIn();
     }
 
-    if (userState.verificationStatus === CODE_SENT || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED || userState.verificationStatus === CODE_EXPIRED) {
+    if (
+      userState.verificationStatus === CODE_SENT ||
+      userState.verificationStatus === VERIFYING ||
+      userState.verificationStatus === UNVERIFIED ||
+      userState.verificationStatus === CODE_EXPIRED
+    ) {
       return <sc-customer-login codeError={this.error}></sc-customer-login>;
     }
 

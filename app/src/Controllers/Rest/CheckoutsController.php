@@ -72,7 +72,7 @@ class CheckoutsController extends RestController {
 		$response = parent::edit( $request );
 
 		// check if the email exists and set on record.
-		if ( (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
+		if ( apply_filters( 'surecart/checkout/finduser', true ) ) {
 			if ( ! empty( $response->email ) ) {
 				$response->email_exists = (bool) email_exists( $response->email );
 			}

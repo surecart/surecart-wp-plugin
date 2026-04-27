@@ -129,7 +129,7 @@ class CustomerLinkService {
 		}
 
 		// login the user.
-		if ( (bool) get_option( 'surecart_checkout_auto_login', false ) ) {
+		if ( apply_filters( 'surecart/checkout/auto-login-new-user', true ) ) {
 			$created->login();
 		}
 
