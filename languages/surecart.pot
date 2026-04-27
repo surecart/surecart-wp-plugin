@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-21T15:54:08+00:00\n"
+"POT-Creation-Date: 2026-04-27T17:18:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 
@@ -4354,7 +4354,7 @@ msgstr ""
 #: src/Integrations/Elementor/Widgets/VariantPills.php:462
 #: components/MediaLibrary/Preview.js:153
 #: Blocks/CustomerDashboardButton/edit.js:61
-#: Blocks/Submit/edit.js:112
+#: Blocks/Submit/edit.js:116
 #: src/blocks/product-quick-view/edit.js:50
 #: src/blocks/product-review-average-rating-stars/edit.js:30
 #: src/blocks/product-review-average-rating-stars/edit.js:37
@@ -6508,7 +6508,7 @@ msgstr ""
 
 #: src/Integrations/Elementor/Widgets/VariantPills.php:464
 #: Blocks/CustomerDashboardButton/edit.js:74
-#: Blocks/Submit/edit.js:125
+#: Blocks/Submit/edit.js:129
 #: src/blocks/product-selected-variant/edit.js:30
 msgid "Small"
 msgstr ""
@@ -6517,13 +6517,13 @@ msgstr ""
 #: bumps/modules/Priority.js:36
 #: upsell-funnels/modules/Priority.js:36
 #: Blocks/CustomerDashboardButton/edit.js:78
-#: Blocks/Submit/edit.js:129
+#: Blocks/Submit/edit.js:133
 msgid "Medium"
 msgstr ""
 
 #: src/Integrations/Elementor/Widgets/VariantPills.php:466
 #: Blocks/CustomerDashboardButton/edit.js:82
-#: Blocks/Submit/edit.js:133
+#: Blocks/Submit/edit.js:137
 msgid "Large"
 msgstr ""
 
@@ -11003,13 +11003,13 @@ msgstr ""
 msgid "Product updated."
 msgstr ""
 
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1109
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1112
 msgctxt "post"
 msgid "Archived"
 msgstr ""
 
 #. translators: %s: number of posts.
-#: src/WordPress/PostTypes/ProductPostTypeService.php:1118
+#: src/WordPress/PostTypes/ProductPostTypeService.php:1121
 msgid "Archived <span class=\"count\">(%s)</span>"
 msgid_plural "Archived <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -22965,6 +22965,14 @@ msgstr ""
 msgid "Example Product Title"
 msgstr ""
 
+#: Blocks/Submit/Block.php:45
+#: Blocks/Submit/deprecated.js:111
+#: Blocks/Submit/edit.js:101
+#: Blocks/Submit/edit.js:206
+#: sc-order-submit.js:67
+msgid "This is a secure, encrypted payment."
+msgstr ""
+
 #: Blocks/Upsell/NoThanksButton/Block.php:117
 #: sc-customer-email.js:90
 msgid "No Thanks"
@@ -23277,7 +23285,7 @@ msgstr ""
 #: Blocks/LogoutButton/edit.js:71
 #: Blocks/OrderConfirmationCustomer/edit.js:37
 #: Blocks/Product/BuyButton/edit.js:109
-#: Blocks/Submit/edit.js:178
+#: Blocks/Submit/edit.js:182
 #: Blocks/Upsell/NoThanksButton/edit.js:95
 #: Blocks/Upsell/SubmitButton/edit.js:152
 #: src/blocks/cart-items-submit/edit.js:54
@@ -23295,7 +23303,7 @@ msgstr ""
 #: Blocks/LogoutButton/edit.js:72
 #: Blocks/OrderConfirmationCustomer/edit.js:38
 #: Blocks/Product/BuyButton/edit.js:110
-#: Blocks/Submit/edit.js:179
+#: Blocks/Submit/edit.js:183
 #: Blocks/Upsell/NoThanksButton/edit.js:96
 #: Blocks/Upsell/SubmitButton/edit.js:153
 #: src/blocks/cart-items-submit/edit.js:55
@@ -24734,11 +24742,6 @@ msgstr ""
 
 #: Blocks/StoreLogo/edit.js:213
 msgid "Link image to home"
-msgstr ""
-
-#: Blocks/Submit/deprecated.js:111
-#: sc-order-submit.js:67
-msgid "This is a secure, encrypted payment."
 msgstr ""
 
 #: Blocks/Submit/edit.js:65
