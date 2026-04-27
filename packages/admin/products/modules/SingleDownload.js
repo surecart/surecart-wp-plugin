@@ -22,7 +22,7 @@ import { store as noticesStore } from '@wordpress/notices';
 
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ download, product, className }) => {
+export default ({ download, product, className, variant }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ export default ({ download, product, className }) => {
 			e?.message || __('Something went wrong', 'surecart'),
 			{ type: 'snackbar' }
 		);
-		e?.additional_errors.forEach((e) => {
+		e?.additional_errors?.forEach((e) => {
 			createErrorNotice(e?.message, {
 				type: 'snackbar',
 			});
@@ -55,15 +55,25 @@ export default ({ download, product, className }) => {
 	};
 
 	// Is this the current release.
-	const isCurrentRelease = product?.current_release_download === download?.id;
+	// current_release_download can be a string ID or an expanded Download object.
+	const variantRelease = variant?.current_release_download;
+	const productRelease = product?.current_release_download;
+	const isCurrentRelease = variant?.id
+		? (variantRelease?.id ?? variantRelease) === download?.id
+		: (productRelease?.id ?? productRelease) === download?.id;
 
 	const onRemove = async () => {
-		const r = confirm(
-			__(
-				'Are you sure you want to remove the download from this product?',
-				'surecart'
-			)
-		);
+		const confirmationMessage = variant?.id
+			? __(
+					'Are you sure you want to remove the download from this variant?',
+					'surecart'
+			  )
+			: __(
+					'Are you sure you want to remove the download from this product?',
+					'surecart'
+			  );
+
+		const r = confirm(confirmationMessage);
 		if (!r) return;
 
 		setLoading(true);
@@ -233,6 +243,7 @@ export default ({ download, product, className }) => {
 								display: flex;
 								align-items: center;
 								gap: 0.5em;
+								flex-wrap: wrap;
 							`}
 						>
 							{download?.media?.byte_size && (
@@ -253,6 +264,14 @@ export default ({ download, product, className }) => {
 									v{download?.media?.release_json?.version}
 								</ScTag>
 							)}
+							{!download?.url && (
+								<ScTag type="success" size="small">
+									<ScFlex alignItems="center">
+										<ScIcon name="shield" />
+										<span>{__('Secure', 'surecart')}</span>
+									</ScFlex>
+								</ScTag>
+							)}
 							{download?.archived && (
 								<div>
 									<ScTag type="warning" size="small">
@@ -264,66 +283,54 @@ export default ({ download, product, className }) => {
 					</div>
 				</div>
 
-				<ScFlex alignItems="center" slot="suffix">
-					{!download?.url && (
-						<ScTag type="success" size="small">
-							<ScFlex alignItems="center">
-								<ScIcon name="shield" />
-								<span>{__('Secure', 'surecart')}</span>
-							</ScFlex>
-						</ScTag>
-					)}
-					<ScDropdown placement="bottom-end">
-						<ScButton type="text" slot="trigger" circle>
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							{download?.media && (
-								<Fragment>
-									<MediaLibrary
-										onSelect={replaceItem}
-										multiple={false}
-										render={({ setOpen }) => {
-											return (
-												<ScMenuItem
-													onClick={() =>
-														setOpen(true)
-													}
-												>
-													<ScIcon
-														name="repeat"
-														slot="prefix"
-													/>
-													{__('Replace', 'surecart')}
-												</ScMenuItem>
-											);
-										}}
-									></MediaLibrary>
-									<ScMenuDivider></ScMenuDivider>
-								</Fragment>
-							)}
+				<ScDropdown placement="bottom-end" slot="suffix">
+					<ScButton type="text" slot="trigger" circle>
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						{download?.media && (
+							<Fragment>
+								<MediaLibrary
+									onSelect={replaceItem}
+									multiple={false}
+									render={({ setOpen }) => {
+										return (
+											<ScMenuItem
+												onClick={() => setOpen(true)}
+											>
+												<ScIcon
+													name="repeat"
+													slot="prefix"
+												/>
+												{__('Replace', 'surecart')}
+											</ScMenuItem>
+										);
+									}}
+								></MediaLibrary>
+								<ScMenuDivider></ScMenuDivider>
+							</Fragment>
+						)}
 
-							<ScMenuItem onClick={downloadItem}>
-								<ScIcon name="download-cloud" slot="prefix" />
-								{__('Download', 'surecart')}
-							</ScMenuItem>
+						<ScMenuItem onClick={downloadItem}>
+							<ScIcon name="download-cloud" slot="prefix" />
+							{__('Download', 'surecart')}
+						</ScMenuItem>
 
-							<ScMenuDivider></ScMenuDivider>
+						<ScMenuDivider></ScMenuDivider>
 
-							<ScMenuItem onClick={toggleDisable}>
-								<ScIcon name="archive" slot="prefix" />
-								{download?.archived
-									? __('Un-Archive', 'surecart')
-									: __('Archive', 'surecart')}
-							</ScMenuItem>
+						<ScMenuItem onClick={toggleDisable}>
+							<ScIcon name="archive" slot="prefix" />
+							{download?.archived
+								? __('Un-Archive', 'surecart')
+								: __('Archive', 'surecart')}
+						</ScMenuItem>
 
-							<ScMenuItem onClick={onRemove}>
-								<ScIcon name="trash" slot="prefix" />
-								{__('Remove', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-				</ScFlex>
+						<ScMenuItem onClick={onRemove}>
+							<ScIcon name="trash" slot="prefix" />
+							{__('Remove', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 			</ScStackedListRow>
 			{loading && <ScBlockUi spinner />}
 		</Fragment>

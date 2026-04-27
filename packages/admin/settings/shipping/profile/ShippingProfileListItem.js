@@ -2,16 +2,21 @@
 import { css, jsx } from '@emotion/core';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { ScIcon, ScStackedListRow } from '@surecart/components-react';
-import { addQueryArgs } from '@wordpress/url';
+import { useLink, useLocation } from '../../../router';
 
 export default ({ shippingProfile, productsCount, className, style }) => {
+	const location = useLocation();
+	const { href, onClick } = useLink({
+		...location.params,
+		type: 'shipping_profile',
+		profile: shippingProfile.id,
+	});
+
 	return (
 		<ScStackedListRow
 			className={className}
-			href={addQueryArgs(window.location.href, {
-				type: 'shipping_profile',
-				profile: shippingProfile.id,
-			})}
+			href={href}
+			onClick={onClick}
 			style={{
 				'--columns': '2',
 				...style,

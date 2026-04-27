@@ -27,6 +27,16 @@ export default (props) => {
 				)}
 				{...props}
 			/>
+
+			{/* Success */}
+			<NoticesList
+				type="success"
+				notices={notices.filter(
+					({ type, status }) =>
+						type === 'default' && status === 'success'
+				)}
+				{...props}
+			/>
 		</>
 	);
 };

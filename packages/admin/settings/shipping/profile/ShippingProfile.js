@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsTemplate from '../../SettingsTemplate';
-import { getQueryArg, removeQueryArgs } from '@wordpress/url';
+import { useLocation, useLink } from '../../../router';
 import { useState } from '@wordpress/element';
 import SettingsBox from '../../SettingsBox';
 import {
@@ -29,7 +29,12 @@ export default () => {
 	const [error, setError] = useState();
 	const [showAdvanced, setShowAdvanced] = useState(false);
 	const [currentModal, setCurrentModal] = useState('');
-	const shippingProfileId = getQueryArg(window.location.href, 'profile');
+	const location = useLocation();
+	const shippingProfileId = location?.params?.profile;
+	const { href: backHref, onClick: onBackClick } = useLink({
+		page: 'sc-settings',
+		tab: 'shipping_protocol',
+	});
 
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
@@ -131,11 +136,8 @@ export default () => {
 			title={__('Manage Shipping Profile', 'surecart')}
 			prefix={
 				<sc-button
-					href={removeQueryArgs(
-						window.location.href,
-						'type',
-						'profile'
-					)}
+					href={backHref}
+					onClick={onBackClick}
 					circle
 					size="small"
 				>

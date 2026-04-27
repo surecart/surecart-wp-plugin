@@ -2,7 +2,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { getQueryArg, removeQueryArgs } from '@wordpress/url';
+import { useLocation, useLink } from '../../router';
 import {
 	ScButton,
 	ScCard,
@@ -96,7 +96,12 @@ const zoneEmpty = {
 export default () => {
 	const [error, setError] = useState(null);
 	const [dialog, setDialog] = useState(null);
-	const region = getQueryArg(window.location.href, 'region');
+	const location = useLocation();
+	const region = location?.params?.region;
+	const { href: backHref, onClick: onBackClick } = useLink({
+		page: 'sc-settings',
+		tab: 'tax_protocol',
+	});
 	const { save } = useSave();
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
@@ -145,11 +150,8 @@ export default () => {
 			<SettingsTemplate
 				prefix={
 					<sc-button
-						href={removeQueryArgs(
-							window.location.href,
-							'type',
-							'region'
-						)}
+						href={backHref}
+						onClick={onBackClick}
 						circle
 						size="small"
 					>

@@ -4,6 +4,14 @@
 	gap: 1px;
 }
 
+// Safari/WebKit and Firefox ignore width: fit-content on flex containers with WP's is-layout-flex.
+@supports (-webkit-hyphens: none) or (selector(::-moz-color-swatch)) {
+	:root
+		.wp-block-surecart-product-quantity-control:not([class*="is-style-"]) {
+		width: var(--sc-quantity-select-width, 100px);
+	}
+}
+
 // Use :where() to avoid specificity issues with style_data block style registration.
 :root :where(.wp-block-surecart-product-quantity-control) {
 	width: fit-content;
@@ -20,7 +28,11 @@
 	}
 
 	&:has(.wp-block-surecart-product-quantity-input:focus) {
-		outline: 2px solid var(--sc-focus-ring-color, var(--wp--preset--color--primary, currentColor));
+		outline: 2px solid
+			var(
+				--sc-focus-ring-color,
+				var(--wp--preset--color--primary, currentColor)
+			);
 		outline-offset: 2px;
 	}
 }
