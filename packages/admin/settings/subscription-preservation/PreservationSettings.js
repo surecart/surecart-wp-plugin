@@ -165,7 +165,7 @@ export default () => {
 
 			<SettingsBox
 				title={__(
-					'Subscription Saver & Cancelation Insights',
+					'Subscription Saver & Cancellation Insights',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -192,7 +192,7 @@ export default () => {
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active.',
+							'Turning this on will collect subscription cancellation reasons and optionally offer a discount to keep their subscription active.',
 							'surecart'
 						)}
 					</span>

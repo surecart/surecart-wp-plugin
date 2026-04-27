@@ -8,7 +8,7 @@ use SureCart\Models\Subscription;
  */
 class SubscriptionPermissionsController extends ModelPermissionsController {
 	/**
-	 * Subscription cancelation.
+	 * Subscription cancellation.
 	 *
 	 * @param \SureCart\Models\User $user User model.
 	 * @param array                 $args {
