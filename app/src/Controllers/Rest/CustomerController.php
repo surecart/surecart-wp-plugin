@@ -17,6 +17,29 @@ class CustomerController extends RestController {
 	protected $class = Customer::class;
 
 	/**
+	 * Get the current logged-in user's customer record.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Customer|null|\WP_Error
+	 */
+	public function me( \WP_REST_Request $request ) {
+		$mode = $request->get_param( 'mode' ) ?? 'live';
+		$user = User::current();
+
+		$customer_id = $user->customerId( $mode );
+		if ( empty( $customer_id ) ) {
+			return null;
+		}
+
+		// Reuse the standard find pipeline so query params (expand, fields, etc.)
+		// behave the same as a direct `customers/{id}` request.
+		$request['id'] = $customer_id;
+
+		return $this->find( $request );
+	}
+
+	/**
 	 * Connect a user.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.

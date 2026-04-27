@@ -1305,14 +1305,6 @@ export interface AddressSuggestion extends Object {
   addressComponents?: GoogleMapAddressComponents[];
 }
 
-export interface CustomerAddressData {
-  shipping_address: Partial<Address> | [];
-  billing_address: Partial<Address> | [];
-  first_name: string;
-  last_name: string;
-  phone: string;
-}
-
 export interface Fulfillment {
   id: string;
   object: 'fulfillment';

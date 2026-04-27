@@ -2,9 +2,9 @@ import { Component, h, Host } from '@stencil/core';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { state as userState, onChange as onUserChange } from '@store/user';
-import { Checkout } from '../../../types';
+import { Address, Checkout } from '../../../types';
 import { createOrUpdateCheckout } from '../../../services/session';
-import { getCustomerAddresses, hasAddressData, isAddressEmpty } from '../../../services/customer-address';
+import { getCurrentCustomer, hasAddressData, isAddressEmpty } from '../../../services/customer-address';
 
 /**
  * Headless provider: when a logged-in user is on a draft checkout, fetches the
@@ -51,23 +51,28 @@ export class ScCheckoutAutofillProvider {
     this.appliedForCheckoutId = checkoutId;
 
     try {
-      const data = await getCustomerAddresses(checkoutState.mode);
+      const customer = await getCurrentCustomer(checkoutState.mode);
       const patch: Record<string, any> = {};
 
-      if (hasAddressData(data?.shipping_address) && isAddressEmpty(checkoutState.checkout?.shipping_address)) {
-        patch.shipping_address = data.shipping_address;
+      // The shipping/billing fields on Customer are typed as `string | Address`; here they
+      // are expanded into Address objects via the `expand` param, so this cast is safe.
+      const shippingAddress = customer?.shipping_address as Address | [] | undefined;
+      const billingAddress = customer?.billing_address as Address | [] | undefined;
+
+      if (hasAddressData(shippingAddress) && isAddressEmpty(checkoutState.checkout?.shipping_address)) {
+        patch.shipping_address = shippingAddress;
       }
-      if (hasAddressData(data?.billing_address) && isAddressEmpty(checkoutState.checkout?.billing_address)) {
-        patch.billing_address = data.billing_address;
+      if (hasAddressData(billingAddress) && isAddressEmpty(checkoutState.checkout?.billing_address)) {
+        patch.billing_address = billingAddress;
       }
-      if (data?.first_name && !checkoutState.checkout?.first_name) {
-        patch.first_name = data.first_name;
+      if (customer?.first_name && !checkoutState.checkout?.first_name) {
+        patch.first_name = customer.first_name;
       }
-      if (data?.last_name && !checkoutState.checkout?.last_name) {
-        patch.last_name = data.last_name;
+      if (customer?.last_name && !checkoutState.checkout?.last_name) {
+        patch.last_name = customer.last_name;
       }
-      if (data?.phone && !checkoutState.checkout?.phone) {
-        patch.phone = data.phone;
+      if (customer?.phone && !checkoutState.checkout?.phone) {
+        patch.phone = customer.phone;
       }
 
       // Nothing to apply — skip the lock entirely.

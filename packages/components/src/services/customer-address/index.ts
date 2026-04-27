@@ -1,13 +1,21 @@
-import { Address, CustomerAddressData } from '../../types';
+import { Address, Customer } from '../../types';
 import apiFetch from '../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 
-const path = 'surecart/v1/customer-addresses';
+const path = 'surecart/v1/customers/me';
 
 /**
- * Fetch the logged-in customer's addresses and profile.
+ * Fetch the logged-in user's customer record (with addresses expanded).
+ *
+ * Resolves to `null` when the logged-in user has no linked customer yet.
  */
-export const getCustomerAddresses = (mode: 'live' | 'test' = 'live') => apiFetch({ path: addQueryArgs(path, { mode }) }) as Promise<CustomerAddressData>;
+export const getCurrentCustomer = (mode: 'live' | 'test' = 'live') =>
+  apiFetch({
+    path: addQueryArgs(path, {
+      mode,
+      expand: ['shipping_address', 'billing_address'],
+    }),
+  }) as Promise<Customer | null>;
 
 /**
  * Returns true when the address has no meaningful fields set (country is ignored
