@@ -140,11 +140,6 @@ export class ScAddress {
     if (!this.countryDetails || this.countryDetails?.code !== this.address.country) {
       this.countryDetails = await getCountryDetails(this.address.country);
     }
-
-    if (this.hasMeaningfulAddress() && !this.isFieldsExpanded()) {
-      this.toggleAddressFieldsVisibility(true);
-    }
-
     this.scChangeAddress.emit(this.address);
     this.scInputAddress.emit(this.address);
   }
@@ -181,9 +176,9 @@ export class ScAddress {
   }
 
   componentWillLoad() {
-    // Start collapsed when Google Maps is active and we don't already have a saved
-    // address with meaningful data — this lets the autocomplete suggestions take prominence.
-    if (window?.scData?.google_map_api_key && !this.hasMeaningfulAddress()) {
+    // Start collapsed when Google Maps is active — the child component
+    // will emit show/hide events to control this going forward.
+    if (window?.scData?.google_map_api_key) {
       this.toggleAddressFieldsVisibility(false);
     }
 
@@ -266,13 +261,6 @@ export class ScAddress {
    *  When Google Maps is on, the child toggles this via show/hide events. */
   isFieldsExpanded(): boolean {
     return this.showCity;
-  }
-
-  /**
-   * Returns true when the address has meaningful data that should be shown to the user (beyond just a country).
-   */
-  hasMeaningfulAddress(): boolean {
-    return !!(this.address?.line_1 || this.address?.city || this.address?.state || this.address?.postal_code);
   }
 
   /** Names of fields that collapse when Google Maps autocomplete is active. */
