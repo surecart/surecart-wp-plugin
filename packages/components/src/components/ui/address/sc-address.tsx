@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch 
 import { __ } from '@wordpress/i18n';
 import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { reportChildrenValidity } from '../../../functions/form-data';
+import { getCurrentUserCountryCode } from '../../../functions/google-maps';
 import { Address, CountryLocaleFieldValue } from '../../../types';
 
 const DEFAULT_COUNTRY_FIELDS: Array<CountryLocaleFieldValue> = [
@@ -117,6 +118,9 @@ export class ScAddress {
   /** Should we show the postal field? */
   @State() showPostal: boolean = true;
 
+  /** Should we show the state field? */
+  @State() showState: boolean = true;
+
   /** Country details. */
   @State() countryDetails: any = null;
 
@@ -172,9 +176,27 @@ export class ScAddress {
   }
 
   componentWillLoad() {
+    // Start collapsed when Google Maps is active — the child component
+    // will emit show/hide events to control this going forward.
+    if (window?.scData?.google_map_api_key) {
+      this.toggleAddressFieldsVisibility(false);
+    }
+
     this.initCountryChoices();
     this.handleAddressChange();
     this.handleNameChange();
+    this.fetchUserCountry();
+  }
+
+  async fetchUserCountry() {
+    if (this.address?.country) {
+      return;
+    }
+
+    const countryCode = await getCurrentUserCountryCode();
+    if (countryCode) {
+      this.updateAddress({ country: countryCode });
+    }
   }
 
   @Method()
@@ -217,6 +239,12 @@ export class ScAddress {
     return regions as Array<{ value: string; label: string }>;
   }
 
+  toggleAddressFieldsVisibility(show: boolean) {
+    this.showCity = show;
+    this.showPostal = show;
+    this.showState = show;
+  }
+
   getRoundedProps(index: number, length: number) {
     const isFirst = index === 0;
     const isLast = index === length - 1;
@@ -228,163 +256,202 @@ export class ScAddress {
     };
   }
 
+  /** Whether the collapsible fields are expanded.
+   *  When Google Maps is off, showCity stays at its default (true) and fields are always expanded.
+   *  When Google Maps is on, the child toggles this via show/hide events. */
+  isFieldsExpanded(): boolean {
+    return this.showCity;
+  }
+
+  /** Names of fields that collapse when Google Maps autocomplete is active. */
+  private collapsibleFieldNames = ['line_2', 'city', 'state', 'postal_code'];
+
+  /** Whether a field should be included in the render. */
+  isFieldIncluded(field: CountryLocaleFieldValue): boolean {
+    switch (field.name) {
+      case 'name':
+        return !!this.showName;
+      case 'state':
+        return !!this?.regions()?.length && !!this?.address?.country;
+      case 'line_2':
+        // When collapsed, always include so browser autocomplete can fill it (CSS hides it).
+        // When expanded, respect the showLine2 prop from settings.
+        if (!this.isFieldsExpanded()) return true;
+        return this.showLine2 || !!this?.address?.line_2?.length;
+      default:
+        return true;
+    }
+  }
+
+  renderField(field: CountryLocaleFieldValue, roundedProps: any, isRequired: boolean) {
+    switch (field.name) {
+      case 'country':
+        return (
+          <sc-select
+            exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
+            part="name__input"
+            value={this.address?.country ?? ''}
+            onScChange={(e: any) => {
+              if (e.target.value === this.address?.country) return;
+              this.clearAddress();
+              this.updateAddress({ country: e.target.value });
+            }}
+            choices={this.countryChoices}
+            autocomplete={'country-name'}
+            placeholder={field.label}
+            name={this.names?.country}
+            search
+            unselect={false}
+            disabled={this.disabled}
+            required={isRequired}
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      case 'name':
+        return (
+          <sc-input
+            exportparts="base:input__base, input, form-control, label, help-text"
+            value={this?.address?.name ?? ''}
+            onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
+            onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
+            autocomplete="name"
+            placeholder={field.label}
+            name={this.names?.name}
+            disabled={this.disabled}
+            required={this.requireName}
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      case 'line_1':
+        return (
+          <sc-address-suggestions
+            address={this.address}
+            names={this.names}
+            regions={this.regions()}
+            label={field.label}
+            disabled={this.disabled}
+            required={isRequired}
+            inputProps={roundedProps}
+            onScChangeAddress={(e: any) => this.updateAddress(e.detail)}
+            onScShowAddressFields={() => this.toggleAddressFieldsVisibility(true)}
+            onScHideAddressFields={() => this.toggleAddressFieldsVisibility(false)}
+          />
+        );
+
+      case 'line_2':
+        return (
+          <sc-input
+            exportparts="base:input__base, input, form-control, label, help-text"
+            value={this?.address?.line_2 ?? ''}
+            onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
+            onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
+            autocomplete="address-line2"
+            placeholder={field.label}
+            name={this.names?.line_2}
+            disabled={this.disabled}
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      case 'city':
+        return (
+          <sc-input
+            exportparts="base:input__base, input, form-control, label, help-text"
+            placeholder={field.label}
+            name={this.names?.city}
+            value={this?.address?.city ?? ''}
+            onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
+            onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
+            autocomplete={'address-level2'}
+            required={isRequired}
+            disabled={this.disabled}
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      case 'state':
+        return (
+          <sc-select
+            exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
+            placeholder={field.label}
+            name={this.names?.state}
+            autocomplete={'address-level1'}
+            value={this?.address?.state ?? ''}
+            onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
+            choices={this.regions()}
+            required={isRequired}
+            disabled={this.disabled}
+            search
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      case 'postal_code':
+        return (
+          <sc-input
+            exportparts="base:input__base, input, form-control, label, help-text"
+            placeholder={field.label}
+            name={this.names?.postal_code}
+            onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
+            onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
+            autocomplete={'postal-code'}
+            required={isRequired}
+            value={this?.address?.postal_code ?? ''}
+            disabled={this.disabled}
+            maxlength={this.address?.country === 'US' ? 5 : undefined}
+            pattern={this.countryDetails?.postal_code_regex || undefined}
+            customValidity={this.countryDetails?.postal_code_regex ? __('Please enter a valid postal code', 'surecart') : undefined}
+            aria-label={field.label}
+            {...roundedProps}
+          />
+        );
+
+      default:
+        return null;
+    }
+  }
+
   render() {
-    const visibleFields = (this.sortedFields() ?? [])?.filter(field => {
-      switch (field.name) {
-        case 'name':
-          return this.showName;
-        case 'line_2':
-          return this.showLine2 || !!this?.address?.line_2?.length;
-        case 'city':
-          return this.showCity;
-        case 'state':
-          return !!this?.regions()?.length && !!this?.address?.country;
-        case 'postal_code':
-          return this.showPostal;
-        default:
-          return true;
-      }
-    });
+    const allFields = (this.sortedFields() ?? []).filter(field => this.isFieldIncluded(field));
+    const isExpanded = this.isFieldsExpanded();
+
+    // Split fields into always-visible (country, name, line_1) and collapsible (line_2, city, state, postal_code).
+    const topFields = allFields.filter(f => !this.collapsibleFieldNames.includes(f.name));
+    const bottomFields = allFields.filter(f => this.collapsibleFieldNames.includes(f.name));
+
+    // Compute rounded props based on visible field count.
+    const totalForRounding = isExpanded ? allFields.length : topFields.length;
 
     return (
       <div class="sc-address" part="base">
         <sc-form-control label={this.label} exportparts="label, help-text, form-control" class="sc-address__control" required={this.required}>
-          {visibleFields.map((field: any, index: number) => {
-            const roundedProps = this.getRoundedProps(index, visibleFields.length);
-
-            switch (field.name) {
-              case 'country':
-                return (
-                  <sc-select
-                    exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                    part="name__input"
-                    value={this.address?.country}
-                    onScChange={(e: any) => {
-                      if (e.target.value === this.address?.country) return;
-                      this.clearAddress();
-                      this.updateAddress({ country: e.target.value });
-                    }}
-                    choices={this.countryChoices}
-                    autocomplete={'country-name'}
-                    placeholder={field.label}
-                    name={this.names?.country}
-                    search
-                    unselect={false}
-                    disabled={this.disabled}
-                    required={this.required}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'name':
-                return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    value={this?.address?.name}
-                    onScChange={(e: any) => this.updateAddress({ name: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ name: e.target.value || null })}
-                    autocomplete="street-address"
-                    placeholder={field.label}
-                    name={this.names?.name}
-                    disabled={this.disabled}
-                    required={this.requireName}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'line_1':
-                return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    value={this?.address?.line_1}
-                    onScChange={(e: any) => this.updateAddress({ line_1: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ line_1: e.target.value || null })}
-                    autocomplete="street-address"
-                    placeholder={field.label}
-                    name={this.names?.line_1}
-                    disabled={this.disabled}
-                    required={this.required}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'line_2':
-                return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    value={this?.address?.line_2}
-                    onScChange={(e: any) => this.updateAddress({ line_2: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ line_2: e.target.value || null })}
-                    autocomplete="street-address"
-                    placeholder={field.label}
-                    name={this.names?.line_2}
-                    disabled={this.disabled}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'city':
-                return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    placeholder={field.label}
-                    name={this.names?.city}
-                    value={this?.address?.city}
-                    onScChange={(e: any) => this.updateAddress({ city: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ city: e.target.value || null })}
-                    required={this.required}
-                    disabled={this.disabled}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'state':
-                return (
-                  <sc-select
-                    exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty"
-                    placeholder={field.label}
-                    name={this.names?.state}
-                    autocomplete={'address-level1'}
-                    value={this?.address?.state}
-                    onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
-                    choices={this.regions()}
-                    required={this.required}
-                    disabled={this.disabled}
-                    search
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              case 'postal_code':
-                return (
-                  <sc-input
-                    exportparts="base:input__base, input, form-control, label, help-text"
-                    placeholder={field.label}
-                    name={this.names?.postal_code}
-                    onScChange={(e: any) => this.updateAddress({ postal_code: e.target.value || null })}
-                    onScInput={(e: any) => this.handleAddressInput({ postal_code: e.target.value || null })}
-                    autocomplete={'postal-code'}
-                    required={this.required}
-                    value={this?.address?.postal_code}
-                    disabled={this.disabled}
-                    maxlength={this.address?.country === 'US' ? 5 : undefined}
-                    pattern={this.countryDetails?.postal_code_regex || undefined}
-                    customValidity={this.countryDetails?.postal_code_regex ? __('Please enter a valid postal code', 'surecart') : undefined}
-                    aria-label={field.label}
-                    {...roundedProps}
-                  />
-                );
-
-              default:
-                return null;
-            }
+          {topFields.map((field: any, index: number) => {
+            const roundedProps = this.getRoundedProps(index, totalForRounding);
+            return this.renderField(field, roundedProps, this.required);
           })}
+
+          <div
+            class={{
+              'sc-address__collapsible': true,
+              'sc-address__collapsible--expanded': isExpanded,
+            }}
+            aria-hidden={!isExpanded ? 'true' : 'false'}
+          >
+            {bottomFields.map((field: any, index: number) => {
+              const globalIndex = topFields.length + index;
+              const roundedProps = this.getRoundedProps(globalIndex, allFields.length);
+              // Don't require fields when collapsed — prevents hidden required validation errors.
+              const isRequired = this.required && isExpanded;
+              return this.renderField(field, roundedProps, isRequired);
+            })}
+          </div>
         </sc-form-control>
 
         {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}

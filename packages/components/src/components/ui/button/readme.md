@@ -50,6 +50,7 @@
 
 ### Used by
 
+ - [sc-address-suggestions](../address-suggestion)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
@@ -115,6 +116,7 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-address-suggestions --> sc-button
   sc-cancel-dialog --> sc-button
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button

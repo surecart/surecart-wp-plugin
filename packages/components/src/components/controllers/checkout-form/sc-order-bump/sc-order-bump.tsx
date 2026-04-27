@@ -111,19 +111,20 @@ export class ScOrderBump {
     }
 
     if (!!this.bump?.percent_off) {
+      const percent = `${this.bump.percent_off}%`;
       return (
         <div
           class="bump__tag"
           aria-label={
-            /** translators: %s: amount percent off */
-            sprintf(__('You save %s%%.', 'surecart'), this.bump?.percent_off)
+            /** translators: %s is the discount percentage (e.g. "10%"). */
+            sprintf(__('You save %s.', 'surecart'), percent)
           }
         >
           <span aria-hidden="true">
             {sprintf(
-              /** translators: %s: amount percent off */
-              _x('Save %s%%', 'Save money', 'surecart'),
-              this.bump?.percent_off,
+              /** translators: %s is the discount percentage (e.g. "10%"). */
+              _x('Save %s', 'Save money', 'surecart'),
+              percent,
             )}
           </span>
         </div>

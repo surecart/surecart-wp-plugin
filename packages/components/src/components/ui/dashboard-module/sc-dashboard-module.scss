@@ -6,6 +6,11 @@
 .dashboard-module {
   display: grid;
   gap: var(--sc-dashboard-module-spacing, 1em);
+
+  > *,
+  ::slotted(*) {
+    min-width: 0;
+  }
 }
 
 .heading {
