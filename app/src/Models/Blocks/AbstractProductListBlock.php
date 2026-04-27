@@ -146,6 +146,60 @@ abstract class AbstractProductListBlock {
 	}
 
 	/**
+	 * Batch-prime gallery attachment caches for all products in the query.
+	 *
+	 * Collects all numeric attachment IDs from each product's gallery_ids
+	 * metadata and loads them in a single query via WordPress core,
+	 * eliminating N+1 get_post() calls in GalleryItemAttachment::create().
+	 */
+	protected function primeAttachmentCaches() {
+		if ( empty( $this->query->posts ) ) {
+			return;
+		}
+
+		$ids = $this->collectGalleryAttachmentIds( $this->query->posts );
+
+		if ( ! empty( $ids ) ) {
+			_prime_post_caches( array_unique( $ids ), false, true );
+		}
+	}
+
+	/**
+	 * Collect all numeric WP attachment IDs from product gallery metadata.
+	 *
+	 * @param \WP_Post[] $posts The product posts.
+	 *
+	 * @return int[]
+	 */
+	protected function collectGalleryAttachmentIds( array $posts ) {
+		$ids = [];
+
+		foreach ( $posts as $post ) {
+			$product = sc_get_product( $post );
+			if ( empty( $product ) ) {
+				continue;
+			}
+
+			$gallery_ids = $product->gallery_ids ?? [];
+			if ( ! is_array( $gallery_ids ) ) {
+				continue;
+			}
+
+			foreach ( $gallery_ids as $item ) {
+				if ( is_numeric( $item ) ) {
+					$ids[] = (int) $item;
+				} elseif ( is_object( $item ) && isset( $item->id ) && is_numeric( $item->id ) ) {
+					$ids[] = (int) $item->id;
+				} elseif ( is_array( $item ) && isset( $item['id'] ) && is_numeric( $item['id'] ) ) {
+					$ids[] = (int) $item['id'];
+				}
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
 	 * Call the query method.
 	 *
 	 * @param string $method The method.

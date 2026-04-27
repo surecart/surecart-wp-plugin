@@ -49,22 +49,48 @@ export const hasRequiredFields = ({ city, country, line_1, postal_code, state })
 
 const lang = window.scData?.locale || navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
 
+let cachedCountryChoices: Array<{ value: string; label: string }> | null = null;
+const countryDetailsCache = new Map<string, any>();
+
 export const countryChoices = async () => {
+  if (cachedCountryChoices) {
+    return cachedCountryChoices;
+  }
+
   const url = addQueryArgs(`https://api.surecart.com/v1/public/atlas`, {
     locale: lang,
   });
   const response = await fetch(url);
   const data: any = await response.json();
   const countries = (data?.data || [])?.map(({ code, name }) => ({ value: code, label: name })) as Array<{ value: string; label: string }>;
-  return (window?.wp?.hooks?.applyFilters?.('surecart_address_countries', countries) as Array<{ value: string; label: string }>) || countries;
+  cachedCountryChoices = (window?.wp?.hooks?.applyFilters?.('surecart_address_countries', countries) as Array<{ value: string; label: string }>) || countries;
+  return cachedCountryChoices;
 };
 
 export const getCountryDetails = async (countryCode: string) => {
+  if (countryDetailsCache.has(countryCode)) {
+    return countryDetailsCache.get(countryCode);
+  }
+
   const url = addQueryArgs(`https://api.surecart.com/v1/public/atlas/${countryCode}`, {
     locale: lang,
   });
   const response = await fetch(url);
-  return await response.json();
+  const details = await response.json();
+  countryDetailsCache.set(countryCode, details);
+  return details;
+};
+
+export const getCountryRegions = async (country: string) => {
+  if (!country) {
+    return [];
+  }
+
+  const details = await getCountryDetails(country);
+  return (details?.states || []).map((state: { code: string; name: string }) => ({
+    value: state.code,
+    label: state.name,
+  }));
 };
 
 export const isAddressComplete = (address: Partial<Address>) => {

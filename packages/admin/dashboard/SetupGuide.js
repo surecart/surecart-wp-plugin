@@ -65,6 +65,80 @@ export default () => {
 					/>
 				</ScButton>
 			}
+			footer={
+				<a
+					href="admin.php?page=sc-learn"
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: var(--sc-spacing-medium, 16px);
+						width: 100%;
+						text-decoration: none;
+						color: inherit;
+
+						&:hover,
+						&:focus,
+						&:active,
+						&:visited {
+							color: inherit;
+							text-decoration: none;
+						}
+
+						@media (max-width: 640px) {
+							flex-direction: column;
+							text-align: center;
+						}
+					`}
+				>
+					<ScIcon
+						name="book-open"
+						css={css`
+							font-size: 24px;
+							color: var(--sc-color-brand-secondary);
+							flex-shrink: 0;
+						`}
+					/>
+					<div
+						css={css`
+							flex: 1;
+							display: flex;
+							flex-direction: column;
+							gap: 2px;
+						`}
+					>
+						<span
+							css={css`
+								font-size: 1em;
+								font-weight: 600;
+								line-height: 1.4;
+							`}
+						>
+							{__('Want a complete guided walkthrough?', 'surecart')}
+						</span>
+						<span
+							css={css`
+								font-size: 0.95em;
+								font-weight: 400;
+								color: var(--sc-color-gray-600);
+								line-height: 1.5;
+							`}
+						>
+							{__('Learn SureCart step by step.', 'surecart')}
+						</span>
+					</div>
+					<span
+						css={css`
+							white-space: nowrap;
+							color: var(--sc-color-brand-primary);
+							font-weight: 600;
+							font-size: 0.95em;
+							flex-shrink: 0;
+						`}
+					>
+						{__('Start learning', 'surecart')} &rarr;
+					</span>
+				</a>
+			}
 		>
 			<div
 				css={css`

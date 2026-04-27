@@ -333,8 +333,9 @@ class SubscriptionsListTable extends ListTable {
 			return;
 		}
 		if ( ! empty( $coupon->percent_off ) ) {
-			// translators: Coupon % off.
-			return sprintf( esc_html( __( '%1d%% off', 'surecart' ) ), $coupon->percent_off );
+			$percent = sprintf( '%d%%', (int) $coupon->percent_off );
+			// translators: %s is the discount percentage (e.g. "10%").
+			return esc_html( sprintf( __( '%s off', 'surecart' ), $percent ) );
 		}
 
 		if ( ! empty( $coupon->amount_off ) ) {

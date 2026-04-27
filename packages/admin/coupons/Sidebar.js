@@ -11,7 +11,9 @@ import { formatDateTime } from '../util/time';
 export default ({ coupon, loading }) => {
 	const formattedDiscount = () => {
 		if (coupon?.percent_off) {
-			return sprintf(__('%s%% off', 'surecart'), coupon?.percent_off);
+			const percent = `${coupon.percent_off}%`;
+			// translators: %s is the discount percentage (e.g. "10%").
+			return sprintf(__('%s off', 'surecart'), percent);
 		}
 		if (coupon?.amount_off) {
 			return (

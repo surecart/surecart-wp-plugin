@@ -23,7 +23,7 @@ class SettingsController {
 				'uninstall'                   => (bool) get_option( 'sc_uninstall', false ),
 				'stripe_payment_element'      => (bool) get_option( 'sc_stripe_payment_element', true ),
 				'auto_sync_user_to_customer'  => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
-				'checkout_auto_login'         => (bool) get_option( 'surecart_checkout_auto_login', false ),
+				'checkout_require_login'      => (bool) get_option( 'surecart_checkout_require_login', false ),
 				'use_esm_loader'              => (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'     => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
 				'load_block_assets_on_demand' => (bool) get_option( 'surecart_load_block_assets_on_demand', false ),
@@ -79,8 +79,8 @@ class SettingsController {
 			update_option( 'surecart_auto_sync_user_to_customer', (bool) $request->get_param( 'auto_sync_user_to_customer' ) );
 		}
 
-		if ( isset( $request['checkout_auto_login'] ) ) {
-			update_option( 'surecart_checkout_auto_login', (bool) $request->get_param( 'checkout_auto_login' ) );
+		if ( isset( $request['checkout_require_login'] ) ) {
+			update_option( 'surecart_checkout_require_login', (bool) $request->get_param( 'checkout_require_login' ) );
 		}
 
 		// update load block styles on demand option.

@@ -27,6 +27,33 @@
     }
   }
 
+  &__collapsible {
+    // Stripe-like technique: fields stay in the DOM so browser autocomplete
+    // can detect and fill them, but they are visually hidden and non-interactive.
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(-8px);
+    width: 100%;
+
+    > * {
+      margin-bottom: var(--sc-address-column-spacing, -1px);
+    }
+
+    &--expanded {
+      opacity: 1;
+      pointer-events: auto;
+      position: relative;
+      transform: translateY(0);
+      transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+      z-index: var(--sc-address-collapsible-z-index, 9);
+    }
+
+    &:focus-within {
+      z-index: var(--sc-address-collapsible-focus-z-index, 10);
+    }
+  }
+
   &__columns {
     display: flex;
     flex-direction: row;

@@ -3,7 +3,7 @@
 namespace SureCart\Settings;
 
 use SureCart\Settings\SettingService;
-use SureCart\WordPress\RecaptchaValidationService;
+use SureCart\WordPress\GoogleMapApiService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -24,8 +24,14 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 			return new SettingService();
 		};
 
+		// Google Map Validation Service.
+		$container['surecart.settings.google_map'] = function () {
+			return new GoogleMapApiService();
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'settings', 'surecart.settings' );
+		$app->alias( 'googleMaps', 'surecart.settings.google_map' );
 	}
 
 
@@ -37,5 +43,6 @@ class SettingsServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.settings']->bootstrap();
+		$container['surecart.settings.google_map']->bootstrap();
 	}
 }
