@@ -195,7 +195,7 @@ export default () => {
 		if ('canceled' === subscription?.status && !subscription?.restore_at)
 			return null;
 
-		// scheduled for cancelation.
+		// scheduled for cancellation.
 		if (subscription?.cancel_at_period_end && !subscription?.restore_at) {
 			return (
 				<>
@@ -486,7 +486,7 @@ export default () => {
 			createSuccessNotice(
 				cancel_behavior === 'immediate'
 					? __('Subscription canceled.', 'surecart')
-					: __('Subscription scheduled for cancelation.', 'surecart'),
+					: __('Subscription scheduled for cancellation.', 'surecart'),
 				{
 					type: 'snackbar',
 				}
@@ -602,14 +602,11 @@ export default () => {
 
 				<Periods subscriptionId={id} />
 
-				{(subscription?.payment_method ||
-					subscription?.manual_payment) && (
-					<PaymentMethod
-						subscription={subscription}
-						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription}
-					/>
-				)}
+				<PaymentMethod
+					subscription={subscription}
+					updateSubscription={editSubscription}
+					loading={!hasLoadedSubscription}
+				/>
 			</>
 
 			<CancelPendingUpdate

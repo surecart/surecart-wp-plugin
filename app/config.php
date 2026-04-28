@@ -120,6 +120,7 @@ return array(
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
+		\SureCart\Rest\ParcelTemplateRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
@@ -165,6 +166,9 @@ return array(
 		\SureCart\Integrations\TheSEOFramework\TheSEOFrameworkServiceProvider::class,
 		\SureCart\Integrations\SureRank\SureRankServiceProvider::class,
 		\SureCart\Integrations\Yoast\YoastServiceProvider::class,
+		\SureCart\Integrations\NpsSurvey\NpsSurveyServiceProvider::class,
+		\SureCart\Abilities\AbilitiesServiceProvider::class,
+		\SureCart\MCP\McpServerServiceProvider::class,
 	),
 
 	/**

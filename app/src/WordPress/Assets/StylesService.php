@@ -34,16 +34,18 @@ class StylesService {
 			array(),
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
-		$brand = \SureCart::account()->brand;
+		$brand   = \SureCart::account()->brand;
+		$color   = preg_replace( '/[^a-fA-F0-9]/', '', \SureCart::theme()->brandColor() );
+		$heading = preg_replace( '/[^a-fA-F0-9]/', '', $brand->heading ?? '000' );
 
 		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
 
 		$style .= ':root {';
-		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
-		$style .= '--sc-color-gray-900: #' . ( $brand->heading ?? '000' ) . ';';
-		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $brand->color ?? '000000' ) . ';';
+		$style .= '--sc-color-primary-500: #' . $color . ';';
+		$style .= '--sc-focus-ring-color-primary: #' . $color . ';';
+		$style .= '--sc-input-border-color-focus: #' . $color . ';';
+		$style .= '--sc-color-gray-900: #' . $heading . ';';
+		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $color ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(

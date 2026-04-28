@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../../../admin/components/ModelSelector';
 import {
@@ -19,7 +17,9 @@ export default (props) => {
 
 	const formattedDiscount = (item) => {
 		if (item?.percent_off) {
-			return sprintf(__('%s%% off', 'surecart'), item?.percent_off);
+			const percent = `${item.percent_off}%`;
+			// translators: %s is the discount percentage (e.g. "10%").
+			return sprintf(__('%s off', 'surecart'), percent);
 		}
 		if (item?.amount_off) {
 			return sprintf(
@@ -58,10 +58,10 @@ export default (props) => {
 				<ScFormControl
 					label={label}
 					showLabel={false}
-					css={css`
-						display: grid;
-						gap: var(--sc-spacing-medium);
-					`}
+					style={{
+						display: 'grid',
+						gap: 'var(--sc-spacing-medium)',
+					}}
 				>
 					<ModelSelector
 						placeholder={placeholder}

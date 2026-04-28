@@ -133,6 +133,11 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 				]
 			)->get();
 
+			// Don't cache or return WP_Error — allow retry on next request.
+			if ( is_wp_error( $prices ) ) {
+				return [];
+			}
+
 			// store in transient.
 			set_transient( $cache_key, $prices, apply_filters( 'surecart_tutor_lms_product_cache_time', DAY_IN_SECONDS, $this ) );
 		}
@@ -162,9 +167,6 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 
 		// get the first product.
 		$prices = $this->getCachedProductPrices( $integrations[0]->model_id );
-		if ( is_wp_error( $prices ) ) {
-			return $prices;
-		}
 
 		// there is no price.
 		if ( empty( $prices ) ) {
@@ -301,10 +303,10 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		wp_reset_query();
 		$course_query = new \WP_Query(
 			[
-				'post_type'   => tutor()->course_post_type,
-				'post_status' => 'publish',
-				's'           => $search,
-				'per_page'    => 10,
+				'post_type'      => tutor()->course_post_type,
+				'post_status'    => 'publish',
+				's'              => $search,
+				'posts_per_page' => 100,
 			]
 		);
 

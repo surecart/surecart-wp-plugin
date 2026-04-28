@@ -15,7 +15,7 @@ class AdminPluginCacheService {
 	 * Plugin-specific documentation URLs.
 	 */
 	private const PLUGIN_DOCS_URLS = [
-		'litespeed-cache/litespeed-cache.php' => 'https://surecart.com/docs/lsp-config/',
+		// 'litespeed-cache/litespeed-cache.php' => 'https://surecart.com/docs/lsp-config/', // we added support for this in the plugin
 	];
 
 	/**
@@ -36,13 +36,13 @@ class AdminPluginCacheService {
 		return apply_filters(
 			'surecart_cache_plugins',
 			[
+				// 'w3-total-cache/w3-total-cache.php', // we added support for this in the plugin
+				// 'litespeed-cache/litespeed-cache.php', // we added support for this in the plugin
+				// 'sg-cachepress/sg-cachepress.php', // we added support for this in the plugin
+				// 'wp-fastest-cache/wpFastestCache.php', // we added support for this in the plugin
 				'wp-rocket/wp-rocket.php',
-				'w3-total-cache/w3-total-cache.php',
-				'litespeed-cache/litespeed-cache.php',
 				'wp-super-cache/wp-cache.php',
 				'autoptimize/autoptimize.php',
-				'wp-fastest-cache/wpFastestCache.php',
-				// 'sg-cachepress/sg-cachepress.php', // we added support for this in the plugin
 				'cache-enabler/cache-enabler.php',
 				'swift-performance-lite/performance.php',
 				'hummingbird-performance/wp-hummingbird.php',

@@ -113,10 +113,10 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'home_url'             => esc_url_raw( home_url() ),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
-					'locale'               => str_replace( '_', '-', get_locale() ),
+					'locale'               => str_replace( '_', '-', determine_locale() ),
 					'currency'             => \SureCart::account()->currency,
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
-					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'theme'                => \SureCart::theme()->mode(),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
@@ -132,6 +132,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
 		);
@@ -221,7 +222,7 @@ class ScriptsService {
 		// enqueue it.
 		wp_enqueue_script( 'surecart-components' );
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'wp_head',
 			function () {
@@ -346,9 +347,9 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
-					'locale'               => str_replace( '_', '-', get_locale() ),
+					'locale'               => str_replace( '_', '-', determine_locale() ),
 					'currency_symbol'      => html_entity_decode( Currency::getCurrencySymbol( \SureCart::account()->currency ) ),
-					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'theme'                => \SureCart::theme()->mode(),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
@@ -365,6 +366,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
 		);
@@ -380,7 +382,7 @@ class ScriptsService {
 				'manualPaymentMethods' => is_admin() ? ( (array) ManualPaymentMethod::get() ?? [] ) : [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,
-				'theme'                => get_option( 'surecart_theme', 'light' ),
+				'theme'                => \SureCart::theme()->mode(),
 				'entitlements'         => \SureCart::account()->entitlements,
 				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [
@@ -390,6 +392,7 @@ class ScriptsService {
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
+				'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 			]
 		);
 

@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { ScChoiceContainer, ScPriceInput } from '@surecart/components-react';
+import { ScChoiceContainer } from '@surecart/components-react';
 import {
 	InspectorControls,
 	useBlockProps,
@@ -8,7 +7,7 @@ import {
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
+import { ScPriceInput } from '@surecart/components-react';
 import { getFormattedPrice } from '../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
@@ -69,9 +68,7 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<ScChoiceContainer
 					showControl={false}
-					css={css`
-						width: 100%;
-					`}
+					style={{ width: '100%' }}
 				>
 					<RichText
 						aria-label={__('Donation Amount text', 'surecart')}

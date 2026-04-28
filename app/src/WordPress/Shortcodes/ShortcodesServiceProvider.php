@@ -299,7 +299,65 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				$metadata['name'],
 			);
 		}
+
+		// Register product review shortcode aliases with friendly names.
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_stars',
+			'surecart/product-review-average-rating-stars',
+			[
+				'size'            => '20px',
+				'fill_color'      => '',
+				'link_to_reviews' => false,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_rating_value',
+			'surecart/product-review-average-rating-value',
+			[
+				'link_to_reviews' => false,
+				'format'          => 'none',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_total_count',
+			'surecart/product-review-total-rating',
+			[
+				'show_label'            => true,
+				'show_for_zero_reviews' => true,
+				'link_to_reviews'       => true,
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_breakdown',
+			'surecart/product-review-breakdown',
+			[
+				'columns'              => 1,
+				'fill_color'           => '',
+				'bar_fill_color'       => '',
+				'bar_background_color' => '',
+			]
+		);
+		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_review_add_button',
+			'surecart/product-review-add-button',
+			[
+				'label'       => __( 'Write a Review', 'surecart' ),
+				'button_type' => 'both',
+				'icon'        => 'edit-2',
+				'className'   => 'is-style-fill',
+			]
+		);
+
+		/*
+		 * Pattern shortcodes.
+		 * These are shortcodes that render the content of a pattern file.
+		 */
+		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
+			'sc_product_review_list',
+			'product-review-standard' // Pattern file name without path or extension.
+		);
 	}
+
 	/**
 	 * Dashboard tab shortcode.
 	 *
@@ -341,16 +399,16 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		$form = \SureCart::forms()->get( $atts['id'] );
 
+		// Validate the post is a published sc_form to prevent private post content disclosure.
+		if ( ! is_a( $form, 'WP_Post' ) || 'sc_form' !== $form->post_type || 'publish' !== $form->post_status ) {
+			return __( 'This form is not available or has been deleted.', 'surecart' );
+		}
+
 		global $load_sc_js;
 		$load_sc_js = true;
 
 		global $sc_form_id;
 		$sc_form_id = $atts['id'];
-
-		// check to make sure we have a form post.
-		if ( ! is_a( $form, 'WP_Post' ) ) {
-			return __( 'This form is not available or has been deleted.', 'surecart' );
-		}
 
 		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $name, $form );
 	}

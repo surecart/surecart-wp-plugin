@@ -52,6 +52,7 @@ export default ({ media, onClick, selected, disabled }) => {
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+						min-width: 0;
 					`}
 				>
 					<div

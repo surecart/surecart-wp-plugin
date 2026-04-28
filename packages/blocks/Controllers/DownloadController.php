@@ -91,7 +91,7 @@ class DownloadController extends BaseController {
 			return;
 		}
 
-		$purchase = Purchase::with( [ 'customer', 'checkout', 'license', 'product', 'product.downloads', 'download.media', 'license.activations' ] )->find( $this->getId() );
+		$purchase = Purchase::with( [ 'customer', 'checkout', 'license', 'product', 'product.downloads', 'download.media', 'license.activations', 'variant', 'variant.downloads' ] )->find( $this->getId() );
 
 		if ( empty( $purchase->customer->id ) || ! User::current()->hasCustomerId( $purchase->customer->id ) ) {
 			return null;
@@ -118,7 +118,7 @@ class DownloadController extends BaseController {
 						)
 					);
 					?>
-				 ">
+				">
 					<?php esc_html_e( 'Downloads', 'surecart' ); ?>
 				</sc-breadcrumb>
 				<sc-breadcrumb>
@@ -135,6 +135,7 @@ class DownloadController extends BaseController {
 							'heading'    => __( 'Downloads', 'surecart' ),
 							'customerId' => $purchase->customer->id ?? '',
 							'productId'  => $purchase->product->id ?? '',
+							'variantId'  => $purchase->variant->id ?? '',
 						]
 					)->render()
 				);

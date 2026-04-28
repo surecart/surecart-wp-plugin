@@ -50,6 +50,7 @@
 
 ### Used by
 
+ - [sc-address-suggestions](../address-suggestion)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
@@ -80,6 +81,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paystack-add-method](../sc-paystack-add-method)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-line-item](../product-line-item)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
@@ -112,6 +114,7 @@
 ```mermaid
 graph TD;
   sc-button --> sc-spinner
+  sc-address-suggestions --> sc-button
   sc-cancel-dialog --> sc-button
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button
@@ -142,6 +145,7 @@ graph TD;
   sc-payment-methods-list --> sc-button
   sc-paystack-add-method --> sc-button
   sc-product-item-list --> sc-button
+  sc-product-line-item --> sc-button
   sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button

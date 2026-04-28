@@ -1,4 +1,5 @@
 {
+	"apiVersion": 3,
 	"name": "surecart/name-your-price",
 	"title": "Name Your Own Price",
 	"description": "Display a name your own price field.",

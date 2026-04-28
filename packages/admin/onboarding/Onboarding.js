@@ -24,6 +24,7 @@ import ConnectDone from './components/ConnectDone';
 let confettiIntervalId;
 let confettiTimerId;
 const CONFETTI_DURATION = 3000;
+const DEFAULT_BRAND_COLOR = '1e40af';
 
 function randomInRange(min, max) {
 	return Math.random() * (max - min) + min;
@@ -50,7 +51,7 @@ export default () => {
 	const [accountCurrency, setAccountCurrency] = useState('usd');
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const refAnimationInstance = useRef(null);
-	const [brandColor, setBrandColor] = useState('1e40af');
+	const [brandColor, setBrandColor] = useState(DEFAULT_BRAND_COLOR);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
@@ -174,6 +175,7 @@ export default () => {
 						currency={accountCurrency}
 						onSelectCurrency={setAccountCurrency}
 						brandColor={brandColor}
+						defaultBrandColor={DEFAULT_BRAND_COLOR}
 						onBrandColorChange={setBrandColor}
 					/>
 				);

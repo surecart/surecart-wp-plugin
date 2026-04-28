@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import {
 	PanelBody,
@@ -16,8 +16,9 @@ import {
  */
 import { ScInput } from '@surecart/components-react';
 
-export default ({ className, attributes, setAttributes, isSelected }) => {
+export default ({ attributes, setAttributes, isSelected }) => {
 	const { label, placeholder, help, name, required } = attributes;
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
@@ -72,15 +73,19 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			{!isSelected && !name && <div>Please add a name</div>}
-			<ScInput
-				className={className}
-				required={required}
-				name={name}
-				label={label}
-				placeholder={placeholder}
-				help={help}
-			></ScInput>
+			<div {...blockProps}>
+				{!isSelected && !name && (
+					<div>{__('Please add a name', 'surecart')}</div>
+				)}
+
+				<ScInput
+					required={required}
+					name={name}
+					label={label}
+					placeholder={placeholder}
+					help={help}
+				></ScInput>
+			</div>
 		</Fragment>
 	);
 };

@@ -91,6 +91,8 @@ export default function Edit({ attributes, setAttributes }) {
 					initialOpen={true}
 				>
 					<SearchControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Search Icons', 'surecart')}
 						value={searchTerm}
 						onChange={setSearchTerm}
@@ -136,6 +138,8 @@ export default function Edit({ attributes, setAttributes }) {
 					</div>
 
 					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Size (px)', 'surecart')}
 						value={size}
 						onChange={(value) => setAttributes({ size: value })}
@@ -145,6 +149,8 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 
 					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label={__('Stroke Width', 'surecart')}
 						value={stroke_width}
 						onChange={(value) =>

@@ -58,6 +58,22 @@
     color: var(--sc-input-help-text-color);
     font-size: var(--sc-input-help-text-font-size-medium);
   }
+
+  &__add-review {
+    sc-button {
+      --sc-input-border-radius-small: var(--sc-input-border-radius-medium);
+    }
+  }
+
+  &--has-review {
+    border-bottom: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+    padding-top: var(--sc-spacing-small);
+    padding-bottom: var(--sc-spacing-large);
+
+    :host(:first-of-type) & {
+      padding-top: 0;
+    }
+  }
 }
 
 .item__text {

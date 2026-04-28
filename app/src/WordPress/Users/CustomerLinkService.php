@@ -81,9 +81,6 @@ class CustomerLinkService {
 				$existing->setCustomerId( $this->checkout->customer_id, $mode );
 				return $existing;
 			}
-			error_log( 'Andre Error: Attempted to set customer id, but the user already has one.' );
-			error_log( print_r( $existing, 1 ) );
-			error_log( print_r( $this->checkout, 1 ) );
 		}
 
 		return false;

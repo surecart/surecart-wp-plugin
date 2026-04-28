@@ -105,7 +105,7 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'admin_head',
 			function () {
@@ -136,7 +136,7 @@ abstract class AdminModelEditController {
 		$this->data['account_slug']         = \SureCart::account()->slug ?? '';
 		$this->data['api_url']              = \SureCart::requests()->getBaseUrl();
 		$this->data['plugin_url']           = \SureCart::core()->assets()->getUrl();
-		$this->data['locale']               = str_replace( '_', '-', get_locale() );
+		$this->data['locale']               = str_replace( '_', '-', determine_locale() );
 		$this->data['root_url']             = esc_url_raw( get_rest_url() );
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
@@ -170,10 +170,13 @@ abstract class AdminModelEditController {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
 		}
+		if ( in_array( 'google_map_api_key', $this->with_data ) ) {
+			$this->data['google_map_api_key'] = \SureCart::googleMaps()->getApiKey();
+		}
 
 		// pass entitlements to page.
 		$this->data['entitlements'] = \SureCart::account()->entitlements;
-		$this->data['get_locale']   = str_replace( '_', '-', get_locale() );
+		$this->data['get_locale']   = str_replace( '_', '-', determine_locale() );
 
 		// pass wp user roles to page.
 		$this->data['wp_user_roles'] = get_editable_roles();

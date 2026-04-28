@@ -44,6 +44,8 @@ export default function UnitSpacingControl({
 					`}
 				/>
 				<RangeControl
+					__next40pxDefaultSize
+					__nextHasNoMarginBottom
 					value={parseInt(value) || 0}
 					onChange={(newValue) => {
 						// Extract current unit from value, default to 'px'

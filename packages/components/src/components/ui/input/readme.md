@@ -135,6 +135,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-address](../address)
+ - [sc-address-suggestions](../address-suggestion)
  - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -162,6 +163,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
   sc-address --> sc-input
+  sc-address-suggestions --> sc-input
   sc-compact-address --> sc-input
   sc-coupon-form --> sc-input
   sc-customer-edit --> sc-input

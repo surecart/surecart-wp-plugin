@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import {
 	InnerBlocks,
 	useBlockProps,
@@ -6,7 +5,6 @@ import {
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
@@ -38,13 +36,13 @@ export default ({}) => {
 	});
 
 	return (
-		<div
-			{...innerBlocksProps}
-			css={css`
-				sc-tab {
+		<>
+			<style>{`
+				.wp-block[data-type="surecart/dashboard-tabs"] sc-tab {
 					margin-bottom: var(--sc-spacing-xx-small) !important;
 				}
-			`}
-		></div>
+			`}</style>
+			<div {...innerBlocksProps}></div>
+		</>
 	);
 };

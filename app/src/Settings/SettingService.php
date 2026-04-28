@@ -26,16 +26,6 @@ class SettingService {
 	public function registerSettings() {
 		$this->register(
 			'surecart',
-			'theme',
-			[
-				'type'              => 'string',
-				'show_in_rest'      => true,
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'light',
-			]
-		);
-		$this->register(
-			'surecart',
 			'auto_sync_user_to_customer',
 			[
 				'type'              => 'boolean',
@@ -98,6 +88,24 @@ class SettingService {
 				'type'              => 'boolean',
 				'show_in_rest'      => true,
 				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'google_map_api_key_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+			]
+		);
+		$this->register(
+			'surecart',
+			'google_map_api_key',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 		$this->register(
@@ -319,6 +327,89 @@ class SettingService {
 				'default'           => false,
 			]
 		);
+		$this->register(
+			'surecart',
+			'learn_admin_menu',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_completed_steps',
+			[
+				'type'              => 'array',
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'string',
+						],
+					],
+				],
+				'default'           => [],
+				'autoload'          => false,
+				'sanitize_callback' => function ( $value ) {
+					if ( ! is_array( $value ) ) {
+						return [];
+					}
+					return array_values(
+						array_unique(
+							array_filter(
+								array_map( 'sanitize_key', $value )
+							)
+						)
+					);
+				},
+			]
+		);
+		$this->register(
+			'surecart',
+			'learn_total_steps',
+			[
+				'type'              => 'integer',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'absint',
+				'default'           => 24,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_edit_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => false,
+			]
+		);
+		$this->register(
+			'surecart',
+			'mcp_delete_abilities_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => false,
+			]
+		);
 	}
 	/**
 	 * Register a setting.
@@ -360,6 +451,17 @@ class SettingService {
 	 */
 	public function get( $name, $default = false ) {
 		return get_option( 'surecart_' . $name, $default );
+	}
+
+	/**
+	 * Get the number of remaining learn steps.
+	 *
+	 * @return int
+	 */
+	public function getLearnRemainingSteps() {
+		$total     = (int) $this->get( 'learn_total_steps', 24 );
+		$completed = $this->get( 'learn_completed_steps', [] );
+		return max( 0, $total - count( (array) $completed ) );
 	}
 
 	/**

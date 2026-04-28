@@ -4,12 +4,14 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { ScButton, ScDrawer, ScForm } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
+import useVariantDownloads from '../../hooks/useVariantDownloads';
 import useVariantValue from '../../hooks/useVariantValue';
 
 import Image from './Image';
 import Price from './Price';
 import Inventory from './Inventory';
 import Purchases from './Purchases';
+import Downloads from './Downloads';
 import Licensing from './Licensing';
 import Shipping from './Shipping';
 import Tax from './Tax';
@@ -23,6 +25,14 @@ export default ({
 }) => {
 	const [open, setOpen] = useState(true);
 	const { getValue } = useVariantValue({ variant, product });
+
+	const downloadsEnabled = getValue('downloads_enabled');
+	const isCustomDownloads = downloadsEnabled === true;
+
+	const { downloads, fetching: downloadsFetching } = useVariantDownloads({
+		variant,
+		isCustomDownloads,
+	});
 
 	/**
 	 * Link media.
@@ -171,10 +181,22 @@ export default ({
 							updateVariant={updateVariant}
 						/>
 
+						<Downloads
+							variant={variant}
+							product={product}
+							updateVariant={updateVariant}
+							downloads={downloads}
+							downloadsFetching={downloadsFetching}
+							isCustomDownloads={isCustomDownloads}
+						/>
+
 						<Licensing
 							variant={variant}
 							product={product}
 							updateVariant={updateVariant}
+							downloads={downloads}
+							downloadsFetching={downloadsFetching}
+							isCustomDownloads={isCustomDownloads}
 						/>
 
 						<Shipping

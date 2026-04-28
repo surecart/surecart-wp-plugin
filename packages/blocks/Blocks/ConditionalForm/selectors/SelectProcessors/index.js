@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
@@ -86,10 +84,10 @@ export default (props) => {
 				<ScFormControl
 					label={label}
 					showLabel={false}
-					css={css`
-						display: grid;
-						gap: var(--sc-spacing-medium);
-					`}
+					style={{
+						display: 'grid',
+						gap: 'var(--sc-spacing-medium)',
+					}}
 				>
 					<ScSelect
 						choices={processors}
