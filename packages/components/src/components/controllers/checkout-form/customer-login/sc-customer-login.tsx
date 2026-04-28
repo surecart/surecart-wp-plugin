@@ -90,10 +90,6 @@ export class ScCustomerLogin {
       userState.avatarUrl = user?.avatar_url || '';
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
-
-      // Set user as logged in to trigger fetching of customer data like addresses.
-      userState.loggedIn = true;
-      userState.name = user?.name || '';
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
