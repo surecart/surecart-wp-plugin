@@ -2,5 +2,10 @@
 	width: 100%;
 	max-width: 250px;
 	min-height: 30px;
-    align-items: center;
+	align-items: center;
+
+	// Fix border-radius inheritance for search field hover state
+	> .sc-form-control {
+		border-radius: inherit !important;
+	}
 }
