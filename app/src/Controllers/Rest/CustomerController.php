@@ -6,7 +6,7 @@ use SureCart\Models\Customer;
 use SureCart\Models\User;
 
 /**
- * Handle Price requests through the REST API
+ * Handle Customer related REST API requests.
  */
 class CustomerController extends RestController {
 	/**
@@ -32,8 +32,7 @@ class CustomerController extends RestController {
 			return null;
 		}
 
-		// Reuse the standard find pipeline so query params (expand, fields, etc.)
-		// behave the same as a direct `customers/{id}` request.
+		// Set the ID in the request to fetch the customer record.
 		$request['id'] = $customer_id;
 
 		return $this->find( $request );

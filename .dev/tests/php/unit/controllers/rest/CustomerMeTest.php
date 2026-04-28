@@ -9,17 +9,9 @@ use SureCart\Rest\CustomerRestServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
-/**
- * Coverage for the `GET /surecart/v1/customers/me` convenience endpoint that
- * resolves the logged-in user's customer record and dispatches it through the
- * standard customer find pipeline.
- */
 class CustomerMeTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-	/**
-	 * Set up a new app instance to use for tests.
-	 */
 	public function setUp(): void {
 		\SureCart::make()->bootstrap(
 			[
@@ -36,10 +28,6 @@ class CustomerMeTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Anonymous users get a 401 — the underlying customer permission check
-	 * still runs once a customer id is resolved, but the route's gate keeps
-	 * unauthenticated calls from reaching the controller at all.
-	 *
 	 * @group customer-me
 	 */
 	public function test_permission_check_denies_unauthenticated_users() {
@@ -69,10 +57,6 @@ class CustomerMeTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Logged-in user with no linked customer for the requested mode → null
-	 * response (200). The autofill caller treats null as a no-op rather than
-	 * an error so unlinked accounts don't trigger a retry loop.
-	 *
 	 * @group customer-me
 	 */
 	public function test_me_returns_null_when_user_has_no_customer() {
@@ -87,10 +71,6 @@ class CustomerMeTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * When a customer id is linked, `me()` should resolve it and dispatch
-	 * through the standard find pipeline so query params (expand, etc.) and
-	 * the model layer behave identically to a direct `customers/{id}` call.
-	 *
 	 * @group customer-me
 	 */
 	public function test_me_returns_customer_via_find_when_linked() {
@@ -143,30 +123,22 @@ class CustomerMeTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * `mode` defaults to `live` — verifies that the param's REST default
-	 * carries through to the customer-id lookup.
-	 *
 	 * @group customer-me
 	 */
 	public function test_me_defaults_to_live_mode() {
 		$user_id = self::factory()->user->create();
 		wp_set_current_user( $user_id );
 
-		// Link only a test-mode customer; live should remain unset.
 		$user = User::find( $user_id );
 		$user->setCustomerId( 'cust_test_only', 'test' );
 
 		$controller = new CustomerController();
 		$request    = new WP_REST_Request( 'GET', '/surecart/v1/customers/me' );
-		// Intentionally omit `mode` — should default to 'live' and find no customer.
 
 		$this->assertNull( $controller->me( $request ) );
 	}
 
 	/**
-	 * Surfaces API errors so the standard REST pipeline can convert them to
-	 * the expected error response — `me()` must not silently swallow them.
-	 *
 	 * @group customer-me
 	 */
 	public function test_me_returns_wp_error_when_api_fails() {
