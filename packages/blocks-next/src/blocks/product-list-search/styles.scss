@@ -4,7 +4,7 @@
 	min-height: 30px;
 	align-items: center;
 
-	// Fix SURDES-28: search field white artifact on hover
+	// Fix search field white artifact on hover
 	// input-group.scss sets border-radius: 4px !important on .sc-form-control
 	// !important here is required to override it for this block's pill shape
 	> .sc-form-control {
