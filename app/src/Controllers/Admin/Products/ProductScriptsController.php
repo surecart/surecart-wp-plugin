@@ -30,6 +30,13 @@ class ProductScriptsController extends AdminModelEditController {
 	protected $path = 'admin/products';
 
 	/**
+	 * Opt into the dataviews stylesheet enqueue (handled by the parent).
+	 *
+	 * @var bool
+	 */
+	protected $needs_dataviews_style = true;
+
+	/**
 	 * Add the app url to the data.
 	 */
 	public function __construct() {

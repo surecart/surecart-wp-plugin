@@ -37,6 +37,14 @@ abstract class AdminModelEditController {
 	protected $dependencies = [ 'sc-core-data', 'sc-ui-data' ];
 
 	/**
+	 * Whether this admin screen renders a `@wordpress/dataviews` table and
+	 * needs the bundled DataViews stylesheet.
+	 *
+	 * @var bool
+	 */
+	protected $needs_dataviews_style = false;
+
+	/**
 	 * Data to pass to the page.
 	 *
 	 * @var array
@@ -80,6 +88,30 @@ abstract class AdminModelEditController {
 	}
 
 	/**
+	 * Enqueue the bundled `@wordpress/dataviews` stylesheet copied to
+	 * `dist/vendor/` at build time. See `webpack.config.js` for the
+	 * CopyPlugin pattern that produces this file.
+	 *
+	 * Only enqueues when `$needs_dataviews_style` is set on the controller.
+	 */
+	protected function enqueueDataviewsStyle(): void {
+		if ( ! $this->needs_dataviews_style ) {
+			return;
+		}
+		$relative = is_rtl() ? 'dist/vendor/dataviews-rtl.css' : 'dist/vendor/dataviews.css';
+		$abs_path = plugin_dir_path( SURECART_PLUGIN_FILE ) . $relative;
+		if ( ! file_exists( $abs_path ) ) {
+			return;
+		}
+		wp_enqueue_style(
+			'sc-dataviews',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . $relative,
+			[],
+			defined( 'SURECART_VERSION' ) ? SURECART_VERSION : (string) filemtime( $abs_path )
+		);
+	}
+
+	/**
 	 * Enqueue scripts
 	 *
 	 * @return void
@@ -91,6 +123,7 @@ abstract class AdminModelEditController {
 
 		// components are also used on index pages.
 		$this->enqueueComponents();
+		$this->enqueueDataviewsStyle();
 
 		// match url query for the scripts.
 		if ( ! empty( $this->url_query ) ) {

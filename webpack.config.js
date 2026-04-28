@@ -255,6 +255,21 @@ module.exports = {
 					from: './packages/components/docs/kses.json',
 					to: '../app/src/Support/kses.json',
 				},
+				{
+					from: require.resolve(
+						'@wordpress/dataviews/build-style/style.css'
+					),
+					to: path.resolve(__dirname, 'dist/vendor/dataviews.css'),
+				},
+				{
+					from: require.resolve(
+						'@wordpress/dataviews/build-style/style-rtl.css'
+					),
+					to: path.resolve(
+						__dirname,
+						'dist/vendor/dataviews-rtl.css'
+					),
+				},
 			],
 		}),
 		// Generate icons.json list from icon-assets
