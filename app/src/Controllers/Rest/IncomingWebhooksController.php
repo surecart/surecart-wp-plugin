@@ -2,12 +2,15 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\SanitizesRestParams;
 use SureCart\Models\IncomingWebhook;
 
 /**
  * Handle Price requests through the REST API
  */
 class IncomingWebhooksController {
+	use SanitizesRestParams;
+
 	/**
 	 * Create a product integration.
 	 *
@@ -62,8 +65,9 @@ class IncomingWebhooksController {
 		}
 
 		// webhook ids.
-		if ( $request->get_param( 'webhook_ids' ) ) {
-			$webhook = $webhook->whereIn( 'webhook_ids', $request->get_param( 'webhook_ids' ) );
+		$webhook_ids = $request->get_param( 'webhook_ids' );
+		if ( ! empty( $webhook_ids ) ) {
+			$webhook = $webhook->whereIn( 'webhook_ids', array_map( 'sanitize_text_field', (array) $webhook_ids ) );
 		}
 
 		$total    = $webhook->count();
@@ -102,11 +106,12 @@ class IncomingWebhooksController {
 			$webhook = $webhook->whereNotNull( 'processed' );
 		}
 
-		if ( $request->get_param( 'webhook_id' ) ) {
-			$webhook = $webhook->where( 'webhook_id', $request->get_param( 'webhook_id' ) );
+		$webhook_id = $this->sanitizeFilterParam( $request->get_param( 'webhook_id' ) );
+		if ( null !== $webhook_id ) {
+			$webhook = $webhook->where( 'webhook_id', $webhook_id );
 		}
 
-		return $webhook->find( $request['id'] );
+		return $webhook->find( $this->sanitizeFilterParam( $request['id'] ) );
 	}
 
 	/**
@@ -117,7 +122,17 @@ class IncomingWebhooksController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return IncomingWebhook::where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return IncomingWebhook::where(
+			array_filter(
+				[
+					'id'         => $this->sanitizeFilterParam( $request['id'] ),
+					'webhook_id' => $this->sanitizeFilterParam( $request->get_param( 'webhook_id' ) ),
+				],
+				function ( $value ) {
+					return null !== $value;
+				}
+			)
+		)->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
 	}
 
 	/**

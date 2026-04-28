@@ -30,6 +30,9 @@ add_filter(
 		if ( ( strpos( $_SERVER['REQUEST_URI'], 'surecart/redirect' ) !== false ) ) {
 			return false;
 		}
+		if ( ( strpos( $_SERVER['REQUEST_URI'], '/' . untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/' ) !== false ) ) {
+			return false;
+		}
 		return $guess;
 	},
 	9999999999

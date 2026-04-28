@@ -105,7 +105,7 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'admin_head',
 			function () {

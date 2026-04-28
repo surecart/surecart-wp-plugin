@@ -98,6 +98,10 @@ export default ({ attributes, setAttributes }) => {
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								label={__('Secure Payment Text', 'surecart')}
+								placeholder={__(
+									'This is a secure, encrypted payment.',
+									'surecart'
+								)}
 								value={secure_notice_text}
 								onChange={(secure_notice_text) =>
 									setAttributes({ secure_notice_text })
@@ -198,7 +202,11 @@ export default ({ attributes, setAttributes }) => {
 						}}
 					>
 						<sc-secure-notice>
-							{secure_notice_text}
+							{secure_notice_text ||
+								__(
+									'This is a secure, encrypted payment.',
+									'surecart'
+								)}
 						</sc-secure-notice>
 					</div>
 				)}
