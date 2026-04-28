@@ -6,14 +6,6 @@ import { Address, Checkout } from '../../../types';
 import { createOrUpdateCheckout } from '../../../services/session';
 import { getCurrentCustomer, hasAddressData, isAddressEmpty } from '../../../services/customer-address';
 
-/**
- * Headless provider: when a logged-in user is on a draft checkout, fetches the
- * customer's saved profile (shipping/billing address, name, phone) and patches the
- * draft checkout with any fields that aren't already set. Runs at most once per
- * checkout id. Address and name components read the patched values from
- * `checkoutState.checkout` via their own subscriptions — this provider doesn't
- * touch component state directly.
- */
 @Component({
   tag: 'sc-checkout-autofill-provider',
   shadow: true,

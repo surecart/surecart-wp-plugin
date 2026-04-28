@@ -538,14 +538,6 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
-    /**
-     * Headless provider: when a logged-in user is on a draft checkout, fetches the
-     * customer's saved profile (shipping/billing address, name, phone) and patches the
-     * draft checkout with any fields that aren't already set. Runs at most once per
-     * checkout id. Address and name components read the patched values from
-     * `checkoutState.checkout` via their own subscriptions — this provider doesn't
-     * touch component state directly.
-     */
     interface ScCheckoutAutofillProvider {
     }
     /**
@@ -4890,14 +4882,6 @@ declare global {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
     };
-    /**
-     * Headless provider: when a logged-in user is on a draft checkout, fetches the
-     * customer's saved profile (shipping/billing address, name, phone) and patches the
-     * draft checkout with any fields that aren't already set. Runs at most once per
-     * checkout id. Address and name components read the patched values from
-     * `checkoutState.checkout` via their own subscriptions — this provider doesn't
-     * touch component state directly.
-     */
     interface HTMLScCheckoutAutofillProviderElement extends Components.ScCheckoutAutofillProvider, HTMLStencilElement {
     }
     var HTMLScCheckoutAutofillProviderElement: {
@@ -7750,14 +7734,6 @@ declare namespace LocalJSX {
          */
         "taxProtocol"?: TaxProtocol;
     }
-    /**
-     * Headless provider: when a logged-in user is on a draft checkout, fetches the
-     * customer's saved profile (shipping/billing address, name, phone) and patches the
-     * draft checkout with any fields that aren't already set. Runs at most once per
-     * checkout id. Address and name components read the patched values from
-     * `checkoutState.checkout` via their own subscriptions — this provider doesn't
-     * touch component state directly.
-     */
     interface ScCheckoutAutofillProvider {
     }
     /**
@@ -12146,14 +12122,6 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
-            /**
-             * Headless provider: when a logged-in user is on a draft checkout, fetches the
-             * customer's saved profile (shipping/billing address, name, phone) and patches the
-             * draft checkout with any fields that aren't already set. Runs at most once per
-             * checkout id. Address and name components read the patched values from
-             * `checkoutState.checkout` via their own subscriptions — this provider doesn't
-             * touch component state directly.
-             */
             "sc-checkout-autofill-provider": LocalJSX.ScCheckoutAutofillProvider & JSXBase.HTMLAttributes<HTMLScCheckoutAutofillProviderElement>;
             /**
              * This component listens for a confirmed event and redirects to the success url.
