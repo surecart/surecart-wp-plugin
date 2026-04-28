@@ -1,19 +1,7 @@
-/**
- * Async filter-element resolver for entity-backed dropdowns.
- *
- * Replaces the eager-fetch pattern (e.g. `useEntityRecords('product-collection',
- * { per_page: 100 })`) with a typeahead-aware resolver that DataViews can call
- * with the user's current input.
- *
- * Two pieces are returned:
- *   - `elements`: the initial pre-fetched batch (sensible defaults so the
- *     dropdown isn't empty before the user types).
- *   - `getElements`: an async resolver compatible with DataViews `field.elements`
- *     when given a function. Receives `{ search }` and returns
- *     `{ value, label }[]`.
- *
- * The resolver caches by query string and short-circuits empty queries.
- */
+// Async typeahead resolver for entity-backed filter dropdowns. Returns a
+// pre-fetched `elements` array (so the dropdown isn't empty on open) plus
+// `getElements({ search })` for DataViews' function-elements API. Caches
+// per-query so repeated keystrokes don't re-fetch.
 import { useMemo, useRef, useCallback } from 'react';
 import { useEntityRecords } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';

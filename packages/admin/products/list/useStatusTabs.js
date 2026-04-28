@@ -10,11 +10,27 @@ import { useMemo, useEffect, useState, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { Icon, published, archive, post } from '@wordpress/icons';
 
+// JSX outside the hook so the elements are stable references.
 const TAB_DEFS = [
-	{ value: 'active', label: __('Active', 'surecart'), archived: false },
-	{ value: 'archived', label: __('Archived', 'surecart'), archived: true },
-	{ value: 'all', label: __('All', 'surecart') },
+	{
+		value: 'active',
+		label: __('Active', 'surecart'),
+		archived: false,
+		icon: <Icon icon={published} size={18} />,
+	},
+	{
+		value: 'archived',
+		label: __('Archived', 'surecart'),
+		archived: true,
+		icon: <Icon icon={archive} size={18} />,
+	},
+	{
+		value: 'all',
+		label: __('All', 'surecart'),
+		icon: <Icon icon={post} size={18} />,
+	},
 ];
 
 export const useStatusTabs = ({ view, setView }) => {
@@ -75,6 +91,7 @@ export const useStatusTabs = ({ view, setView }) => {
 			TAB_DEFS.map((t) => ({
 				value: t.value,
 				label: t.label,
+				icon: t.icon,
 				count: counts[t.value],
 			})),
 		[counts]

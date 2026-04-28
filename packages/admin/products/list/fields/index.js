@@ -1,4 +1,6 @@
+import mediaField from './media';
 import nameField from './name';
+import displayNameField from './display_name';
 import skuField from './sku';
 import priceField from './price';
 import commissionAmountField from './commission_amount';
@@ -18,6 +20,8 @@ import { applyFieldExtensions } from '../../../components/dataview-list';
 export const buildProductFields = (ctx) => {
 	const fields = [
 		archiveStatusField(),
+		mediaField(ctx),
+		displayNameField(ctx),
 		nameField(ctx),
 		skuField(ctx),
 		priceField(ctx),
@@ -34,7 +38,9 @@ export const buildProductFields = (ctx) => {
 };
 
 export {
+	mediaField,
 	nameField,
+	displayNameField,
 	skuField,
 	priceField,
 	commissionAmountField,

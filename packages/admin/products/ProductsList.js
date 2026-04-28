@@ -12,7 +12,8 @@ import {
 	useDataViewState,
 	useUrlFilterWriter,
 	readInitialFiltersFromUrl,
-	StatusTabs,
+	StatusSidebar,
+	useEnhancedView,
 	applyDefaultFieldsExtensions,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
@@ -48,6 +49,11 @@ export default ({ navigation }) => {
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+
+	// Enhanced-view state is also read by `DataViewListLayout` internally;
+	// pulling it here so the sidebar's back-chevron can call `toggle` to
+	// exit enhanced view without a page reload.
+	const { toggle: toggleEnhancedView } = useEnhancedView();
 
 	const [isMutating, setIsMutating] = useState(false);
 
@@ -273,24 +279,52 @@ export default ({ navigation }) => {
 	);
 
 	return (
-		<>
-			<ListHeader
-				title={__('Products', 'surecart')}
-				actionLabel={__('Add Product', 'surecart')}
-				actionHref={addQueryArgs('admin.php', {
-					page: 'sc-products',
-					action: 'edit',
-				})}
-				onAction={() => navigation.goToCreate()}
-			/>
-			<DataViewListLayout
-				// tabs={
-				// 	<StatusTabs
-				// 		tabs={tabs}
-				// 		activeValue={activeValue}
-				// 		onChange={setTab}
-				// 	/>
-				// }
+		<DataViewListLayout
+			pageHeader={
+				<ListHeader
+					title={__('Products', 'surecart')}
+					actionLabel={__('Add Product', 'surecart')}
+					actionHref={addQueryArgs('admin.php', {
+						page: 'sc-products',
+						action: 'edit',
+					})}
+					onAction={() => navigation.goToCreate()}
+				/>
+			}
+			statusSidebar={
+					<StatusSidebar
+						siteName={
+							window?.scData?.site_name ||
+							(window?.location?.hostname ?? '')
+						}
+						siteHref={
+							window?.scData?.home_url ||
+							window?.location?.origin
+						}
+						heading={__('Products', 'surecart')}
+						description={__(
+							'Add, edit, and manage the products you sell in your store.',
+							'surecart'
+						)}
+						onBack={toggleEnhancedView}
+						tabs={tabs}
+						activeValue={activeValue}
+						onChange={setTab}
+					/>
+				}
+				defaultLayouts={{
+					table: {},
+					grid: {
+						mediaField: 'media',
+						titleField: 'display_name',
+						descriptionField: 'price',
+					},
+					list: {
+						mediaField: 'media',
+						titleField: 'display_name',
+						descriptionField: 'price',
+					},
+				}}
 				data={records}
 				fields={fields}
 				view={view}
@@ -298,8 +332,7 @@ export default ({ navigation }) => {
 				paginationInfo={paginationInfo}
 				actions={actions}
 				isLoading={!hasResolved}
-				isMutating={isMutating}
-			/>
-		</>
+			isMutating={isMutating}
+		/>
 	);
 };

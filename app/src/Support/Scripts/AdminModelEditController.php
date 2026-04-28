@@ -151,14 +151,21 @@ abstract class AdminModelEditController {
 		);
 
 		// automatically load dependencies and version.
-		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		$asset_file_path = plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		if ( ! file_exists( $asset_file_path ) ) {
+			// Bundle hasn't been built yet (e.g. fresh install or the entry
+			// was just added without running `yarn build`). Bail rather than
+			// crashing on an `array_merge( null, ... )`.
+			return;
+		}
+		$asset_file = include $asset_file_path;
 
 		// Enqueue scripts.
 		wp_enqueue_script(
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
-			array_merge( $asset_file['dependencies'], $this->dependencies ),
-			$asset_file['version'],
+			array_merge( $asset_file['dependencies'] ?? [], $this->dependencies ),
+			$asset_file['version'] ?? null,
 			true
 		);
 

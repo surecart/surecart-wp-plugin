@@ -256,14 +256,16 @@ module.exports = {
 					to: '../app/src/Support/kses.json',
 				},
 				{
-					from: require.resolve(
-						'@wordpress/dataviews/build-style/style.css'
+					from: path.resolve(
+						__dirname,
+						'node_modules/@wordpress/dataviews/build-style/style.css'
 					),
 					to: path.resolve(__dirname, 'dist/vendor/dataviews.css'),
 				},
 				{
-					from: require.resolve(
-						'@wordpress/dataviews/build-style/style-rtl.css'
+					from: path.resolve(
+						__dirname,
+						'node_modules/@wordpress/dataviews/build-style/style-rtl.css'
 					),
 					to: path.resolve(
 						__dirname,

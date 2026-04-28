@@ -16,6 +16,10 @@ const PERSISTED_VIEW_KEYS = [
 	'filters',
 ];
 
+// Stored alongside the persisted view so we can invalidate the user's
+// saved `fields` when the screen's default columns change.
+const FIELDS_VERSION_KEY = '_fieldsVersion';
+
 function readPersistedView(preferenceKey) {
 	if (!preferenceKey) return null;
 	const stored = select(preferencesStore).get(
@@ -32,6 +36,10 @@ export default function useDataViewState(config) {
 		defaultSort = { field: 'created_at', direction: 'desc' },
 		sortMap = {},
 		defaultFields = [],
+		// Bump this when `defaultFields` changes so users with persisted
+		// preferences pick up the new default columns instead of being
+		// stuck on whatever they had saved.
+		defaultFieldsVersion,
 		perPage = 20,
 		layoutStyles = {},
 		buildQueryArgs,
@@ -61,7 +69,12 @@ export default function useDataViewState(config) {
 				initialViewFilters,
 			}),
 			readPersistedView(preferenceKey),
-			{ layoutStyles, initialViewFilters }
+			{
+				layoutStyles,
+				initialViewFilters,
+				defaultFields,
+				defaultFieldsVersion,
+			}
 		)
 	);
 
@@ -74,10 +87,18 @@ export default function useDataViewState(config) {
 			mergeView(prev, persistedFromStore, {
 				layoutStyles,
 				initialViewFilters,
+				defaultFields,
+				defaultFieldsVersion,
 			})
 		);
 		hydratedRef.current = true;
-	}, [persistedFromStore, layoutStyles, initialViewFilters]);
+	}, [
+		persistedFromStore,
+		layoutStyles,
+		initialViewFilters,
+		defaultFields,
+		defaultFieldsVersion,
+	]);
 
 	// Write the persisted subset back whenever view changes.
 	const isFirstRenderRef = useRef(true);
@@ -90,6 +111,9 @@ export default function useDataViewState(config) {
 		const subset = {};
 		for (const key of PERSISTED_VIEW_KEYS) {
 			if (view[key] !== undefined) subset[key] = view[key];
+		}
+		if (defaultFieldsVersion) {
+			subset[FIELDS_VERSION_KEY] = defaultFieldsVersion;
 		}
 		setPreference(PREFERENCES_SCOPE, preferenceKey, subset);
 	}, [view, preferenceKey, setPreference]);
@@ -166,13 +190,29 @@ function buildBaseView({
 	};
 }
 
-// Merge persisted subset over a base view. Incoming-URL filters and layout.styles
-// always override whatever's persisted.
-function mergeView(base, persisted, { layoutStyles, initialViewFilters }) {
+// Merge persisted subset over a base view. Incoming-URL filters and
+// layout.styles always override whatever's persisted. If the persisted
+// `_fieldsVersion` doesn't match the current `defaultFieldsVersion`, the
+// persisted `fields` are dropped so users pick up new default columns.
+function mergeView(
+	base,
+	persisted,
+	{ layoutStyles, initialViewFilters, defaultFields, defaultFieldsVersion }
+) {
 	if (!persisted) return base;
 	const merged = { ...base };
+	const fieldsVersionMismatch =
+		defaultFieldsVersion !== undefined &&
+		persisted[FIELDS_VERSION_KEY] !== defaultFieldsVersion;
 	for (const key of PERSISTED_VIEW_KEYS) {
-		if (persisted[key] !== undefined) merged[key] = persisted[key];
+		if (persisted[key] === undefined) continue;
+		// Skip persisted `fields` when the default-columns version has
+		// changed — fall back to the current defaults instead.
+		if (key === 'fields' && fieldsVersionMismatch) continue;
+		merged[key] = persisted[key];
+	}
+	if (fieldsVersionMismatch) {
+		merged.fields = defaultFields;
 	}
 	merged.layout = { ...(merged.layout || {}), styles: layoutStyles };
 	if (initialViewFilters && initialViewFilters.length) {

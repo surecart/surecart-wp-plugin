@@ -1,5 +1,47 @@
 $padding-size: 20px;
 
+// Enhanced-view mode — toggled by the eye-icon in the dataview header.
+//
+// `FullscreenMode` from `@wordpress/interface` adds `is-fullscreen-mode` to
+// the body. WP core CSS already hides `#wpadminbar` and `#adminmenuwrap` for
+// that class. We strip the PHP-rendered SureCart breadcrumb so the dark
+// sidebar can reach the very top, but keep `.sc-list-header` (the page title
+// + "Add new" button) — it should mount inside the white canvas like WC's
+// experimental products app does.
+body.is-fullscreen-mode.sc-enhanced-view {
+	#sc-admin-header {
+		display: none !important;
+	}
+
+	// Lock body / wrapper scroll so the only scrollable region is the
+	// inner white canvas inside InterfaceSkeleton. Mirrors what Site
+	// Editor does on `body.is-fullscreen-mode`.
+	&,
+	html,
+	#wpwrap,
+	#wpcontent,
+	#wpbody,
+	#wpbody-content {
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	#wpbody-content {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.wrap {
+		margin: 0;
+		padding: 0;
+		height: 100vh;
+	}
+
+	.sc-dataview-list-wrapper[data-enhanced-view='on'] {
+		height: 100vh;
+	}
+}
+
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
 	.dataviews-view-table {
