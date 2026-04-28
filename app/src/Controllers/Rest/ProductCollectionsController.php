@@ -21,4 +21,12 @@ class ProductCollectionsController extends RestController {
 	 * @var string
 	 */
 	protected $class = ProductCollection::class;
+
+	/**
+	 * Resource slug for the dynamic list filter hooks
+	 * (`surecart/product_collections/list/query_args`, `.../list/response`).
+	 *
+	 * @var string
+	 */
+	protected $resource = 'product_collections';
 }

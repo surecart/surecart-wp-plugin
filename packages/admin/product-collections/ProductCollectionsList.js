@@ -1,64 +1,44 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { jsx } from '@emotion/react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback } from 'react';
-import { Icon } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
-import { trash, edit, external } from '@wordpress/icons';
 import {
 	DataViewListLayout,
 	useDataViewState,
-	ConfirmDeleteModal,
+	applyDefaultFieldsExtensions,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
+import { buildCollectionFields } from './list/fields';
+import { buildCollectionActions } from './list/actions';
+import {
+	buildCollectionsQuery,
+	COLLECTIONS_DEFAULT_SORT,
+	COLLECTIONS_SORT_MAP,
+} from './list/buildQuery';
 import './product-collections-list-style.scss';
 
-/**
- * Column width styles via DataViews layout.styles API.
- */
 const LAYOUT_STYLES = {
 	name: { width: '30%' },
 	products_count: { width: '100px' },
 };
 
-/**
- * Default visible fields — mirrors PHP get_columns().
- */
 const DEFAULT_FIELDS = ['name', 'products_count', 'description', 'created'];
-
 const PREFERENCE_KEY = 'product-collections-list-view';
 
-/**
- * Get the collection edit URL.
- */
-function getEditUrl(id) {
-	return addQueryArgs('admin.php', {
-		page: 'sc-product-collections',
-		action: 'edit',
-		id,
-	});
-}
-
-/**
- * Get the products list URL filtered by collection.
- */
-function getProductsUrl(collectionId) {
-	return addQueryArgs('admin.php', {
-		page: 'sc-products',
-		sc_collection: collectionId,
-	});
-}
-
-/**
- * Product Collections list DataView component.
- */
-export default function ProductCollectionsList({ navigation }) {
+export default ({ navigation }) => {
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+
+	const defaultFields = useMemo(
+		() =>
+			applyDefaultFieldsExtensions('product-collections', DEFAULT_FIELDS),
+		[]
+	);
 
 	const {
 		view,
@@ -69,91 +49,23 @@ export default function ProductCollectionsList({ navigation }) {
 		invalidateList,
 	} = useDataViewState({
 		entity: 'product-collection',
-		defaultSort: { field: 'created_at', direction: 'desc' },
-		defaultFields: DEFAULT_FIELDS,
+		defaultSort: COLLECTIONS_DEFAULT_SORT,
+		sortMap: COLLECTIONS_SORT_MAP,
+		defaultFields,
 		layoutStyles: LAYOUT_STYLES,
 		preferenceKey: PREFERENCE_KEY,
+		buildQueryArgs: ({ view: currentView }) => {
+			const full = buildCollectionsQuery(currentView);
+			delete full.per_page;
+			delete full.page;
+			delete full.sort;
+			delete full.query;
+			return full;
+		},
 	});
 
 	const fields = useMemo(
-		() => [
-			{
-				id: 'name',
-				label: __('Name', 'surecart'),
-				enableSorting: false,
-				enableGlobalSearch: true,
-				render: ({ item }) => {
-					return (
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								gap: 12px;
-							`}
-						>
-							<div>
-								<a
-									href={getEditUrl(item?.id)}
-									onClick={(e) => {
-										e.preventDefault();
-										navigation.goToEdit(item?.id);
-									}}
-									css={css`
-										font-weight: 600;
-										color: var(--sc-color-gray-900);
-										text-decoration: none;
-										&:hover {
-											color: var(--sc-color-primary-500);
-										}
-									`}
-								>
-									{item?.name}
-								</a>
-							</div>
-						</div>
-					);
-				},
-			},
-			{
-				id: 'products_count',
-				label: __('Products', 'surecart'),
-				enableSorting: false,
-				render: ({ item }) => (
-					<a
-						href={getProductsUrl(item?.id)}
-						css={css`
-							color: var(--sc-color-primary-500);
-							text-decoration: none;
-							&:hover {
-								text-decoration: underline;
-							}
-						`}
-					>
-						{item?.products_count ?? 0}
-					</a>
-				),
-			},
-			{
-				id: 'description',
-				label: __('Description', 'surecart'),
-				enableSorting: false,
-				render: ({ item }) => {
-					if (!item?.description) {
-						return '-';
-					}
-					const stripped = item.description.replace(/<[^>]*>/g, '');
-					return stripped.length > 50
-						? stripped.substring(0, 50) + '...'
-						: stripped;
-				},
-			},
-			{
-				id: 'created',
-				label: __('Created', 'surecart'),
-				enableSorting: false,
-				render: ({ item }) => item?.created_at_date_time || '-',
-			},
-		],
+		() => buildCollectionFields({ navigation }),
 		[navigation]
 	);
 
@@ -166,13 +78,10 @@ export default function ProductCollectionsList({ navigation }) {
 							'surecart',
 							'product-collection',
 							item.id,
-							{
-								throwOnError: true,
-							}
+							{ throwOnError: true }
 						)
 					)
 				);
-				// Re-fetch the list so deleted items disappear.
 				invalidateList();
 				createSuccessNotice(
 					sprintf(
@@ -192,8 +101,6 @@ export default function ProductCollectionsList({ navigation }) {
 						__('Failed to delete collection.', 'surecart'),
 					{ type: 'snackbar' }
 				);
-
-				// Rethrow so ConfirmDeleteModal keeps itself open on failure.
 				throw error;
 			}
 		},
@@ -206,51 +113,8 @@ export default function ProductCollectionsList({ navigation }) {
 	);
 
 	const actions = useMemo(
-		() => [
-			{
-				id: 'edit',
-				label: __('Edit', 'surecart'),
-				icon: <Icon icon={edit} />,
-				isPrimary: true,
-				callback: ([item]) => {
-					navigation.goToEdit(item.id);
-				},
-			},
-			{
-				id: 'view',
-				label: __('View Collection', 'surecart'),
-				icon: <Icon icon={external} />,
-				isPrimary: true,
-				isEligible: (item) => !!item.permalink,
-				callback: ([item]) => {
-					window.open(item.permalink, '_blank');
-				},
-			},
-			{
-				id: 'delete',
-				icon: <Icon icon={trash} />,
-				label: __('Delete permanently', 'surecart'),
-				isDestructive: true,
-				supportsBulk: true,
-				RenderModal: ({ items, closeModal }) => (
-					<ConfirmDeleteModal
-						items={items}
-						closeModal={closeModal}
-						onDelete={handleDelete}
-						message={sprintf(
-							_n(
-								'Are you sure you want to permanently delete %d collection?',
-								'Are you sure you want to permanently delete %d collections?',
-								items.length,
-								'surecart'
-							),
-							items.length
-						)}
-					/>
-				),
-			},
-		],
-		[handleDelete, navigation]
+		() => buildCollectionActions({ navigation, handleDelete }),
+		[navigation, handleDelete]
 	);
 
 	return (
@@ -275,4 +139,4 @@ export default function ProductCollectionsList({ navigation }) {
 			/>
 		</>
 	);
-}
+};

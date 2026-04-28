@@ -4,7 +4,17 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as preferencesStore } from '@wordpress/preferences';
 
 export const PREFERENCES_SCOPE = 'surecart/dataview-lists';
-const PERSISTED_VIEW_KEYS = ['fields', 'layout', 'perPage', 'sort', 'filters'];
+
+const PERSISTED_VIEW_KEYS = [
+	'type',
+	'fields',
+	'layout',
+	'perPage',
+	'page',
+	'sort',
+	'search',
+	'filters',
+];
 
 function readPersistedView(preferenceKey) {
 	if (!preferenceKey) return null;

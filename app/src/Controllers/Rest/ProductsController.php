@@ -16,6 +16,14 @@ class ProductsController extends RestController {
 	protected $class = Product::class;
 
 	/**
+	 * Resource slug for the dynamic list filter hooks
+	 * (`surecart/products/list/query_args`, `.../list/response`).
+	 *
+	 * @var string
+	 */
+	protected $resource = 'products';
+
+	/**
 	 * Run some middleware to run before request.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
