@@ -121,7 +121,7 @@ class WooCommerceImportTask extends Task {
 		$import = ( new ProductImport() )->create( [ 'data' => $products_import_batch ] );
 
 		if ( is_wp_error( $import ) ) {
-			error_log( 'SureCart WooCommerce Sync: Import failed - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( 'SureCart WooCommerce Sync: Import failed - ' . esc_html( $import->get_error_message() ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 			// Track failed batch products so they appear on the results page.
 			$this->trackFailedBatch( $products_import_batch, $import->get_error_message() );

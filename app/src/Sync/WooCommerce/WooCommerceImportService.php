@@ -200,14 +200,15 @@ class WooCommerceImportService {
 		global $wpdb;
 
 		// One query: join posts + postmeta, filter to sc_product with wc_product_id.
-		$rows = $wpdb->get_col(
+		$rows = $wpdb->get_col( $wpdb->prepare(
 			"SELECT pm.meta_value
 			 FROM {$wpdb->postmeta} pm
 			 JOIN {$wpdb->posts} p ON p.ID = pm.post_id
 			 WHERE p.post_type = 'sc_product'
 			   AND pm.meta_key = 'product'
-			   AND pm.meta_value LIKE '%wc_product_id%'"
-		);
+			   AND pm.meta_value LIKE %s",
+			$wpdb->esc_like( '%wc_product_id%' )
+		) );
 
 		$valid_ids = [];
 		foreach ( $rows as $serialized ) {

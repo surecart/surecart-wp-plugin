@@ -443,19 +443,26 @@ class WooCommerceProductMapper {
 		// Step 2: Batch-fetch existing collections from API (single request).
 		$uncached_slugs = array_keys( $uncached );
 		try {
-			$results = \SureCart\Models\ProductCollection::where(
-				[
-					'limit' => min( count( $uncached_slugs ) * 2, 100 ),
-				]
-			)->get();
+			// API doesn't support reliable slug filtering, so check each collection individually
+			foreach ( $uncached as $cache_key => $data ) {
+				$wc_term = $data['term'];
 
-			if ( ! is_wp_error( $results ) && is_array( $results ) ) {
-				// Build a slug -> collection map from results.
-				foreach ( $results as $result ) {
-					if ( ! empty( $result->slug ) && ! empty( $result->id ) ) {
-						$result_slug = strtolower( trim( $result->slug ) );
-						if ( isset( $uncached[ $result_slug ] ) && ! isset( $this->collections_cache[ $result_slug ] ) ) {
-							$this->collections_cache[ $result_slug ] = $result;
+				// Try to find existing collection by name using query search
+				$search_results = \SureCart\Models\ProductCollection::where(
+					[
+						'query' => $wc_term->name,
+						'limit' => 10,
+					]
+				)->get();
+
+				if ( ! is_wp_error( $search_results ) && is_array( $search_results ) ) {
+					foreach ( $search_results as $result ) {
+						// Check for exact name match (case-insensitive)
+						if ( ! empty( $result->name ) && ! empty( $result->id ) ) {
+							if ( strtolower( trim( $result->name ) ) === strtolower( trim( $wc_term->name ) ) ) {
+								$this->collections_cache[ $cache_key ] = $result;
+								break; // Found exact match, stop looking
+							}
 						}
 					}
 				}
@@ -722,7 +729,7 @@ class WooCommerceProductMapper {
 
 				// Tax.
 				'tax_enabled'                  => $variation->is_taxable(),
-				'tax_category'                 => $variation->is_virtual() ? 'digital' : 'tangible',
+				'tax_category'                 => $this->isSubscriptionProduct( $product ) ? 'digital' : ( $variation->is_virtual() ? 'digital' : 'tangible' ),
 
 				// Metadata.
 				'metadata'                     => [
@@ -917,7 +924,7 @@ class WooCommerceProductMapper {
 		// Determine tax category.
 		$tax_category = $is_digital ? 'digital' : 'tangible';
 		if ( $this->isSubscriptionProduct( $product ) ) {
-			$tax_category = 'saas';
+			$tax_category = 'digital';
 		}
 
 		return [
