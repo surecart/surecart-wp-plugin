@@ -133,6 +133,22 @@ class LoginRestServiceProviderTest extends SureCartUnitTestCase {
 	/**
 	 * @group login
 	 */
+	public function test_login_returns_avatar_url() {
+		$request = new \WP_REST_Request('POST', '/surecart/v1/login');
+		$request->set_body_params([
+			'login'    => $this->user->user_login,
+			'password' => 'testpassword',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertArrayHasKey('avatar_url', $data, 'Login response should include avatar_url.');
+		$this->assertNotEmpty($data['avatar_url'], 'avatar_url should not be empty.');
+	}
+
+	/**
+	 * @group login
+	 */
 	public function test_login_returns_name_and_email() {
 		$request = new \WP_REST_Request('POST', '/surecart/v1/login');
 		$request->set_body_params([

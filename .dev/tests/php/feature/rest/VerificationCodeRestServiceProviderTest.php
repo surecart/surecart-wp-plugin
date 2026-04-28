@@ -105,6 +105,30 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 	/**
 	 * @group login
 	 */
+	public function test_verify_success_returns_avatar_url() {
+		$user = self::factory()->user->create_and_get();
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => $user->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertArrayHasKey('avatar_url', $data, 'Verify response should include avatar_url.');
+		$this->assertNotEmpty($data['avatar_url'], 'avatar_url should not be empty.');
+	}
+
+	/**
+	 * @group login
+	 */
 	public function test_verify_success_returns_customer_fallback_data() {
 		$user = self::factory()->user->create_and_get([
 			'display_name' => 'Fallback Name',

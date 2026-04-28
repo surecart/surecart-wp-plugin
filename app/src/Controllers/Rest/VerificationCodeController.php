@@ -102,6 +102,7 @@ class VerificationCodeController extends RestController {
 		}
 
 		$verify->name         = $user->display_name ?? $user->user_login;
+		$verify->avatar_url   = get_avatar_url( $user->user_email, [ 'size' => 48 ] );
 		$verify->nonce        = ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' );
 		$redirect_to          = $request->get_param( 'redirect_to' );
 		$redirect_url         = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
