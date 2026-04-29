@@ -7,18 +7,23 @@ import {
 	__experimentalHStack as HStack,
 } from '@wordpress/components';
 
-export default function ConfirmDeleteModal({
+// Generic confirm modal for dataview actions. Default label/style is for
+// a destructive action; pass `confirmLabel` and `isDestructive={false}`
+// for non-destructive flows like Archive.
+export default function ConfirmActionModal({
 	items,
 	closeModal,
-	onDelete,
+	onConfirm,
 	message,
+	confirmLabel = __('Delete', 'surecart'),
+	isDestructive = true,
 }) {
 	const [isBusy, setIsBusy] = useState(false);
 
 	const handleConfirm = async () => {
 		setIsBusy(true);
 		try {
-			await onDelete(items);
+			await onConfirm(items);
 			closeModal();
 		} catch (error) {
 			// Keep modal open so the user can retry or cancel explicitly.
@@ -41,12 +46,12 @@ export default function ConfirmDeleteModal({
 				</Button>
 				<Button
 					variant="primary"
-					isDestructive
+					isDestructive={isDestructive}
 					isBusy={isBusy}
 					disabled={isBusy}
 					onClick={handleConfirm}
 				>
-					{__('Delete', 'surecart')}
+					{confirmLabel}
 				</Button>
 			</HStack>
 		</VStack>

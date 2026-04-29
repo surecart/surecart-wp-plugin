@@ -197,3 +197,15 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 		display: none;
 	}
 }
+
+// Astra (and other themes) leak `.components-modal__header .components-button
+// { width: 60px; height: 60px }` into every WP admin Modal — making the close
+// (X) icon oversized. Restore WordPress's default size on our admin screens.
+body[class*='surecart_page_'] {
+	.components-modal__header .components-button.has-icon {
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
+		min-height: 32px;
+	}
+}

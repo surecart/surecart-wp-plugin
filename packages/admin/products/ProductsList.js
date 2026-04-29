@@ -152,16 +152,34 @@ export default ({ navigation }) => {
 		async (items) => {
 			setIsMutating(true);
 			try {
-				await Promise.all(
-					items.map((item) =>
-						saveEntityRecord(
-							'surecart',
-							'product',
-							{ id: item.id, archived: !item.archived },
-							{ throwOnError: true }
-						)
-					)
-				);
+				if (items.length === 1) {
+					// Single mutation — go direct so core-data caches the
+					// optimistic update and the row updates instantly.
+					const item = items[0];
+					await saveEntityRecord(
+						'surecart',
+						'product',
+						{ id: item.id, archived: !item.archived },
+						{ throwOnError: true }
+					);
+				} else {
+					// Bulk — submit one Batch API request and let the platform
+					// process N PATCHes asynchronously. Far kinder to rate
+					// limits than the previous N-fanout from the browser.
+					await apiFetch({
+						path: '/surecart/v1/batches',
+						method: 'POST',
+						data: {
+							batch_operations: items.map((item) => ({
+								http_method: 'PATCH',
+								path: `/v1/products/${item.id}`,
+								body: {
+									product: { archived: !item.archived },
+								},
+							})),
+						},
+					});
+				}
 				invalidateList();
 				createSuccessNotice(
 					items.length === 1
@@ -169,9 +187,10 @@ export default ({ navigation }) => {
 							? __('Product unarchived.', 'surecart')
 							: __('Product archived.', 'surecart')
 						: sprintf(
+								/* translators: %d is the number of products in the batch. */
 								_n(
-									'%d product updated.',
-									'%d products updated.',
+									'Queued %d product for update. Refresh in a moment to see the result.',
+									'Queued %d products for update. Refresh in a moment to see the result.',
 									items.length,
 									'surecart'
 								),

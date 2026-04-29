@@ -1,10 +1,8 @@
-/** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { jsx } from '@emotion/react';
 import { Icon } from '@wordpress/components';
 import { trash, edit, external } from '@wordpress/icons';
 import {
-	ConfirmDeleteModal,
+	ConfirmActionModal,
 	applyActionExtensions,
 } from '../../../components/dataview-list';
 
@@ -32,10 +30,12 @@ export const buildCollectionActions = ({ navigation, handleDelete }) => {
 			isDestructive: true,
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => (
-				<ConfirmDeleteModal
+				<ConfirmActionModal
 					items={items}
 					closeModal={closeModal}
-					onDelete={handleDelete}
+					onConfirm={handleDelete}
+					confirmLabel={__('Delete', 'surecart')}
+					isDestructive={true}
 					message={sprintf(
 						_n(
 							'Are you sure you want to permanently delete %d collection?',
