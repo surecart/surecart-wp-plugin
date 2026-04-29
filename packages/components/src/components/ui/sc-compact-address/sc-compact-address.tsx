@@ -141,8 +141,12 @@ export class ScCompactAddress {
   }
 
   async fetchUserCountry() {
+    if (this.address?.country) {
+      return;
+    }
+
     const countryCode = await getCurrentUserCountryCode();
-    if (countryCode && !this.address?.country) {
+    if (countryCode) {
       this.updateAddress({ country: countryCode });
     }
   }
