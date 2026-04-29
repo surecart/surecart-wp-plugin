@@ -41,11 +41,21 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
-		<?php if ( ! empty( $suffix ) || ! empty( $report_url ) ) : ?>
+		<?php if ( ! empty( $suffix ) || ! empty( $report_url ) || ! empty( $enhanced_view_promo ) ) : ?>
 		<div class="sc-admin-suffix">
 			<?php
 			if ( ! empty( $suffix ) ) {
 				echo wp_kses_post( $suffix );
+			}
+			?>
+			<?php
+			if ( ! empty( $enhanced_view_promo ) ) {
+				\SureCart::render(
+					'layouts/partials/enhanced-views-promo',
+					[
+						'return_url' => is_string( $enhanced_view_promo ) ? $enhanced_view_promo : admin_url(),
+					]
+				);
 			}
 			?>
 			<?php

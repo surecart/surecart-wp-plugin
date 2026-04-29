@@ -21,11 +21,12 @@ class ProductCollectionsController extends AdminController {
 
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
+				'breadcrumbs'         => [
 					'product-collections' => [
 						'title' => __( 'Product Collections', 'surecart' ),
 					],
 				],
+				'enhanced_view_promo' => admin_url( 'admin.php?page=sc-product-collections' ),
 			),
 		);
 

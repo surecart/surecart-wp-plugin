@@ -62,14 +62,25 @@ trait RendersEnhancedAdminView {
 		if ( null !== $breadcrumb_key && null !== $title ) {
 			$this->withHeader(
 				[
-					'breadcrumbs' => [
+					'breadcrumbs'         => [
 						$breadcrumb_key => [ 'title' => $title ],
 					],
+					'enhanced_view_promo' => $this->currentAdminPageUrl(),
 				]
 			);
 		}
 
 		return \SureCart::view( $view );
+	}
+
+	/**
+	 * Get the URL of the current admin page, for redirecting back after toggling enhanced views.
+	 *
+	 * @return string
+	 */
+	private function currentAdminPageUrl(): string {
+		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return $page ? admin_url( 'admin.php?page=' . $page ) : admin_url();
 	}
 
 	/**
