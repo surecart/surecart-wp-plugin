@@ -301,6 +301,8 @@ export default ({ navigation }) => {
 							window?.scData?.home_url ||
 							window?.location?.origin
 						}
+						siteIconUrl={window?.scData?.site_icon_url || ''}
+						dashboardHref="index.php"
 						heading={__('Products', 'surecart')}
 						description={__(
 							'Add, edit, and manage the products you sell in your store.',

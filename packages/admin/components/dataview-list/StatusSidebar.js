@@ -1,8 +1,52 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import { __ } from '@wordpress/i18n';
-import { __experimentalHStack as HStack, Button } from '@wordpress/components';
-import { Icon, chevronLeft, external } from '@wordpress/icons';
+import {
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+	__experimentalHeading as Heading,
+	__experimentalText as Text,
+	__experimentalItemGroup as ItemGroup,
+	__experimentalItem as Item,
+	Button,
+	VisuallyHidden,
+} from '@wordpress/components';
+import { chevronLeft } from '@wordpress/icons';
+
+const SiteIcon = ({ iconUrl }) => {
+	if (iconUrl) {
+		return (
+			<img
+				alt=""
+				src={iconUrl}
+				css={css`
+					display: block;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				`}
+			/>
+		);
+	}
+	return (
+		<span
+			aria-hidden="true"
+			css={css`
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				height: 100%;
+				background: var(--wp-admin-theme-color, #3858e9);
+				color: #fff;
+				font-size: 12px;
+				font-weight: 600;
+			`}
+		>
+			{siteName ? siteName.charAt(0).toUpperCase() : ''}
+		</span>
+	);
+};
 
 export default ({
 	heading,
@@ -13,6 +57,8 @@ export default ({
 	onBack,
 	siteName,
 	siteHref,
+	siteIconUrl,
+	dashboardHref,
 }) => (
 	<div
 		role="region"
@@ -21,207 +67,197 @@ export default ({
 			display: flex;
 			flex-direction: column;
 			height: 100%;
-			width: 280px;
-			min-width: 280px;
+			margin-top: -1px;
+			width: 320px;
+			min-width: 320px;
 			background: #1e1e1e;
 			color: #e0e0e0;
 
-			.components-button {
+			/* Dark-theme treatment over WP component primitives. Site Editor
+			   does the same trick — neutral components painted dark by their
+			   wrapping context. */
+			.components-button,
+			.components-item {
 				color: inherit;
 			}
-			.components-button:not(:disabled):hover {
+			.components-button:not(:disabled):hover,
+			.components-item:hover {
 				color: #fff;
 				background: rgba(255, 255, 255, 0.08);
 			}
-			.components-button:not(:disabled):focus-visible {
+			.components-button:focus-visible,
+			.components-item:focus-visible {
 				box-shadow: 0 0 0 2px var(--wp-admin-theme-color, #3858e9);
 				outline: 2px solid transparent;
 			}
-			.components-button svg {
+			.components-button svg,
+			.components-item svg {
 				fill: currentColor;
 			}
 		`}
 	>
 		{siteName ? (
-			<div
+			<HStack
+				spacing={2}
+				justify="flex-start"
+				alignment="center"
 				css={css`
 					padding: 12px 16px;
-					background: #1e1e1e;
-					margin-top: -1px;
 					border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 				`}
 			>
-				<a
-					href={siteHref || '#'}
-					target="_blank"
-					rel="noopener noreferrer"
+				<Button
+					href={dashboardHref || 'index.php'}
+					label={__('Go to the Dashboard', 'surecart')}
 					css={css`
-						display: inline-flex;
-						align-items: center;
-						gap: 8px;
-						color: #fff;
-						font-weight: 500;
-						text-decoration: none;
-						min-width: 0;
-
-						&:hover .sc-status-sidebar__site-arrow {
-							opacity: 1;
-							transform: translate(2px, -2px);
-						}
+						width: 32px;
+						height: 32px;
+						padding: 0 !important;
+						border-radius: 4px;
+						overflow: hidden;
+						flex: 0 0 32px;
 					`}
 				>
-					<span
-						aria-hidden="true"
+					<SiteIcon iconUrl={siteIconUrl} />
+				</Button>
+				<div
+					css={css`
+						flex: 1 1 auto;
+						min-width: 0;
+					`}
+				>
+					<Button
+						href={siteHref || '#'}
+						target="_blank"
+						variant="link"
 						css={css`
-							display: inline-flex;
-							align-items: center;
-							justify-content: center;
-							width: 24px;
-							height: 24px;
-							border-radius: 2px;
-							background: var(--wp-admin-theme-color, #3858e9);
-							color: #fff;
-							font-size: 12px;
-							font-weight: 600;
-							flex: 0 0 24px;
-						`}
-					>
-						S
-					</span>
-					<span
-						css={css`
+							color: #fff !important;
+							font-weight: 500;
+							max-width: 100%;
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
+							text-decoration: none !important;
+							&:hover {
+								color: #fff !important;
+								text-decoration: underline !important;
+							}
 						`}
 					>
 						{siteName}
-					</span>
-					<span
-						aria-hidden="true"
-						className="sc-status-sidebar__site-arrow"
-						css={css`
-							display: inline-flex;
-							align-items: center;
-							color: #949494;
-							opacity: 0.7;
-							transition: opacity 120ms ease, transform 120ms ease;
-						`}
-					>
-						<Icon icon={external} size={16} />
-					</span>
-				</a>
-			</div>
+						<VisuallyHidden as="span">
+							{__('(opens in a new tab)', 'surecart')}
+						</VisuallyHidden>
+					</Button>
+				</div>
+			</HStack>
 		) : null}
 
 		{heading ? (
-			<div
+			<VStack
+				spacing={4}
 				css={css`
-					padding: 16px 16px 8px;
+					padding: 24px 16px 16px;
 				`}
 			>
-				<HStack
-					spacing={1}
-					justify="flex-start"
-					alignment="center"
-					css={css`
-						margin-left: -8px;
-					`}
-				>
+				<HStack spacing={1} alignment="center" justify="flex-start">
 					{onBack ? (
 						<Button
 							icon={chevronLeft}
 							label={__('Back', 'surecart')}
 							onClick={onBack}
-							size="small"
+							size="compact"
+							css={css`
+								margin-left: -6px;
+							`}
 						/>
 					) : null}
-					<span
+					<Heading
+						level={2}
 						css={css`
-							font-size: 17px;
-							font-weight: 500;
-							color: #fff;
-							line-height: 1.2;
+							color: #fff !important;
+							margin: 0 !important;
 						`}
 					>
 						{heading}
-					</span>
+					</Heading>
 				</HStack>
 				{description ? (
-					<p
+					<Text
 						css={css`
-							margin: 8px 0 0;
-							color: #949494;
-							font-size: 13px;
-							line-height: 1.5;
+							color: #949494 !important;
 						`}
 					>
 						{description}
-					</p>
+					</Text>
 				) : null}
-			</div>
+			</VStack>
 		) : null}
 
-		<div
+		<ItemGroup
 			role="tablist"
 			aria-label={heading || __('Status', 'surecart')}
 			css={css`
-				padding: 4px 8px 16px;
+				padding: 8px 8px 16px;
 			`}
 		>
 			{tabs.map((tab) => {
 				const isActive = tab.value === activeValue;
 				return (
-					<Button
+					<Item
 						key={String(tab.value)}
 						role="tab"
 						aria-selected={isActive}
 						aria-current={isActive ? 'page' : undefined}
 						onClick={() => onChange(tab.value)}
-						icon={tab.icon}
 						css={css`
-							width: 100%;
-							justify-content: flex-start !important;
-							padding: 6px 12px !important;
-							height: auto !important;
-							min-height: 36px;
-							margin: 1px 0;
-							border-radius: 2px;
-							font-weight: 400;
+							cursor: pointer;
+							padding: 10px 12px !important;
+							border-radius: 4px;
+							font-size: 14px !important;
 
 							${isActive &&
 							css`
 								color: #fff !important;
-								background: rgba(
-									255,
-									255,
-									255,
-									0.12
-								) !important;
+								font-weight: 600 !important;
 							`}
 						`}
 					>
-						<span
-							css={css`
-								flex: 1 1 auto;
-								text-align: left;
-							`}
-						>
-							{tab.label}
-						</span>
-						{typeof tab.count === 'number' && (
+						<HStack spacing={3} alignment="center">
+							{tab.icon ? (
+								<span
+									aria-hidden="true"
+									css={css`
+										display: inline-flex;
+										flex: 0 0 24px;
+									`}
+								>
+									{tab.icon}
+								</span>
+							) : null}
 							<span
 								css={css`
-									font-size: 12px;
-									color: #949494;
+									flex: 1 1 auto;
+									text-align: left;
 								`}
 							>
-								{tab.count}
+								{tab.label}
 							</span>
-						)}
-					</Button>
+							{typeof tab.count === 'number' && (
+								<span
+									css={css`
+										font-size: 13px;
+										color: #949494;
+										font-weight: 400;
+									`}
+								>
+									{tab.count}
+								</span>
+							)}
+						</HStack>
+					</Item>
 				);
 			})}
-		</div>
+		</ItemGroup>
 	</div>
 );

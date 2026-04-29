@@ -204,6 +204,8 @@ abstract class AdminModelEditController {
 		$this->data['locale']               = str_replace( '_', '-', determine_locale() );
 		$this->data['root_url']             = esc_url_raw( get_rest_url() );
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
+		$this->data['site_name']            = get_bloginfo( 'name' );
+		$this->data['site_icon_url']        = get_site_icon_url( 96 );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
 		$this->data['collection_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) );
