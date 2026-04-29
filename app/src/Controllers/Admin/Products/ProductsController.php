@@ -29,12 +29,13 @@ class ProductsController extends AdminController {
 		// add header.
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
+				'breadcrumbs'         => [
 					'products' => [
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
+				'suffix'              => isset( $_GET['debug'] ) ? $this->syncDropdown() : null,
+				'enhanced_view_promo' => admin_url( 'admin.php?page=sc-products' ),
 			),
 		);
 

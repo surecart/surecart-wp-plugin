@@ -16,6 +16,27 @@ class SettingService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerSettings' ] );
+		add_action( 'admin_post_sc_set_enhanced_admin_views', [ $this, 'handleSetEnhancedAdminViews' ] );
+	}
+
+	/**
+	 * Handle setting enhanced admin views.
+	 *
+	 * @return void
+	 */
+	public function handleSetEnhancedAdminViews() {
+		check_admin_referer( 'sc_set_enhanced_admin_views' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to change this setting.', 'surecart' ), '', [ 'response' => 403 ] );
+		}
+
+		$value = isset( $_POST['value'] ) ? (bool) absint( wp_unslash( $_POST['value'] ) ) : false;
+		update_option( 'surecart_enhanced_admin_views', $value );
+
+		$redirect = isset( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : admin_url();
+		wp_safe_redirect( $redirect );
+		exit;
 	}
 
 	/**
