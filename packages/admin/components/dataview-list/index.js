@@ -1,6 +1,6 @@
 export { default as DataViewListLayout } from './DataViewListLayout';
 export { default as useDataViewState } from './useDataViewState';
-export { default as ConfirmDeleteModal } from './ConfirmDeleteModal';
+export { default as ConfirmActionModal } from './ConfirmActionModal';
 export { default as StatusTabs } from './StatusTabs';
 export {
 	default as useUrlFilterSync,

@@ -80,6 +80,7 @@ return array(
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
 		\SureCart\Rest\ProductCollectionsRestServiceProvider::class,
+		\SureCart\Rest\BatchesRestServiceProvider::class,
 		\SureCart\Rest\PriceRestServiceProvider::class,
 		\SureCart\Rest\CouponRestServiceProvider::class,
 		\SureCart\Rest\PromotionRestServiceProvider::class,
