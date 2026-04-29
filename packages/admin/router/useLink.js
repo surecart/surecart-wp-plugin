@@ -1,15 +1,15 @@
-import { useHistory } from '.';
 import { addQueryArgs } from '@wordpress/url';
 
+import { useNavigationConfirm } from './NavigationConfirmProvider';
+
 export const useLink = (params) => {
-	const history = useHistory();
+	const { requestNavigation } = useNavigationConfirm();
 
 	const href = addQueryArgs(window.location.pathname, params);
 
 	const onClick = (event) => {
 		event.preventDefault();
-		history.push(params);
-		window.scrollTo(0, 0);
+		requestNavigation(params);
 	};
 
 	return { href, onClick };

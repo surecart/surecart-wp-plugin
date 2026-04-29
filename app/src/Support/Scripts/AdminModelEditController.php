@@ -105,7 +105,7 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'admin_head',
 			function () {
@@ -169,6 +169,9 @@ abstract class AdminModelEditController {
 			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
+		}
+		if ( in_array( 'google_map_api_key', $this->with_data ) ) {
+			$this->data['google_map_api_key'] = \SureCart::googleMaps()->getApiKey();
 		}
 
 		// pass entitlements to page.

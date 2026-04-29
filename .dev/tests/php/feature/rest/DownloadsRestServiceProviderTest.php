@@ -58,6 +58,110 @@ class DownloadRestServiceProviderTest extends SureCartUnitTestCase
 		];
 	}
 
+	public function listWithVariantIdsProvider() {
+		return [
+			'Single variant ID'    => [ [ 'test-variant-id' ] ],
+			'Multiple variant IDs' => [ [ 'variant-id-1', 'variant-id-2' ] ],
+		];
+	}
+
+	/**
+	 * Test that variant_ids filter is forwarded to the API call.
+	 *
+	 * @dataProvider listWithVariantIdsProvider
+	 */
+	public function test_list_with_variant_ids_filter( $variant_ids ) {
+		$requests = \Mockery::mock( RequestService::class );
+		\SureCart::alias( 'request', function () use ( $requests ) {
+			return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
+		} );
+
+		$requests->shouldReceive( 'makeRequest' )
+			->withArgs( function ( $endpoint, $args ) use ( $variant_ids ) {
+				return 'downloads' === $endpoint
+					&& isset( $args['query']['variant_ids'] )
+					&& $args['query']['variant_ids'] === $variant_ids;
+			} )
+			->once()
+			->andReturn( (object) [
+				'id' => 'test',
+			] );
+
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap( 'read_sc_downloads' );
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'variant_ids' => $variant_ids ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 200, $response->get_status() );
+	}
+
+	/**
+	 * Test that variant_ids filter is denied for unauthorized users.
+	 */
+	public function test_list_with_variant_ids_filter_unauthorized() {
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'variant_ids' => [ 'test-variant-id' ] ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 403, $response->get_status() );
+	}
+
+	public function listWithProductIdsProvider() {
+		return [
+			'Single product ID'    => [ [ 'test-product-id' ] ],
+			'Multiple product IDs' => [ [ 'product-id-1', 'product-id-2' ] ],
+		];
+	}
+
+	/**
+	 * Test that product_ids filter is forwarded to the API call.
+	 *
+	 * @dataProvider listWithProductIdsProvider
+	 */
+	public function test_list_with_product_ids_filter( $product_ids ) {
+		$requests = \Mockery::mock( RequestService::class );
+		\SureCart::alias( 'request', function () use ( $requests ) {
+			return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
+		} );
+
+		$requests->shouldReceive( 'makeRequest' )
+			->withArgs( function ( $endpoint, $args ) use ( $product_ids ) {
+				return 'downloads' === $endpoint
+					&& isset( $args['query']['product_ids'] )
+					&& $args['query']['product_ids'] === $product_ids;
+			} )
+			->once()
+			->andReturn( (object) [
+				'id' => 'test',
+			] );
+
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap( 'read_sc_downloads' );
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'product_ids' => $product_ids ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 200, $response->get_status() );
+	}
+
+	/**
+	 * Test that product_ids filter is denied for unauthorized users.
+	 */
+	public function test_list_with_product_ids_filter_unauthorized() {
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user( $user->ID );
+
+		$request = new \WP_REST_Request( 'GET', '/surecart/v1/downloads' );
+		$request->set_query_params( [ 'product_ids' => [ 'test-product-id' ] ] );
+		$response = rest_do_request( $request );
+		$this->assertSame( 403, $response->get_status() );
+	}
+
 	/**
 	 * @dataProvider requestProvider
 	 */

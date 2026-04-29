@@ -271,7 +271,7 @@ class PostSyncService {
 
 			$this->syncCollections( $post_id, $model );
 
-			// we need to do this because tax_input checks permissions for some ungodly reason.
+			// We need to use wp_set_post_terms() because tax_input performs its own permission checks.
 			wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
 			$values = $this->syncVariantValues( $model, $post_id );
@@ -337,7 +337,7 @@ class PostSyncService {
 		// set the collection terms.
 		$this->syncCollections( $post_id, $model );
 
-		// we need to do this because tax_input checks permissions for some ungodly reason.
+		// We need to use wp_set_post_terms() because tax_input performs its own permission checks.
 		wp_set_post_terms( $post_id, \SureCart::account()->id, 'sc_account' );
 
 		$values = $this->syncVariantValues( $model, $post_id );

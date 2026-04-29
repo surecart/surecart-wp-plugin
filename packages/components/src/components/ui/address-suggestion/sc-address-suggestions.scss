@@ -1,0 +1,160 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+sc-input {
+  margin-bottom: var(--sc-address-column-spacing, -1px);
+}
+
+.sc-address__suggestions {
+  position: absolute;
+  right: 0px;
+  // Must beat .sc-address__collapsible (9 / 10 on focus-within) in sc-address.scss.
+  z-index: var(--sc-address-suggestion-z-index, 11);
+  background: var(--sc-panel-background-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-height: var(--sc-panel-height, 350px);
+  width: 100%;
+  border: solid 1px var(--sc-panel-border-color);
+  border-radius: var(--sc-border-radius-medium);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(2px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &--body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  &--scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &--footer {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    font-size: var(--sc-font-size-small);
+    border-top: solid 1px var(--sc-color-gray-200);
+    background-color: var(--sc-panel-background-color);
+
+    button {
+      background: none;
+      border: none;
+      color: var(--sc-color-gray-600);
+      font-size: var(--sc-font-size-small);
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &--list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &--item {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--sc-font-sans);
+    font-size: var(--sc-font-size-medium);
+    font-weight: var(--sc-font-weight-normal);
+    color: var(--color);
+    background-color: var(--sc-panel-background-color);
+    transition: background-color 0.2s ease;
+
+    &:hover,
+    &.focused {
+      background-color: var(--sc-color-gray-100);
+      color: var(--sc-color-primary);
+    }
+
+    &:active {
+      background-color: var(--sc-color-primary-light);
+      color: var(--sc-color-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sc-focus-ring-color, var(--sc-color-primary));
+      outline-offset: -2px;
+    }
+
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    &--no-select {
+      cursor: auto;
+
+      &:hover,
+      &.focused,
+      &:active {
+        background-color: var(--sc-panel-background-color);
+        outline: none;
+      }
+    }
+
+    &--no-result {
+      color: var(--sc-color-gray-600);
+    }
+
+    &--powered-by {
+      font-size: var(--sc-font-size-small);
+      color: var(--sc-color-gray-600);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      padding: 0 0 0 20px;
+      margin-top: 1px;
+
+      a {
+        color: var(--sc-color-gray-600);
+        text-decoration: none;
+
+        span {
+          font-weight: var(--sc-font-weight-bold);
+        }
+      }
+    }
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

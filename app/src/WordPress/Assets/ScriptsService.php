@@ -132,6 +132,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
 		);
@@ -221,7 +222,7 @@ class ScriptsService {
 		// enqueue it.
 		wp_enqueue_script( 'surecart-components' );
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'wp_head',
 			function () {
@@ -365,6 +366,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
 		);
@@ -390,6 +392,7 @@ class ScriptsService {
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 					'checkout'  => \SureCart::pages()->url( 'checkout' ),
 				],
+				'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 			]
 		);
 

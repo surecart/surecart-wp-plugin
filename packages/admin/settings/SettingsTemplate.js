@@ -7,6 +7,7 @@ import { ScForm } from '@surecart/components-react';
 import { SnackbarList } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import Notifications from '../components/Notifications';
+import Notices from '../components/Notices';
 
 export default ({
 	title,
@@ -27,10 +28,19 @@ export default ({
 				styles={css`
 					:root {
 						--wp-admin-theme-color: var(--sc-color-primary-500);
+						--wp-components-color-accent: var(
+							--sc-color-primary-500
+						);
 						--wp-admin-theme-color-darker-10: var(
 							--sc-color-primary-500
 						);
+						--wp-components-color-accent-darker-10: var(
+							--sc-color-primary-500
+						);
 						--wp-admin-theme-color-darker-20: var(
+							--sc-color-primary-500
+						);
+						--wp-components-color-accent-darker-20: var(
 							--sc-color-primary-500
 						);
 						--sc-color-primary-text: #fff;
@@ -82,12 +92,24 @@ export default ({
 
 			<div
 				css={css`
-					display: grid;
-					gap: 3em;
+					margin-bottom: 3em;
+					> * ~ * {
+						margin-top: var(--sc-spacing-x-large);
+					}
 				`}
-				style={{ '--sc-form-row-spacing': 'var(--sc-spacing-large)' }}
 			>
-				{children}
+				<Notices margin="80px" />
+				<div
+					css={css`
+						display: grid;
+						gap: 3em;
+					`}
+					style={{
+						'--sc-form-row-spacing': 'var(--sc-spacing-large)',
+					}}
+				>
+					{children}
+				</div>
 			</div>
 
 			<Notifications
