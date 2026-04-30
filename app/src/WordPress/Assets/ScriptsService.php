@@ -222,7 +222,7 @@ class ScriptsService {
 		// enqueue it.
 		wp_enqueue_script( 'surecart-components' );
 
-		// fix shitty jetpack issues key hijacking issues.
+		// Fix Jetpack script key hijacking issues.
 		add_filter(
 			'wp_head',
 			function () {
