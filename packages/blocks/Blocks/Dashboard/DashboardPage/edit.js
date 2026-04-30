@@ -21,9 +21,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const blockProps = useBlockProps({
-		name,
-	});
+	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
@@ -55,6 +53,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 			</InspectorControls>
 			<div {...blockProps}>
 				<ScTabPanel
+					name={name}
 					className={instanceClass}
 					{...innerBlocksProps}
 				></ScTabPanel>
