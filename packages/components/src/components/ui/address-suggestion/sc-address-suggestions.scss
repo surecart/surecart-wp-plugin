@@ -10,7 +10,8 @@ sc-input {
 .sc-address__suggestions {
   position: absolute;
   right: 0px;
-  z-index: 9;
+  // Must beat .sc-address__collapsible (9 / 10 on focus-within) in sc-address.scss.
+  z-index: var(--sc-address-suggestion-z-index, 11);
   background: var(--sc-panel-background-color);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   max-height: var(--sc-panel-height, 350px);

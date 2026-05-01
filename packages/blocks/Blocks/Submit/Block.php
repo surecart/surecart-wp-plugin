@@ -42,7 +42,7 @@ class Block extends BaseBlock {
 			<?php echo ! empty( $attributes['show_icon'] ) ? 'icon="lock"' : ''; ?>
 			show-total="<?php echo ! empty( $attributes['show_total'] ) ? 'true' : 'false'; ?>"
 			secure-notice="<?php echo ! empty( $attributes['show_secure_notice'] ) ? 'true' : 'false'; ?>"
-			secure-notice-text="<?php echo esc_attr( $attributes['secure_notice_text'] ?? '' ); ?>"
+			secure-notice-text="<?php echo ! empty( $attributes['secure_notice_text'] ) ? esc_attr( $attributes['secure_notice_text'] ) : esc_attr( __( 'This is a secure, encrypted payment.', 'surecart' ) ); ?>"
 			<?php echo $text_color ? 'text-color="' . esc_attr( $text_color ) . '"' : ''; ?>
 			<?php echo $background_color ? 'background-color="' . esc_attr( $background_color ) . '"' : ''; ?>
 			class="wp-block-surecart-submit"
