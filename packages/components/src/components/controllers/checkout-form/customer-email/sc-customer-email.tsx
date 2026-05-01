@@ -5,7 +5,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
-import { getValueFromUrl } from '../../../../functions/util';
+import { getValueFromUrl, isRateLimited } from '../../../../functions/util';
 import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
@@ -74,6 +74,9 @@ export class ScCustomerEmail {
   /** Error */
   @State() error: string = '';
 
+  /** Initial mode for sc-customer-login. Flips to 'password' on 429. */
+  @State() loginMode: 'code' | 'password' = 'code';
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -128,8 +131,7 @@ export class ScCustomerEmail {
     if (!this.value) return;
     if (userState.loggedIn) return;
 
-    // Feature flag: only proactively send a verification code when the merchant
-    // has opted into the login-prompt UX. When off, the checkout stays frictionless.
+    // Opt-out merchant setting: skip proactive code-send when disabled.
     if (!checkoutState.showLoginPrompt) return;
 
     // Check if a valid email using regex, if not return.
@@ -139,6 +141,8 @@ export class ScCustomerEmail {
 
     try {
       this.busy = true;
+      this.error = '';
+      this.loginMode = 'code';
       await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
@@ -201,6 +205,14 @@ export class ScCustomerEmail {
   }
 
   handleCodeSendError(error: any) {
+    // 429: silently switch to password mode. Header + input is enough context — no red error.
+    if (isRateLimited(error)) {
+      userState.email = this.input?.value || '';
+      userState.verificationStatus = UNVERIFIED;
+      this.loginMode = 'password';
+      return;
+    }
+
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
@@ -308,7 +320,7 @@ export class ScCustomerEmail {
       userState.verificationStatus === UNVERIFIED ||
       userState.verificationStatus === CODE_EXPIRED
     ) {
-      return <sc-customer-login codeError={this.error}></sc-customer-login>;
+      return <sc-customer-login initialMode={this.loginMode} codeError={this.error}></sc-customer-login>;
     }
 
     return (

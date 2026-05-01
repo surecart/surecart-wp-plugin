@@ -12,6 +12,7 @@ import { speak } from '@wordpress/a11y';
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { createOrUpdateCheckout } from '@services/session';
 import { state as checkoutState } from '@store/checkout';
+import { isRateLimited } from '../../../../functions/util';
 import { Checkout } from 'src/types';
 
 @Component({
@@ -44,8 +45,14 @@ export class ScCustomerLogin {
   /** Code Error coming from the parent */
   @Prop() codeError: string = '';
 
+  /** Lets the parent open in password mode (used on 429 fallback). */
+  @Prop() initialMode: 'code' | 'password' = 'code';
+
   /** Login Password */
   @State() password: string = '';
+
+  /** Set after a 429 — hides the code toggle to prevent a retry loop. */
+  @State() codeUnavailable: boolean = false;
 
   formatCooldown(): string {
     const minutes = Math.floor(this.resendCooldown / 60);
@@ -107,6 +114,10 @@ export class ScCustomerLogin {
         userState.verificationStatus = CODE_EXPIRED;
         this.error = '';
         speak(__('Code expired. Please send a new code.', 'surecart'), 'assertive');
+      } else if (isRateLimited(e)) {
+        this.error = __('Please wait a moment and try again.', 'surecart');
+        userState.verificationStatus = UNVERIFIED;
+        speak(this.error, 'assertive');
       } else {
         if (e.code === 'not_found') {
           this.error = __('Incorrect code. Please try again.', 'surecart');
@@ -160,6 +171,15 @@ export class ScCustomerLogin {
   }
 
   handleCodeSendError(error: any) {
+    // 429: switch to password (different endpoint, no limit conflict).
+    if (isRateLimited(error)) {
+      this.mode = 'password';
+      this.codeUnavailable = true;
+      this.error = __('Please sign in with your password to continue.', 'surecart');
+      this.startCooldown();
+      return;
+    }
+
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
@@ -184,6 +204,9 @@ export class ScCustomerLogin {
   }
 
   componentWillLoad() {
+    this.mode = this.initialMode;
+    // initialMode='password' means the parent already 429'd on code-send.
+    this.codeUnavailable = this.initialMode === 'password';
     this.startCooldown();
   }
 
@@ -221,18 +244,22 @@ export class ScCustomerLogin {
       userState.email = email;
       userState.avatarUrl = avatar_url || '';
     } catch (e: any) {
-      this.error = e?.message || __('Login failed. Please try again.', 'surecart');
+      this.error = isRateLimited(e) ? __('Please wait a moment and try again.', 'surecart') : e?.message || __('Login failed. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
   }
 
   renderSentInfo() {
+    // Don't claim a code was sent if we 429'd before it left.
+    const headline = this.codeUnavailable ? __('Signing in as', 'surecart') : __('Code sent to', 'surecart');
+    const iconName = this.codeUnavailable ? 'user' : 'mail';
+
     return (
       <div class="customer-code__sent-info">
-        <sc-icon name="mail" class="customer-code__mail-icon" aria-hidden="true" />
+        <sc-icon name={iconName} class="customer-code__mail-icon" aria-hidden="true" />
         <span>
-          {__('Code sent to', 'surecart')} <strong class="customer-code__sent-email">{userState.email}</strong>
+          {headline} <strong class="customer-code__sent-email">{userState.email}</strong>
         </span>
         <a
           href="#"
@@ -314,24 +341,26 @@ export class ScCustomerLogin {
             {__('Login', 'surecart')}
           </sc-button>
         </sc-flex>
-        {!!this.error && <p class="customer-password__error" role="alert" innerHTML={this.error}></p>}
-        <div class="customer-code__footer">
-          <div class="customer-code__footer-left"></div>
-          <div class="customer-code__footer-right">
-            <a
-              href="#"
-              class="customer-code__mode-link"
-              onClick={e => {
-                e.preventDefault();
-                this.error = '';
-                this.mode = 'code';
-              }}
-            >
-              <sc-icon name="key" aria-hidden="true" />
-              {__('Use Login Code', 'surecart')}
-            </a>
+        {!!(this.error || this.codeError) && <p class="customer-password__error" role="alert" innerHTML={this.error || this.codeError}></p>}
+        {!this.codeUnavailable && (
+          <div class="customer-code__footer">
+            <div class="customer-code__footer-left"></div>
+            <div class="customer-code__footer-right">
+              <a
+                href="#"
+                class="customer-code__mode-link"
+                onClick={e => {
+                  e.preventDefault();
+                  this.error = '';
+                  this.mode = 'code';
+                }}
+              >
+                <sc-icon name="key" aria-hidden="true" />
+                {__('Use Login Code', 'surecart')}
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

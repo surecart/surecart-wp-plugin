@@ -121,6 +121,64 @@ describe('sc-customer-login', () => {
     expect(errorEl.getAttribute('role')).toBe('alert');
   });
 
+  it('starts in password mode silently when initialMode="password" (rate-limit fallback)', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = UNVERIFIED;
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login initial-mode="password"></sc-customer-login>`,
+    });
+
+    const passwordView = page.root.shadowRoot.querySelector('.customer-password');
+    const codeView = page.root.shadowRoot.querySelector('.customer-code');
+    expect(passwordView).not.toBeNull();
+    expect(codeView).toBeNull();
+
+    // No red error on first load — header + input is enough context.
+    const errorEl = page.root.shadowRoot.querySelector('.customer-password__error');
+    expect(errorEl).toBeNull();
+  });
+
+  it('hides the "Use Login Code" toggle and rephrases header when codeUnavailable (initialMode=password)', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = UNVERIFIED;
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login initial-mode="password"></sc-customer-login>`,
+    });
+
+    // No bounce-back link — prevents the 429 -> code -> resend -> 429 loop.
+    const modeLink = page.root.shadowRoot.querySelector('.customer-code__mode-link');
+    expect(modeLink).toBeNull();
+
+    // Header should not claim a code was sent, since none was.
+    const headerText = page.root.shadowRoot.querySelector('.customer-code__sent-info span')?.textContent;
+    expect(headerText).toContain('Signing in as');
+    expect(headerText).not.toContain('Code sent to');
+  });
+
+  it('keeps the "Use Login Code" toggle when password mode reached via manual switch (no 429)', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_SENT;
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    // Manual switch to password from the code footer.
+    const useCodePassword = page.root.shadowRoot.querySelector('.customer-code__mode-link') as HTMLElement;
+    useCodePassword.click();
+    await page.waitForChanges();
+
+    // In password view now — toggle back to code mode should still be available.
+    const passwordModeLink = page.root.shadowRoot.querySelector('.customer-code__mode-link');
+    expect(passwordModeLink).not.toBeNull();
+    expect(passwordModeLink.textContent).toContain('Use Login Code');
+  });
+
   it('error elements have role="alert" for accessibility', async () => {
     userState.email = 'user@example.com';
     userState.verificationStatus = CODE_SENT;

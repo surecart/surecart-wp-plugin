@@ -553,6 +553,7 @@
   },
   "sc-customer-login": {
     "code-error": true,
+    "initial-mode": true,
     "style": true,
     "id": true,
     "class": true,

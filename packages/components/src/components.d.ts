@@ -1093,6 +1093,10 @@ export namespace Components {
           * Code Error coming from the parent
          */
         "codeError": string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode": 'code' | 'password';
     }
     interface ScCustomerName {
         /**
@@ -8357,6 +8361,10 @@ declare namespace LocalJSX {
           * Code Error coming from the parent
          */
         "codeError"?: string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode"?: 'code' | 'password';
     }
     interface ScCustomerName {
         /**
