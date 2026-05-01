@@ -36,9 +36,6 @@ export class ScCustomerLogin {
   /** Interval timer reference for cleanup */
   private cooldownInterval: any = null;
 
-  /** Verified */
-  @State() verified: boolean = false;
-
   /** Error */
   @State() error: string = '';
 
@@ -235,8 +232,6 @@ export class ScCustomerLogin {
         // @ts-ignore
         apiFetch.nonceMiddleware.nonce = nonce;
       }
-
-      this.verified = true;
 
       userState.loggedIn = true;
       userState.verificationStatus = VERIFIED;
