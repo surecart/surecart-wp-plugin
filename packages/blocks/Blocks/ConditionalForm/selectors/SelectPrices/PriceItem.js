@@ -29,15 +29,14 @@ export default ({ id, ...props }) => {
 	return (
 		<FilterItem
 			loading={!hasLoadedItem}
-			imageUrl={item?.product?.image_url}
+			image={item?.product?.line_item_image}
 			icon={'tag'}
 			{...props}
 		>
-			<strong style={{ display: 'block' }}>
-				{item?.product?.name}
-			</strong>
+			<strong style={{ display: 'block' }}>{item?.product?.name}</strong>
 			{!!item && (
 				<span>
+					{item?.name ? `${item?.name} - ` : ''}
 					{formatNumber(item?.amount, item?.currency)}{' '}
 					{intervalString(item, { showOnce: true })}
 				</span>
