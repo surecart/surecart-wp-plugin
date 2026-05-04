@@ -37,7 +37,7 @@ export default (props) => {
 			)}
 			{!(value || [])?.length || addNew ? (
 				<ScFormControl
-					label={label}
+					label={label || __('Search prices', 'surecart')}
 					showLabel={false}
 					style={{
 						display: 'grid',
@@ -60,7 +60,7 @@ export default (props) => {
 								onChange([
 									...new Set([
 										...(value || []),
-										...[price_id],
+										price_id,
 									]),
 								]);
 								setAddNew(false);
