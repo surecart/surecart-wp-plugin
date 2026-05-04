@@ -66,7 +66,7 @@ export default (props) => {
 								setAddNew(false);
 							}
 						}}
-						onScHide={() => setAddNew(false)}
+						onScClose={() => setAddNew(false)}
 					/>
 				</ScFormControl>
 			) : (
