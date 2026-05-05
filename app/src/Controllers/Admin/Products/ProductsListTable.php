@@ -145,7 +145,7 @@ class ProductsListTable extends ListTable {
 					'name'                => __( 'Name', 'surecart' ),
 					'price'               => __( 'Price', 'surecart' ),
 					'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-					'quantity'            => __( 'Quantity', 'surecart' ),
+					'quantity'            => __( 'Stock', 'surecart' ),
 					'integrations'        => __( 'Integrations', 'surecart' ),
 					'product_collections' => __( 'Collections', 'surecart' ),
 					'status'              => __( 'Product Page', 'surecart' ),

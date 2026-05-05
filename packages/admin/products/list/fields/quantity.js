@@ -2,7 +2,7 @@ import { __, sprintf } from '@wordpress/i18n';
 
 export default () => ({
 	id: 'quantity',
-	label: __('Quantity', 'surecart'),
+	label: __('Stock', 'surecart'),
 	enableSorting: false,
 	getValue: ({ item }) => {
 		if (!item?.stock_enabled) return Infinity;
