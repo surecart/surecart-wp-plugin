@@ -201,7 +201,7 @@ class CustomersListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $customer->id ) ); ?>">
-			<?php echo wp_kses_post( $customer->name ?? $customer->email ); ?>
+			<?php echo esc_html( $customer->name ?? $customer->email ); ?>
 		</a>
 
 		<?php
