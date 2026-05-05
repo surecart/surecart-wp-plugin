@@ -2,20 +2,16 @@
 import { css, jsx } from '@emotion/react';
 import { DataViews } from '@wordpress/dataviews/wp';
 import { Spinner } from '@wordpress/components';
+import { InterfaceSkeleton, FullscreenMode } from '@wordpress/interface';
 import Notifications from '../Notifications';
+import EnhancedViewToggle from './EnhancedViewToggle';
+import useEnhancedView from './useEnhancedView';
 
-/**
- * Wrapper around `<DataViews>` that adds:
- *   - an above-table slot (`tabs`) for status tabs / filter pills
- *   - a mutation overlay spinner for bulk operations
- *   - SureCart-themed wrapper styling
- *
- * `defaultLayouts` is forwarded as-is — screens can opt into grid by passing
- * `{ table: {}, grid: { mediaField: 'image', titleField: 'name' } }`.
- */
 export default ({
 	header,
+	pageHeader,
 	tabs,
+	statusSidebar,
 	className = '',
 	data,
 	fields,
@@ -26,24 +22,34 @@ export default ({
 	isLoading,
 	isMutating = false,
 	defaultLayouts,
+	enhancedViewControl = true,
 	...rest
-}) => (
-	<div className={`sc-dataview-list-wrapper ${className}`.trim()}>
-		{tabs ? <div>{tabs}</div> : null}
+}) => {
+	const { enabled, toggle } = useEnhancedView();
+
+	const headerWithToggle = (
+		<div
+			css={css`
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 8px;
+			`}
+		>
+			{header}
+			{enhancedViewControl ? (
+				<EnhancedViewToggle enabled={enabled} onToggle={toggle} />
+			) : null}
+		</div>
+	);
+
+	const tableShell = (
 		<div
 			css={css`
 				position: relative;
-				margin-top: 12px;
-				background: var(
-					--sc-card-background-color,
-					var(--sc-color-white)
-				);
-				border: 1px solid
-					var(--sc-card-border-color, var(--sc-color-gray-300));
-				border-radius: var(--sc-input-border-radius-medium);
-				box-shadow: var(--sc-shadow-small);
 			`}
 		>
+			{tabs && !enabled ? <div>{tabs}</div> : null}
 			<DataViews
 				data={data}
 				fields={fields}
@@ -57,7 +63,7 @@ export default ({
 						table: {},
 					}
 				}
-				header={header}
+				header={headerWithToggle}
 				search
 				{...rest}
 			/>
@@ -70,8 +76,7 @@ export default ({
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						background: rgba(255, 255, 255, 0.6);
-						border-radius: inherit;
+						background: rgba(255, 255, 255, 0.4);
 						z-index: 10;
 					`}
 				>
@@ -79,7 +84,72 @@ export default ({
 				</div>
 			)}
 		</div>
+	);
 
-		<Notifications />
-	</div>
-);
+	if (statusSidebar && enabled) {
+		return (
+			<div
+				className={`sc-dataview-list-wrapper ${className}`.trim()}
+				data-enhanced-view="on"
+			>
+				<FullscreenMode isActive />
+				<InterfaceSkeleton
+					className="sc-workspace-skeleton"
+					/* `secondarySidebar` is the LEFT panel slot (Block
+					   Library / Site Editor nav). `sidebar` is the RIGHT
+					   Settings panel — using it would render the rail on
+					   the right edge in LTR. */
+					secondarySidebar={statusSidebar}
+					content={
+						/* Site Editor "frame canvas" — a dark inset frames a
+						   rounded white canvas. The dark frame stays fixed
+						   at the viewport edges; only the inner canvas
+						   scrolls. Achieved with a flex column where the
+						   white card fills the remaining height and clips
+						   its overflow so the scrollbar sits inside the
+						   rounded corners, not on the body. */
+						<div
+							css={css`
+								padding: 16px;
+								background: #1e1e1e;
+								height: 100%;
+								box-sizing: border-box;
+								display: flex;
+								flex-direction: column;
+							`}
+						>
+							<div
+								css={css`
+									background: #fff;
+									border-radius: 8px;
+									padding: 24px 32px;
+									flex: 1 1 auto;
+									min-height: 0;
+									overflow-y: auto;
+									box-shadow: 0 0 0 1px
+										rgba(0, 0, 0, 0.06);
+									box-sizing: border-box;
+								`}
+							>
+								{pageHeader}
+								{tableShell}
+							</div>
+						</div>
+					}
+				/>
+				<Notifications />
+			</div>
+		);
+	}
+
+	return (
+		<div
+			className={`sc-dataview-list-wrapper ${className}`.trim()}
+			data-enhanced-view="off"
+		>
+			{pageHeader}
+			{tableShell}
+			<Notifications />
+		</div>
+	);
+};

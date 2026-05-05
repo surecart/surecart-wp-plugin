@@ -1,5 +1,34 @@
 $padding-size: 20px;
 
+body.is-fullscreen-mode.sc-enhanced-view {
+	#sc-admin-header {
+		display: none !important;
+	}
+
+	overflow: hidden;
+	height: 100vh;
+
+	#wpbody-content {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.wrap {
+		margin: 0;
+		padding: 0;
+	}
+
+	.sc-dataview-list-wrapper[data-enhanced-view="on"] {
+		height: 100vh;
+	}
+}
+
+html:has(body.is-fullscreen-mode.sc-enhanced-view) {
+	margin-top: 0 !important;
+	height: 100vh;
+	overflow: hidden;
+}
+
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
 	.dataviews-view-table {

@@ -14,10 +14,8 @@ const SORT_MAP = {
 
 const DEFAULT_SORT = { field: 'created_at', direction: 'desc' };
 
-/**
- * Three-way switch: `active` (default) sets `archived=false`, `archived`
- * sets `archived=true`, `all` omits the param.
- */
+// Three-way switch: `active` → `archived=false`, `archived` → `archived=true`,
+// `all` → omit the param.
 export const applyArchiveStatusFilter = ({ view, args }) => {
 	const filter = findFilter(view, 'archive_status');
 	const value = filter?.value;

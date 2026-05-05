@@ -1,16 +1,6 @@
-/**
- * Generic URL ↔ DataViews filter serialiser.
- *
- * Each registered filter declares its own `urlKey`, plus optional
- * `serialize` / `deserialize` (or `multiple: true` to default to comma-joined
- * arrays). The hook reads `window.location` once on mount to seed the
- * initial filters, then watches `view.filters` and writes them back to the
- * URL via the SureCart router — defaults are stripped so the URL stays
- * minimal.
- *
- * Two entry points so screens can call `readInitialFiltersFromUrl` *before*
- * setting up `useDataViewState`, then call `useUrlFilterWriter` *after* it.
- */
+// URL ↔ filter serialiser. Each filter config declares `urlKey` and
+// optionally `serialize` / `deserialize` (or `multiple: true` for comma-
+// joined arrays). Defaults are stripped so the URL stays minimal.
 import { useEffect, useMemo, useRef } from 'react';
 import { getQueryArgs } from '@wordpress/url';
 import { useHistory } from '../../router';
@@ -33,10 +23,6 @@ const defaultDeserialize = (raw, multiple) => {
 	return raw;
 };
 
-/**
- * Read URL params synchronously and return DataViews filter shapes. Use this
- * when seeding `initialViewFilters` for `useDataViewState`.
- */
 export const readInitialFiltersFromUrl = (filters) => {
 	const params = getQueryArgs(window.location.href);
 	const out = [];
@@ -54,14 +40,6 @@ export const readInitialFiltersFromUrl = (filters) => {
 	return out;
 };
 
-/**
- * Effect-only writer that mirrors the live `view.filters` to the URL.
- *
- * @param {Object}   options
- * @param {string}   options.pageSlug
- * @param {Object[]} options.filters
- * @param {Object}   options.view
- */
 const useUrlFilterWriter = ({ pageSlug, filters, view }) => {
 	const history = useHistory();
 	const lastWrittenRef = useRef('');
@@ -87,12 +65,6 @@ const useUrlFilterWriter = ({ pageSlug, filters, view }) => {
 	}, [view, history, pageSlug, filters]);
 };
 
-/**
- * Convenience: combines `readInitialFiltersFromUrl` (memoised once) with the
- * effect-only writer. Pass `view` after `useDataViewState` resolves it.
- *
- * @returns {{ initialViewFilters: Array }}
- */
 const useUrlFilterSync = ({ pageSlug, filters, view }) => {
 	const initialViewFilters = useMemo(
 		() => readInitialFiltersFromUrl(filters),

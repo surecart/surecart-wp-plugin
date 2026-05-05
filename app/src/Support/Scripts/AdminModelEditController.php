@@ -151,14 +151,21 @@ abstract class AdminModelEditController {
 		);
 
 		// automatically load dependencies and version.
-		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		$asset_file_path = plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
+		if ( ! file_exists( $asset_file_path ) ) {
+			// Bundle hasn't been built yet (e.g. fresh install or the entry
+			// was just added without running `yarn build`). Bail rather than
+			// crashing on an `array_merge( null, ... )`.
+			return;
+		}
+		$asset_file = include $asset_file_path;
 
 		// Enqueue scripts.
 		wp_enqueue_script(
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
-			array_merge( $asset_file['dependencies'], $this->dependencies ),
-			$asset_file['version'],
+			array_merge( $asset_file['dependencies'] ?? [], $this->dependencies ),
+			$asset_file['version'] ?? null,
 			true
 		);
 
@@ -197,6 +204,8 @@ abstract class AdminModelEditController {
 		$this->data['locale']               = str_replace( '_', '-', determine_locale() );
 		$this->data['root_url']             = esc_url_raw( get_rest_url() );
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
+		$this->data['site_name']            = get_bloginfo( 'name' );
+		$this->data['site_icon_url']        = get_site_icon_url( 96 );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
 		$this->data['collection_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) );
