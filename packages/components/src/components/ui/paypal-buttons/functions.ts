@@ -1,4 +1,4 @@
-export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency = 'usd', merchantInitiated, locale }) => {
+export const getScriptLoadParams = ({ clientId, reusable, merchantId, currency = 'usd', merchantInitiated, locale = '' }) => {
   const hasValidLocale = typeof locale === 'string' && locale.includes('-');
   return {
     'client-id': clientId.replace(/ /g, ''),
