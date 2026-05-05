@@ -7,6 +7,16 @@ import {
 	ConfirmActionModal,
 	applyActionExtensions,
 } from '../../../components/dataview-list';
+import {
+	isVariantRow,
+	getVariantParent,
+	getVariantOriginalId,
+} from '../variants';
+
+// Compose each product action's `isEligible` against this so we don't
+// scatter `!isVariantRow` checks throughout the file.
+const productOnly = (extra) => (item) =>
+	!isVariantRow(item) && (extra ? extra(item) : true);
 
 // Hand bulk delete to the dedicated page — same route the PHP list
 // table uses, with the Action-Scheduler-backed deletion + progress UI.
@@ -45,6 +55,8 @@ export const buildProductActions = ({
 	handleArchiveToggle,
 	handleDuplicate,
 	handleDelete,
+	handleDeleteVariant,
+	onEditVariant,
 }) => {
 	const actions = [
 		{
@@ -52,13 +64,68 @@ export const buildProductActions = ({
 			label: __('Edit', 'surecart'),
 			icon: <Icon icon={edit} />,
 			isPrimary: true,
+			isEligible: productOnly(),
 			callback: ([item]) => navigation.goToEdit(item.id),
+		},
+		{
+			id: 'editVariant',
+			label: __('Edit variant', 'surecart'),
+			icon: <Icon icon={edit} />,
+			isPrimary: true,
+			isEligible: (item) => isVariantRow(item),
+			callback: ([item]) => {
+				const parent = getVariantParent(item);
+				const variantId = getVariantOriginalId(item);
+				if (!parent?.id || !variantId) return;
+				onEditVariant?.({ productId: parent.id, variantId });
+			},
+		},
+		{
+			id: 'deleteVariant',
+			label: __('Delete variant', 'surecart'),
+			icon: <Icon icon={trash} />,
+			isDestructive: true,
+			isEligible: (item) => isVariantRow(item),
+			// Soft delete (status: 'draft') — same pattern as the
+			// in-product VariantItem menu. Drafts are filtered out of
+			// the list, so the row disappears; restore from the
+			// product edit page.
+			RenderModal: ({ items, closeModal }) => {
+				const item = items[0];
+				const parent = getVariantParent(item);
+				const variantId = getVariantOriginalId(item);
+				const label = [item?.option_1, item?.option_2, item?.option_3]
+					.filter(Boolean)
+					.join(' / ');
+				return (
+					<ConfirmActionModal
+						items={items}
+						closeModal={closeModal}
+						onConfirm={() =>
+							handleDeleteVariant?.({
+								productId: parent?.id,
+								variantId,
+							})
+						}
+						confirmLabel={__('Delete', 'surecart')}
+						isDestructive={true}
+						message={sprintf(
+							/* translators: %s is the variant label, e.g. "LG / Gray". */
+							__(
+								'Delete the %s variant? It will no longer be available for purchase. You can restore it later from the product edit page.',
+								'surecart'
+							),
+							label || __('selected', 'surecart')
+						)}
+					/>
+				);
+			},
 		},
 		{
 			id: 'archive',
 			label: __('Archive', 'surecart'),
 			icon: <Icon icon={archive} />,
-			isEligible: (item) => !item.archived,
+			isEligible: productOnly((item) => !item.archived),
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => (
 				<ConfirmActionModal
@@ -83,7 +150,7 @@ export const buildProductActions = ({
 			id: 'unarchive',
 			label: __('Un-Archive', 'surecart'),
 			icon: <Icon icon={archive} />,
-			isEligible: (item) => !!item.archived,
+			isEligible: productOnly((item) => !!item.archived),
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => (
 				<ConfirmActionModal
@@ -109,13 +176,14 @@ export const buildProductActions = ({
 			label: __('View Product', 'surecart'),
 			isPrimary: true,
 			icon: <Icon icon={external} />,
-			isEligible: (item) => !!item.permalink,
+			isEligible: productOnly((item) => !!item.permalink),
 			callback: ([item]) => window.open(item.permalink, '_blank'),
 		},
 		{
 			id: 'duplicate',
 			label: __('Duplicate', 'surecart'),
 			icon: <Icon icon={copy} />,
+			isEligible: productOnly(),
 			callback: ([item]) => handleDuplicate([item]),
 		},
 		{
@@ -123,6 +191,7 @@ export const buildProductActions = ({
 			icon: <Icon icon={trash} />,
 			label: __('Delete permanently', 'surecart'),
 			isDestructive: true,
+			isEligible: productOnly(),
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => {
 				if (items.length > 1) {

@@ -32,37 +32,15 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
 	.dataviews-view-table {
-		tr td .components-checkbox-control__input-container {
-			opacity: 0;
-			transition: opacity 0.1s ease;
-		}
-
-		tr:hover td .components-checkbox-control__input-container,
-		tr:focus-within td .components-checkbox-control__input-container,
+		// Always show selection checkboxes (upstream defaults to
+		// hover-reveal). The doubled class on `__input` matches
+		// upstream's `.x.x` specificity trick so this override wins.
+		tr td .components-checkbox-control__input-container,
+		thead th .components-checkbox-control__input-container,
 		tr
-			td
-			.components-checkbox-control__input:checked
-			+ .components-checkbox-control__input-container,
-		tr td .components-checkbox-control__input-container:has(input:checked),
-		tr
-			td
-			.components-checkbox-control__input-container:has(
-				input:indeterminate
-			) {
-			opacity: 1;
-		}
-
-		thead th .components-checkbox-control__input-container {
-			opacity: 1;
-		}
-	}
-
-	// Touch devices: always show checkboxes.
-	@media (hover: none) {
-		.dataviews-view-table
-			tr
-			td
-			.components-checkbox-control__input-container {
+			.components-checkbox-control__input.components-checkbox-control__input,
+		thead
+			.components-checkbox-control__input.components-checkbox-control__input {
 			opacity: 1;
 		}
 	}
@@ -112,20 +90,14 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 		background-color: var(--sc-color-brand-main-background);
 	}
 
-	// Actions with `isPrimary: true` + `icon` are rendered as always-visible
-	// icon buttons by @wordpress/dataviews. We hide them by default and only
-	// reveal on row hover / focus so the table stays clean. The kebab menu
-	// (`.dataviews-all-actions-button`) stays visible so touch users still
-	// have access to every action.
+	// Hide isPrimary action icons until row hover/focus to keep the table clean.
 	.dataviews-view-table__row
 		.dataviews-item-actions
 		.components-button:not(.dataviews-all-actions-button) {
 		visibility: hidden;
 	}
 
-	.dataviews-view-table__row.is-hovered
-		.dataviews-item-actions
-		.components-button,
+	.dataviews-view-table__row:hover .dataviews-item-actions .components-button,
 	.dataviews-view-table__row:focus-within
 		.dataviews-item-actions
 		.components-button {
@@ -201,7 +173,7 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 // Astra (and other themes) leak `.components-modal__header .components-button
 // { width: 60px; height: 60px }` into every WP admin Modal — making the close
 // (X) icon oversized. Restore WordPress's default size on our admin screens.
-body[class*='surecart_page_'] {
+body[class*="surecart_page_"] {
 	.components-modal__header .components-button.has-icon {
 		width: 32px;
 		height: 32px;

@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select, dispatch, resolveSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import {
@@ -27,6 +27,13 @@ import {
 } from './list/buildQuery';
 import { PRODUCTS_URL_FILTERS } from './list/urlFilters';
 import { useStatusTabs } from './list/useStatusTabs';
+import {
+	useExpandedVariants,
+	useSavingVariantIds,
+	injectVariantRows,
+	applyVariantRenderers,
+} from './list/variants';
+import VariantEditPanel from './modules/Variations/VariantEditPanel';
 import './product-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -56,6 +63,10 @@ export default ({ navigation }) => {
 	const { toggle: toggleEnhancedView } = useEnhancedView();
 
 	const [isMutating, setIsMutating] = useState(false);
+
+	const expanded = useExpandedVariants();
+	const saving = useSavingVariantIds();
+	const [editingVariant, setEditingVariant] = useState(null);
 
 	// Pre-fetch collections for the filter dropdown. DataViews' `field.elements`
 	// expects a static array — async element resolvers aren't reliable across
@@ -130,7 +141,7 @@ export default ({ navigation }) => {
 	// own renderer reads from the resolved data. Re-runs only when the
 	// bag changes — and the integrations field is hidden by default, so
 	// this stays cheap.
-	const fields = useMemo(
+	const baseFields = useMemo(
 		() =>
 			buildProductFields({
 				navigation,
@@ -147,6 +158,60 @@ export default ({ navigation }) => {
 			itemLabels,
 		]
 	);
+
+	// Variant-aware field renderers + chevron on `name`.
+	const fields = useMemo(
+		() =>
+			applyVariantRenderers(baseFields, {
+				expandedIds: expanded.ids,
+				onToggle: expanded.toggle,
+				savingVariantIds: saving.ids,
+			}),
+		[baseFields, expanded.ids, expanded.toggle, saving.ids]
+	);
+
+	// Variants are synthetic — injected after server-side pagination/
+	// filter/sort, never counted in paginationInfo.total.
+	const dataWithVariants = useMemo(
+		() => injectVariantRows(records, expanded.ids),
+		[records, expanded.ids]
+	);
+
+	// Correct the bulk-actions footer item count.
+	useEffect(() => {
+		const productCount = (records || []).length;
+
+		const formatCount = (n) =>
+			n === 1
+				? __('1 Item', 'surecart')
+				: sprintf(
+						/* translators: %d: number of items. */
+						__('%d Items', 'surecart'),
+						n
+				  );
+
+		const apply = (span) => {
+			const target = formatCount(productCount);
+			if (span.textContent !== target) {
+				span.textContent = target;
+			}
+		};
+
+		const span = document.querySelector(
+			'.dataviews-bulk-actions-footer__item-count'
+		);
+		if (!span) return;
+
+		apply(span);
+
+		const observer = new MutationObserver(() => apply(span));
+		observer.observe(span, {
+			childList: true,
+			characterData: true,
+			subtree: true,
+		});
+		return () => observer.disconnect();
+	}, [records, dataWithVariants]);
 
 	const handleArchiveToggle = useCallback(
 		async (items) => {
@@ -256,6 +321,74 @@ export default ({ navigation }) => {
 		]
 	);
 
+	const handleDeleteVariant = useCallback(
+		async ({ productId, variantId }) => {
+			if (!productId || !variantId) return;
+			setIsMutating(true);
+			try {
+				// resolveSelect (not just select) — the list's fetcher
+				// doesn't always prime the per-record cache. Without
+				// this we'd read `{}` and PATCH `variants: []`, wiping siblings.
+				await resolveSelect(coreStore).getEntityRecord(
+					'surecart',
+					'product',
+					productId
+				);
+
+				const current = select(coreStore).getEditedEntityRecord(
+					'surecart',
+					'product',
+					productId
+				);
+				const sourceVariants = Array.isArray(current?.variants)
+					? current.variants
+					: current?.variants?.data || [];
+
+				// Belt-and-suspenders for the same data-loss scenario.
+				if (sourceVariants.length === 0) {
+					throw new Error(
+						__(
+							'Could not load the product variants. Refresh the page and try again.',
+							'surecart'
+						)
+					);
+				}
+
+				// Soft delete — flip just the targeted variant.
+				const next = sourceVariants.map((v) =>
+					v?.id !== variantId ? v : { ...v, status: 'draft' }
+				);
+
+				await dispatch(coreStore).editEntityRecord(
+					'surecart',
+					'product',
+					productId,
+					{ variants: next }
+				);
+				await dispatch(coreStore).saveEditedEntityRecord(
+					'surecart',
+					'product',
+					productId,
+					{ throwOnError: true }
+				);
+
+				invalidateList();
+				createSuccessNotice(__('Variant deleted.', 'surecart'), {
+					type: 'snackbar',
+				});
+			} catch (error) {
+				createErrorNotice(
+					error?.message ||
+						__('Failed to delete variant.', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			} finally {
+				setIsMutating(false);
+			}
+		},
+		[invalidateList, createSuccessNotice, createErrorNotice]
+	);
+
 	const handleDuplicate = useCallback(
 		async (items) => {
 			setIsMutating(true);
@@ -293,32 +426,40 @@ export default ({ navigation }) => {
 				handleArchiveToggle,
 				handleDuplicate,
 				handleDelete,
+				handleDeleteVariant,
+				onEditVariant: setEditingVariant,
 			}),
-		[navigation, handleArchiveToggle, handleDuplicate, handleDelete]
+		[
+			navigation,
+			handleArchiveToggle,
+			handleDuplicate,
+			handleDelete,
+			handleDeleteVariant,
+		]
 	);
 
 	return (
-		<DataViewListLayout
-			pageHeader={
-				<ListHeader
-					title={__('Products', 'surecart')}
-					actionLabel={__('Add Product', 'surecart')}
-					actionHref={addQueryArgs('admin.php', {
-						page: 'sc-products',
-						action: 'edit',
-					})}
-					onAction={() => navigation.goToCreate()}
-				/>
-			}
-			statusSidebar={
+		<>
+			<DataViewListLayout
+				pageHeader={
+					<ListHeader
+						title={__('Products', 'surecart')}
+						actionLabel={__('Add Product', 'surecart')}
+						actionHref={addQueryArgs('admin.php', {
+							page: 'sc-products',
+							action: 'edit',
+						})}
+						onAction={() => navigation.goToCreate()}
+					/>
+				}
+				statusSidebar={
 					<StatusSidebar
 						siteName={
 							window?.scData?.site_name ||
 							(window?.location?.hostname ?? '')
 						}
 						siteHref={
-							window?.scData?.home_url ||
-							window?.location?.origin
+							window?.scData?.home_url || window?.location?.origin
 						}
 						siteIconUrl={window?.scData?.site_icon_url || ''}
 						dashboardHref="index.php"
@@ -346,14 +487,25 @@ export default ({ navigation }) => {
 						descriptionField: 'price',
 					},
 				}}
-				data={records}
+				data={dataWithVariants}
 				fields={fields}
 				view={view}
 				onChangeView={setView}
 				paginationInfo={paginationInfo}
 				actions={actions}
 				isLoading={!hasResolved}
-			isMutating={isMutating}
-		/>
+				isMutating={isMutating}
+			/>
+			{editingVariant && (
+				<VariantEditPanel
+					productId={editingVariant.productId}
+					variantId={editingVariant.variantId}
+					onClose={() => setEditingVariant(null)}
+					onSavingStart={(id) => saving.start(id)}
+					onSavingEnd={(id) => saving.end(id)}
+					onSaved={() => invalidateList()}
+				/>
+			)}
+		</>
 	);
 };

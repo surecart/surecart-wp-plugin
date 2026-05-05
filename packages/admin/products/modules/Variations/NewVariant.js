@@ -18,6 +18,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Error from '../../../components/Error';
 import Image from './Image';
+import { toVariantsArray } from './utils';
 
 export default ({ product, updateProduct, onRequestClose }) => {
 	const [variant, setVariant] = useState(null);
@@ -38,7 +39,7 @@ export default ({ product, updateProduct, onRequestClose }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		updateProduct({
-			variants: [...product?.variants, variant],
+			variants: [...toVariantsArray(product?.variants), variant],
 		});
 		onRequestClose();
 	};
