@@ -17,7 +17,6 @@ describe('Paypal Buttons Functions', () => {
         'intent': 'tokenize',
         'vault': true,
         'currency': 'EUR',
-        'locale': 'en_US',
       });
     });
 
@@ -37,7 +36,6 @@ describe('Paypal Buttons Functions', () => {
         'merchant-id': 'merchant_id',
         'vault': true,
         'currency': 'EUR',
-        'locale': 'en_US',
       });
     });
 
@@ -62,7 +60,7 @@ describe('Paypal Buttons Functions', () => {
       });
     });
 
-    it('should default locale to en_US when not provided', () => {
+    it('should omit locale when not provided', () => {
       const params = getScriptLoadParams({
         clientId: 'client_id',
         reusable: false,
@@ -70,7 +68,7 @@ describe('Paypal Buttons Functions', () => {
         currency: 'eur',
         merchantInitiated: false,
       });
-      expect(params.locale).toBe('en_US');
+      expect(params.locale).toBeUndefined();
     });
 
     it('should handle multi-hyphen locales like zh-Hant-TW', () => {
@@ -85,7 +83,7 @@ describe('Paypal Buttons Functions', () => {
       expect(params.locale).toBe('zh_Hant_TW');
     });
 
-    it('should fall back to en_US when locale is null', () => {
+    it('should omit locale when input is null', () => {
       const params = getScriptLoadParams({
         clientId: 'client_id',
         reusable: false,
@@ -94,10 +92,10 @@ describe('Paypal Buttons Functions', () => {
         merchantInitiated: false,
         locale: null,
       });
-      expect(params.locale).toBe('en_US');
+      expect(params.locale).toBeUndefined();
     });
 
-    it('should fall back to en_US when locale is an empty string', () => {
+    it('should omit locale when input is an empty string', () => {
       const params = getScriptLoadParams({
         clientId: 'client_id',
         reusable: false,
@@ -106,7 +104,31 @@ describe('Paypal Buttons Functions', () => {
         merchantInitiated: false,
         locale: '',
       });
-      expect(params.locale).toBe('en_US');
+      expect(params.locale).toBeUndefined();
+    });
+
+    it('should omit locale when input is a bare language code (en)', () => {
+      const params = getScriptLoadParams({
+        clientId: 'client_id',
+        reusable: false,
+        merchantId: 'merchant_id',
+        currency: 'usd',
+        merchantInitiated: false,
+        locale: 'en',
+      });
+      expect(params.locale).toBeUndefined();
+    });
+
+    it('should omit locale when input is a bare language code (de)', () => {
+      const params = getScriptLoadParams({
+        clientId: 'client_id',
+        reusable: false,
+        merchantId: 'merchant_id',
+        currency: 'usd',
+        merchantInitiated: false,
+        locale: 'de',
+      });
+      expect(params.locale).toBeUndefined();
     });
 
     it('should use a merchant_id for a non-subscription order (regardless of CIB/MIB)', () => {
@@ -126,7 +148,6 @@ describe('Paypal Buttons Functions', () => {
         'vault': true,
         'merchant-id': 'merchant_id',
         'currency': 'EUR',
-        'locale': 'en_US',
       });
 
       // MIB on.
@@ -145,7 +166,6 @@ describe('Paypal Buttons Functions', () => {
         'vault': true,
         'merchant-id': 'merchant_id',
         'currency': 'EUR',
-        'locale': 'en_US',
       });
     });
   });
