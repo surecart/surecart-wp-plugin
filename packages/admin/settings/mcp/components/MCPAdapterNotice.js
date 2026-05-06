@@ -60,8 +60,11 @@ export default ({ isInstalled }) => {
 
 	return (
 		<SettingsBox
-			title={__('MCP', 'surecart')}
-			description={__('Connect AI assistants to your store.', 'surecart')}
+			title={__('MCP Server', 'surecart')}
+			description={__(
+				'Recommended: install the official MCP Adapter to expose abilities to AI assistants.',
+				'surecart'
+			)}
 			noButton
 		>
 			<>
@@ -73,7 +76,7 @@ export default ({ isInstalled }) => {
 					`}
 				>
 					{__(
-						'The MCP Adapter plugin is needed to connect AI assistants like ChatGPT, or Claude to your store. Install and activate it to get started.',
+						'The MCP Adapter plugin is the easiest way to connect AI assistants like ChatGPT or Claude to your store. SureCart abilities are registered automatically — the adapter exposes them over a REST endpoint AI clients can call.',
 						'surecart'
 					)}
 				</p>
