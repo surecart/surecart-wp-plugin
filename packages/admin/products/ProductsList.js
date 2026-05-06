@@ -32,6 +32,7 @@ import {
 	applyVariantRenderers,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
+import { toVariantsArray } from './modules/Variations/utils';
 import './product-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -317,9 +318,7 @@ export default ({ navigation }) => {
 					'product',
 					productId
 				);
-				const sourceVariants = Array.isArray(current?.variants)
-					? current.variants
-					: current?.variants?.data || [];
+				const sourceVariants = toVariantsArray(current?.variants);
 
 				// Belt-and-suspenders for the same data-loss scenario.
 				if (sourceVariants.length === 0) {
@@ -370,7 +369,9 @@ export default ({ navigation }) => {
 		async (items) => {
 			setIsMutating(true);
 			try {
-				await Promise.all(
+				// allSettled — bulk duplicates shouldn't fail-fast; partial
+				// success still warrants a refresh and an honest count.
+				const results = await Promise.allSettled(
 					items.map((item) =>
 						apiFetch({
 							path: `/surecart/v1/products/${item.id}/duplicate`,
@@ -378,17 +379,48 @@ export default ({ navigation }) => {
 						})
 					)
 				);
+				const succeeded = results.filter(
+					(r) => r.status === 'fulfilled'
+				).length;
+				const failed = results.length - succeeded;
 				invalidateList();
-				createSuccessNotice(
-					__('Product duplicated successfully.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to duplicate product.', 'surecart'),
-					{ type: 'snackbar' }
-				);
+				if (succeeded > 0 && failed === 0) {
+					createSuccessNotice(
+						sprintf(
+							/* translators: %d is the number of duplicated products. */
+							_n(
+								'Duplicated %d product.',
+								'Duplicated %d products.',
+								succeeded,
+								'surecart'
+							),
+							succeeded
+						),
+						{ type: 'snackbar' }
+					);
+				} else if (succeeded > 0 && failed > 0) {
+					createErrorNotice(
+						sprintf(
+							/* translators: 1: succeeded count, 2: failed count. */
+							__(
+								'Duplicated %1$d, failed %2$d.',
+								'surecart'
+							),
+							succeeded,
+							failed
+						),
+						{ type: 'snackbar' }
+					);
+				} else {
+					const firstError = results.find(
+						(r) => r.status === 'rejected'
+					);
+					createErrorNotice(
+						firstError?.reason?.message ||
+							__('Failed to duplicate product.', 'surecart'),
+						{ type: 'snackbar' }
+					);
+				}
 			} finally {
 				setIsMutating(false);
 			}

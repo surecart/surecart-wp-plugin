@@ -24,6 +24,13 @@ class BatchesRestServiceProvider extends RestServiceProvider implements RestServ
 	protected $controller = BatchesController::class;
 
 	/**
+	 * Batches are append-only — submit, then poll for status.
+	 *
+	 * @var array
+	 */
+	protected $methods = [ 'index', 'create', 'find' ];
+
+	/**
 	 * Schema callback.
 	 *
 	 * @return array
@@ -109,14 +116,6 @@ class BatchesRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
-	}
-
-	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
-	}
-
-	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_products' );
 	}
 }

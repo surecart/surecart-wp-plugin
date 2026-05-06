@@ -160,12 +160,16 @@ abstract class AdminModelEditController {
 		}
 		$asset_file = include $asset_file_path;
 
+		// Fall back to plugin version so we still cache-bust on upgrade if
+		// the asset manifest is missing or malformed.
+		$version = $asset_file['version'] ?? ( defined( 'SURECART_VERSION' ) ? SURECART_VERSION : null );
+
 		// Enqueue scripts.
 		wp_enqueue_script(
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
 			array_merge( $asset_file['dependencies'] ?? [], $this->dependencies ),
-			$asset_file['version'] ?? null,
+			$version,
 			true
 		);
 
@@ -176,7 +180,7 @@ abstract class AdminModelEditController {
 				$this->handle,
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.css",
 				array(),
-				$asset_file['version']
+				$version
 			);
 		}
 
@@ -190,7 +194,7 @@ abstract class AdminModelEditController {
 				$this->handle . '-vendor',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$vendor_style_rel",
 				array(),
-				$asset_file['version']
+				$version
 			);
 		}
 

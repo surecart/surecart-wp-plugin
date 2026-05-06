@@ -65,9 +65,9 @@ app/src/Controllers/Admin/{Entity}/
 
 | File                        | Purpose                                                                                                                                                       |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `useDataViewState.js`       | Hook: view state, query building, data fetching, filter mirroring. Persists view to `@wordpress/preferences` under scope `surecart/dataview-lists`            |
+| `useDataViewState.js`       | Hook: view state, query building, data fetching, URL filter sync. Persists layout (type/fields/layout/perPage/sort) to `@wordpress/preferences` under scope `surecart/dataview-lists`. Filters live in the URL, not preferences. |
 | `DataViewListLayout.js`     | Component: card-wrapped DataViews table with a mutation overlay                                                                                               |
-| `ConfirmDeleteModal.js`     | Modal: reusable deletion confirmation with async busy state — accepts `items` array, works for both single row and bulk                                       |
+| `ConfirmActionModal.js`     | Modal: reusable confirmation with async busy state — accepts `items` array, works for both single row and bulk (delete, archive, etc.)                        |
 | `dataview-list-common.scss` | Shared styles: viewport-fit layout, checkbox visibility, padding, hover, footer, popover, `.sc-list-header`                                                   |
 | `index.js`                  | Barrel export — also imports `@wordpress/dataviews/build-style/style.css` so each consuming bundle ships its own copy                                         |
 
@@ -138,7 +138,7 @@ import { trash, edit, external } from '@wordpress/icons';
 import {
 	DataViewListLayout,
 	useDataViewState,
-	ConfirmDeleteModal,
+	ConfirmActionModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import './entity-list-style.scss';
@@ -152,25 +152,20 @@ const STATUS_ELEMENTS = [
 const LAYOUT_STYLES = { name: { width: '25%' }, featured: { width: '60px' } };
 const DEFAULT_FIELDS = ['name', 'price', 'date'];
 const PREFERENCE_KEY = 'entity-list-view';
+// URL ↔ filter mapping. Defaults are stripped so a fresh page load is clean.
+const URL_FILTERS = [
+	{
+		field: 'archive_status',
+		urlKey: 'status',
+		operator: 'is',
+		defaultValue: 'active',
+	},
+];
 
 export default function EntityList({ navigation }) {
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-
-	// Seed DataViews filters from URL params (see step 7).
-	const initialViewFilters = useMemo(() => {
-		const urlParams = getQueryArgs(window.location.href);
-		const filters = [];
-		if (urlParams.status === 'archived' || urlParams.status === 'all') {
-			filters.push({
-				field: 'archive_status',
-				operator: 'is',
-				value: urlParams.status,
-			});
-		}
-		return filters;
-	}, []);
 
 	const {
 		view,
@@ -185,8 +180,11 @@ export default function EntityList({ navigation }) {
 		sortMap: SORT_MAP, // omit if no sort-field rename needed
 		defaultFields: DEFAULT_FIELDS,
 		layoutStyles: LAYOUT_STYLES,
-		preferenceKey: PREFERENCE_KEY, // persists view to @wordpress/preferences
-		initialViewFilters,
+		preferenceKey: PREFERENCE_KEY, // persists layout to @wordpress/preferences
+		// URL-canonical filters: seeded from URL on mount, written back on
+		// view change. Omit both options on screens with no filters.
+		pageSlug: 'sc-entity',
+		urlFilters: URL_FILTERS,
 		buildQueryArgs: ({ view: currentView }) => {
 			const args = {};
 			const statusValue = currentView.filters?.find(
@@ -245,7 +243,7 @@ export default function EntityList({ navigation }) {
 
 	const actions = useMemo(
 		() => [
-			/* see step 11 — includes handleDelete via ConfirmDeleteModal */
+			/* see step 11 — includes handleDelete via ConfirmActionModal */
 		],
 		[handleDelete, navigation]
 	);
@@ -394,18 +392,32 @@ class {Entity}ListTable extends \WP_List_Table { … }
 
 ### 8. URL parameter pre-filtering
 
-If the legacy page supports `?sc_collection=xxx`-style deep links, seed filters at module scope:
+For deep links like `?status=archived` or `?sc_collection=foo,bar`, declare a `urlFilters` config and pass it to `useDataViewState` along with `pageSlug`. The hook reads the URL on mount and writes back on view change automatically — no `getQueryArgs` boilerplate needed.
 
 ```js
-import { getQueryArgs } from '@wordpress/url';
+const URL_FILTERS = [
+	{
+		field: 'archive_status', // matches the field id in your fields/filterBy
+		urlKey: 'status',         // URL param name
+		operator: 'is',
+		defaultValue: 'active',   // values matching default are stripped from URL
+	},
+	{
+		field: 'product_collections',
+		urlKey: 'sc_collection',
+		operator: 'isAny',
+		multiple: true,            // comma-joined in URL
+	},
+];
 
-const URL_PARAMS = getQueryArgs(window.location.href);
-const INITIAL_FILTERS = URL_PARAMS.sc_collection
-	? { collectionId: URL_PARAMS.sc_collection }
-	: {};
+useDataViewState({
+	// ...other options
+	pageSlug: 'sc-entity',
+	urlFilters: URL_FILTERS,
+});
 ```
 
-Pass `INITIAL_FILTERS` to `useDataViewState` so the `ModelSelector` reflects the pre-selected value on first render.
+Each filter config supports `serialize` / `deserialize` overrides for non-trivial value shapes. Skip `pageSlug` + `urlFilters` entirely for screens with no filters (e.g. Product Collections).
 
 ### 9. Map PHP columns → fields
 
@@ -484,9 +496,9 @@ Rules:
 
 Every faceted filter — status tabs, collection pickers, per-taxonomy dropdowns — belongs on a field as `filterBy: { operators: ['is'|'isAny'] }` + an `elements: [{ value, label }]` array. DataViews handles the UI (dropdown, multi-select, chip display), persistence through `view.filters`, i18n, and accessibility. Don't reach for custom tab strips, `ModelSelector` on the page chrome, or native `<select>` — consolidate on the DataViews filter model.
 
-### 11. Map PHP row actions → DataViews actions (delete unified via `ConfirmDeleteModal`)
+### 11. Map PHP row actions → DataViews actions (delete unified via `ConfirmActionModal`)
 
-The same `ConfirmDeleteModal` handles both single-row delete and bulk delete. It takes an `items` array; the row action passes `[item]`, bulk passes the whole selection. Wire one `handleDelete` callback that maps over `items` — don't branch between single and bulk paths.
+The same `ConfirmActionModal` handles both single-row and bulk variants of any destructive/confirming action (delete, archive, etc.). It takes an `items` array; the row action passes `[item]`, bulk passes the whole selection. Wire one `handleDelete` callback that maps over `items` — don't branch between single and bulk paths.
 
 ```js
 const actions = useMemo(
@@ -514,10 +526,10 @@ const actions = useMemo(
 			supportsBulk: true,
 			hideModalHeader: true,
 			RenderModal: ({ items, closeModal }) => (
-				<ConfirmDeleteModal
+				<ConfirmActionModal
 					items={items}
 					closeModal={closeModal}
-					onDelete={handleDelete}
+					onConfirm={handleDelete}
 					message={sprintf(
 						_n(
 							'Are you sure you want to permanently delete %d item?',
@@ -554,32 +566,38 @@ The shared SCSS provides viewport-fit layout, checkbox visibility, padding, hove
 ```js
 const {
 	view,
-	setView,
-	status,
-	setStatus, // resets page to 1
-	filters,
-	setFilter, // setFilter('key', value) — resets page to 1
+	setView,           // standard DataViews onChange — pass to <DataViewListLayout>
 	records,
 	hasResolved,
 	paginationInfo,
-	invalidateList, // call after mutations
-	queryArgs, // for debugging
+	invalidateList,    // call after mutations
+	queryArgs,         // for debugging
 } = useDataViewState({
 	entity: 'product',
-	kind: 'surecart', // default
+	kind: 'surecart',                                     // default
 	defaultSort: { field: 'date', direction: 'desc' },
-	sortMap: { name: 'name', date: 'cataloged_at' }, // optional — view field → API field
+	sortMap: { name: 'name', date: 'cataloged_at' },      // optional — view field → API field
 	defaultFields: ['name', 'price', 'date'],
 	perPage: 20,
-	defaultStatus: 'active',
 	layoutStyles: { name: { width: '25%' } },
-	initialFilters: {},
-	buildQueryArgs: ({ view, status, filters }) => ({}),
-	preferenceKey: 'products-list-view', // persists { fields, layout, perPage, sort, filters }
+	preferenceKey: 'products-list-view',                  // persists layout subset (see below)
+	pageSlug: 'sc-products',                              // optional — required for URL filter sync
+	urlFilters: PRODUCTS_URL_FILTERS,                     // optional — see step 8
+	buildQueryArgs: ({ view }) => ({}),                   // additional REST args derived from view
 });
 ```
 
-View persistence is handled entirely by `@wordpress/preferences` under scope `surecart/dataview-lists`. Pick a unique `preferenceKey` per list. Transient state (`page`, `search`) is intentionally not persisted.
+**Persistence contract** — preferences scope `surecart/dataview-lists`, key `preferenceKey`. Persists only the layout subset:
+
+| Persisted (preferences) | Transient (URL or session) |
+| --- | --- |
+| `type` (table/grid/list)  | `filters` (URL when `urlFilters` provided) |
+| `fields` (visible columns) | `search` (session only) |
+| `layout`                   | `page` (session only) |
+| `perPage`                  | |
+| `sort`                     | |
+
+Filters live in the URL — they're shareable, refresh-safe, and can't drift from what the user sees. Search and page are intentionally not persisted; they reset on reload.
 
 ## DataViewListLayout Props
 
@@ -616,7 +634,7 @@ Status/facet filtering lives on the fields themselves via `filterBy` + `elements
 13. **Seed filters from URL params at module scope** — `getQueryArgs(window.location.href)` outside the component, pass as `initialFilters`
 14. **Use `navigation.goToEdit(id)` for edit links** — not `window.location.href`
 15. **`spa.php` has no `<h1>` or "Add New" button** — the React `ListHeader` renders them. Don't port the legacy page header into the spa view
-16. **One `handleDelete` for single + bulk** — `ConfirmDeleteModal` takes `items`; the row action wraps one item in an array. Don't branch into two code paths
+16. **One `handleDelete` for single + bulk** — `ConfirmActionModal` takes `items`; the row action wraps one item in an array. Don't branch into two code paths
 17. **`useAdminSpaNavigation` is consumed by `createListEditApp`** — don't call it again in the list/edit component; read the `navigation` prop that the factory passes in
 18. **Don't touch DOM outside the app root** — `createListEditApp` deliberately doesn't sync sidebars, menu items, or external headers. If the design wants a toolbar control, render it inside `DataViewListLayout` via `header` (next to the gear icon) or add it as a DataViews `action`
 19. **Keep the `@deprecated` annotation current** — when a legacy list table is removed, bump the target version or drop the annotation in the same PR
