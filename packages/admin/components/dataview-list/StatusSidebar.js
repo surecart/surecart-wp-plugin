@@ -66,7 +66,7 @@ export default ({
 		css={css`
 			display: flex;
 			flex-direction: column;
-			height: 100%;
+			height: calc(100% + 1px);
 			margin-top: -1px;
 			width: 320px;
 			min-width: 320px;

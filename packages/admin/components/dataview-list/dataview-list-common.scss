@@ -1,7 +1,8 @@
 $padding-size: 20px;
 
 body.is-fullscreen-mode.sc-enhanced-view {
-	#sc-admin-header {
+	#sc-admin-header,
+	#wpfooter {
 		display: none !important;
 	}
 
