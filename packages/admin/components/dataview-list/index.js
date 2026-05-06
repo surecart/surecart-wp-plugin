@@ -1,7 +1,6 @@
 export { default as DataViewListLayout } from './DataViewListLayout';
 export { default as useDataViewState } from './useDataViewState';
 export { default as ConfirmActionModal } from './ConfirmActionModal';
-export { default as StatusTabs } from './StatusTabs';
 export { default as StatusSidebar } from './StatusSidebar';
 export { default as EnhancedViewToggle } from './EnhancedViewToggle';
 export { default as useEnhancedView } from './useEnhancedView';
