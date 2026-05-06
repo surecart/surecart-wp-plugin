@@ -49,7 +49,13 @@ const LAYOUT_STYLES = {
 	created_at: { width: '10%' },
 };
 
-const DEFAULT_FIELDS = ['name', 'status', 'price', 'product_collections'];
+const DEFAULT_FIELDS = [
+	'name',
+	'status',
+	'quantity',
+	'price',
+	'product_collections',
+];
 const PREFERENCE_KEY = 'products-list-view';
 
 export default ({ navigation }) => {
