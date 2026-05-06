@@ -130,6 +130,22 @@ export default ({ navigation }) => {
 		view,
 	});
 
+	// Remove polluted fields from the view when in table mode.
+	// These fields are only relevant to card-based layouts,
+	// and can cause confusion when accidentally left enabled in table view.
+	useEffect(() => {
+		if (view?.type !== 'table') return;
+		const polluted =
+			view.titleField || view.mediaField || view.descriptionField;
+		if (!polluted) return;
+		setView({
+			...view,
+			titleField: undefined,
+			mediaField: undefined,
+			descriptionField: undefined,
+		});
+	}, [view, setView]);
+
 	const { tabs, activeValue, setTab } = useStatusTabs({ view, setView });
 
 	// Async-fetched integrations enrichment for the integrations column.
@@ -159,59 +175,27 @@ export default ({ navigation }) => {
 		]
 	);
 
-	// Variant-aware field renderers + chevron on `name`.
+	// Variants are a tabular concept — chevron/sub-rows/cell renderers
+	// only run in table view. In grid/list, the `name` field renders
+	// as bare text so it doesn't double up with the card's mediaField.
+	const isTableView = view?.type === 'table';
+
 	const fields = useMemo(
 		() =>
 			applyVariantRenderers(baseFields, {
 				expandedIds: expanded.ids,
 				onToggle: expanded.toggle,
 				savingVariantIds: saving.ids,
+				viewType: view?.type,
 			}),
-		[baseFields, expanded.ids, expanded.toggle, saving.ids]
+		[baseFields, expanded.ids, expanded.toggle, saving.ids, view?.type]
 	);
 
-	// Variants are synthetic — injected after server-side pagination/
-	// filter/sort, never counted in paginationInfo.total.
 	const dataWithVariants = useMemo(
-		() => injectVariantRows(records, expanded.ids),
-		[records, expanded.ids]
+		() =>
+			isTableView ? injectVariantRows(records, expanded.ids) : records,
+		[isTableView, records, expanded.ids]
 	);
-
-	// Correct the bulk-actions footer item count.
-	useEffect(() => {
-		const productCount = (records || []).length;
-
-		const formatCount = (n) =>
-			n === 1
-				? __('1 Item', 'surecart')
-				: sprintf(
-						/* translators: %d: number of items. */
-						__('%d Items', 'surecart'),
-						n
-				  );
-
-		const apply = (span) => {
-			const target = formatCount(productCount);
-			if (span.textContent !== target) {
-				span.textContent = target;
-			}
-		};
-
-		const span = document.querySelector(
-			'.dataviews-bulk-actions-footer__item-count'
-		);
-		if (!span) return;
-
-		apply(span);
-
-		const observer = new MutationObserver(() => apply(span));
-		observer.observe(span, {
-			childList: true,
-			characterData: true,
-			subtree: true,
-		});
-		return () => observer.disconnect();
-	}, [records, dataWithVariants]);
 
 	const handleArchiveToggle = useCallback(
 		async (items) => {

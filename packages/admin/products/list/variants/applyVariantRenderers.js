@@ -196,10 +196,24 @@ const decorateForVariants = (field, { savingVariantIds }) => {
 
 // Wraps each field so variant rows render their own cells, and
 // injects the expand/collapse chevron into the `name` field.
+//
+// Variant features (chevron, badge, sub-rows, cell renderers) are
+// inherently tabular — they only make sense in table view. In grid
+// and list layouts we strip the thumbnail from the `name` field so
+// it doesn't double up with the card's mediaField, and otherwise
+// pass fields through untouched.
 export default function applyVariantRenderers(
 	fields,
-	{ expandedIds, onToggle, savingVariantIds }
+	{ expandedIds, onToggle, savingVariantIds, viewType = 'table' }
 ) {
+	if (viewType !== 'table') {
+		return fields.map((field) =>
+			field.id === 'name'
+				? { ...field, render: ({ item }) => item?.name || '' }
+				: field
+		);
+	}
+
 	return fields.map((field) => {
 		const variantAware = decorateForVariants(field, { savingVariantIds });
 		if (field.id === 'name') {
