@@ -166,6 +166,110 @@ exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\`
 </sc-payment>
 `;
 
+exports[`sc-payment renders razorpay as a single combined tile on one-time checkouts 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-checkout-razorpay-payment-provider processor-id="razorpayid"></sc-checkout-razorpay-payment-provider>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <slot name="label-end"></slot>
+      </div>
+      <div theme="container">
+        <sc-payment-method-choice processor-id="razorpay">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="razorpay" style="font-size: 24px;"></sc-icon>
+            <span>
+              Cards, Netbanking, Wallet &amp; UPI
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="Cards, Netbanking, Wallet &amp; UPI selected for check out.">
+              <sc-icon aria-hidden="true" name="razorpay" slot="icon"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment renders razorpay as per-method tile on recurring checkouts with a single method 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-checkout-razorpay-payment-provider processor-id="razorpayid"></sc-checkout-razorpay-payment-provider>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <slot name="label-end"></slot>
+      </div>
+      <div theme="container">
+        <sc-payment-method-choice method-id="card" processor-id="razorpay">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="razorpay" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="Credit Card selected for check out.">
+              <sc-icon aria-hidden="true" name="razorpay" slot="icon"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment renders razorpay as per-method tiles on recurring checkouts with multiple methods 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-checkout-razorpay-payment-provider processor-id="razorpayid"></sc-checkout-razorpay-payment-provider>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+        <slot name="label-end"></slot>
+      </div>
+      <sc-toggles theme="container">
+        <sc-payment-method-choice method-id="card" processor-id="razorpay">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="razorpay" style="font-size: 24px;"></sc-icon>
+            <span>
+              Credit Card
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="Credit Card selected for check out.">
+              <sc-icon aria-hidden="true" name="razorpay" slot="icon"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+        <sc-payment-method-choice method-id="upi" processor-id="razorpay">
+          <span class="sc-payment-toggle-summary" slot="summary">
+            <sc-icon aria-hidden="true" name="upi" style="font-size: 24px;"></sc-icon>
+            <span>
+              UPI
+            </span>
+          </span>
+          <sc-card>
+            <sc-payment-selected label="UPI selected for check out.">
+              <sc-icon aria-hidden="true" name="upi" slot="icon"></sc-icon>
+              Another step will appear after submitting your order to complete your purchase details.
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </sc-toggles>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
 exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
 <sc-payment>
   <mock:shadow-root>

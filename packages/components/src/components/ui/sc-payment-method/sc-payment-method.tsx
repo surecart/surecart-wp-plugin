@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { BankAccount, PaymentInstrument, PaymentMethod } from '../../../types';
+import { getRazorpayMethodIcon, getRazorpayMethodLabel } from '../../../functions/razorpay';
 
 @Component({
   tag: 'sc-payment-method',
@@ -53,7 +54,7 @@ export class ScPaymentMethod {
         return (
           <div class="payment-method" part="instrument">
             <div class="payment-method-icon">
-              <sc-icon style={{ fontSize: '36px', '--height': '0.63em' }} name={type} />
+              <sc-icon style={{ 'fontSize': '36px', '--height': '0.63em' }} name={type} />
             </div>
             <span>{this?.paymentMethod?.payment_method_name}</span>
             {this.renderExternalLink()}
@@ -65,6 +66,18 @@ export class ScPaymentMethod {
         return (
           <div class="payment-method" part="instrument">
             <sc-icon style={{ fontSize: '56px', lineHeight: '1', height: '28px' }} name="paypal"></sc-icon>
+          </div>
+        );
+      }
+
+      // Razorpay method types — explicit label/icon so acronyms stay uppercase ("UPI", not "Upi").
+      const razorpayLabel = getRazorpayMethodLabel(type);
+      if (razorpayLabel) {
+        return (
+          <div class="payment-method" part="instrument">
+            <sc-icon style={{ fontSize: '24px' }} name={getRazorpayMethodIcon(type)} aria-hidden="true"></sc-icon>
+            <span>{razorpayLabel}</span>
+            {this.renderExternalLink()}
           </div>
         );
       }

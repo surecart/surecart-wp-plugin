@@ -3,7 +3,7 @@
  */
 import { onChange as onChangeCheckout } from '../checkout';
 import { onChange as onChangeProcessor, state as selectedProcessor } from '../selected-processor';
-import { availableManualPaymentMethods, availableMethodTypes, availableProcessors } from './getters';
+import { availableManualPaymentMethods, availableMethodTypes, availableProcessors, isMethodAwareProcessor } from './getters';
 import { onChange } from './store';
 
 /**
@@ -27,8 +27,8 @@ const maybeUpdateProcessor = () => {
 const maybeUpdateMethod = () => {
   // get method ids.
   const ids = (availableMethodTypes() || []).map(({ id }) => id);
-  // if the processor is not mollie, unset the method.
-  if (selectedProcessor?.id !== 'mollie') {
+  // method only applies to method-aware processors (mollie, razorpay).
+  if (!isMethodAwareProcessor(selectedProcessor?.id)) {
     selectedProcessor.method = null;
     return;
   }
@@ -43,7 +43,12 @@ onChangeCheckout('checkout', () => {
   maybeUpdateProcessor();
   maybeUpdateMethod();
 });
-onChangeProcessor('id', () => maybeUpdateProcessor());
+onChangeProcessor('id', () => {
+  maybeUpdateProcessor();
+
+  // Reset method on processor switch so a stale `payment_method_type` doesn't leak into finalize.
+  maybeUpdateMethod();
+});
 
 // when processors and methods are first loaded, select first one.
 onChange('processors', () => maybeUpdateProcessor());

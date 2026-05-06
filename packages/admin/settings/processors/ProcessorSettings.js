@@ -258,7 +258,7 @@ export default () => {
 				'Connect with Razorpay to accept payments via Cards, Netbanking, Wallet & UPI.',
 				'surecart'
 			),
-			isBeta: true,
+			isBeta: false,
 			status: renderStatus('razorpay'),
 		},
 	];

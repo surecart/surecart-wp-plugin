@@ -2,26 +2,35 @@
  * External dependencies.
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
  */
 import { state as checkoutState } from '@store/checkout';
+import { listenTo } from '@store/checkout/functions';
+import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
+import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 import { loadRazorpay } from 'src/functions/razorpay';
-import { Customer, RazorpayConstructor } from 'src/types';
+import apiFetch from '../../../../functions/fetch';
+import { Customer, Pagination, PaymentMethodType, RazorpayConstructor, ResponseError } from 'src/types';
 
 @Component({
   tag: 'sc-checkout-razorpay-payment-provider',
   shadow: true,
 })
 export class ScCheckoutRazorpayPaymentProvider {
-  private unlistenToFormState: () => void;
+  /** Razorpay processor id. Required for the recurring `payment_method_types` fetch. */
+  @Prop() processorId: string;
+
+  private unlistenToFormState?: () => void;
+  private unlistenToCheckout?: () => void;
   private razorpayInstance: RazorpayConstructor | null = null;
   private confirming: boolean = false;
 
@@ -38,10 +47,51 @@ export class ScCheckoutRazorpayPaymentProvider {
         this.confirm();
       }
     });
+
+    // Keep the recurring payment_method_types in sync with the checkout.
+    this.fetchMethods();
+    this.unlistenToCheckout = listenTo('checkout', ['currency', 'reusable_payment_method_required'], () => this.fetchMethods());
   }
 
   disconnectedCallback() {
-    this.unlistenToFormState();
+    // Guarded — Stencil can disconnect before componentWillLoad fires on mid-render reparenting.
+    this.unlistenToFormState?.();
+    this.unlistenToCheckout?.();
+    // Release shared state so a later mollie / non-recurring flow starts clean.
+    processorsState.methods = [];
+  }
+
+  /** Fetch enabled `payment_method_types` for recurring checkouts. No-op otherwise. */
+  async fetchMethods() {
+    const checkout = checkoutState.checkout;
+    if (!this.processorId || !checkout?.currency) return;
+
+    // One-time — Razorpay handles method selection in its modal. Clear any stale recurring methods.
+    if (!checkout?.reusable_payment_method_required) {
+      if (processorsState.methods.length) processorsState.methods = [];
+      return;
+    }
+
+    try {
+      lockCheckout('methods');
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/processors/${this.processorId}/payment_method_types`, {
+          currency: checkout.currency,
+          reusable: true,
+          per_page: 100,
+        }),
+      })) as {
+        object: 'list';
+        pagination: Pagination;
+        data: PaymentMethodType[];
+      };
+      processorsState.methods = response?.data || [];
+    } catch (e) {
+      createErrorNotice(e as ResponseError);
+      console.error(e);
+    } finally {
+      unLockCheckout('methods');
+    }
   }
 
   async confirm() {
