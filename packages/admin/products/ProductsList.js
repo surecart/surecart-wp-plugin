@@ -10,8 +10,6 @@ import apiFetch from '@wordpress/api-fetch';
 import {
 	DataViewListLayout,
 	useDataViewState,
-	useUrlFilterWriter,
-	readInitialFiltersFromUrl,
 	StatusSidebar,
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
@@ -91,12 +89,6 @@ export default ({ navigation }) => {
 		[collectionRecords]
 	);
 
-	// Seed filters from the URL on mount; written back via useUrlFilterWriter.
-	const initialViewFilters = useMemo(
-		() => readInitialFiltersFromUrl(PRODUCTS_URL_FILTERS),
-		[]
-	);
-
 	// Default visible fields can be extended by plugins.
 	const defaultFields = useMemo(
 		() => applyDefaultFieldsExtensions('products', DEFAULT_FIELDS),
@@ -116,8 +108,9 @@ export default ({ navigation }) => {
 		sortMap: PRODUCTS_SORT_MAP,
 		defaultFields,
 		layoutStyles: LAYOUT_STYLES,
-		initialViewFilters,
 		preferenceKey: PREFERENCE_KEY,
+		pageSlug: 'sc-products',
+		urlFilters: PRODUCTS_URL_FILTERS,
 		buildQueryArgs: ({ view: currentView }) => {
 			// Per-screen filter args; useDataViewState already adds
 			// per_page/page/sort/query.
@@ -128,12 +121,6 @@ export default ({ navigation }) => {
 			delete full.query;
 			return full;
 		},
-	});
-
-	useUrlFilterWriter({
-		pageSlug: 'sc-products',
-		filters: PRODUCTS_URL_FILTERS,
-		view,
 	});
 
 	// Remove polluted fields from the view when in table mode.

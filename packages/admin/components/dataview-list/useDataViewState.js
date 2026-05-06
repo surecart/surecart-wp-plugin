@@ -2,23 +2,49 @@ import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as preferencesStore } from '@wordpress/preferences';
+import { getQueryArgs } from '@wordpress/url';
+import { useHistory } from '../../router';
 
 export const PREFERENCES_SCOPE = 'surecart/dataview-lists';
 
-const PERSISTED_VIEW_KEYS = [
-	'type',
-	'fields',
-	'layout',
-	'perPage',
-	'page',
-	'sort',
-	'search',
-	'filters',
-];
+// Layout-only persistence. Filters live in the URL (canonical, shareable);
+// `search` and `page` are transient and reset on reload.
+const PERSISTED_VIEW_KEYS = ['type', 'fields', 'layout', 'perPage', 'sort'];
 
-// Stored alongside the persisted view so we can invalidate the user's
-// saved `fields` when the screen's default columns change.
-const FIELDS_VERSION_KEY = '_fieldsVersion';
+const defaultSerialize = (value, multiple) => {
+	if (value === null || value === undefined) return undefined;
+	if (multiple) {
+		const arr = Array.isArray(value) ? value : [value];
+		const cleaned = arr.filter(
+			(v) => v !== null && v !== undefined && v !== ''
+		);
+		return cleaned.length ? cleaned.join(',') : undefined;
+	}
+	return value === '' ? undefined : String(value);
+};
+
+const defaultDeserialize = (raw, multiple) => {
+	if (raw === undefined || raw === null || raw === '') return undefined;
+	if (multiple) return String(raw).split(',').filter(Boolean);
+	return raw;
+};
+
+const readInitialFiltersFromUrl = (filters = []) => {
+	const params = getQueryArgs(window.location.href);
+	const out = [];
+	for (const cfg of filters) {
+		const raw = params[cfg.urlKey];
+		const deserialize = cfg.deserialize || defaultDeserialize;
+		const value = deserialize(raw, !!cfg.multiple);
+		if (value === undefined) continue;
+		out.push({
+			field: cfg.field,
+			operator: cfg.operator || (cfg.multiple ? 'isAny' : 'is'),
+			value,
+		});
+	}
+	return out;
+};
 
 function readPersistedView(preferenceKey) {
 	if (!preferenceKey) return null;
@@ -36,19 +62,20 @@ export default function useDataViewState(config) {
 		defaultSort = { field: 'created_at', direction: 'desc' },
 		sortMap = {},
 		defaultFields = [],
-		// Bump this when `defaultFields` changes so users with persisted
-		// preferences pick up the new default columns instead of being
-		// stuck on whatever they had saved.
-		defaultFieldsVersion,
 		perPage = 20,
 		layoutStyles = {},
 		buildQueryArgs,
-		initialViewFilters = [],
 		preferenceKey,
+		// URL-canonical filter config. When both are provided, the hook
+		// seeds filters from the URL on mount and writes them back on view
+		// change. Skipped entirely when omitted (e.g. Product Collections).
+		pageSlug,
+		urlFilters = [],
 	} = config;
 
 	const { invalidateResolution } = useDispatch(coreStore);
 	const { set: setPreference } = useDispatch(preferencesStore);
+	const history = useHistory();
 
 	// Subscribe to preference so server-loaded values replace defaults on arrival.
 	const persistedFromStore = useSelect(
@@ -59,6 +86,12 @@ export default function useDataViewState(config) {
 		[preferenceKey]
 	);
 
+	// Filters always come from the URL — read once at mount.
+	const initialFiltersRef = useRef(null);
+	if (initialFiltersRef.current === null) {
+		initialFiltersRef.current = readInitialFiltersFromUrl(urlFilters);
+	}
+
 	const [view, setView] = useState(() =>
 		mergeView(
 			buildBaseView({
@@ -66,15 +99,10 @@ export default function useDataViewState(config) {
 				defaultSort,
 				defaultFields,
 				layoutStyles,
-				initialViewFilters,
+				initialFilters: initialFiltersRef.current,
 			}),
 			readPersistedView(preferenceKey),
-			{
-				layoutStyles,
-				initialViewFilters,
-				defaultFields,
-				defaultFieldsVersion,
-			}
+			{ layoutStyles }
 		)
 	);
 
@@ -83,24 +111,11 @@ export default function useDataViewState(config) {
 	useEffect(() => {
 		if (hydratedRef.current) return;
 		if (!persistedFromStore) return;
-		setView((prev) =>
-			mergeView(prev, persistedFromStore, {
-				layoutStyles,
-				initialViewFilters,
-				defaultFields,
-				defaultFieldsVersion,
-			})
-		);
+		setView((prev) => mergeView(prev, persistedFromStore, { layoutStyles }));
 		hydratedRef.current = true;
-	}, [
-		persistedFromStore,
-		layoutStyles,
-		initialViewFilters,
-		defaultFields,
-		defaultFieldsVersion,
-	]);
+	}, [persistedFromStore, layoutStyles]);
 
-	// Write the persisted subset back whenever view changes.
+	// Write the persisted layout subset back whenever view changes.
 	const isFirstRenderRef = useRef(true);
 	useEffect(() => {
 		if (!preferenceKey) return;
@@ -112,11 +127,31 @@ export default function useDataViewState(config) {
 		for (const key of PERSISTED_VIEW_KEYS) {
 			if (view[key] !== undefined) subset[key] = view[key];
 		}
-		if (defaultFieldsVersion) {
-			subset[FIELDS_VERSION_KEY] = defaultFieldsVersion;
-		}
 		setPreference(PREFERENCES_SCOPE, preferenceKey, subset);
 	}, [view, preferenceKey, setPreference]);
+
+	// Mirror filters back to the URL when they change. Defaults are stripped
+	// so a fresh page load has a clean `/admin.php?page=<slug>`.
+	const lastWrittenUrlRef = useRef('');
+	useEffect(() => {
+		if (!pageSlug || !urlFilters.length) return;
+		const params = { page: pageSlug };
+		for (const cfg of urlFilters) {
+			const filter = view.filters?.find((f) => f.field === cfg.field);
+			const value = filter?.value;
+			const isDefault =
+				cfg.defaultValue !== undefined && value === cfg.defaultValue;
+			if (value === undefined || isDefault) continue;
+			const serialize = cfg.serialize || defaultSerialize;
+			const serialised = serialize(value, !!cfg.multiple);
+			if (serialised === undefined) continue;
+			params[cfg.urlKey] = serialised;
+		}
+		const next = JSON.stringify(params);
+		if (next === lastWrittenUrlRef.current) return;
+		lastWrittenUrlRef.current = next;
+		history.replace(params);
+	}, [view, history, pageSlug, urlFilters]);
 
 	const queryArgs = useMemo(() => {
 		const sortField = view.sort?.field
@@ -176,7 +211,7 @@ function buildBaseView({
 	defaultSort,
 	defaultFields,
 	layoutStyles,
-	initialViewFilters,
+	initialFilters,
 }) {
 	return {
 		type: 'table',
@@ -184,39 +219,23 @@ function buildBaseView({
 		page: 1,
 		sort: defaultSort,
 		search: '',
-		filters: initialViewFilters,
+		filters: initialFilters,
 		fields: defaultFields,
 		layout: { styles: layoutStyles },
 	};
 }
 
-// Merge persisted subset over a base view. Incoming-URL filters and
-// layout.styles always override whatever's persisted. If the persisted
-// `_fieldsVersion` doesn't match the current `defaultFieldsVersion`, the
-// persisted `fields` are dropped so users pick up new default columns.
-function mergeView(
-	base,
-	persisted,
-	{ layoutStyles, initialViewFilters, defaultFields, defaultFieldsVersion }
-) {
+// Merge the persisted layout subset over the base view. `layout.styles`
+// always comes from the current spec so column widths can be tuned at
+// build time. Persisted `fields` referencing IDs that no longer exist
+// are silently ignored by DataViews — no reconciliation needed here.
+function mergeView(base, persisted, { layoutStyles }) {
 	if (!persisted) return base;
 	const merged = { ...base };
-	const fieldsVersionMismatch =
-		defaultFieldsVersion !== undefined &&
-		persisted[FIELDS_VERSION_KEY] !== defaultFieldsVersion;
 	for (const key of PERSISTED_VIEW_KEYS) {
 		if (persisted[key] === undefined) continue;
-		// Skip persisted `fields` when the default-columns version has
-		// changed — fall back to the current defaults instead.
-		if (key === 'fields' && fieldsVersionMismatch) continue;
 		merged[key] = persisted[key];
 	}
-	if (fieldsVersionMismatch) {
-		merged.fields = defaultFields;
-	}
 	merged.layout = { ...(merged.layout || {}), styles: layoutStyles };
-	if (initialViewFilters && initialViewFilters.length) {
-		merged.filters = initialViewFilters;
-	}
 	return merged;
 }

@@ -5,11 +5,6 @@ export { default as StatusTabs } from './StatusTabs';
 export { default as StatusSidebar } from './StatusSidebar';
 export { default as EnhancedViewToggle } from './EnhancedViewToggle';
 export { default as useEnhancedView } from './useEnhancedView';
-export {
-	default as useUrlFilterSync,
-	useUrlFilterWriter,
-	readInitialFiltersFromUrl,
-} from './useUrlFilterSync';
 export { default as useAsyncEntityElements } from './useAsyncEntityElements';
 export {
 	buildBaseQuery,
