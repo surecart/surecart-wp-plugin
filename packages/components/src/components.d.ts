@@ -565,6 +565,10 @@ export namespace Components {
         "selectorTitle": string;
     }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
+         */
+        "processorId": string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -7717,6 +7721,10 @@ declare namespace LocalJSX {
         "selectorTitle"?: string;
     }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
+         */
+        "processorId"?: string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
