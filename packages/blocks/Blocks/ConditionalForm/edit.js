@@ -188,8 +188,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					}}
 				>
 					<style>{`
-						.sc-modal-overflow .components-modal__frame,
-						.sc-modal-overflow .components-modal__content {
+						.sc-modal-overflow .components-modal__frame {
 							overflow: visible !important;
 						}
 					`}</style>
