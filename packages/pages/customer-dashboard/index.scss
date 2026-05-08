@@ -90,10 +90,16 @@ body.page-template-template-surecart-dashboard {
 			position: fixed;
 			inset-block-start: 0;
 			inset-inline-start: 0;
-			transform-origin: inline-start;
+			transform-origin: left;
 			width: $sidebar-width;
-			border-inline-end: 1px solid var(--sc-color-gray-200);
+			box-shadow: -15px 0 30px 0 rgba(0, 0, 0, 0.18);
 			z-index: 0;
+		}
+
+		// In RTL the panel sits on the right edge (because `inset-inline-start` flips), so mirror the shadow's X offset
+		// to keep it falling onto the content side instead of off-screen. Same blur, same color — just the sign flips.
+		&.rtl.has-columns:before {
+			box-shadow: 15px 0 30px 0 rgba(0, 0, 0, 0.18);
 		}
 
 		&.surecart-theme-dark {
