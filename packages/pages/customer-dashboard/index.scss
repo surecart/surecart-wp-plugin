@@ -88,11 +88,11 @@ body.page-template-template-surecart-dashboard {
 			content: " ";
 			height: 100%;
 			position: fixed;
-			left: 0;
-			top: 0;
-			transform-origin: left;
+			inset-block-start: 0;
+			inset-inline-start: 0;
+			transform-origin: inline-start;
 			width: $sidebar-width;
-			box-shadow: -15px 0 30px 0 rgba(0, 0, 0, 0.18);
+			border-inline-end: 1px solid var(--sc-color-gray-200);
 			z-index: 0;
 		}
 
