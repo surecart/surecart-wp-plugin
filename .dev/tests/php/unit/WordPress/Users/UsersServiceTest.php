@@ -54,11 +54,19 @@ class UsersServiceTest extends SureCartUnitTestCase {
 		// serialized meta value, so storing the id in the array is enough.
 		update_user_meta( $user_id, 'sc_customer_ids', array( 'live' => 'cust_123' ) );
 
+		// `phone` is forwarded to wp_update_user() but isn't in WordPress core's
+		// insert_user_meta whitelist and the plugin doesn't register a filter for it
+		// in this code path — so the meta value isn't changed by syncCustomerProfile().
+		// We seed an existing value here so the post-sync assertion proves "untouched"
+		// rather than "missing key".
+		update_user_meta( $user_id, 'phone', 'pre-existing-phone' );
+
 		$customer = (object) array(
 			'id'         => 'cust_123',
 			'email'      => 'attacker@evil.test',
 			'first_name' => 'New First',
 			'last_name'  => 'New Last',
+			'phone'      => 'webhook-phone',
 		);
 
 		$this->service->syncCustomerProfile( $customer );
@@ -68,9 +76,14 @@ class UsersServiceTest extends SureCartUnitTestCase {
 		// CVE-2026-7655 — user_email must remain unchanged.
 		$this->assertSame( $original_email, $user->user_email, 'user_email must NOT be mutated by a webhook payload (CVE-2026-7655).' );
 
-		// Non-sensitive fields still sync.
+		// Non-sensitive fields that ARE in WP core's meta whitelist sync as expected.
 		$this->assertSame( 'New First', get_user_meta( $user_id, 'first_name', true ) );
 		$this->assertSame( 'New Last', get_user_meta( $user_id, 'last_name', true ) );
+
+		// Phone is a no-op via wp_update_user() in this code path — pinning current
+		// behavior so any future regression (or unrelated change to phone handling)
+		// surfaces explicitly instead of silently changing.
+		$this->assertSame( 'pre-existing-phone', get_user_meta( $user_id, 'phone', true ) );
 	}
 
 	/**
