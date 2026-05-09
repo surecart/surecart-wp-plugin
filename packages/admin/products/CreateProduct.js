@@ -5,13 +5,20 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from 'react';
 
-import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScButton,
+	ScForm,
+	ScInput,
+	ScSwitch,
+} from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
 export default ({ id, onCreateProduct }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
+	const [isBundle, setIsBundle] = useState(false);
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -26,6 +33,7 @@ export default ({ id, onCreateProduct }) => {
 				{
 					name,
 					auto_fulfill_enabled: true,
+					...(isBundle && { bundle: true }),
 				},
 				{ throwOnError: true }
 			);
@@ -73,6 +81,19 @@ export default ({ id, onCreateProduct }) => {
 							required
 							autofocus
 						/>
+
+						<ScSwitch
+							checked={isBundle}
+							onScChange={(e) => setIsBundle(!!e.target.checked)}
+						>
+							{__('This is a bundle', 'surecart')}
+							<span slot="description">
+								{__(
+									"Sell multiple products together for one price. You'll choose which products are included after creating the bundle. This setting can't be changed later.",
+									'surecart'
+								)}
+							</span>
+						</ScSwitch>
 
 						<div
 							css={css`display: flex gap: var(--sc-spacing-small);`}
