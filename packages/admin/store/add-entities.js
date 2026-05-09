@@ -34,6 +34,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'bundle_item',
+		kind: 'surecart',
+		label: __('Bundle Item', 'surecart'),
+		baseURL: '/surecart/v1/bundle_items',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'upsell',
 		kind: 'surecart',
 		label: __('Upsell', 'surecart'),

@@ -2,19 +2,16 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\HasPrice;
-use SureCart\Models\Traits\HasProduct;
-
 /**
  * BundleItem model.
  *
- * A bundle item defines a component price (and optionally a pinned variant)
- * within a bundle price. All CRUD proxies to api.surecart.com/bundle_items.
+ * A bundle item is the join between a bundle Product and one of its component
+ * Products. Variant selection happens at checkout (via the bundle line item's
+ * `bundle_component_variants` map), not on the bundle item itself.
+ *
+ * All CRUD proxies to api.surecart.com/bundle_items.
  */
 class BundleItem extends Model {
-	use HasPrice;
-	use HasProduct;
-
 	/**
 	 * Rest API endpoint
 	 *
@@ -30,22 +27,64 @@ class BundleItem extends Model {
 	protected $object_name = 'bundle_item';
 
 	/**
-	 * Set the variant attribute.
+	 * The parent bundle Product (the one with bundle: true).
 	 *
-	 * @param  string $value Variant properties.
+	 * @param string|array $value Product id or expanded payload.
 	 * @return void
 	 */
-	public function setVariantAttribute( $value ) {
-		$this->setRelation( 'variant', $value, Variant::class );
+	public function setBundleProductAttribute( $value ) {
+		$this->setRelation( 'bundle_product', $value, Product::class );
 	}
 
 	/**
-	 * Set the bundle_price attribute (the parent bundle price).
+	 * @return string|null
+	 */
+	public function getBundleProductIdAttribute() {
+		return $this->getRelationId( 'bundle_product' );
+	}
+
+	/**
+	 * The component Product included in the bundle.
 	 *
-	 * @param  string $value Price properties.
+	 * Must not itself be a bundle (API returns :cannot_be_bundle).
+	 *
+	 * @param string|array $value Product id or expanded payload.
 	 * @return void
 	 */
-	public function setBundlePriceAttribute( $value ) {
-		$this->setRelation( 'bundle_price', $value, Price::class );
+	public function setComponentProductAttribute( $value ) {
+		$this->setRelation( 'component_product', $value, Product::class );
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getComponentProductIdAttribute() {
+		return $this->getRelationId( 'component_product' );
+	}
+
+	/**
+	 * Display name of the component product.
+	 *
+	 * @return string
+	 */
+	public function getNameAttribute() {
+		$product = $this->component_product ?? null;
+		return is_a( $product, Product::class ) ? (string) ( $product->name ?? '' ) : '';
+	}
+
+	/**
+	 * Component product's line-item image (small, for list rendering).
+	 *
+	 * @return object
+	 */
+	public function getLineItemImageAttribute() {
+		$product = $this->component_product ?? null;
+		if ( is_a( $product, Product::class ) ) {
+			$image = $product->line_item_image ?? null;
+			if ( ! empty( $image ) ) {
+				return $image;
+			}
+		}
+		return (object) array();
 	}
 }

@@ -13,7 +13,6 @@ export default ({
 	onSelect,
 	ad_hoc,
 	variable,
-	bundle,
 	trial,
 	setup_fee,
 	value,
@@ -191,7 +190,6 @@ export default ({
 			value={value}
 			ad_hoc={ad_hoc}
 			variable={variable}
-			bundle={bundle}
 			trial={trial}
 			setup_fee={setup_fee}
 			open={open}

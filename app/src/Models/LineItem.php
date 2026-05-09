@@ -43,41 +43,62 @@ class LineItem extends Model {
 	}
 
 	/**
-	 * Set the bundle_parent relation (expandable).
+	 * The parent bundle line item this component belongs to (expandable).
 	 *
-	 * @param  string $value Bundle parent line item.
+	 * Only present on component line items. The parent is the row the customer
+	 * actually sees priced; this expansion lets a component find its parent so
+	 * the UI can group siblings under it.
+	 *
+	 * @param string|array $value Line item id or expanded payload.
 	 * @return void
 	 */
-	public function setBundleParentAttribute( $value ) {
-		$this->setRelation( 'bundle_parent', $value, self::class );
+	public function setBundleLineItemAttribute( $value ) {
+		$this->setRelation( 'bundle_line_item', $value, self::class );
 	}
 
 	/**
-	 * Set the bundle_components collection (expandable).
+	 * Per-component variant selections, keyed by component_product_id.
 	 *
-	 * @param  array $value Bundle component line items.
+	 * Lives on the bundle parent line item only. Backend uses this to materialize
+	 * component line items with the chosen variant. Stored as a raw map — there's
+	 * no relation hydration here.
+	 *
+	 * @param array $value Map of component_product_id => variant_id.
 	 * @return void
 	 */
-	public function setBundleComponentsAttribute( $value ) {
-		$this->setCollection( 'bundle_components', $value, self::class );
+	public function setBundleComponentVariantsAttribute( $value ) {
+		$this->attributes['bundle_component_variants'] = is_array( $value ) ? $value : array();
 	}
 
 	/**
-	 * Is this line item a bundle parent?
+	 * Whether this line item is a bundle parent (priced row that owns components).
+	 *
+	 * A parent has `component_line_item: false` AND its price's product is a
+	 * bundle product. Requires the `price.product` expansion to be present;
+	 * otherwise returns false.
 	 *
 	 * @return bool
 	 */
 	public function getIsBundleParentAttribute() {
-		return empty( $this->bundle_parent_id ) && ! empty( $this->price ) && is_a( $this->price, Price::class ) && ! empty( $this->price->bundle );
+		if ( ! empty( $this->component_line_item ) ) {
+			return false;
+		}
+		if ( empty( $this->price ) || ! is_a( $this->price, Price::class ) ) {
+			return false;
+		}
+		$product = $this->price->product ?? null;
+		return ! empty( $product ) && is_a( $product, Product::class ) && ! empty( $product->bundle );
 	}
 
 	/**
-	 * Is this a bundle component line item?
+	 * Whether this line item is a bundle component (auto-generated child).
+	 *
+	 * Friendly alias for the API's direct `component_line_item` boolean.
 	 *
 	 * @return bool
 	 */
 	public function getIsBundleComponentAttribute() {
-		return ! empty( $this->bundle_parent_id );
+		return ! empty( $this->component_line_item );
 	}
 
 	/**

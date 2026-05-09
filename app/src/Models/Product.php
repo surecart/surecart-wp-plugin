@@ -29,7 +29,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'price.bundle_items', 'bundle_item.price', 'bundle_item.product', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
+	protected $sync_expands = array( 'prices', 'bundle_items', 'bundle_items.component_product', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
 
 	/**
 	 * Rest API endpoint
@@ -58,6 +58,25 @@ class Product extends Model implements PageModel {
 	 * @var string
 	 */
 	protected $cache_key = 'products';
+
+	/**
+	 * Hydrate the bundle_items collection from API expansion.
+	 *
+	 * @param array $value Bundle items payload.
+	 * @return void
+	 */
+	public function setBundleItemsAttribute( $value ) {
+		$this->setCollection( 'bundle_items', $value, BundleItem::class );
+	}
+
+	/**
+	 * Whether this product is a bundle.
+	 *
+	 * @return bool
+	 */
+	public function isBundle(): bool {
+		return ! empty( $this->bundle );
+	}
 
 	/**
 	 * Create a new model
