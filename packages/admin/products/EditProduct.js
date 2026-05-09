@@ -21,6 +21,7 @@ import SaveButton from './components/product/SaveButton';
 import BuyLink from './modules/BuyLink';
 
 import Advanced from './modules/Advanced';
+import Components from './modules/Components';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
 import Media from './modules/Media';
@@ -60,7 +61,14 @@ export default ({ id, setBrowserURL }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id);
+	} = useEntity('product', id, {
+		expand: [
+			'bundle_items',
+			'bundle_items.component_product',
+			'bundle_items.component_product.featured_product_media',
+			'bundle_items.component_product.product_medias',
+		],
+	});
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
@@ -430,6 +438,12 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
+					<Components
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+
 					<Media
 						productId={id}
 						product={product}
@@ -450,12 +464,14 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Variations
-						productId={id}
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+					{!product?.bundle && (
+						<Variations
+							productId={id}
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Integrations id={id} product={product} />
 

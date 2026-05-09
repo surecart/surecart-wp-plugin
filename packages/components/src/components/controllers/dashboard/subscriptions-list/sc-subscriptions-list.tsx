@@ -83,10 +83,8 @@ export class ScSubscriptionsList {
         expand: [
           'price',
           'price.product',
-          'price.bundle_items',
-          'bundle_item.price',
-          'bundle_item.product',
-          'bundle_item.variant',
+          'product.bundle_items',
+          'bundle_item.component_product',
           'current_period',
           'period.checkout',
           'purchase',

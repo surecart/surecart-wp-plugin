@@ -15,10 +15,8 @@ import PriceName from '../../../components/price/parts/PriceName';
 // components
 import Subscription from '../../../components/price/Subscription';
 import Header from './Header';
-import BundleItemsPreview from './BundleItemsPreview';
 import Swap from '../../../components/price/parts/Swap';
 import Advanced from '../../../components/price/parts/Advanced';
-import BundleItems from '../../../components/price/parts/BundleItems';
 import PaymentType from '../../../components/price/parts/PaymentType';
 
 export default ({ price, product, allPrices }) => {
@@ -209,8 +207,6 @@ export default ({ price, product, allPrices }) => {
 				collapsible={true}
 			/>
 
-			<BundleItemsPreview price={currentPrice} />
-
 			<Error error={savePriceError || error} setError={setError} />
 
 			<ScForm onScFormSubmit={saveEditedPrice}>
@@ -289,11 +285,6 @@ export default ({ price, product, allPrices }) => {
 										currentProduct={product}
 									/>
 								)}
-
-							<BundleItems
-								price={currentPrice}
-								updatePrice={editPrice}
-							/>
 
 							<Advanced
 								price={currentPrice}

@@ -19,7 +19,6 @@ export default ({
 	children,
 	ad_hoc = true,
 	variable = true,
-	bundle = true,
 	trial = true,
 	setup_fee = true,
 	exclude = [],
@@ -71,9 +70,8 @@ export default ({
 						if (!ad_hoc && price?.ad_hoc) {
 							return false;
 						}
-						if (!bundle && price?.bundle) {
-							return false;
-						}
+						// `bundle` filter removed — bundle is no longer a Price attribute
+						// (moved to Product). The dead filter has been deleted.
 						if (!trial && !!price?.trial_duration_days) {
 							return false;
 						}

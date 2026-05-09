@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { BundleItem, License, Price, Product, Purchase, Subscription, Variant } from '../../../../types';
+import { BundleItem, License, Price, Product, Purchase, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 import { formatNumber } from '../../../../../../admin/util';
 @Component({
@@ -189,11 +189,14 @@ export class ScSubscriptionDetails {
     );
   }
 
-  /** Bundle items attached to the subscription's price (if it is a bundle). */
+  /**
+   * Bundle items attached to the subscription's product (if it is a bundle).
+   * Bundle is a Product attribute post-refactor — read it via price.product.
+   */
   getBundleItems(): BundleItem[] {
-    const price = this.subscription?.price as Price;
-    if (!price?.bundle) return [];
-    return (price?.bundle_items?.data || []) as BundleItem[];
+    const product = (this.subscription?.price as Price)?.product as Product;
+    if (!product?.bundle) return [];
+    return (product?.bundle_items?.data || []) as BundleItem[];
   }
 
   renderBundleComponents() {
@@ -222,19 +225,16 @@ export class ScSubscriptionDetails {
         {this.bundleExpanded && (
           <div class="subscription-details__bundle-components">
             {items.map(item => {
-              const itemPrice = item?.price as Price;
-              const itemProduct = (itemPrice?.product || item?.product) as Product;
-              const itemVariant = item?.variant as Variant;
-              const variantLabel =
-                (itemVariant as any)?.name ||
-                [itemVariant?.option_1, itemVariant?.option_2, itemVariant?.option_3].filter(Boolean).join(' / ');
+              // Component is a Product (no longer a Price). Variant choice
+              // lives on the customer's component purchases, not on the bundle
+              // item — re-introduce the variant label via the
+              // bundle_component_purchases expansion when platform confirms it
+              // (see docs/product-bundle-plan.md §16).
+              const itemProduct = item?.component_product as Product;
               return (
                 <div class="subscription-details__bundle-component" key={item?.id}>
                   <sc-icon name="chevron-right" />
-                  <span>
-                    {itemProduct?.name}
-                    {variantLabel ? ` — ${variantLabel}` : ''}
-                  </span>
+                  <span>{itemProduct?.name}</span>
                   {item?.quantity > 1 && (
                     <span class="subscription-details__bundle-qty">
                       {sprintf(

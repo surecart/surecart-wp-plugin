@@ -4,7 +4,7 @@ if ( empty( $bundle_item ) ) {
 	return '';
 }
 
-$component_name = $bundle_item->product->name ?? '';
+$component_name = $bundle_item->component_product->name ?? '';
 if ( empty( $component_name ) ) {
 	return '';
 }

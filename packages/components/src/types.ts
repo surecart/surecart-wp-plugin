@@ -163,14 +163,6 @@ export interface Price {
   portal_subscription_update_enabled: boolean;
   metadata: { [key: string]: string };
   current_swap?: Swap;
-  bundle?: boolean;
-  bundle_items?: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<BundleItem>;
-  };
-  bundle_savings_amount?: number;
-  bundle_savings_display_amount?: string;
 }
 export interface VariantOption {
   id: string;
@@ -418,6 +410,16 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<VariantOption>;
   };
+  /**
+   * Whether this product is a bundle. Set on create, immutable thereafter.
+   * A bundle product owns BundleItems pointing at component products.
+   */
+  bundle?: boolean;
+  bundle_items?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<BundleItem>;
+  };
   product_medias: {
     object: 'list';
     pagination: Pagination;
@@ -549,15 +551,26 @@ export interface LineItem extends Object {
   is_swappable?: boolean;
   note?: string;
   display_note?: string;
-  bundle_parent_id?: string;
-  bundle_parent?: string | LineItem;
-  bundle_component?: boolean;
-  bundle_components?: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<LineItem>;
-  };
+  /**
+   * Whether this line item is a bundle component (auto-generated child).
+   * Always paired with a `bundle_line_item` expansion pointing at the parent.
+   * Component LIs always have unit_amount: 0 and tax_amount: 0.
+   */
+  component_line_item?: boolean;
+  /** On a component LI, the parent bundle line item (expansion). */
+  bundle_line_item?: string | LineItem;
+  /**
+   * On the bundle parent LI, the shopper's variant selections, keyed by
+   * component_product_id. Required for any component product that has variants.
+   */
+  bundle_component_variants?: Record<string, string>;
+  /**
+   * On a component LI, the portion of the bundle's price allocated to this
+   * component (used internally for tax calculation). Cents.
+   */
   bundle_allocated_unit_amount?: number;
+  /** Tax rate (decimal, e.g. 0.0875). Populated on both parent and components. */
+  tax_rate?: number;
 }
 
 export interface DeletedItem {
@@ -579,15 +592,26 @@ export interface Fee {
   updated_at: number;
 }
 
+/**
+ * BundleItem — a join between a bundle Product and one of its component Products.
+ *
+ * Variant selection is NOT pinned here; the shopper picks at checkout via
+ * `bundle_component_variants` on the bundle line item. Components are always
+ * Products, never Prices or Variants.
+ */
 export interface BundleItem {
   id: string;
   object: 'bundle_item';
-  bundle_price: string | Price;
-  price: string | Price;
-  product?: string | Product;
-  variant?: string | Variant;
+  /** The parent bundle product (the one with bundle: true). */
+  bundle_product: string | Product;
+  /** The component product included in the bundle. Must not itself be a bundle. */
+  component_product: string | Product;
   quantity: number;
+  /** Optional weighting input (cents) for tax allocation. Nil → even split by quantity. */
+  basis_amount?: number | null;
   position: number;
+  /** Whether this is the current version of the bundle item. */
+  current_version?: boolean;
   metadata?: { [key: string]: string };
   created_at: number;
   updated_at: number;

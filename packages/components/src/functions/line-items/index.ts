@@ -13,16 +13,25 @@ export const groupBundleLineItems = (items: LineItem[] = []) => {
   const componentsByParent: Record<string, LineItem[]> = {};
 
   (items || []).forEach(item => {
-    if (item?.bundle_parent_id) {
-      if (!componentsByParent[item.bundle_parent_id]) {
-        componentsByParent[item.bundle_parent_id] = [];
+    if (item?.component_line_item) {
+      const parent = item?.bundle_line_item as LineItem | undefined;
+      const parentId = parent?.id;
+      if (parentId) {
+        if (!componentsByParent[parentId]) {
+          componentsByParent[parentId] = [];
+        }
+        componentsByParent[parentId].push(item);
       }
-      componentsByParent[item.bundle_parent_id].push(item);
-    } else if ((item?.price as Price)?.bundle) {
-      bundleParents.push(item);
-    } else {
-      regular.push(item);
+      return;
     }
+
+    const product = (item?.price as Price)?.product as Product | undefined;
+    if (product?.bundle) {
+      bundleParents.push(item);
+      return;
+    }
+
+    regular.push(item);
   });
 
   return { regular, bundleParents, componentsByParent };

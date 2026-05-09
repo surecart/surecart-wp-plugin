@@ -1,13 +1,19 @@
 <?php
+/**
+ * Product Bundle Items — outer container that renders on a bundle product's
+ * detail page. Iterates the product's BundleItems via the inner template.
+ *
+ * Bundle is a Product attribute post-refactor (was on Price). Each BundleItem
+ * exposes its component via `component_product`. Variant choice is the
+ * shopper's at checkout — it's not on the bundle item.
+ */
 $product = sc_get_product();
 
-// Must have product with an initial price that is a bundle.
-if ( empty( $product ) || empty( $product->initial_price ) || empty( $product->initial_price->bundle ) ) {
+if ( empty( $product ) || empty( $product->bundle ) ) {
 	return '';
 }
 
-// Must have bundle items.
-$bundle_items = $product->initial_price->bundle_items->data ?? [];
+$bundle_items = $product->bundle_items->data ?? array();
 if ( empty( $bundle_items ) ) {
 	return '';
 }

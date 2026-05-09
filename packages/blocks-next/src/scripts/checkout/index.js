@@ -166,26 +166,33 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get cartLineItems() {
 			return state.checkoutLineItems.filter(
-				(item) => !item.bundle_parent_id
+				(item) => !item.component_line_item
 			);
 		},
 
 		/**
 		 * Check if the current line item (from context) is a bundle parent.
+		 *
+		 * A parent has component_line_item:false AND its price.product is a
+		 * bundle product (bundle is a Product attribute post-refactor).
 		 */
 		get isBundleParent() {
 			const { line_item } = getContext();
-			return !line_item?.bundle_parent_id && !!line_item?.price?.bundle;
+			if (line_item?.component_line_item) return false;
+			return !!line_item?.price?.product?.bundle;
 		},
 
 		/**
 		 * Get the bundle components for the current line item (from context).
+		 *
+		 * Children point at their parent via the bundle_line_item expansion;
+		 * we group by the parent line_item's id.
 		 */
 		get bundleComponents() {
 			const { line_item } = getContext();
-			if (!line_item?.price?.bundle) return [];
+			if (!line_item?.price?.product?.bundle) return [];
 			return (state?.checkout?.line_items?.data || []).filter(
-				(item) => item.bundle_parent_id === line_item.id
+				(item) => item?.component_line_item && item?.bundle_line_item?.id === line_item.id
 			);
 		},
 
@@ -215,11 +222,16 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Get the bundle savings display amount.
+		 * Bundle savings display amount.
+		 *
+		 * Empty string for now — pre-refactor this read `price.bundle_savings_display_amount`,
+		 * but bundle is a Product attribute post-refactor and savings exposure is
+		 * a platform-team open question (see docs/product-bundle-plan.md §16).
+		 * Re-introduce once the field is confirmed on the bundle line item or
+		 * bundle product.
 		 */
 		get bundleSavingsAmount() {
-			const { line_item } = getContext();
-			return line_item?.price?.bundle_savings_display_amount || '';
+			return '';
 		},
 
 		/**

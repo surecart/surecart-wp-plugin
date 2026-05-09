@@ -65,7 +65,6 @@ export class ScBundleLineItem {
     const image = this.item?.image;
     const isImageFallback = image?.type === 'fallback';
     const amount = this.getBundleAmount();
-    const savingsAmount = price?.bundle_savings_display_amount;
 
     return (
       <div class="base" part="base">
@@ -90,9 +89,7 @@ export class ScBundleLineItem {
                 {product?.name}
               </div>
               <div class="price" part="price">
-                {!!this.item?.scratch_display_amount && this.item?.scratch_display_amount !== amount && (
-                  <span class="item__scratch-price">{this.item.scratch_display_amount}</span>
-                )}
+                {!!this.item?.scratch_display_amount && this.item?.scratch_display_amount !== amount && <span class="item__scratch-price">{this.item.scratch_display_amount}</span>}
                 {amount}
                 <div class="price__description">
                   {price?.short_interval_text} {price?.short_interval_count_text}
@@ -106,15 +103,6 @@ export class ScBundleLineItem {
                 {price?.name && <div>{price.name}</div>}
                 {!!this.item?.purchasable_status_display && <div>{this.item.purchasable_status_display}</div>}
               </div>
-              {!!savingsAmount && (
-                <div class="bundle-savings" part="savings">
-                  {sprintf(
-                    /** translators: %s: savings amount */
-                    __('You save %s', 'surecart'),
-                    savingsAmount,
-                  )}
-                </div>
-              )}
             </div>
 
             {/* Row 3: Trial + Fees */}

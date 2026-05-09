@@ -1,6 +1,6 @@
 <?php
 $product      = sc_get_product();
-$bundle_items = $product->initial_price->bundle_items->data ?? [];
+$bundle_items = $product->bundle_items->data ?? array();
 
 if ( empty( $bundle_items ) ) {
 	return;

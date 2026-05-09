@@ -67,10 +67,8 @@ export class ScSubscription {
           expand: [
             'price',
             'price.product',
-            'price.bundle_items',
-            'bundle_item.price',
-            'bundle_item.product',
-            'bundle_item.variant',
+            'product.bundle_items',
+            'bundle_item.component_product',
             'current_period',
             'period.checkout',
             'purchase',
@@ -106,10 +104,8 @@ export class ScSubscription {
           expand: [
             'price',
             'price.product',
-            'price.bundle_items',
-            'bundle_item.price',
-            'bundle_item.product',
-            'bundle_item.variant',
+            'product.bundle_items',
+            'bundle_item.component_product',
             'current_period',
             'period.checkout',
             'purchase',
@@ -134,7 +130,7 @@ export class ScSubscription {
       this.loading = true;
       this.subscription = (await await apiFetch({
         path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId || this.subscription?.id}`, {
-          expand: ['price', 'price.product', 'price.bundle_items', 'bundle_item.price', 'bundle_item.product', 'bundle_item.variant', 'current_period'],
+          expand: ['price', 'price.product', 'product.bundle_items', 'bundle_item.component_product', 'current_period'],
           ...(this.query || {}),
         }),
       })) as Subscription;

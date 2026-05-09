@@ -42,12 +42,9 @@ export const expand = [
   'shipping_choices',
   'shipping_choice.shipping_method',
   'invoice',
-  'price.bundle_items',
-  'bundle_item.price',
-  'bundle_item.product',
-  'bundle_item.variant',
-  'line_item.bundle_parent',
-  'line_item.bundle_components',
+  'product.bundle_items',
+  'bundle_item.component_product',
+  'line_item.bundle_line_item',
 ];
 
 /** Default data we send with every request. */
