@@ -11,6 +11,15 @@
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
+		"anchor": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		},
 		"color": {
 			"gradients": true,
 			"text": true,
@@ -20,17 +29,28 @@
 				"background": true
 			}
 		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"shadow": true,
 		"spacing": {
 			"padding": true,
-			"margin": ["top", "bottom"]
+			"margin": ["top", "bottom"],
+			"blockGap": true
 		},
 		"__experimentalLayout": {
 			"allowSwitching": false,
 			"allowInheriting": false,
 			"default": {
 				"type": "flex",
-				"justifyContent": "left",
-				"flexWrap": "nowrap"
+				"orientation": "vertical"
 			}
 		},
 		"layout": {
@@ -39,8 +59,7 @@
 			"allowSizingOnChildren": true,
 			"default": {
 				"type": "flex",
-				"justifyContent": "left",
-				"flexWrap": "nowrap"
+				"orientation": "vertical"
 			}
 		}
 	},

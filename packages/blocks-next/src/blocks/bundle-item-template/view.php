@@ -1,1 +1,66 @@
-<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<?php
+$bundle_item = $block->context['surecart/bundleItem'] ?? null;
+if ( empty( $bundle_item ) ) {
+	return '';
+}
+
+$component       = $bundle_item->component_product ?? null;
+$variant_options = $component->variant_options->data ?? array();
+$variants        = $component->variants->data ?? array();
+
+$variants_payload = array_map(
+	function ( $variant ) {
+		return array(
+			'id'              => $variant->id,
+			'option_1'        => $variant->option_1 ?? null,
+			'option_2'        => $variant->option_2 ?? null,
+			'option_3'        => $variant->option_3 ?? null,
+			'available_stock' => $variant->available_stock ?? 0,
+		);
+	},
+	$variants
+);
+
+$render_inner_blocks = static function ( $current_option = null ) use ( $block ) {
+	$block_instance              = $block->parsed_block;
+	$block_instance['blockName'] = 'core/null';
+
+	$filter = static function ( $context ) use ( $current_option ) {
+		if ( null !== $current_option ) {
+			$context['surecart/bundleItemOption'] = $current_option;
+		}
+		return $context;
+	};
+
+	add_filter( 'render_block_context', $filter, 1 );
+	$content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
+	remove_filter( 'render_block_context', $filter, 1 );
+
+	return $content;
+};
+
+$component_context = wp_interactivity_data_wp_context(
+	array(
+		'componentProductId'         => $component->id ?? null,
+		'componentVariants'          => $variants_payload,
+		'componentHasUnlimitedStock' => ! empty( $component->has_unlimited_stock ),
+		'componentOptionValues'      => (object) array(),
+	)
+);
+?>
+<div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-bundle-item' ) ) ); ?> <?php echo wp_kses_data( $component_context ); ?>>
+	<?php if ( ! empty( $variant_options ) ) : ?>
+		<?php foreach ( $variant_options as $key => $option ) : ?>
+			<div
+				class="sc-bundle-item__row"
+				<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'optionNumber' => (int) $key + 1 ) ) ); ?>
+			>
+				<?php echo $render_inner_blocks( $option ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			</div>
+		<?php endforeach; ?>
+	<?php else : ?>
+		<div class="sc-bundle-item__row">
+			<?php echo $render_inner_blocks(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		</div>
+	<?php endif; ?>
+</div>

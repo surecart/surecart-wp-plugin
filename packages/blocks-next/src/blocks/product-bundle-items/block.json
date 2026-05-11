@@ -17,13 +17,22 @@
 	"attributes": {
 		"title": {
 			"type": "string",
-			"default": "What's Included"
+			"default": ""
 		}
 	},
 	"supports": {
 		"interactivity": true,
 		"reusable": false,
 		"html": false,
+		"anchor": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		},
 		"color": {
 			"gradients": true,
 			"text": true,
@@ -35,7 +44,8 @@
 		},
 		"spacing": {
 			"margin": ["top", "bottom"],
-			"padding": true
+			"padding": true,
+			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -46,7 +56,8 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
-		}
+		},
+		"shadow": true
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",

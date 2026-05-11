@@ -8,20 +8,23 @@ import {
 } from '@wordpress/block-editor';
 
 const TEMPLATE = [
-	['surecart/bundle-item-image', {}, []],
 	[
 		'core/group',
 		{
-			style: { spacing: { blockGap: '2px' } },
-			layout: { type: 'flex', orientation: 'vertical' },
+			style: { spacing: { blockGap: '6px' } },
+			layout: {
+				type: 'flex',
+				orientation: 'horizontal',
+				justifyContent: 'left',
+				flexWrap: 'nowrap',
+			},
 		},
 		[
 			['surecart/bundle-item-name', {}, []],
-			['surecart/bundle-item-variant', {}, []],
+			['surecart/bundle-item-quantity', {}, []],
 		],
 	],
-	['surecart/bundle-item-price', {}, []],
-	['surecart/bundle-item-quantity', {}, []],
+	['surecart/bundle-item-variant', {}, []],
 ];
 
 export default ({ __unstableLayoutClassNames }) => {

@@ -7,11 +7,25 @@
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": ["surecart/bundle-item-template"],
-	"usesContext": ["surecart/bundleItem"],
+	"usesContext": [
+		"surecart/bundleItem",
+		"surecart/bundleItemOption",
+		"surecart/bundleItemOptionNumber"
+	],
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
+		"anchor": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		},
 		"color": {
+			"gradients": true,
 			"text": true,
 			"background": true,
 			"__experimentalDefaultControls": {
@@ -24,11 +38,16 @@
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
 		},
+		"shadow": true,
 		"spacing": {
+			"padding": true,
 			"margin": ["top", "bottom"]
 		}
 	},

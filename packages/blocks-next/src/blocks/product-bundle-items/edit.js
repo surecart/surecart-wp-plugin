@@ -1,11 +1,18 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	__experimentalUseInnerBlocksProps,
+	InspectorControls,
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useEntityRecord } from '@wordpress/core-data';
-import TemplateListEdit from '../../components/TemplateListEdit';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
+import { useEffect } from '@wordpress/element';
 
 const TEMPLATE = [
 	[
@@ -13,70 +20,76 @@ const TEMPLATE = [
 		{
 			layout: {
 				type: 'flex',
-				justifyContent: 'left',
-				flexWrap: 'nowrap',
+				orientation: 'vertical',
 			},
 		},
 	],
 ];
 
-const DUMMY_BUNDLE_ITEMS = [
-	{
-		id: 'dummy-1',
-		'surecart/bundleItem': {
-			product: { name: __('Premium WordPress Theme', 'surecart') },
-			price: { display_amount: '$49' },
-			variant: null,
-			quantity: 1,
+// Every child in the bundle subtree has `inserter: false`, so the vanilla
+// `template` prop of useInnerBlocksProps doesn't auto-create them on first
+// mount in the site editor. We force the initial tree via replaceInnerBlocks.
+const buildDefaultTree = () =>
+	createBlock(
+		'surecart/bundle-item-template',
+		{
+			layout: {
+				type: 'flex',
+				orientation: 'vertical',
+			},
 		},
-	},
-	{
-		id: 'dummy-2',
-		'surecart/bundleItem': {
-			product: { name: __('SEO Toolkit Plugin', 'surecart') },
-			price: { display_amount: '$29' },
-			variant: { name: __('Pro', 'surecart') },
-			quantity: 1,
-		},
-	},
-	{
-		id: 'dummy-3',
-		'surecart/bundleItem': {
-			product: { name: __('Stock Photo Pack', 'surecart') },
-			price: { display_amount: '$19' },
-			variant: null,
-			quantity: 2,
-		},
-	},
-];
-
-export default ({ attributes, setAttributes, clientId, context: { postId } }) => {
-	const blockProps = useBlockProps();
-
-	const { record: { meta: { product } = {} } = {} } = useEntityRecord(
-		'postType',
-		'sc_product',
-		postId
+		[
+			createBlock(
+				'core/group',
+				{
+					style: { spacing: { blockGap: '6px' } },
+					layout: {
+						type: 'flex',
+						orientation: 'horizontal',
+						justifyContent: 'left',
+						flexWrap: 'nowrap',
+					},
+				},
+				[
+					createBlock('surecart/bundle-item-name'),
+					createBlock('surecart/bundle-item-quantity'),
+				]
+			),
+			createBlock('surecart/bundle-item-variant'),
+		]
 	);
 
-	// Build blockContexts from real data or fall back to dummy data.
-	const initialPrice = (product?.prices?.data || []).find((p) => !p.archived);
-	const realItems =
-		initialPrice?.bundle && initialPrice?.bundle_items?.data?.length
-			? initialPrice.bundle_items.data
-			: null;
+export default ({ attributes, setAttributes, clientId }) => {
+	const blockProps = useBlockProps({
+		className: 'sc-bundle-items',
+	});
 
-	const blockContexts = realItems
-		? realItems.map((item) => ({
-				id: item.id,
-				'surecart/bundleItem': {
-					product: item.product || {},
-					price: item.price || {},
-					variant: item.variant || null,
-					quantity: item.quantity ?? 1,
-				},
-		  }))
-		: DUMMY_BUNDLE_ITEMS;
+	const useInnerBlocksProps = __stableUseInnerBlocksProps
+		? __stableUseInnerBlocksProps
+		: __experimentalUseInnerBlocksProps;
+
+	const innerBlocksProps = useInnerBlocksProps(
+		{ className: 'sc-bundle-items__list' },
+		{
+			template: TEMPLATE,
+			templateLock: false,
+			allowedBlocks: ['surecart/bundle-item-template'],
+			renderAppender: false,
+		}
+	);
+
+	const hasChildren = useSelect(
+		(select) => select(blockEditorStore).getBlocks(clientId).length > 0,
+		[clientId]
+	);
+	const { replaceInnerBlocks } = useDispatch(blockEditorStore);
+
+	useEffect(() => {
+		if (!hasChildren && clientId) {
+			replaceInnerBlocks(clientId, [buildDefaultTree()], false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [hasChildren, clientId]);
 
 	return (
 		<>
@@ -91,22 +104,12 @@ export default ({ attributes, setAttributes, clientId, context: { postId } }) =>
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<div className="sc-bundle-items">
-					{!!attributes.title && (
-						<div className="sc-bundle-items__title">
-							{attributes.title}
-						</div>
-					)}
-
-					<TemplateListEdit
-						template={TEMPLATE}
-						blockContexts={blockContexts}
-						className="sc-bundle-items__list"
-						clientId={clientId}
-						renderAppender={false}
-						attachBlockProps={false}
-					/>
-				</div>
+				{!!attributes.title && (
+					<div className="sc-bundle-items__title">
+						{attributes.title}
+					</div>
+				)}
+				<div {...innerBlocksProps} />
 			</div>
 		</>
 	);

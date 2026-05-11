@@ -8,15 +8,13 @@ export default ({ context: { 'surecart/bundleItem': bundleItem } }) => {
 		className: 'sc-bundle-item__qty',
 	});
 
-	const quantity = bundleItem?.quantity ?? 1;
-
-	if (quantity <= 1) {
-		return null;
-	}
+	// Always show a sample "× 2" in the editor so the slot stays visible.
+	// The runtime view hides this block entirely when quantity <= 1.
+	const quantity = bundleItem?.quantity ?? 2;
 
 	return (
 		<span {...blockProps}>
-			&times; {quantity}
+			&times; {quantity > 1 ? quantity : 2}
 		</span>
 	);
 };

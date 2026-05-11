@@ -50,21 +50,21 @@ return [
 
 		<!-- wp:surecart/product-description /-->
 
-		<!-- wp:surecart/product-bundle-items {"title":"What\'s Included"} -->
-			<!-- wp:surecart/bundle-item-template {"layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"}} -->
-			<!-- wp:surecart/bundle-item-image /-->
-			<!-- wp:group {"style":{"spacing":{"blockGap":"2px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
-			<div class="wp-block-group"><!-- wp:surecart/bundle-item-name /-->
-			<!-- wp:surecart/bundle-item-variant /--></div>
-			<!-- /wp:group -->
-			<!-- wp:surecart/bundle-item-price /-->
-			<!-- wp:surecart/bundle-item-quantity /-->
-			<!-- /wp:surecart/bundle-item-template -->
-		<!-- /wp:surecart/product-bundle-items -->
-
 		<!-- wp:surecart/product-variant-pills -->
 		<!-- wp:surecart/product-variant-pill /-->
 		<!-- /wp:surecart/product-variant-pills -->
+
+		<!-- wp:surecart/product-bundle-items -->
+		<!-- wp:surecart/bundle-item-template {"layout":{"type":"flex","orientation":"vertical"}} -->
+		<!-- wp:group {"style":{"spacing":{"blockGap":"6px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+		<div class="wp-block-group"><!-- wp:surecart/bundle-item-name /-->
+
+		<!-- wp:surecart/bundle-item-quantity /--></div>
+		<!-- /wp:group -->
+
+		<!-- wp:surecart/bundle-item-variant /-->
+		<!-- /wp:surecart/bundle-item-template -->
+		<!-- /wp:surecart/product-bundle-items -->
 
 		<!-- wp:surecart/product-price-chooser -->
 		<!-- wp:surecart/product-price-choice-template {"layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap","orientation":"horizontal"}} -->

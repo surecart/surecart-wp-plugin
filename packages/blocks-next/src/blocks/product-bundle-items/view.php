@@ -31,8 +31,7 @@ if ( empty( $bundle_items ) ) {
 
 			// Use an early priority so that other 'render_block_context' filters have access to the values.
 			add_filter( 'render_block_context', $filter_block_context, 1 );
-			// Render the inner blocks with `dynamic` set to `false` to prevent calling
-			// `render_callback` and ensure that no wrapper markup is included.
+
 			$block_content = ( new WP_Block( $block_instance ) )->render( array( 'dynamic' => false ) );
 			remove_filter( 'render_block_context', $filter_block_context, 1 );
 			?>

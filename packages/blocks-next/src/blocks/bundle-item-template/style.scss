@@ -1,4 +1,36 @@
 .sc-bundle-item {
-	align-items: center;
-	gap: var(--sc-spacing-small, 0.625rem);
+	width: 100%;
+
+	&__row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--sc-spacing-x-small, 0.5rem);
+	}
+}
+
+.sc-bundle-item__name {
+	display: inline;
+	font-weight: var(
+		--sc-input-label-font-weight,
+		var(--sc-font-weight-normal, 400)
+	);
+	font-size: var(--sc-font-size-medium, 1rem);
+	line-height: 1.35;
+	color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
+}
+
+.sc-bundle-item .wp-block-surecart-bundle-item-quantity,
+.sc-bundle-item__qty {
+	color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
+	font-size: var(--sc-font-size-small, 0.875rem);
+	font-weight: var(--sc-font-weight-medium, 500);
+}
+
+.sc-bundle-item .sc-pill-option__wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sc-spacing-x-small, 0.5rem);
+	margin: 0;
+	border: 0;
+	padding: 0;
 }

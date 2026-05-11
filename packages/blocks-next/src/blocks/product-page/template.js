@@ -66,7 +66,10 @@ export default [
 									style: {
 										spacing: {
 											blockGap: '0.5em',
-											padding: { right: '0px', left: '0px' },
+											padding: {
+												right: '0px',
+												left: '0px',
+											},
 										},
 									},
 									layout: {
@@ -138,7 +141,10 @@ export default [
 									style: {
 										spacing: {
 											blockGap: '0.5em',
-											padding: { right: '0px', left: '0px' },
+											padding: {
+												right: '0px',
+												left: '0px',
+											},
 										},
 									},
 									layout: {
@@ -183,48 +189,46 @@ export default [
 					],
 					['surecart/product-description'],
 					[
+						'surecart/product-variant-pills',
+						[
+							[
+								'surecart/product-variant-pills-wrapper',
+								[['surecart/product-variant-pill']],
+							],
+						],
+					],
+					[
 						'surecart/product-bundle-items',
-						{ title: "What's Included" },
 						[
 							[
 								'surecart/bundle-item-template',
 								{
 									layout: {
 										type: 'flex',
-										justifyContent: 'left',
-										flexWrap: 'nowrap',
+										orientation: 'vertical',
 									},
 								},
 								[
-									['surecart/bundle-item-image'],
 									[
 										'core/group',
 										{
 											style: {
-												spacing: { blockGap: '2px' },
+												spacing: { blockGap: '6px' },
 											},
 											layout: {
 												type: 'flex',
-												orientation: 'vertical',
+												orientation: 'horizontal',
+												justifyContent: 'left',
+												flexWrap: 'nowrap',
 											},
 										},
 										[
 											['surecart/bundle-item-name'],
-											['surecart/bundle-item-variant'],
+											['surecart/bundle-item-quantity'],
 										],
 									],
-									['surecart/bundle-item-price'],
-									['surecart/bundle-item-quantity'],
+									['surecart/bundle-item-variant'],
 								],
-							],
-						],
-					],
-					[
-						'surecart/product-variant-pills',
-						[
-							[
-								'surecart/product-variant-pills-wrapper',
-								[['surecart/product-variant-pill']],
 							],
 						],
 					],
@@ -249,7 +253,10 @@ export default [
 											style: {
 												spacing: {
 													blockGap: '0px',
-													padding: { right: '0px', left: '0px' },
+													padding: {
+														right: '0px',
+														left: '0px',
+													},
 												},
 											},
 											layout: {
@@ -265,7 +272,10 @@ export default [
 													style: {
 														spacing: {
 															blockGap: '0.5rem',
-															padding: { right: '0px', left: '0px' },
+															padding: {
+																right: '0px',
+																left: '0px',
+															},
 														},
 													},
 													layout: {
