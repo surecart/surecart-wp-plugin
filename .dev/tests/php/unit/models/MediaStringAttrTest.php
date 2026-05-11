@@ -100,4 +100,34 @@ class MediaStringAttrTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString( '<img', $html );
 		$this->assertStringContainsString( 'foo', $html );
 	}
+
+	/**
+	 * Exercises the short-circuit branch in GalleryItemProductMedia::html()
+	 * where $this->item->media IS set and the call delegates straight to
+	 * Media::html() — the second fatal-risk path for SUR-5239.
+	 *
+	 * @group media
+	 * @group models
+	 */
+	public function test_gallery_item_product_media_html_with_media_relation_accepts_string_attr() {
+		$product_media = new ProductMedia(
+			[
+				'id'    => 'pm_with_media',
+				'media' => [
+					'id'     => 'inner_media',
+					'url'    => 'https://example.com/inner.jpg',
+					'alt'    => 'Inner image',
+					'width'  => 800,
+					'height' => 600,
+				],
+			]
+		);
+		$gallery_item  = new GalleryItemProductMedia( $product_media );
+
+		// Must not throw "Cannot access offset of type string on string" on PHP 8+.
+		$html = $gallery_item->html( 'full', 'class=foo&id=bar' );
+
+		$this->assertStringContainsString( '<img', $html );
+		$this->assertStringContainsString( 'foo', $html );
+	}
 }
