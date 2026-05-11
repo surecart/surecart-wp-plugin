@@ -58,4 +58,46 @@ class MediaStringAttrTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString( '<img', $html );
 		$this->assertStringContainsString( 'foo', $html );
 	}
+
+	/**
+	 * Array $attr is the documented contract — ensure wp_parse_args() normalisation does not regress it.
+	 *
+	 * @group media
+	 * @group models
+	 */
+	public function test_media_html_accepts_array_attr() {
+		$media = new Media(
+			[
+				'id'     => 'test_media',
+				'url'    => 'https://example.com/image.jpg',
+				'alt'    => 'Goat mug',
+				'width'  => 800,
+				'height' => 600,
+			]
+		);
+
+		$html = $media->html( 'full', [ 'class' => 'foo' ] );
+
+		$this->assertStringContainsString( '<img', $html );
+		$this->assertStringContainsString( 'foo', $html );
+	}
+
+	/**
+	 * @group media
+	 * @group models
+	 */
+	public function test_gallery_item_product_media_html_accepts_array_attr() {
+		$product_media = new ProductMedia(
+			[
+				'id'  => 'pm_test',
+				'url' => 'https://example.com/image.jpg',
+			]
+		);
+		$gallery_item  = new GalleryItemProductMedia( $product_media );
+
+		$html = $gallery_item->html( 'full', [ 'class' => 'foo' ] );
+
+		$this->assertStringContainsString( '<img', $html );
+		$this->assertStringContainsString( 'foo', $html );
+	}
 }
