@@ -225,11 +225,6 @@ export class ScSubscriptionDetails {
         {this.bundleExpanded && (
           <div class="subscription-details__bundle-components">
             {items.map(item => {
-              // Component is a Product (no longer a Price). Variant choice
-              // lives on the customer's component purchases, not on the bundle
-              // item — re-introduce the variant label via the
-              // bundle_component_purchases expansion when platform confirms it
-              // (see docs/product-bundle-plan.md §16).
               const itemProduct = item?.component_product as Product;
               return (
                 <div class="subscription-details__bundle-component" key={item?.id}>

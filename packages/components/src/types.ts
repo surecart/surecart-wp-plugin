@@ -1436,6 +1436,7 @@ export interface ProductState {
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
   note?: string;
+  bundleComponentVariants?: Record<string, string>;
 }
 export interface FeaturedProductMediaAttributes {
   alt: string;

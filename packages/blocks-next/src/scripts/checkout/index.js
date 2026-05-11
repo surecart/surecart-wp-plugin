@@ -221,15 +221,6 @@ const { state, actions } = store('surecart/checkout', {
 				: '';
 		},
 
-		/**
-		 * Bundle savings display amount.
-		 *
-		 * Empty string for now — pre-refactor this read `price.bundle_savings_display_amount`,
-		 * but bundle is a Product attribute post-refactor and savings exposure is
-		 * a platform-team open question (see docs/product-bundle-plan.md §16).
-		 * Re-introduce once the field is confirmed on the bundle line item or
-		 * bundle product.
-		 */
 		get bundleSavingsAmount() {
 			return '';
 		},
