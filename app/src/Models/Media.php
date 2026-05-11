@@ -62,6 +62,9 @@ class Media extends Model {
 	 * @return string
 	 */
 	protected function html( $size = 'full', $attr = [] ) {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		// prepare attributes.
 		$attr = $this->attributes( $size, $attr );
 		$html = '<img ';
@@ -85,6 +88,9 @@ class Media extends Model {
 	 * @return array
 	 */
 	protected function attributes( $size = 'full', $attr = [] ) {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		// get sizes.
 		$sizes      = wp_get_registered_image_subsizes();
 		$image_size = $sizes[ $size ] ?? null;

@@ -43,6 +43,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 * @return string
 	 */
 	public function html( $size = 'full', $attr = array(), $metadata = array() ): string {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		$image = '';
 
 		// Handle media.
@@ -143,6 +146,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = array() ): object {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		if ( isset( $this->item->media ) ) {
 			return $this->item->media->attributes( $size, $attr );
 		}
