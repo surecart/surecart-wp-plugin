@@ -218,9 +218,17 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { buttonText, outOfStockText, unavailableText } = context;
+			const {
+				buttonText,
+				outOfStockText,
+				unavailableText,
+				selectComponentOptionsText,
+			} = context;
 			if (state.isSoldOut) {
 				return outOfStockText;
+			}
+			if (state.isBundleIncomplete) {
+				return selectComponentOptionsText || buttonText;
 			}
 			if (state.isUnavailable) {
 				return unavailableText;
@@ -241,8 +249,73 @@ const { state, actions } = store('surecart/product-page', {
 			return (
 				!!product?.archived || // archived.
 				!!state?.isSoldOut || // sold out.
-				!!(variants?.length && !state.selectedVariant?.id) // no selected variant.
+				!!(variants?.length && !state.selectedVariant?.id) || // no selected variant.
+				!!state.isBundleIncomplete // bundle has variable components still unselected.
 			);
+		},
+
+		/**
+		 * Bundle PDP: any variable component that still has no selection
+		 * blocks Add to cart. See ProductPageBlock::context() for the seed
+		 * list of variable component product IDs.
+		 */
+		get isBundleIncomplete() {
+			const context = getContext();
+			if (!context) return false;
+			const variableIds = context.bundleVariableComponentIds || [];
+			if (!variableIds.length) return false;
+			const selections = context.bundleComponentVariants || {};
+			return variableIds.some((id) => !selections?.[id]);
+		},
+
+		/**
+		 * Bundle pill: is this option_value currently selected in its
+		 * component? Scoped to bundle-item-variant block's nested context.
+		 */
+		get isBundleComponentOptionSelected() {
+			const context = getContext();
+			if (!context) return false;
+			const { optionNumber, option_value, componentOptionValues } =
+				context;
+			if (!optionNumber || option_value == null) return false;
+			return (
+				componentOptionValues?.[`option_${optionNumber}`] ===
+				option_value
+			);
+		},
+
+		/**
+		 * Bundle pill: Shopify-style sold-out marker. Stays visible but
+		 * marks the pill as unavailable so the shopper sees the full
+		 * variant matrix.
+		 */
+		get isBundleComponentOptionUnavailable() {
+			const context = getContext();
+			if (!context) return false;
+			if (context.componentHasUnlimitedStock) return false;
+
+			const {
+				optionNumber,
+				option_value,
+				componentOptionValues,
+				componentVariants,
+			} = context;
+			if (!optionNumber || option_value == null) return false;
+			const optionKey = `option_${optionNumber}`;
+
+			// Constrain by earlier options the shopper has already picked.
+			const matching = (componentVariants || []).filter((v) => {
+				for (let i = 1; i < optionNumber; i++) {
+					const prevKey = `option_${i}`;
+					const prevVal = componentOptionValues?.[prevKey];
+					if (!prevVal) continue;
+					if (v[prevKey] !== prevVal) return false;
+				}
+				return v[optionKey] === option_value;
+			});
+
+			if (!matching.length) return true;
+			return Math.max(...matching.map((v) => v.available_stock || 0)) <= 0;
 		},
 
 		/**
@@ -266,8 +339,22 @@ const { state, actions } = store('surecart/product-page', {
 		 * Line item to add to cart.
 		 */
 		get lineItem() {
-			const { adHocAmount, selectedPrice, note, noteLabel } =
-				getContext();
+			const {
+				adHocAmount,
+				selectedPrice,
+				note,
+				noteLabel,
+				bundleComponentVariants,
+			} = getContext();
+
+			// Filter the bundle variant map to ID values only — context may
+			// hold a stdClass-shaped object server-side hydrated as {}.
+			const componentVariants = Object.entries(
+				bundleComponentVariants || {}
+			).reduce((acc, [k, v]) => {
+				if (v) acc[k] = v;
+				return acc;
+			}, {});
 
 			return {
 				price: selectedPrice?.id,
@@ -288,6 +375,9 @@ const { state, actions } = store('surecart/product-page', {
 						: note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
+					: {}),
+				...(Object.keys(componentVariants).length
+					? { bundle_component_variants: componentVariants }
 					: {}),
 			};
 		},
@@ -457,6 +547,63 @@ const { state, actions } = store('surecart/product-page', {
 						option_value_slug,
 				})
 			);
+		}),
+
+		/**
+		 * Bundle PDP: a shopper picked a variant option for one of the
+		 * component products. Writes both the per-component selection map
+		 * and the bundle-level component_product_id → variant_id map that
+		 * gets sent on add to cart as `bundle_component_variants`.
+		 *
+		 * Mirrors the chosen variant id into the Stencil product store so
+		 * the legacy sc-product-buy-button path also has the data
+		 * (see packages/components/src/store/product/mutations.ts).
+		 */
+		setBundleComponentOption: withSyncEvent((e) => {
+			if (isNotKeySubmit(e)) return true;
+			e.preventDefault();
+
+			const ctx = getContext();
+			const {
+				optionNumber,
+				option_value,
+				componentOptionValues,
+				componentVariants,
+				componentProductId,
+				bundleComponentVariants,
+				product,
+			} = ctx;
+
+			if (!optionNumber || option_value == null) return;
+
+			componentOptionValues[`option_${optionNumber}`] = option_value;
+
+			const variant = getVariantFromValues({
+				variants: componentVariants || [],
+				values: componentOptionValues || {},
+			});
+
+			if (componentProductId) {
+				if (variant?.id) {
+					bundleComponentVariants[componentProductId] = variant.id;
+				} else {
+					delete bundleComponentVariants[componentProductId];
+				}
+			}
+
+			// Bridge to the Stencil product store (legacy buy-button path).
+			try {
+				const stencilState = window.surecart?.product?.state;
+				const bundleId = product?.id;
+				if (stencilState && bundleId) {
+					stencilState[bundleId] = stencilState[bundleId] || {};
+					stencilState[bundleId].bundleComponentVariants = {
+						...bundleComponentVariants,
+					};
+				}
+			} catch (err) {
+				// non-fatal — next-gen path already has the data.
+			}
 		}),
 
 		/**

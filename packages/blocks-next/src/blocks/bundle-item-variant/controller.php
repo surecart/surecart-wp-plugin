@@ -1,7 +1,7 @@
 <?php
-$bundle_item = $block->context['surecart/bundleItem'] ?? null;
-if ( empty( $bundle_item ) ) {
+$current_option = $block->context['surecart/bundleItemOption'] ?? null;
+if ( empty( $current_option ) ) {
 	return '';
 }
 
-return '';
+return 'file:./view.php';
