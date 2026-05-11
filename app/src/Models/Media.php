@@ -56,8 +56,8 @@ class Media extends Model {
 	 * Get the image markup.
 	 * We are assuming all media here is an image.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return string
 	 */
@@ -79,8 +79,8 @@ class Media extends Model {
 	/**
 	 * Get the image attributes.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return array
 	 */

@@ -36,9 +36,9 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Get the media attribute markup.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
-	 * @param array  $metadata Additional metadata.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
+	 * @param array        $metadata Additional metadata.
 	 *
 	 * @return string
 	 */
@@ -140,8 +140,8 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Get the image data.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return object
 	 */
