@@ -3,65 +3,15 @@ import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { DropdownMenu, MenuItem } from '@wordpress/components';
+import { moreHorizontal, edit as editIcon, trash } from '@wordpress/icons';
 import { SortableKnob } from 'react-easy-sort';
 
-import {
-	ScButton,
-	ScIcon,
-	ScInput,
-	ScPriceInput,
-} from '@surecart/components-react';
+import { ScIcon, ScInput } from '@surecart/components-react';
 
-import HelpTooltip from '../../../components/HelpTooltip';
-
+import Confirm from '../../../components/confirm';
 import { componentProductOf } from './utils';
-
-const BasisAmountTooltip = () => (
-	<HelpTooltip
-		position="bottom right"
-		width="320px"
-		content={
-			<div
-				css={css`
-					font-size: 13px;
-					line-height: 1.5;
-					color: var(--sc-color-gray-700);
-				`}
-			>
-				<p
-					css={css`
-						margin: 0 0 8px 0;
-						font-weight: 600;
-					`}
-				>
-					{__('How the bundle price is split for tax', 'surecart')}
-				</p>
-				<p
-					css={css`
-						margin: 0 0 8px 0;
-					`}
-				>
-					{__(
-						"Components are always free in the cart. Basis amount is an optional weighting that controls how the bundle's total tax is allocated across components — useful when components are taxed at different rates.",
-						'surecart'
-					)}
-				</p>
-				<p
-					css={css`
-						margin: 0;
-					`}
-				>
-					{__(
-						"Leave blank to split evenly by quantity. A common starting point is each component's standalone price.",
-						'surecart'
-					)}
-				</p>
-			</div>
-		}
-	>
-		<ScIcon name="info" style={{ opacity: 0.5, fontSize: '14px' }} />
-	</HelpTooltip>
-);
+import BundleItemDrawer from './BundleItemDrawer';
 
 export default ({
 	item,
@@ -85,33 +35,42 @@ export default ({
 		  })
 		: null;
 
-	// Local state for the inputs. ScPriceInput holds value in cents; we just
-	// pass `item.basis_amount` (cents) straight through.
-	const [qty, setQty] = useState(item.quantity ?? 1);
-	const [basis, setBasis] = useState(item.basis_amount ?? '');
+	const [isOpen, setIsOpen] = useState(false);
+	const [confirmingDelete, setConfirmingDelete] = useState(false);
 
-	useEffect(() => setQty(item.quantity ?? 1), [item.quantity]);
-	useEffect(() => setBasis(item.basis_amount ?? ''), [item.basis_amount]);
+	// Commit on every change — Stencil scBlur fires async, so committing on
+	// blur let the parent's edit record lag behind what the user saw.
+	const [qty, setQty] = useState(item?.quantity ?? 1);
 
-	const commitQty = () => {
-		const next = Math.max(1, parseInt(qty, 10) || 1);
-		if (String(next) !== String(qty)) setQty(next);
-		if (next !== item.quantity) onUpdate({ quantity: next });
+	useEffect(() => setQty(item?.quantity ?? 1), [item?.quantity]);
+
+	const pushQty = (raw) => {
+		const next = Math.max(1, parseInt(raw, 10) || 1);
+		if (next !== item?.quantity) onUpdate({ quantity: next });
 	};
 
-	const commitBasis = () => {
-		// Empty string → null (= "weight by quantity" per the platform spec).
-		// Anything else is already cents emitted by ScPriceInput on scChange.
-		const trimmed = String(basis ?? '').trim();
-		const next =
-			trimmed === '' ? null : Math.max(0, parseInt(trimmed, 10) || 0);
-		if (next !== item.basis_amount) onUpdate({ basis_amount: next });
+	const normaliseQtyOnBlur = () => {
+		const next = Math.max(1, parseInt(qty, 10) || 1);
+		if (String(next) !== String(qty)) setQty(next);
+	};
+
+	const confirmDeleteMessage = sprintf(
+		/* translators: %s: product name */
+		__('Remove "%s" from this bundle?', 'surecart'),
+		componentName || __('this product', 'surecart')
+	);
+
+	const handleDelete = () => setConfirmingDelete(true);
+
+	const handleConfirmDelete = () => {
+		setConfirmingDelete(false);
+		onRemove();
 	};
 
 	return (
 		<div
 			css={css`
-				padding: 28px;
+				padding: 20px 24px;
 				background: white;
 				border-bottom: 1px solid var(--sc-color-gray-200);
 				border-top: 1px solid var(--sc-color-gray-200);
@@ -175,7 +134,6 @@ export default ({
 							rel="noopener noreferrer"
 							css={css`
 								font-weight: 500;
-								color: var(--sc-color-primary-600);
 								text-decoration: none;
 								&:hover {
 									text-decoration: underline;
@@ -212,83 +170,75 @@ export default ({
 
 				<div
 					css={css`
-						display: flex;
-						gap: var(--sc-spacing-medium);
-						align-items: flex-end;
-						flex-wrap: wrap;
+						width: 84px;
 					`}
 				>
-					<div
-						css={css`
-							width: 90px;
-						`}
-					>
-						<ScInput
-							label={__('Quantity', 'surecart')}
-							type="number"
-							min="1"
-							value={String(qty)}
-							onScChange={(e) => setQty(e.target.value)}
-							onScBlur={commitQty}
-						/>
-					</div>
-					<div
-						css={css`
-							width: 140px;
-						`}
-					>
-						<div
-							css={css`
-								display: inline-flex;
-								align-items: center;
-								gap: 4px;
-								margin-bottom: var(
-									--sc-input-label-margin,
-									var(--sc-spacing-xx-small)
-								);
-								color: var(--sc-input-label-color);
-								font-size: var(--sc-input-label-font-size);
-								font-weight: var(--sc-input-label-font-weight);
-								text-transform: var(
-									--sc-input-label-text-transform,
-									none
-								);
-								letter-spacing: var(
-									--sc-input-label-letter-spacing,
-									0
-								);
-							`}
-						>
-							{__('Basis amount', 'surecart')}
-							<BasisAmountTooltip />
-						</div>
-						<ScPriceInput
-							type="number"
-							min={0}
-							currencyCode={
-								currency || window?.scData?.currency_code
-							}
-							placeholder={__('Optional', 'surecart')}
-							value={basis === null ? '' : basis}
-							onScChange={(e) => setBasis(e.target.value)}
-							onScBlur={commitBasis}
-						/>
-					</div>
+					<ScInput
+						label={__('Quantity', 'surecart')}
+						type="number"
+						min="1"
+						value={String(qty)}
+						onScChange={(e) => {
+							setQty(e.target.value);
+							pushQty(e.target.value);
+						}}
+						onScBlur={normaliseQtyOnBlur}
+					/>
 				</div>
 
-				<ScButton
-					type="text"
-					circle
-					onClick={onRemove}
-					aria-label={sprintf(
-						/* translators: %s: component product name */
-						__('Remove %s from this bundle', 'surecart'),
-						componentName || __('component', 'surecart')
-					)}
+				<DropdownMenu
+					icon={moreHorizontal}
+					label={__('More Actions', 'surecart')}
+					popoverProps={{ placement: 'bottom-end' }}
+					menuProps={{ style: { minWidth: '150px' } }}
 				>
-					<ScIcon name="x" />
-				</ScButton>
+					{({ onClose }) => (
+						<>
+							<MenuItem
+								icon={editIcon}
+								iconPosition="left"
+								onClick={() => {
+									setIsOpen(true);
+									onClose();
+								}}
+							>
+								{__('Edit', 'surecart')}
+							</MenuItem>
+							<MenuItem
+								icon={trash}
+								iconPosition="left"
+								onClick={() => {
+									handleDelete();
+									onClose();
+								}}
+							>
+								{__('Delete', 'surecart')}
+							</MenuItem>
+						</>
+					)}
+				</DropdownMenu>
 			</div>
+
+			<BundleItemDrawer
+				item={item}
+				cachedProduct={cachedProduct}
+				currency={currency}
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+				onSave={(patch) => onUpdate(patch)}
+			/>
+
+			{confirmingDelete && (
+				<Confirm
+					open={confirmingDelete}
+					confirmButtonText={__('Delete', 'surecart')}
+					cancelButtonText={__('Cancel', 'surecart')}
+					onConfirm={handleConfirmDelete}
+					onRequestClose={() => setConfirmingDelete(false)}
+				>
+					{confirmDeleteMessage}
+				</Confirm>
+			)}
 		</div>
 	);
 };
