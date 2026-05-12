@@ -1,0 +1,10 @@
+.sc-cart-line-item-bundle-components {
+	color: var(--sc-input-help-text-color);
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	&__item:empty {
+		display: none;
+	}
+}

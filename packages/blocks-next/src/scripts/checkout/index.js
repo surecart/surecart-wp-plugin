@@ -204,6 +204,38 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Whether the current line item has bundle components to display.
+		 * Implicitly false for non-bundle parents and for component line items
+		 * themselves — bundleComponents returns [] in those cases.
+		 */
+		get hasBundleComponents() {
+			return state.bundleComponentsCount > 0;
+		},
+
+		/**
+		 * Format a single bundle component for display in the cart drawer.
+		 *
+		 * Called from inside a nested `data-wp-each--bundle_component` template,
+		 * so getContext() includes the component line item under
+		 * `bundle_component`.
+		 *
+		 * Output mirrors lineItemVariant's joining convention so the cart reads
+		 * consistently: "Mens Watch - Black / Leather" or just "Mens Sunglass"
+		 * when the component has no variants.
+		 */
+		get lineItemBundleComponent() {
+			const { bundle_component } = getContext();
+			if (!bundle_component) return '';
+
+			const name = bundle_component?.price?.product?.name || '';
+			const variants = (bundle_component?.variant_options || [])
+				.filter(Boolean)
+				.join(' / ');
+
+			return variants ? `${name} - ${variants}` : name;
+		},
+
+		/**
 		 * Get the bundle components label text.
 		 */
 		get bundleComponentsLabel() {

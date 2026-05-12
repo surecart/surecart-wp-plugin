@@ -34,6 +34,8 @@ return [
 
 <!-- wp:surecart/cart-line-item-variant {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
 
+<!-- wp:surecart/cart-line-item-bundle-components {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
+
 <!-- wp:surecart/cart-line-item-note {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /--></div>
 <!-- /wp:group -->
 
