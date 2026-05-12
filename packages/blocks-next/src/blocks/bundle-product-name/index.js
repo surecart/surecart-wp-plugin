@@ -1,8 +1,8 @@
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { title as icon } from '@wordpress/icons';
+import { tag as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -10,9 +10,6 @@ import { title as icon } from '@wordpress/icons';
 import edit from './edit';
 import metadata from './block.json';
 
-/**
- * Register the block.
- */
 registerBlockType(metadata.name, {
 	edit,
 	icon,
