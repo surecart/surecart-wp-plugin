@@ -1,5 +1,5 @@
 import { Component, Element, Fragment, h, Host, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
@@ -7,12 +7,17 @@ import { ManualPaymentMethods } from './ManualPaymentMethods';
 import {
   getAvailableProcessor,
   hasMultipleProcessorChoices,
+  hasMultipleMethodChoices,
   availableManualPaymentMethods,
+  availableMethodTypes,
   availableProcessors,
   hasOtherAvailableCreditCardProcessor,
+  processorSupportsCurrentCurrency,
 } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 import { MockProcessor } from './MockProcessor';
+import { PaymentMethodType, Processor } from '../../../../types';
+import { getRazorpayMethodIcon, getRazorpayMethodLabel } from '../../../../functions/razorpay';
 
 /**
  * @part base - The elements base wrapper.
@@ -102,17 +107,14 @@ export class ScPayment {
     );
   }
 
-  renderMock(processor) {
+  renderMock(processor: Processor) {
     return <MockProcessor processor={processor} />;
   }
 
-  renderPaystack(processor) {
+  renderPaystack(processor: Processor) {
     const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
-    // if system currency is not in the supported currency list, then stop.
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
-      return;
-    }
+    if (!processorSupportsCurrentCurrency(processor)) return;
 
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="paystack">
@@ -132,12 +134,8 @@ export class ScPayment {
     );
   }
 
-  renderRazorpay(processor) {
-    // if system currency is not in the supported currency list, then stop.
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
-      return;
-    }
-
+  /** Combined Razorpay — Razorpay's modal fans out all enabled methods itself. */
+  renderRazorpayCombined(processor: Processor) {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="razorpay">
         <span slot="summary" class="sc-payment-toggle-summary">
@@ -151,9 +149,42 @@ export class ScPayment {
             {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
           </sc-payment-selected>
         </sc-card>
-        <sc-checkout-razorpay-payment-provider />
       </sc-payment-method-choice>
     );
+  }
+
+  /** Per-method Razorpay tile. Rendered as a sibling so `sc-payment-method-choice` can wire it into `sc-toggles`. */
+  renderRazorpayMethodChoice(method: PaymentMethodType) {
+    const label = getRazorpayMethodLabel(method.id) ?? method.id;
+    const icon = getRazorpayMethodIcon(method.id);
+
+    return (
+      <sc-payment-method-choice key={`razorpay-${method.id}`} processor-id="razorpay" method-id={method.id}>
+        <span slot="summary" class="sc-payment-toggle-summary">
+          <sc-icon name={icon} style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{label}</span>
+        </span>
+
+        <sc-card>
+          <sc-payment-selected label={sprintf(__('%s selected for check out.', 'surecart'), label)}>
+            <sc-icon slot="icon" name={icon} aria-hidden="true"></sc-icon>
+            {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+          </sc-payment-selected>
+        </sc-card>
+      </sc-payment-method-choice>
+    );
+  }
+
+  renderRazorpay(processor: Processor) {
+    if (!processorSupportsCurrentCurrency(processor)) return;
+
+    // Split into per-method tiles on recurring checkouts — Razorpay's recurring API requires
+    // an explicit `payment_method_type`, while the one-time modal fans all methods out itself.
+    const methods = availableMethodTypes() || [];
+    if (checkoutState.checkout?.reusable_payment_method_required && methods.length > 0) {
+      return methods.map(method => this.renderRazorpayMethodChoice(method));
+    }
+    return this.renderRazorpayCombined(processor);
   }
 
   render() {
@@ -162,11 +193,15 @@ export class ScPayment {
       return null;
     }
 
-    const Tag = hasMultipleProcessorChoices() || selectedProcessor?.id === 'paypal' ? 'sc-toggles' : 'div';
+    // `sc-toggles` wrapper when >1 choice will render (processors, paypal's card fallback, or per-method tiles).
+    const Tag = hasMultipleProcessorChoices() || hasMultipleMethodChoices() || selectedProcessor?.id === 'paypal' ? 'sc-toggles' : 'div';
     const mollie = getAvailableProcessor('mollie');
+    const razorpay = getAvailableProcessor('razorpay');
 
     return (
       <Host>
+        {/* Mounted at Host level so the provider isn't reparented when its own `processorsState.methods` write flips the `Tag` wrapper. */}
+        {processorSupportsCurrentCurrency(razorpay) && <sc-checkout-razorpay-payment-provider processor-id={razorpay.id} />}
         <sc-form-control label={this.label} exportparts="label, help-text, form-control">
           <div class="sc-payment-label" slot="label">
             <div>{this.label}</div>

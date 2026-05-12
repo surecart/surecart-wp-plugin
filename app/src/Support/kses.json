@@ -318,6 +318,7 @@
     "slot": true
   },
   "sc-checkout-razorpay-payment-provider": {
+    "processor-id": true,
     "style": true,
     "id": true,
     "class": true,

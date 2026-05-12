@@ -226,7 +226,7 @@ class InvoicesListTable extends ListTable {
 		}
 
 		$url = \SureCart::getUrl()->edit( 'customer', $customer->id );
-		return '<a href="' . esc_url( $url ) . '">' . ( ! empty( $customer->name ) ? $customer->name : $customer->email ) . '</a>';
+		return '<a href="' . esc_url( $url ) . '">' . esc_html( ! empty( $customer->name ) ? $customer->name : $customer->email ) . '</a>';
 	}
 
 	/**

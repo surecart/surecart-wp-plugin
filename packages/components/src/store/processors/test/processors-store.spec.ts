@@ -12,12 +12,13 @@ import {
   hasOtherAvailableCreditCardProcessor,
 } from '../getters';
 import { state as processorsState, dispose as disposeProcessors } from '../index';
-import { state as selectedProcessor } from '@store/selected-processor';
+import { state as selectedProcessor, dispose as disposeSelectedProcessor } from '@store/selected-processor';
 
 describe('Processors store', () => {
   beforeEach(() => {
     disposeCheckout();
     disposeProcessors();
+    disposeSelectedProcessor();
   });
 
   describe('getters', () => {
@@ -253,6 +254,8 @@ describe('Processors store', () => {
 
     describe('availableMethodTypes', () => {
       it('shows credit card, then paypal by default', () => {
+        // Method-types sort is per-processor; set mollie so we get the mollie sort order.
+        selectedProcessor.id = 'mollie';
         processorsState.methods = [
           {
             id: 'ideal',
@@ -284,6 +287,7 @@ describe('Processors store', () => {
         ]);
       });
       it('can have a custom order', () => {
+        selectedProcessor.id = 'mollie';
         processorsState.methods = [
           {
             id: 'ideal',
