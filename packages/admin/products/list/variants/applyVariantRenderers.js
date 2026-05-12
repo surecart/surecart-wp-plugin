@@ -27,17 +27,6 @@ const VARIANT_CELLS = {
 	quantity: VariantQuantityCell,
 };
 
-const VariantBlankCell = () => (
-	<span
-		className="sc-variant-cell"
-		css={css`
-			color: var(--sc-color-gray-300);
-		`}
-	>
-		—
-	</span>
-);
-
 const ChevronToggle = ({ isExpanded, onToggle, label }) => (
 	<Button
 		size="small"
@@ -149,7 +138,7 @@ const decorateNameField = (field, { expandedIds, onToggle }) => {
 const decorateForVariants = (field, { savingVariantIds }) => {
 	const originalRender = field.render;
 	const originalGetValue = field.getValue;
-	const VariantCell = VARIANT_CELLS[field.id] || VariantBlankCell;
+	const VariantCell = VARIANT_CELLS[field.id] || (() => null);
 
 	return {
 		...field,

@@ -8,6 +8,11 @@
 
 .dataviews-view-table tbody tr:has(.sc-variant-cell) {
 	background: var(--sc-color-gray-50, #f9fafb);
+
+	.components-checkbox-control,
+	.components-checkbox-control__input-container {
+		visibility: hidden;
+	}
 }
 
 .dataviews-view-table tbody tr:has(.sc-variant-cell):hover {

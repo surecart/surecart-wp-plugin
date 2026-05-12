@@ -27,14 +27,15 @@ export default ({ item }) => {
 				align-items: center;
 				gap: 12px;
 				min-width: 0;
-				padding-left: 36px;
-				color: var(--sc-color-gray-700);
 			`}
 		>
 			<VariantThumbnail variant={item} />
 			<Label
 				css={css`
-					font-weight: 500;
+					font-weight: 600;
+					font-size: var(--sc-font-size-medium, 14px);
+					color: var(--sc-color-gray-900);
+					font-size: 12px;
 					word-break: break-word;
 					${isDraft && 'color: var(--sc-color-gray-400);'}
 				`}

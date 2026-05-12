@@ -28,7 +28,7 @@ const Placeholder = ({ size }) => (
 	</div>
 );
 
-export default function VariantThumbnail({ variant, size = 32 }) {
+export default function VariantThumbnail({ variant, size = 40 }) {
 	const src = variant?.line_item_image?.src || variant?.image_url || '';
 	if (!src) return <Placeholder size={size} />;
 

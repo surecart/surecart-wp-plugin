@@ -11,10 +11,6 @@ const getEditUrl = (id) =>
 		id,
 	});
 
-// Used in table + list views (DataViews renders the field as the row's
-// "name" column or as the list-row title region). Inline thumbnail is OK
-// here because grid/list views use a separate `display_name` field as
-// `titleField` to avoid duplicating the card image.
 export default ({ navigation } = {}) => ({
 	id: 'name',
 	label: __('Name', 'surecart'),
@@ -46,6 +42,7 @@ export default ({ navigation } = {}) => ({
 					}}
 					css={css`
 						font-weight: 600;
+						font-size: var(--sc-font-size-medium, 14px);
 						color: var(--sc-color-gray-900);
 						text-decoration: none;
 						word-break: break-word;
