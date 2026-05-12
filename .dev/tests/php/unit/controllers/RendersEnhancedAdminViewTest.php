@@ -37,15 +37,16 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Default state: no option stored → legacy branch is active for both controllers.
+	 * Default state: no option stored → SPA branch is active for both controllers.
+	 * The modern DataView is the new default; users opt out by toggling it off.
 	 *
 	 * @group admin-views
 	 */
-	public function test_flag_is_off_by_default() {
+	public function test_flag_is_on_by_default() {
 		delete_option( 'surecart_enhanced_admin_views' );
 
-		$this->assertFalse( $this->products_controller->isEnhancedAdminViewsEnabled() );
-		$this->assertFalse( $this->product_collections_controller->isEnhancedAdminViewsEnabled() );
+		$this->assertTrue( $this->products_controller->isEnhancedAdminViewsEnabled() );
+		$this->assertTrue( $this->product_collections_controller->isEnhancedAdminViewsEnabled() );
 	}
 
 	/**
@@ -93,12 +94,14 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 
 	/**
 	 * When the flag is off, `index()` dispatches to `renderWpListView()` and
-	 * never touches the SPA branch.
+	 * never touches the SPA branch. The option must be explicitly set to false —
+	 * the absence of the option now defaults to the SPA, so `delete_option`
+	 * would route to the SPA branch instead.
 	 *
 	 * @group admin-views
 	 */
 	public function test_index_routes_to_legacy_when_flag_is_off() {
-		delete_option( 'surecart_enhanced_admin_views' );
+		update_option( 'surecart_enhanced_admin_views', false );
 
 		$controller = Mockery::mock( ProductCollectionsController::class )
 			->makePartial()
