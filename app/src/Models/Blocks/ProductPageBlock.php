@@ -234,7 +234,7 @@ class ProductPageBlock {
 				'selectComponentOptionsText' => __( 'Select options', 'surecart' ),
 				'note'                       => '',
 				'noteLabel'                  => '',
-				'bundleComponentVariants'    => (object) array(),
+				'bundleComponentVariants'    => $this->getInitialBundleComponentVariants( $product ),
 				'bundleVariableComponentIds' => $this->getBundleVariableComponentIds( $product ),
 				'bundleComponents'           => $this->getBundleComponents( $product ),
 			),
@@ -263,6 +263,65 @@ class ProductPageBlock {
 			$ids[] = $component->id;
 		}
 		return $ids;
+	}
+
+	/**
+	 * Seed bundleComponentVariants with each variable component's first
+	 * available variant so the bundle PDP opens with a valid default
+	 * selection (parity with how the main product auto-picks an in-stock
+	 * variant).
+	 *
+	 * @param object $product The bundle product (or non-bundle — returns {}).
+	 *
+	 * @return object Map of component_product_id -> variant_id.
+	 */
+	protected function getInitialBundleComponentVariants( $product ) {
+		if ( empty( $product->bundle ) ) {
+			return (object) array();
+		}
+
+		$map = array();
+		foreach ( $product->bundle_items->data ?? array() as $item ) {
+			$component = $item->component_product ?? null;
+			if ( empty( $component->id ) ) {
+				continue;
+			}
+
+			$initial = $this->findInitialBundleComponentVariant( $component );
+			if ( ! empty( $initial->id ) ) {
+				$map[ $component->id ] = $initial->id;
+			}
+		}
+
+		return (object) $map;
+	}
+
+	/**
+	 * Pick a sensible default variant for a bundle component product.
+	 * Prefer the first in-stock non-archived variant; fall back to the
+	 * first variant when nothing is in stock so pills still highlight.
+	 *
+	 * @param object $component Component product.
+	 *
+	 * @return object|null
+	 */
+	protected function findInitialBundleComponentVariant( $component ) {
+		$variants = $component->variants->data ?? array();
+		if ( empty( $variants ) ) {
+			return null;
+		}
+
+		if ( ! empty( $component->has_unlimited_stock ) ) {
+			return $variants[0];
+		}
+
+		foreach ( $variants as $variant ) {
+			if ( ( $variant->available_stock ?? 0 ) > 0 && empty( $variant->archived ) ) {
+				return $variant;
+			}
+		}
+
+		return $variants[0];
 	}
 
 	/**

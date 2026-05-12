@@ -21,6 +21,35 @@ $variants_payload = array_map(
 	$variants
 );
 
+// Populate the initial option values based on the first available variant, preferring in-stock variants if stock is not unlimited.
+$initial_variant = null;
+if ( ! empty( $variants ) ) {
+	if ( ! empty( $component->has_unlimited_stock ) ) {
+		$initial_variant = $variants[0];
+	} else {
+		foreach ( $variants as $variant ) {
+			if ( ( $variant->available_stock ?? 0 ) > 0 && empty( $variant->archived ) ) {
+				$initial_variant = $variant;
+				break;
+			}
+		}
+		if ( ! $initial_variant ) {
+			$initial_variant = $variants[0];
+		}
+	}
+}
+
+$initial_option_values = $initial_variant
+	? (object) array_filter(
+		array(
+			'option_1' => $initial_variant->option_1 ?? null,
+			'option_2' => $initial_variant->option_2 ?? null,
+			'option_3' => $initial_variant->option_3 ?? null,
+		),
+		fn( $value ) => null !== $value && '' !== $value
+	)
+	: (object) array();
+
 $render_inner_blocks = static function ( $current_option = null ) use ( $block ) {
 	$block_instance              = $block->parsed_block;
 	$block_instance['blockName'] = 'core/null';
@@ -44,7 +73,7 @@ $component_context = wp_interactivity_data_wp_context(
 		'componentProductId'         => $component->id ?? null,
 		'componentVariants'          => $variants_payload,
 		'componentHasUnlimitedStock' => ! empty( $component->has_unlimited_stock ),
-		'componentOptionValues'      => (object) array(),
+		'componentOptionValues'      => $initial_option_values,
 	)
 );
 ?>
