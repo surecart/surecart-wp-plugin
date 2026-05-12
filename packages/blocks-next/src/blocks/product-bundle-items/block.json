@@ -14,12 +14,6 @@
 		"surecart/sticky-purchase"
 	],
 	"usesContext": ["postId"],
-	"attributes": {
-		"title": {
-			"type": "string",
-			"default": ""
-		}
-	},
 	"supports": {
 		"interactivity": true,
 		"reusable": false,

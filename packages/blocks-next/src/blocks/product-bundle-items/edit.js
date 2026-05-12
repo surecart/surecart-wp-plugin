@@ -5,11 +5,8 @@ import {
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
-	InspectorControls,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
@@ -63,7 +60,7 @@ const buildDefaultTree = () =>
 		]
 	);
 
-export default ({ attributes, setAttributes, clientId }) => {
+export default ({ clientId }) => {
 	const blockProps = useBlockProps({
 		className: 'sc-bundle-items',
 	});
@@ -96,25 +93,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 	}, [hasChildren, clientId]);
 
 	return (
-		<>
-			<InspectorControls>
-				<PanelBody title={__('Settings', 'surecart')}>
-					<TextControl
-						label={__('Title', 'surecart')}
-						value={attributes.title}
-						onChange={(title) => setAttributes({ title })}
-					/>
-				</PanelBody>
-			</InspectorControls>
-
-			<div {...blockProps}>
-				{!!attributes.title && (
-					<div className="sc-bundle-items__title">
-						{attributes.title}
-					</div>
-				)}
-				<div {...innerBlocksProps} />
-			</div>
-		</>
+		<div {...blockProps}>
+			<div {...innerBlocksProps} />
+		</div>
 	);
 };

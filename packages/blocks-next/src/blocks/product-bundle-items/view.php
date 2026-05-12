@@ -8,12 +8,6 @@ if ( empty( $bundle_items ) ) {
 ?>
 
 <div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-bundle-items' ) ) ); ?>>
-	<?php if ( ! empty( $attributes['title'] ) ) : ?>
-		<div class="sc-bundle-items__title">
-			<?php echo esc_html( $attributes['title'] ); ?>
-		</div>
-	<?php endif; ?>
-
 	<ul class="sc-bundle-items__list">
 		<?php
 		foreach ( $bundle_items as $item ) :

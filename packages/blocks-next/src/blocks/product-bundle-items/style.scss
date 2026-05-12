@@ -1,12 +1,4 @@
 .sc-bundle-items {
-	&__title {
-		font-weight: var(--sc-font-weight-semibold, 600);
-		font-size: var(--sc-font-size-medium, 1rem);
-		line-height: 1.4;
-		margin: 0 0 var(--sc-spacing-small, 0.625rem);
-		color: inherit;
-	}
-
 	&__list {
 		list-style: none !important;
 		padding: 0 !important;
