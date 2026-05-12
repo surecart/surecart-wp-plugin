@@ -236,6 +236,7 @@ class ProductPageBlock {
 				'noteLabel'                  => '',
 				'bundleComponentVariants'    => (object) array(),
 				'bundleVariableComponentIds' => $this->getBundleVariableComponentIds( $product ),
+				'bundleComponents'           => $this->getBundleComponents( $product ),
 			),
 		);
 	}
@@ -262,6 +263,42 @@ class ProductPageBlock {
 			$ids[] = $component->id;
 		}
 		return $ids;
+	}
+
+	/**
+	 * Build a stock-only snapshot of each bundle component for the
+	 * product-page store to derive sold-out state from.
+	 *
+	 * @param object $product The bundle product (or non-bundle — returns {}).
+	 *
+	 * @return object Map of component_product_id -> stock metadata.
+	 */
+	protected function getBundleComponents( $product ) {
+		if ( empty( $product->bundle ) ) {
+			return (object) array();
+		}
+
+		$components = array();
+		foreach ( $product->bundle_items->data ?? array() as $item ) {
+			$component = $item->component_product ?? null;
+			if ( empty( $component->id ) ) {
+				continue;
+			}
+
+			$components[ $component->id ] = array(
+				'has_unlimited_stock' => ! empty( $component->has_unlimited_stock ),
+				'available_stock'     => (int) ( $component->available_stock ?? 0 ),
+				'variants'            => array_map(
+					fn( $variant ) => array(
+						'id'              => $variant->id,
+						'available_stock' => (int) ( $variant->available_stock ?? 0 ),
+					),
+					$component->variants->data ?? array()
+				),
+			);
+		}
+
+		return (object) $components;
 	}
 
 	/**

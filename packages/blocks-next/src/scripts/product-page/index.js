@@ -224,7 +224,7 @@ const { state, actions } = store('surecart/product-page', {
 				unavailableText,
 				selectComponentOptionsText,
 			} = context;
-			if (state.isSoldOut) {
+			if (state.isSoldOut || state.isBundleComponentSoldOut) {
 				return outOfStockText;
 			}
 			if (state.isBundleIncomplete) {
@@ -250,7 +250,8 @@ const { state, actions } = store('surecart/product-page', {
 				!!product?.archived || // archived.
 				!!state?.isSoldOut || // sold out.
 				!!(variants?.length && !state.selectedVariant?.id) || // no selected variant.
-				!!state.isBundleIncomplete // bundle has variable components still unselected.
+				!!state.isBundleIncomplete || // bundle has variable components still unselected.
+				!!state.isBundleComponentSoldOut // a chosen bundle component variant is sold out.
 			);
 		},
 
@@ -266,6 +267,35 @@ const { state, actions } = store('surecart/product-page', {
 			if (!variableIds.length) return false;
 			const selections = context.bundleComponentVariants || {};
 			return variableIds.some((id) => !selections?.[id]);
+		},
+
+		/**
+		 * Bundle PDP: a non-variable component is sold out, OR the shopper
+		 * has picked a variant for a component and that variant is sold out.
+		 * Sourced from ProductPageBlock::getBundleComponents().
+		 */
+		get isBundleComponentSoldOut() {
+			const context = getContext();
+			if (!context) return false;
+			const components = context.bundleComponents || {};
+			const ids = Object.keys(components);
+			if (!ids.length) return false;
+			const selections = context.bundleComponentVariants || {};
+
+			return ids.some((id) => {
+				const info = components[id];
+				if (!info || info.has_unlimited_stock) return false;
+
+				const variants = info.variants || [];
+				if (variants.length) {
+					const chosenId = selections[id];
+					if (!chosenId) return false;
+					const chosen = variants.find((v) => v.id === chosenId);
+					return chosen && (chosen.available_stock || 0) <= 0;
+				}
+
+				return (info.available_stock || 0) <= 0;
+			});
 		},
 
 		/**
