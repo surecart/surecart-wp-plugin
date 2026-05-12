@@ -3,50 +3,23 @@
 	"apiVersion": 3,
 	"name": "surecart/bundle-item-variant",
 	"title": "Bundle Item Variant",
-	"description": "Per-component variant picker shown on the bundle product page. Renders pill options for each variant option of the component product; selections are sent as bundle_component_variants on add to cart.",
+	"description": "Per-component variant pill picker shown on the bundle product page. Renders one pill per option value; selections are sent as bundle_component_variants on add to cart.",
 	"version": "1.0.0",
 	"category": "surecart-product-page",
 	"ancestor": ["surecart/bundle-item-template"],
-	"usesContext": [
-		"surecart/bundleItem",
-		"surecart/bundleItemOption",
-		"surecart/bundleItemOptionNumber"
-	],
-	"attributes": {
-		"highlight_text": {
-			"type": "string"
-		},
-		"highlight_background": {
-			"type": "string"
-		},
-		"highlight_border": {
-			"type": "string"
-		}
-	},
+	"usesContext": ["surecart/bundleItem", "surecart/bundleItemOption"],
 	"supports": {
 		"interactivity": true,
 		"inserter": false,
 		"anchor": true,
-		"color": {
-			"gradients": false,
-			"text": true,
-			"background": false,
-			"__experimentalDefaultControls": {
-				"text": true
-			}
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		},
+		"html": false,
 		"spacing": {
+			"padding": true,
 			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"text": true,
+			"background": false
 		}
 	},
 	"textdomain": "surecart",

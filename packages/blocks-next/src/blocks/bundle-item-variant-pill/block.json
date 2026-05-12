@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/bundle-item-variant-pill",
+	"title": "Bundle Item Variant Pill",
+	"description": "A single pill for a bundle component variant value.",
+	"version": "1.0.0",
+	"category": "surecart-product-page",
+	"ancestor": ["surecart/bundle-item-variant"],
+	"usesContext": [
+		"surecart/bundleItemVariantPill/value",
+		"surecart/bundleItemVariantPill/name",
+		"surecart/bundleItemVariantPill/selected"
+	],
+	"attributes": {
+		"highlight_text": {
+			"type": "string"
+		},
+		"highlight_background": {
+			"type": "string"
+		},
+		"highlight_border": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"inserter": false,
+		"anchor": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		},
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"shadow": true,
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"]
+		}
+	},
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"render": "file:./view.php",
+	"style": ["surecart-pill"]
+}
