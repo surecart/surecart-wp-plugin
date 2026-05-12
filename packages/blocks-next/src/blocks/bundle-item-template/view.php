@@ -21,9 +21,45 @@ $variants_payload = array_map(
 	$variants
 );
 
-// Populate the initial option values based on the first available variant, preferring in-stock variants if stock is not unlimited.
+// Honour shopper picks persisted in the URL by setBundleComponentOption
+// (?{prefix-}bundle-{componentId}-{optionSlug}={valueSlug}). Falls back
+// to the first in-stock variant, then to the first variant overall so
+// pills always highlight something.
+$component_id            = $component->id ?? '';
+$url_picked_option_values = array();
+foreach ( $variant_options as $key => $option ) {
+	$arg_key  = 'bundle-' . $component_id . '-' . sanitize_title( $option->name );
+	$arg_slug = isset( $_GET[ $arg_key ] ) ? sanitize_title( wp_unslash( $_GET[ $arg_key ] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( empty( $arg_slug ) ) {
+		continue;
+	}
+
+	foreach ( $option->values as $value ) {
+		if ( sanitize_title( $value ) === $arg_slug ) {
+			$url_picked_option_values[ 'option_' . ( $key + 1 ) ] = $value;
+			break;
+		}
+	}
+}
+
 $initial_variant = null;
-if ( ! empty( $variants ) ) {
+if ( ! empty( $url_picked_option_values ) ) {
+	foreach ( $variants as $variant ) {
+		$match = true;
+		foreach ( $url_picked_option_values as $option_key => $value ) {
+			if ( ( $variant->{$option_key} ?? null ) !== $value ) {
+				$match = false;
+				break;
+			}
+		}
+		if ( $match ) {
+			$initial_variant = $variant;
+			break;
+		}
+	}
+}
+
+if ( ! $initial_variant && ! empty( $variants ) ) {
 	if ( ! empty( $component->has_unlimited_stock ) ) {
 		$initial_variant = $variants[0];
 	} else {

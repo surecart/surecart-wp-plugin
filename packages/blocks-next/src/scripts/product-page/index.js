@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withSyncEvent,
+} from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -345,7 +350,9 @@ const { state, actions } = store('surecart/product-page', {
 			});
 
 			if (!matching.length) return true;
-			return Math.max(...matching.map((v) => v.available_stock || 0)) <= 0;
+			return (
+				Math.max(...matching.map((v) => v.available_stock || 0)) <= 0
+			);
 		},
 
 		/**
@@ -579,16 +586,6 @@ const { state, actions } = store('surecart/product-page', {
 			);
 		}),
 
-		/**
-		 * Bundle PDP: a shopper picked a variant option for one of the
-		 * component products. Writes both the per-component selection map
-		 * and the bundle-level component_product_id → variant_id map that
-		 * gets sent on add to cart as `bundle_component_variants`.
-		 *
-		 * Mirrors the chosen variant id into the Stencil product store so
-		 * the legacy sc-product-buy-button path also has the data
-		 * (see packages/components/src/store/product/mutations.ts).
-		 */
 		setBundleComponentOption: withSyncEvent((e) => {
 			if (isNotKeySubmit(e)) return true;
 			e.preventDefault();
@@ -597,11 +594,14 @@ const { state, actions } = store('surecart/product-page', {
 			const {
 				optionNumber,
 				option_value,
+				option_name_slug,
+				option_value_slug,
 				componentOptionValues,
 				componentVariants,
 				componentProductId,
 				bundleComponentVariants,
 				product,
+				urlPrefix,
 			} = ctx;
 
 			if (!optionNumber || option_value == null) return;
@@ -619,6 +619,19 @@ const { state, actions } = store('surecart/product-page', {
 				} else {
 					delete bundleComponentVariants[componentProductId];
 				}
+			}
+
+			if (componentProductId && option_name_slug && option_value_slug) {
+				const key = `${
+					urlPrefix ? urlPrefix + '-' : ''
+				}bundle-${componentProductId}-${option_name_slug}`;
+				window.history.replaceState(
+					{},
+					'',
+					addQueryArgs(window.location.href, {
+						[key]: option_value_slug,
+					})
+				);
 			}
 
 			// Bridge to the Stencil product store (legacy buy-button path).

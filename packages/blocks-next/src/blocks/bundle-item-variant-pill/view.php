@@ -4,8 +4,10 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			array(
-				'option_value' => $block->context['value'],
-				'option_name'  => $block->context['name'],
+				'option_value'      => $block->context['value'],
+				'option_name'       => $block->context['name'],
+				'option_name_slug'  => sanitize_title( $block->context['name'] ),
+				'option_value_slug' => sanitize_title( $block->context['value'] ),
 			)
 		)
 	);

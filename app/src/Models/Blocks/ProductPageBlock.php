@@ -298,8 +298,10 @@ class ProductPageBlock {
 
 	/**
 	 * Pick a sensible default variant for a bundle component product.
-	 * Prefer the first in-stock non-archived variant; fall back to the
-	 * first variant when nothing is in stock so pills still highlight.
+	 * Honour shopper picks from the URL first (?{prefix-}bundle-{id}-{slug}=
+	 * value, written by setBundleComponentOption); fall back to the first
+	 * in-stock variant; finally fall back to the first variant so pills
+	 * still highlight.
 	 *
 	 * @param object $component Component product.
 	 *
@@ -309,6 +311,11 @@ class ProductPageBlock {
 		$variants = $component->variants->data ?? array();
 		if ( empty( $variants ) ) {
 			return null;
+		}
+
+		$from_url = $this->findBundleComponentVariantFromUrl( $component );
+		if ( $from_url ) {
+			return $from_url;
 		}
 
 		if ( ! empty( $component->has_unlimited_stock ) ) {
@@ -322,6 +329,57 @@ class ProductPageBlock {
 		}
 
 		return $variants[0];
+	}
+
+	/**
+	 * Resolve a bundle component's variant from the option slugs the user
+	 * picked previously (persisted in the URL by setBundleComponentOption).
+	 *
+	 * @param object $component Component product.
+	 *
+	 * @return object|null
+	 */
+	protected function findBundleComponentVariantFromUrl( $component ) {
+		$variant_options = $component->variant_options->data ?? array();
+		$variants        = $component->variants->data ?? array();
+		if ( empty( $variant_options ) || empty( $variants ) ) {
+			return null;
+		}
+
+		$selected_values = array();
+		foreach ( $variant_options as $key => $option ) {
+			$arg_key  = 'bundle-' . $component->id . '-' . sanitize_title( $option->name );
+			$arg_slug = $this->url->getArg( $arg_key );
+			if ( empty( $arg_slug ) ) {
+				continue;
+			}
+
+			foreach ( $option->values as $value ) {
+				if ( sanitize_title( $value ) === sanitize_title( $arg_slug ) ) {
+					$selected_values[ 'option_' . ( $key + 1 ) ] = $value;
+					break;
+				}
+			}
+		}
+
+		if ( empty( $selected_values ) ) {
+			return null;
+		}
+
+		foreach ( $variants as $variant ) {
+			$match = true;
+			foreach ( $selected_values as $option_key => $value ) {
+				if ( ( $variant->{$option_key} ?? null ) !== $value ) {
+					$match = false;
+					break;
+				}
+			}
+			if ( $match ) {
+				return $variant;
+			}
+		}
+
+		return null;
 	}
 
 	/**
