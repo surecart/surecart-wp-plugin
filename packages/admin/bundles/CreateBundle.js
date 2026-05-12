@@ -15,7 +15,7 @@ export default ({ id, onCreateProduct }) => {
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
-	// create the product.
+	// create the bundle.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -26,6 +26,7 @@ export default ({ id, onCreateProduct }) => {
 				{
 					name,
 					auto_fulfill_enabled: true,
+					bundle: true,
 				},
 				{ throwOnError: true }
 			);
@@ -33,7 +34,7 @@ export default ({ id, onCreateProduct }) => {
 			if (!product?.id) {
 				throw {
 					message: __(
-						'Could not create product. Please try again.',
+						'Could not create bundle. Please try again.',
 						'surecart'
 					),
 				};
@@ -53,7 +54,7 @@ export default ({ id, onCreateProduct }) => {
 				<span slot="title">{error}</span>
 			</ScAlert>
 
-			<Box title={__('Create New Product', 'surecart')}>
+			<Box title={__('Create New Bundle', 'surecart')}>
 				<ScForm
 					onScSubmit={onSubmit}
 					onKeyDown={(e) => {
@@ -69,9 +70,9 @@ export default ({ id, onCreateProduct }) => {
 						`}
 					>
 						<ScInput
-							label={__('Product Name', 'surecart')}
+							label={__('Bundle Name', 'surecart')}
 							className="sc-product-name hydrated"
-							help={__('A name for your product.', 'surecart')}
+							help={__('A name for your bundle.', 'surecart')}
 							onScInput={(e) => setName(e.target.value)}
 							value={name}
 							name="name"
@@ -86,7 +87,7 @@ export default ({ id, onCreateProduct }) => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-products'}
+								href={'admin.php?page=sc-bundles'}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}

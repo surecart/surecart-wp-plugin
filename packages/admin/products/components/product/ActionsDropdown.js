@@ -46,7 +46,11 @@ export default ({
 								onClick={() => setModal('archive')}
 							>
 								{product?.archived
-									? __('Un-Archive Product', 'surecart')
+									? product?.bundle
+										? __('Un-Archive Bundle', 'surecart')
+										: __('Un-Archive Product', 'surecart')
+									: product?.bundle
+									? __('Archive Bundle', 'surecart')
 									: __('Archive Product', 'surecart')}
 							</MenuItem>
 						)}
@@ -56,7 +60,9 @@ export default ({
 								iconPosition="left"
 								onClick={() => setModal('delete')}
 							>
-								{__('Delete Product', 'surecart')}
+								{product?.bundle
+									? __('Delete Bundle', 'surecart')
+									: __('Delete Product', 'surecart')}
 							</MenuItem>
 						)}
 						<DuplicateModel
@@ -64,13 +70,13 @@ export default ({
 							id={product?.id}
 							onConfirm={hasDirtyRecords ? onSubmit : null}
 							onSuccess={(duplicate) => {
+								const editPath = product?.bundle
+									? 'admin.php?page=sc-bundles&action=edit'
+									: 'admin.php?page=sc-products&action=edit';
 								window.location.assign(
-									addQueryArgs(
-										'admin.php?page=sc-products&action=edit',
-										{
-											id: duplicate?.id,
-										}
-									)
+									addQueryArgs(editPath, {
+										id: duplicate?.id,
+									})
 								);
 							}}
 							message={confirmMessage}
@@ -95,7 +101,9 @@ export default ({
 									}}
 									iconPosition="left"
 								>
-									{__('Duplicate Product', 'surecart')}
+									{product?.bundle
+										? __('Duplicate Bundle', 'surecart')
+										: __('Duplicate Product', 'surecart')}
 								</MenuItem>
 							)}
 						</DuplicateModel>

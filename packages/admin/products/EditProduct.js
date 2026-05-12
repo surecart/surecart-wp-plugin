@@ -212,21 +212,35 @@ export default ({ id, setBrowserURL }) => {
 	 * Toggle product delete.
 	 */
 	const onDeleteProduct = async () => {
+		const wasBundle = !!product?.bundle;
 		try {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
-
-			createSuccessNotice(__('Product deleted.', 'surecart'), {
-				type: 'snackbar',
-			});
-
-			// Redirect to products page.
-			window.location.href = addQueryArgs('admin.php', {
-				page: 'sc-products',
-			});
 		} catch (e) {
-			setError(e);
+			// Known WP core-data quirk: REMOVE_ITEMS reducer does
+			// `queryItems.itemIds.filter(...)` without a guard, and an
+			// in-flight `getEntityRecords` query can leave `itemIds`
+			// undefined → TypeError. The API DELETE already succeeded by
+			// then, so we let this one through and surface anything else.
+			const isReducerBug =
+				e?.name === 'TypeError' &&
+				/undefined.*filter/i.test(e?.message || '');
+			if (!isReducerBug) {
+				setError(e);
+				return;
+			}
 		}
+
+		createSuccessNotice(
+			wasBundle
+				? __('Bundle deleted.', 'surecart')
+				: __('Product deleted.', 'surecart'),
+			{ type: 'snackbar' }
+		);
+
+		window.location.href = addQueryArgs('admin.php', {
+			page: wasBundle ? 'sc-bundles' : 'sc-products',
+		});
 	};
 
 	/**
@@ -295,7 +309,11 @@ export default ({ id, setBrowserURL }) => {
 						<ScButton
 							circle
 							size="small"
-							href="admin.php?page=sc-products"
+							href={
+								product?.bundle
+									? 'admin.php?page=sc-bundles'
+									: 'admin.php?page=sc-products'
+							}
 						>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
@@ -303,12 +321,22 @@ export default ({ id, setBrowserURL }) => {
 							<sc-breadcrumb>
 								<Logo display="block" />
 							</sc-breadcrumb>
-							<sc-breadcrumb href="admin.php?page=sc-products">
-								{__('Products', 'surecart')}
+							<sc-breadcrumb
+								href={
+									product?.bundle
+										? 'admin.php?page=sc-bundles'
+										: 'admin.php?page=sc-products'
+								}
+							>
+								{product?.bundle
+									? __('Bundles', 'surecart')
+									: __('Products', 'surecart')}
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
-									{__('Edit Product', 'surecart')}
+									{product?.bundle
+										? __('Edit Bundle', 'surecart')
+										: __('Edit Product', 'surecart')}
 									{renderStatusBadge()}
 								</sc-flex>
 							</sc-breadcrumb>

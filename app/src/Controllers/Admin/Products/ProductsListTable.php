@@ -84,7 +84,15 @@ class ProductsListTable extends ListTable {
 			)
 		);
 
-		$this->items = $query->data;
+		// TODO: Move this to $this->items = $query->data; once bundle filter supported to product list.
+		$this->items = array_values(
+			array_filter(
+				is_array( $query->data ) ? $query->data : array(),
+				function ( $product ) {
+					return empty( $product->bundle );
+				}
+			)
+		);
 	}
 
 	/**
