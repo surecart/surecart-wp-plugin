@@ -1,5 +1,5 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
 	useBlockProps,
@@ -11,7 +11,7 @@ const TEMPLATE = [
 	[
 		'core/group',
 		{
-			style: { spacing: { blockGap: '6px' } },
+			style: { spacing: { blockGap: '4px' } },
 			layout: {
 				type: 'flex',
 				orientation: 'horizontal',
@@ -20,11 +20,17 @@ const TEMPLATE = [
 			},
 		},
 		[
-			['surecart/bundle-item-name', {}, []],
+			['surecart/bundle-product-name', {}, []],
+			['core/paragraph', { content: '-' }, []],
+			['surecart/bundle-variant-name', {}, []],
 			['surecart/bundle-item-quantity', {}, []],
 		],
 	],
-	['surecart/bundle-item-variant', {}, []],
+	[
+		'surecart/bundle-item-variant',
+		{},
+		[['surecart/bundle-item-variant-pill']],
+	],
 ];
 
 export default ({ __unstableLayoutClassNames }) => {

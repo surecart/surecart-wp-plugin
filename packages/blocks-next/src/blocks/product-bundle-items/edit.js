@@ -42,7 +42,7 @@ const buildDefaultTree = () =>
 			createBlock(
 				'core/group',
 				{
-					style: { spacing: { blockGap: '6px' } },
+					style: { spacing: { blockGap: '4px' } },
 					layout: {
 						type: 'flex',
 						orientation: 'horizontal',
@@ -51,11 +51,15 @@ const buildDefaultTree = () =>
 					},
 				},
 				[
-					createBlock('surecart/bundle-item-name'),
+					createBlock('surecart/bundle-product-name'),
+					createBlock('core/paragraph', { content: '-' }),
+					createBlock('surecart/bundle-variant-name'),
 					createBlock('surecart/bundle-item-quantity'),
 				]
 			),
-			createBlock('surecart/bundle-item-variant'),
+			createBlock('surecart/bundle-item-variant', {}, [
+				createBlock('surecart/bundle-item-variant-pill'),
+			]),
 		]
 	);
 

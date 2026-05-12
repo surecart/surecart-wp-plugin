@@ -1,14 +1,24 @@
 .sc-bundle-item {
 	width: 100%;
 
+	// Tight stack: label margin matches .sc-form-label so the row reads
+	// like the storefront Variants Selector.
 	&__row {
 		display: flex;
 		flex-direction: column;
-		gap: var(--sc-spacing-x-small, 0.5rem);
+		gap: var(--sc-input-label-margin, var(--sc-spacing-xx-small, 0.25rem));
+	}
+
+	// Beat themes that add a default paragraph margin to the separator
+	// between bundle-product-name and bundle-variant-name.
+	&__row .wp-block-paragraph {
+		margin: 0;
 	}
 }
 
-.sc-bundle-item__name {
+.sc-bundle-item__name,
+.sc-bundle-item__product-name,
+.sc-bundle-item__variant-name {
 	display: inline;
 	font-weight: var(
 		--sc-input-label-font-weight,
@@ -17,6 +27,18 @@
 	font-size: var(--sc-font-size-medium, 1rem);
 	line-height: 1.35;
 	color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
+}
+
+// Non-variable bundle items have no option name — hide the empty variant-
+// name span and the preceding "-" separator paragraph in the same group.
+.sc-bundle-item__variant-name:empty {
+	display: none;
+}
+
+.sc-bundle-item__row
+	.wp-block-group:has(> .sc-bundle-item__variant-name:empty)
+	> .wp-block-paragraph {
+	display: none;
 }
 
 .sc-bundle-item .wp-block-surecart-bundle-item-quantity,

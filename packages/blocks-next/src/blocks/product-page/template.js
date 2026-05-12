@@ -213,7 +213,7 @@ export default [
 										'core/group',
 										{
 											style: {
-												spacing: { blockGap: '6px' },
+												spacing: { blockGap: '4px' },
 											},
 											layout: {
 												type: 'flex',
@@ -223,11 +223,20 @@ export default [
 											},
 										},
 										[
-											['surecart/bundle-item-name'],
+											['surecart/bundle-product-name'],
+											[
+												'core/paragraph',
+												{ content: '-' },
+											],
+											['surecart/bundle-variant-name'],
 											['surecart/bundle-item-quantity'],
 										],
 									],
-									['surecart/bundle-item-variant'],
+									[
+										'surecart/bundle-item-variant',
+										{},
+										[['surecart/bundle-item-variant-pill']],
+									],
 								],
 							],
 						],

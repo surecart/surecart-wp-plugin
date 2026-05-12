@@ -59,13 +59,20 @@ return [
 
 		<!-- wp:surecart/product-bundle-items -->
 		<!-- wp:surecart/bundle-item-template {"layout":{"type":"flex","orientation":"vertical"}} -->
-		<!-- wp:group {"style":{"spacing":{"blockGap":"6px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
-		<div class="wp-block-group"><!-- wp:surecart/bundle-item-name /-->
-
-		<!-- wp:surecart/bundle-item-quantity /--></div>
+		<!-- wp:group {"style":{"spacing":{"blockGap":"4px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
+		<div class="wp-block-group">
+		<!-- wp:surecart/bundle-product-name /-->
+		<!-- wp:paragraph -->
+		<p>-</p>
+		<!-- /wp:paragraph -->
+		<!-- wp:surecart/bundle-variant-name /-->
+		<!-- wp:surecart/bundle-item-quantity /-->
+		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:surecart/bundle-item-variant /-->
+		<!-- wp:surecart/bundle-item-variant -->
+		<!-- wp:surecart/bundle-item-variant-pill /-->
+		<!-- /wp:surecart/bundle-item-variant -->
 		<!-- /wp:surecart/bundle-item-template -->
 		<!-- /wp:surecart/product-bundle-items -->
 
