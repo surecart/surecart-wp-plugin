@@ -3,6 +3,8 @@
 namespace SureCart\Abilities;
 
 use SureCart\Abilities\Abilities\ArchiveProduct;
+use SureCart\Abilities\Abilities\GetAbandonedCheckout;
+use SureCart\Abilities\Abilities\ListAbandonedCheckouts;
 use SureCart\Abilities\Abilities\CancelSubscription;
 use SureCart\Abilities\Abilities\CreateCoupon;
 use SureCart\Abilities\Abilities\CreateCustomer;
@@ -153,6 +155,9 @@ class AbilityRegistrar {
 			new ListOrders(),
 			new GetOrder(),
 			new GetOrderStatistics(),
+			// Abandoned Checkouts.
+			new ListAbandonedCheckouts(),
+			new GetAbandonedCheckout(),
 			// Customers.
 			new ListCustomers(),
 			new GetCustomer(),
