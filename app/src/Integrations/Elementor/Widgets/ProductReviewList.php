@@ -277,7 +277,7 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$selector        = '{{WRAPPER}} .wp-block-surecart-product-review-list';
 		$review_selector = '{{WRAPPER}} .wp-block-surecart-product-review-list .sc-product-review-link > .wp-block-group';
 		$star_selector   = '{{WRAPPER}} .wp-block-surecart-product-review-rating-stars svg';
-		$button_selector = '{{WRAPPER}} .wp-block-surecart-product-review-add-button';
+		$button_selector = '{{WRAPPER}} .wp-block-surecart-product-review-add-button .wp-block-button__link';
 
 		$this->start_controls_section(
 			'section_review_list_style',
@@ -845,8 +845,8 @@ class ProductReviewList extends \Elementor\Widget_Base {
 		$btn_label = $settings['button_text'] ?? __( 'Write a Review', 'surecart' );
 		?>
 		<div class="wp-block-buttons">
-			<div class="wp-block-button">
-				<div class="wp-block-button__link sc-button__link wp-block-surecart-product-review-add-button" style="border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
+			<div class="wp-block-button wp-block-surecart-product-review-add-button">
+				<div class="wp-block-button__link wp-element-button sc-button__link" style="display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
 			<?php
 			echo wp_kses(
 				\SureCart::svg()->get(
