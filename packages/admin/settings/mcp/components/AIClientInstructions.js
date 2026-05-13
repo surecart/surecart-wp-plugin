@@ -140,7 +140,7 @@ const getClientSteps = (selectedClient) => {
 	}
 };
 
-export default ({ restUrl, appPasswordsUrl }) => {
+export default ({ restUrl, appPasswordsUrl, isAdapterActive = true }) => {
 	const [selectedClient, setSelectedClient] = useState('claude_desktop');
 	const [copied, setCopied] = useState(false);
 
@@ -197,6 +197,19 @@ export default ({ restUrl, appPasswordsUrl }) => {
 					unselect={false}
 					choices={clientChoices}
 				/>
+
+				{!isAdapterActive && (
+					<ScAlert open type="info">
+						<ScProse>
+							<p>
+								{__(
+									"The example below uses the official MCP Adapter endpoint. If you are running a different MCP server, replace the URL value with your server's REST endpoint — the rest of the setup stays the same.",
+									'surecart'
+								)}
+							</p>
+						</ScProse>
+					</ScAlert>
+				)}
 
 				<ScProse>
 					<ol css={stepsOlCss}>
