@@ -3,7 +3,7 @@
 namespace SureCart\Routing;
 
 /**
- * Generates links for specific amdin urls.
+ * Generates links for specific admin urls.
  */
 class AdminURLService {
 	/**
@@ -165,6 +165,53 @@ class AdminURLService {
 					'action' => 'sync',
 					'nonce'  => wp_create_nonce( "sync_$name" ),
 					'id'     => $id,
+				],
+				$this->index( $name )
+			)
+		);
+	}
+
+	/**
+	 * Import results page url.
+	 *
+	 * @param string       $name       Model lowercase name.
+	 * @param string|array $import_ids The import ID(s).
+	 * @param string|null  $session_id Optional session ID for skipped products lookup.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function importResults( $name, $import_ids, $session_id = null ) {
+		$import_ids = array_map( 'sanitize_key', (array) $import_ids );
+
+		$query_args = [
+			'action'     => 'import_results',
+			'import_ids' => implode( ',', $import_ids ),
+			'nonce'      => wp_create_nonce( 'sc_import_results' ),
+		];
+
+		// Add session_id for skipped products lookup.
+		if ( $session_id ) {
+			$query_args['session_id'] = sanitize_key( $session_id );
+		}
+
+		return esc_url( add_query_arg( $query_args, $this->index( $name ) ) );
+	}
+
+	/**
+	 * Import results page URL by session ID (for all-skipped imports).
+	 *
+	 * @param string $name       Model lowercase name.
+	 * @param string $session_id The session ID.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function importResultsBySession( $name, $session_id ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action'     => 'import_results',
+					'session_id' => sanitize_key( $session_id ),
+					'nonce'      => wp_create_nonce( 'sc_import_results' ),
 				],
 				$this->index( $name )
 			)

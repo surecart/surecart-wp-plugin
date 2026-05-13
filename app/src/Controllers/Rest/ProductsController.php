@@ -101,4 +101,51 @@ class ProductsController extends RestController {
 		}
 		return $model->duplicate( $request['id'] );
 	}
+
+	/**
+	 * Import WooCommerce products.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function importWooCommerce() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return new \WP_Error(
+				'woocommerce_not_active',
+				__( 'WooCommerce is not active.', 'surecart' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		$service = \SureCart::sync()->woocommerce_products();
+
+		if ( $service->isRunning() ) {
+			return new \WP_Error(
+				'import_already_running',
+				__( 'A WooCommerce import is already in progress.', 'surecart' ),
+				[ 'status' => 409 ]
+			);
+		}
+
+		$result = $service->dispatch();
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		return rest_ensure_response( [ 'message' => __( 'WooCommerce import started.', 'surecart' ) ] );
+	}
+
+	/**
+	 * Get count of importable WooCommerce products.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function wooCommerceCount() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return rest_ensure_response( [ 'count' => 0 ] );
+		}
+
+		$count = \SureCart::sync()->woocommerce_products()->getImportableCount();
+
+		return rest_ensure_response( [ 'count' => $count ] );
+	}
 }
