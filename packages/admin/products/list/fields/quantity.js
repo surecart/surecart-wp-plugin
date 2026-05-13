@@ -1,4 +1,5 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+import StockCell from '../StockCell';
 
 export default () => ({
 	id: 'quantity',
@@ -8,12 +9,10 @@ export default () => ({
 		if (!item?.stock_enabled) return Infinity;
 		return item?.available_stock || 0;
 	},
-	render: ({ item }) => {
-		if (!item?.stock_enabled) return '∞';
-		return sprintf(
-			/* translators: %d is the number of available stock */
-			__('%d Available', 'surecart'),
-			item?.available_stock || 0
-		);
-	},
+	render: ({ item }) => (
+		<StockCell
+			tracked={!!item?.stock_enabled}
+			available={item?.available_stock || 0}
+		/>
+	),
 });

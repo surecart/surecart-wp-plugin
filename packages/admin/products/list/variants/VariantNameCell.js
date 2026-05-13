@@ -33,9 +33,8 @@ export default ({ item }) => {
 			<Label
 				css={css`
 					font-weight: 600;
-					font-size: var(--sc-font-size-medium, 14px);
+					font-size: 13px;
 					color: var(--sc-color-gray-900);
-					font-size: 12px;
 					word-break: break-word;
 					${isDraft && 'color: var(--sc-color-gray-400);'}
 				`}

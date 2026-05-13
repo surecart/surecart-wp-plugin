@@ -13,6 +13,7 @@ import {
 	StatusSidebar,
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
+	ModernViewIntroModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import useProductIntegrations from './hooks/useProductIntegrations';
@@ -402,10 +403,7 @@ export default ({ navigation }) => {
 					createErrorNotice(
 						sprintf(
 							/* translators: 1: succeeded count, 2: failed count. */
-							__(
-								'Duplicated %1$d, failed %2$d.',
-								'surecart'
-							),
+							__('Duplicated %1$d, failed %2$d.', 'surecart'),
 							succeeded,
 							failed
 						),
@@ -513,6 +511,17 @@ export default ({ navigation }) => {
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
 					onSaved={() => invalidateList()}
+				/>
+			)}
+
+			{window?.scData?.modern_view_intro?.enabled && (
+				<ModernViewIntroModal
+					enabled={!!window.scData.modern_view_intro.enabled}
+					dismissed={!!window.scData.modern_view_intro.dismissed}
+					imageUrl={window.scData.modern_view_intro.image_url}
+					toggleId={window.scData.modern_view_intro.toggle_id}
+					dismissUrl={window.scData.modern_view_intro.dismiss_url}
+					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
 				/>
 			)}
 		</>
