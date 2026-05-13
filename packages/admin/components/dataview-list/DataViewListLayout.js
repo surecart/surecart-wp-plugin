@@ -63,6 +63,7 @@ export default ({
 						table: {},
 					}
 				}
+				supportedLayouts={['table']}
 				header={headerWithToggle}
 				search
 				{...rest}

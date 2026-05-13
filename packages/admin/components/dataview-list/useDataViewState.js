@@ -7,9 +7,7 @@ import { useHistory } from '../../router';
 
 export const PREFERENCES_SCOPE = 'surecart/dataview-lists';
 
-// Layout-only persistence. Filters live in the URL (canonical, shareable);
-// `search` and `page` are transient and reset on reload.
-const PERSISTED_VIEW_KEYS = ['type', 'fields', 'layout', 'perPage', 'sort'];
+const PERSISTED_VIEW_KEYS = ['fields', 'layout', 'perPage', 'sort'];
 
 const defaultSerialize = (value, multiple) => {
 	if (value === null || value === undefined) return undefined;
@@ -111,7 +109,9 @@ export default function useDataViewState(config) {
 	useEffect(() => {
 		if (hydratedRef.current) return;
 		if (!persistedFromStore) return;
-		setView((prev) => mergeView(prev, persistedFromStore, { layoutStyles }));
+		setView((prev) =>
+			mergeView(prev, persistedFromStore, { layoutStyles })
+		);
 		hydratedRef.current = true;
 	}, [persistedFromStore, layoutStyles]);
 

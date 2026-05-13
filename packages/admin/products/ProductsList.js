@@ -4,7 +4,7 @@ import { jsx } from '@emotion/react';
 import { useDispatch, select, dispatch, resolveSelect } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import {
@@ -125,22 +125,6 @@ export default ({ navigation }) => {
 		},
 	});
 
-	// Remove polluted fields from the view when in table mode.
-	// These fields are only relevant to card-based layouts,
-	// and can cause confusion when accidentally left enabled in table view.
-	useEffect(() => {
-		if (view?.type !== 'table') return;
-		const polluted =
-			view.titleField || view.mediaField || view.descriptionField;
-		if (!polluted) return;
-		setView({
-			...view,
-			titleField: undefined,
-			mediaField: undefined,
-			descriptionField: undefined,
-		});
-	}, [view, setView]);
-
 	const { tabs, activeValue, setTab } = useStatusTabs({ view, setView });
 
 	// Async-fetched integrations enrichment for the integrations column.
@@ -170,26 +154,19 @@ export default ({ navigation }) => {
 		]
 	);
 
-	// Variants are a tabular concept — chevron/sub-rows/cell renderers
-	// only run in table view. In grid/list, the `name` field renders
-	// as bare text so it doesn't double up with the card's mediaField.
-	const isTableView = view?.type === 'table';
-
 	const fields = useMemo(
 		() =>
 			applyVariantRenderers(baseFields, {
 				expandedIds: expanded.ids,
 				onToggle: expanded.toggle,
 				savingVariantIds: saving.ids,
-				viewType: view?.type,
 			}),
-		[baseFields, expanded.ids, expanded.toggle, saving.ids, view?.type]
+		[baseFields, expanded.ids, expanded.toggle, saving.ids]
 	);
 
 	const dataWithVariants = useMemo(
-		() =>
-			isTableView ? injectVariantRows(records, expanded.ids) : records,
-		[isTableView, records, expanded.ids]
+		() => injectVariantRows(records, expanded.ids),
+		[records, expanded.ids]
 	);
 
 	const handleArchiveToggle = useCallback(
@@ -481,19 +458,7 @@ export default ({ navigation }) => {
 						onChange={setTab}
 					/>
 				}
-				defaultLayouts={{
-					table: {},
-					grid: {
-						mediaField: 'media',
-						titleField: 'display_name',
-						descriptionField: 'price',
-					},
-					list: {
-						mediaField: 'media',
-						titleField: 'display_name',
-						descriptionField: 'price',
-					},
-				}}
+				defaultLayouts={{ table: {} }}
 				data={dataWithVariants}
 				fields={fields}
 				view={view}
