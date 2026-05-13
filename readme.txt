@@ -422,6 +422,21 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
+= 4.3.0 - May 14th, 2026 =
+- New: Import products from WooCommerce.
+- Improvement: Add price condition to conditional form block.
+- Improvement: Ability to enable SureCart WordPress capabilities without needing to install the MCP plugin.
+- Fix: Security issue (props to Wordfence).
+- Fix: RTL issue with sidebar on the customer dashboard.
+- Fix: Search field on shop page loses border radius on hover in some cases.
+- Fix: Country auto-detect missing in sc-compact-address (already present on full address).
+- Fix: PHP warning in register_block_type_from_metadata in debug mode.
+- Fix: "Write a review" button border radius not applying.
+- Fix: Layout shift issue with cart bag icon in some cases.
+- Fix: Variant stock does not trigger out-of-stock state when parent tracking is disabled.
+- Fix: Overflow when viewing affiliates with long email addresses.
+- Fix: Validation message unclear when saving notification settings without a store address.
+
 = 4.2.3 - May 6th, 2026 = 
 - Improvement: Add Razorpay UPI payment method for recurring (subscription) checkouts.
 - Fix: Minor security issue (props to Patchstack).
