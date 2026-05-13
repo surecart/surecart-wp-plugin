@@ -22,6 +22,10 @@ add_action(
 add_filter(
 	'block_type_metadata_settings',
 	function ( $settings, $metadata ) {
+		if ( empty( $metadata['file'] ) ) {
+			return $settings;
+		}
+
 		// if there is a controller file, use it.
 		$controller_path = wp_normalize_path(
 			realpath(
