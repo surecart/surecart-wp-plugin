@@ -367,6 +367,7 @@ export interface Variant {
   product: string | Product;
   sku?: string | null;
   display_amount?: string;
+  has_unlimited_stock?: boolean | null;
   downloads_enabled?: boolean | null;
   current_release_download?: string | Download | null;
   downloads?: {
@@ -435,6 +436,7 @@ export interface Product extends Object {
   };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
+  has_unlimited_stock: boolean;
   stock: number;
   available_stock: number;
   held_stock: number;
