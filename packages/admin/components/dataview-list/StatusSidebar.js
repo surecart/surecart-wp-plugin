@@ -13,7 +13,7 @@ import {
 } from '@wordpress/components';
 import { chevronLeft } from '@wordpress/icons';
 
-const SiteIcon = ({ iconUrl }) => {
+const SiteIcon = ({ iconUrl, siteName }) => {
 	if (iconUrl) {
 		return (
 			<img
@@ -43,7 +43,7 @@ const SiteIcon = ({ iconUrl }) => {
 				font-weight: 600;
 			`}
 		>
-			{siteName ? siteName.charAt(0).toUpperCase() : ''}
+			{siteName ? siteName?.charAt(0)?.toUpperCase() : ''}
 		</span>
 	);
 };
@@ -118,7 +118,7 @@ export default ({
 						flex: 0 0 32px;
 					`}
 				>
-					<SiteIcon iconUrl={siteIconUrl} />
+					<SiteIcon iconUrl={siteIconUrl} siteName={siteName} />
 				</Button>
 				<div
 					css={css`

@@ -126,8 +126,7 @@ export default ({
 									flex: 1 1 auto;
 									min-height: 0;
 									overflow-y: auto;
-									box-shadow: 0 0 0 1px
-										rgba(0, 0, 0, 0.06);
+									box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
 									box-sizing: border-box;
 								`}
 							>
