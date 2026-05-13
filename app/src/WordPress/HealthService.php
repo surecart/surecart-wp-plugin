@@ -121,7 +121,7 @@ class HealthService {
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
-				! empty( $account->id ) ? __( 'API for is reachable.', 'surecart' ) : __( 'API for is not reachable.', 'surecart' )
+				! empty( $account->id ) ? __( 'The SureCart API is reachable.', 'surecart' ) : __( 'The SureCart API is not reachable.', 'surecart' )
 			),
 			'actions'     => '',
 			'test'        => 'surecart_api_test',

@@ -32,7 +32,7 @@ const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
     checkout: null,
     currencyCode: 'usd',
     abandonedCheckoutEnabled: true,
-    showLoginPrompt: false,
+    showLoginPrompt: true,
     initialLineItems: [],
     isCheckoutPage: false,
     validateStock: false,

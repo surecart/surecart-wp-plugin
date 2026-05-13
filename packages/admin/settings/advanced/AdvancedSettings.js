@@ -107,12 +107,6 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
-	const [showLoginPrompt, setShowLoginPrompt] = useEntityProp(
-		'root',
-		'site',
-		'surecart_checkout_show_login_prompt'
-	);
-
 	/**
 	 * Form is submitted.
 	 */
@@ -364,20 +358,6 @@ export default () => {
 					<span slot="description">
 						{__(
 							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				<ScSwitch
-					checked={showLoginPrompt}
-					onScChange={(e) =>
-						setShowLoginPrompt(e.target.checked)
-					}
-				>
-					{__('Show Login Prompt at Checkout', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'When enabled, returning customers will see an inline login prompt at checkout if their email matches an existing account. Recommended for subscription-based stores. Disable for impulse-buy or low-cost products where a frictionless checkout experience is preferred.',
 							'surecart'
 						)}
 					</span>

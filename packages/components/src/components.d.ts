@@ -567,6 +567,10 @@ export namespace Components {
         "selectorTitle": string;
     }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
+         */
+        "processorId": string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -1095,6 +1099,10 @@ export namespace Components {
           * Code Error coming from the parent
          */
         "codeError": string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode": 'code' | 'password';
     }
     interface ScCustomerName {
         /**
@@ -7762,6 +7770,10 @@ declare namespace LocalJSX {
         "selectorTitle"?: string;
     }
     interface ScCheckoutRazorpayPaymentProvider {
+        /**
+          * Razorpay processor id. Required for the recurring `payment_method_types` fetch.
+         */
+        "processorId"?: string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -8368,6 +8380,10 @@ declare namespace LocalJSX {
           * Code Error coming from the parent
          */
         "codeError"?: string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode"?: 'code' | 'password';
     }
     interface ScCustomerName {
         /**

@@ -12,6 +12,7 @@ import {
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useEntityProp } from '@wordpress/core-data';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -19,6 +20,11 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'order_protocol'
+	);
+	const [showLoginPrompt, setShowLoginPrompt] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_show_login_prompt'
 	);
 
 	/**
@@ -115,10 +121,25 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Payment', 'surecart')}
-				description={__('Configure payment settings.', 'surecart')}
+				title={__('Checkout', 'surecart')}
+				description={__(
+					'Configure customer-facing checkout behavior.',
+					'surecart'
+				)}
 				loading={!hasLoadedItem}
 			>
+				<ScSwitch
+					checked={showLoginPrompt}
+					onScChange={(e) => setShowLoginPrompt(e.target.checked)}
+				>
+					{__('Show Login Prompt at Checkout', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Returning customers will be prompted to login at checkout if their email matches an existing account. Recommended for subscription-based stores. Disable for impulse-buy or low-cost products where a frictionless checkout experience is preferred.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 				<ScSwitch
 					checked={item?.require_reusable_payment_methods}
 					onScChange={(e) =>

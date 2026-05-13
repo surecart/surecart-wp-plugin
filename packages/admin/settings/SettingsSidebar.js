@@ -173,13 +173,15 @@ const TABS = [
  */
 export default function SettingsSidebar({ currentTab }) {
 	const hasApiToken = !!window.scSettingsData?.has_api_token;
-	const abilitiesApiAvailable = !!window.scSettingsData?.abilities_api_available;
+	const abilitiesApiAvailable =
+		!!window.scSettingsData?.abilities_api_available;
 
 	return (
 		<div id="sc-nav" style={{ '--sc-tabs-min-width': '0' }}>
 			{TABS.filter((item) => {
 				if (item.requiresToken && !hasApiToken) return false;
-				if (item.requiresAbilities && !abilitiesApiAvailable) return false;
+				if (item.requiresAbilities && !abilitiesApiAvailable)
+					return false;
 				return true;
 			}).map((item) => (
 				<SidebarTab
