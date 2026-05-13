@@ -39,7 +39,20 @@ class AbilitiesServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		// Don't register abilities if they are globally disabled.
+		if ( ! get_option( 'surecart_mcp_abilities_enabled', true ) ) {
+			return;
+		}
+
 		$registrar = $container['surecart.abilities.registrar'];
+
+		// Pass toggle settings to the registrar so it can filter abilities.
+		$registrar->set_settings(
+			array(
+				'edit_enabled'   => (bool) get_option( 'surecart_mcp_edit_abilities_enabled', true ),
+				'delete_enabled' => (bool) get_option( 'surecart_mcp_delete_abilities_enabled', true ),
+			)
+		);
 
 		add_action( 'wp_abilities_api_categories_init', array( $registrar, 'register_category' ) );
 		add_action( 'wp_abilities_api_init', array( $registrar, 'register_abilities' ) );

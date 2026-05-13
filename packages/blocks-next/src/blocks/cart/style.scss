@@ -26,3 +26,30 @@ html:has(.sc-drawer.open) {
 	overflow: hidden;
 	scrollbar-gutter: stable;
 }
+
+// Fallback layout styles for themes that dequeue WP block-library/global styles (e.g., Etch).
+// Wrapped in :where() for zero specificity so block editor customizations always win.
+:where(.sc-cart-drawer) {
+	:where(.is-layout-flex) {
+		display: flex;
+		gap: var(--wp--style--block-gap, 0.5em);
+	}
+
+	:where(.is-layout-grid) {
+		display: grid;
+	}
+
+	// Flow layout defaults.
+	:where(.is-layout-flow) > :first-child {
+		margin-block-start: 0;
+	}
+
+	:where(.is-layout-flow) > * + * {
+		margin-block-start: var(--wp--style--block-gap, 0.5em);
+	}
+
+	// Line items gap matching the cart template's blockGap: 2em.
+	:where(.wp-block-surecart-slide-out-cart-line-items) > * + * {
+		margin-block-start: var(--wp--style--block-gap, 2em);
+	}
+}

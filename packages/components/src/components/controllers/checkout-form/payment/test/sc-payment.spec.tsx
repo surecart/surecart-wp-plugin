@@ -157,6 +157,118 @@ describe('sc-payment', () => {
     expect(page.root).toMatchSnapshot();
   });
 
+  it('renders razorpay as a single combined tile on one-time checkouts', async () => {
+    // Earlier tests may have defined scData non-configurably; mutate instead of redefining.
+    if ((window as any).scData) {
+      (window as any).scData.currency = 'inr';
+    } else {
+      Object.defineProperty(window, 'scData', { value: { currency: 'inr' }, configurable: true, writable: true });
+    }
+
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+
+    processorsState.processors = [
+      {
+        id: 'razorpayid',
+        live_mode: true,
+        recurring_enabled: true,
+        processor_type: 'razorpay',
+        supported_currencies: ['inr'],
+      },
+    ] as unknown as Processor[];
+    // On one-time checkouts the provider clears methods; mirror that here.
+    processorsState.methods = [];
+
+    checkoutState.formId = 1;
+    checkoutState.mode = 'live';
+    checkoutState.checkout = {
+      live_mode: true,
+      currency: 'inr',
+      reusable_payment_method_required: false,
+    } as Checkout;
+
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('renders razorpay as per-method tiles on recurring checkouts with multiple methods', async () => {
+    // Earlier tests may have defined scData non-configurably; mutate instead of redefining.
+    if ((window as any).scData) {
+      (window as any).scData.currency = 'inr';
+    } else {
+      Object.defineProperty(window, 'scData', { value: { currency: 'inr' }, configurable: true, writable: true });
+    }
+
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+
+    processorsState.processors = [
+      {
+        id: 'razorpayid',
+        live_mode: true,
+        recurring_enabled: true,
+        processor_type: 'razorpay',
+        supported_currencies: ['inr'],
+      },
+    ] as unknown as Processor[];
+    processorsState.methods = [
+      { id: 'card' },
+      { id: 'upi' },
+    ] as any;
+
+    checkoutState.formId = 1;
+    checkoutState.mode = 'live';
+    checkoutState.checkout = {
+      live_mode: true,
+      currency: 'inr',
+      reusable_payment_method_required: true,
+    } as Checkout;
+
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('renders razorpay as per-method tile on recurring checkouts with a single method', async () => {
+    // Earlier tests may have defined scData non-configurably; mutate instead of redefining.
+    if ((window as any).scData) {
+      (window as any).scData.currency = 'inr';
+    } else {
+      Object.defineProperty(window, 'scData', { value: { currency: 'inr' }, configurable: true, writable: true });
+    }
+
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+
+    processorsState.processors = [
+      {
+        id: 'razorpayid',
+        live_mode: true,
+        recurring_enabled: true,
+        processor_type: 'razorpay',
+        supported_currencies: ['inr'],
+      },
+    ] as unknown as Processor[];
+    processorsState.methods = [{ id: 'card' }] as any;
+
+    checkoutState.formId = 1;
+    checkoutState.mode = 'live';
+    checkoutState.checkout = {
+      live_mode: true,
+      currency: 'inr',
+      reusable_payment_method_required: true,
+    } as Checkout;
+
+    await page.waitForChanges();
+    expect(page.root).toMatchSnapshot();
+  });
+
   it('renders mock processor with stripe', async () => {
     const page = await newSpecPage({
       components: [ScPayment],

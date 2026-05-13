@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-16T07:59:11",
+  "timestamp": "2026-04-21T15:53:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.3",
@@ -484,20 +484,19 @@
         "sc-order-shipping-address"
       ],
       "dependencies": [
-        "sc-form-control",
         "sc-select",
         "sc-input",
+        "sc-address-suggestions",
+        "sc-form-control",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-visually-hidden"
         ],
         "sc-select": [
           "sc-icon",
@@ -509,8 +508,19 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -523,6 +533,308 @@
         ],
         "sc-order-shipping-address": [
           "sc-address"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/ui/address-suggestion/sc-address-suggestions.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-address-suggestions",
+      "readme": "# sc-address-suggestions\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "address",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "complexType": {
+            "original": "Partial<Address>",
+            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+            "references": {
+              "Partial": {
+                "location": "global",
+                "id": "global::Partial"
+              },
+              "Address": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::Address"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    country: null,\n    city: null,\n    line_1: null,\n    line_2: null,\n    postal_code: null,\n    state: null,\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "If the address input is disabled",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "inputProps",
+          "type": "{ [x: string]: unknown; }",
+          "complexType": {
+            "original": "Record<string, unknown>",
+            "resolved": "{ [x: string]: unknown; }",
+            "references": {
+              "Record": {
+                "location": "global",
+                "id": "global::Record"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Props for the input element",
+          "docsTags": [],
+          "default": "{}",
+          "values": [
+            {
+              "type": "{ [x: string]: unknown; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The label for the address input",
+          "docsTags": [],
+          "default": "__('Address', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "names",
+          "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "complexType": {
+            "original": "Partial<Address>",
+            "resolved": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+            "references": {
+              "Partial": {
+                "location": "global",
+                "id": "global::Partial"
+              },
+              "Address": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::Address"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    name: 'shipping_name',\n    country: 'shipping_country',\n    city: 'shipping_city',\n    line_1: 'shipping_line_1',\n    line_2: 'shipping_line_2',\n    postal_code: 'shipping_postal_code',\n    state: 'shipping_state',\n  }",
+          "values": [
+            {
+              "type": "{ name?: string; line_1?: string; line_2?: string; city?: string; state?: string; postal_code?: string; country?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "regions",
+          "type": "{ value: string; label: string; }[]",
+          "complexType": {
+            "original": "Array<{ value: string; label: string }>",
+            "resolved": "{ value: string; label: string; }[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Holds the regions for a given country.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "{ value: string; label: string; }[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "If the address is required",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scChangeAddress",
+          "detail": "Address",
+          "bubbles": true,
+          "complexType": {
+            "original": "Address",
+            "resolved": "Address",
+            "references": {
+              "Address": {
+                "location": "import",
+                "path": "../../../types",
+                "id": "src/types.ts::Address"
+              }
+            }
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Address changed — emitted to parent to update address state.",
+          "docsTags": []
+        },
+        {
+          "event": "scHideAddressFields",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Event to hide address fields",
+          "docsTags": []
+        },
+        {
+          "event": "scShowAddressFields",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "Event to show address fields manually",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "manually",
+          "docs": ""
+        },
+        {
+          "name": "no-result",
+          "docs": ""
+        },
+        {
+          "name": "powered-by",
+          "docs": ""
+        },
+        {
+          "name": "suggestion-item",
+          "docs": ""
+        },
+        {
+          "name": "suggestions",
+          "docs": ""
+        },
+        {
+          "name": "suggestions-list",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-address"
+      ],
+      "dependencies": [
+        "sc-button",
+        "sc-icon",
+        "sc-input"
+      ],
+      "dependencyGraph": {
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
+        "sc-address": [
+          "sc-address-suggestions"
         ]
       }
     },
@@ -2512,6 +2824,7 @@
         }
       ],
       "dependents": [
+        "sc-address-suggestions",
         "sc-cancel-dialog",
         "sc-cancel-discount",
         "sc-cancel-survey",
@@ -2573,6 +2886,9 @@
       "dependencyGraph": {
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-address-suggestions": [
+          "sc-button"
         ],
         "sc-cancel-dialog": [
           "sc-button"
@@ -5821,9 +6137,10 @@
           "sc-compact-address"
         ],
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -5835,6 +6152,11 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
         ],
         "sc-compact-address": [
           "sc-form-control",
@@ -9798,9 +10120,10 @@
           "sc-form-control"
         ],
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
         ],
         "sc-select": [
@@ -9813,6 +10136,14 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-block-ui": [
           "sc-spinner"
         ],
@@ -9824,9 +10155,6 @@
           "sc-button",
           "sc-menu",
           "sc-menu-item"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ]
       }
     },
@@ -13420,6 +13748,27 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "variantId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "variant-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -15185,7 +15534,7 @@
       "filePath": "src/components/providers/form-components-validator/sc-form-components-validator.tsx",
       "encapsulation": "shadow",
       "tag": "sc-form-components-validator",
-      "readme": "# ce-form-components-validator\n\n\n",
+      "readme": "# ce-form-components-validator\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -15287,13 +15636,11 @@
           "sc-compact-address"
         ],
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-visually-hidden"
         ],
         "sc-select": [
           "sc-icon",
@@ -15305,8 +15652,19 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -15332,9 +15690,6 @@
           "sc-button",
           "sc-menu",
           "sc-menu-item"
-        ],
-        "sc-button": [
-          "sc-spinner"
         ],
         "sc-customer-phone": [
           "sc-phone-input"
@@ -16898,6 +17253,7 @@
         }
       ],
       "dependents": [
+        "sc-address-suggestions",
         "sc-alert",
         "sc-breadcrumb",
         "sc-breadcrumbs",
@@ -16968,6 +17324,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-address-suggestions": [
+          "sc-icon"
+        ],
         "sc-alert": [
           "sc-icon"
         ],
@@ -18397,6 +18756,7 @@
       ],
       "dependents": [
         "sc-address",
+        "sc-address-suggestions",
         "sc-compact-address",
         "sc-coupon-form",
         "sc-customer-edit",
@@ -18425,6 +18785,9 @@
           "sc-visually-hidden"
         ],
         "sc-address": [
+          "sc-input"
+        ],
+        "sc-address-suggestions": [
           "sc-input"
         ],
         "sc-compact-address": [
@@ -21460,13 +21823,11 @@
           "sc-address"
         ],
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-visually-hidden"
         ],
         "sc-select": [
           "sc-icon",
@@ -21478,8 +21839,19 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -23882,13 +24254,11 @@
           "sc-compact-address"
         ],
         "sc-address": [
-          "sc-form-control",
           "sc-select",
           "sc-input",
+          "sc-address-suggestions",
+          "sc-form-control",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-visually-hidden"
         ],
         "sc-select": [
           "sc-icon",
@@ -23900,8 +24270,19 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-address-suggestions": [
+          "sc-button",
+          "sc-icon",
+          "sc-input"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -45636,7 +46017,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Address": {
-      "declaration": "export interface Address extends Object {\n  name?: string;\n  line_1?: string;\n  line_2?: string;\n  city?: string;\n  state?: string;\n  postal_code?: string;\n  country?: string;\n}",
+      "declaration": "export interface Address extends Object {\n  name?: string | null;\n  line_1?: string | null;\n  line_2?: string | null;\n  city?: string | null;\n  state?: string | null;\n  postal_code?: string | null;\n  country?: string | null;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },
@@ -45686,7 +46067,7 @@
       "path": "src/types.ts"
     },
     "src/types.ts::Purchase": {
-      "declaration": "export interface Purchase {\n  id: string;\n  object: 'purchase';\n  live_mode: boolean;\n  quantity: number;\n  revoked: boolean;\n  revoked_at: number;\n  customer: string | Customer;\n  invoice_item: string | InvoiceItem;\n  invoice: string | Invoice;\n  line_item: string | LineItem;\n  order: string | Order;\n  product: string | Product;\n  refund: string | Refund;\n  subscription: string | Subscription;\n  license: string | License;\n  created_at: number;\n  updated_at: number;\n}",
+      "declaration": "export interface Purchase {\n  id: string;\n  object: 'purchase';\n  live_mode: boolean;\n  quantity: number;\n  revoked: boolean;\n  revoked_at: number;\n  customer: string | Customer;\n  invoice_item: string | InvoiceItem;\n  invoice: string | Invoice;\n  line_item: string | LineItem;\n  order: string | Order;\n  product: string | Product;\n  variant?: string | Variant;\n  refund: string | Refund;\n  subscription: string | Subscription;\n  license: string | License;\n  created_at: number;\n  updated_at: number;\n}",
       "docstring": "",
       "path": "src/types.ts"
     },

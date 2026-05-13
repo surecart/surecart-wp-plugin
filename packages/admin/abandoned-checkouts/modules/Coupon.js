@@ -17,7 +17,9 @@ export default ({ promotion, coupon, loading }) => {
 				/>
 			);
 		}
-		return sprintf(__('%d%% off', 'surecart'), coupon?.percent_off || 0);
+		const percent = `${parseInt(coupon?.percent_off, 10) || 0}%`;
+		// translators: %s is the discount percentage (e.g. "10%").
+		return sprintf(__('%s off', 'surecart'), percent);
 	};
 
 	return (

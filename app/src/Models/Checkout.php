@@ -655,8 +655,9 @@ class Checkout extends Model {
 				return Currency::format( $this->discount->coupon->amount_off, $this->currency );
 			}
 
-			// translators: %1d is the percentage discount.
-			return sprintf( __( '%1d%% off', 'surecart' ), $this->discount->coupon->percent_off | 0 );
+			$percent = sprintf( '%d%%', (int) $this->discount->coupon->percent_off );
+			// translators: %s is the discount percentage (e.g. "10%").
+			return sprintf( __( '%s off', 'surecart' ), $percent );
 		}
 
 		return '';

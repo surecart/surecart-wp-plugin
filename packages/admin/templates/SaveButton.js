@@ -5,6 +5,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { ScButton, ScSkeleton } from '@surecart/components-react';
+import { isKeepBusy } from '../settings/UseSave';
 
 export default function SaveButton({ onSave, children, busy, loading }) {
 	const { isDirty, isSaving } = useSelect((select) => {
@@ -19,6 +20,8 @@ export default function SaveButton({ onSave, children, busy, loading }) {
 		};
 	}, []);
 
+	// Stay busy if saving, prop is set, or save() was called with keepBusy.
+	const effectiveBusy = isSaving || busy || isKeepBusy();
 	const disabled = !isDirty || isSaving;
 
 	if (loading) {
@@ -38,8 +41,8 @@ export default function SaveButton({ onSave, children, busy, loading }) {
 			type="primary"
 			submit
 			aria-disabled={disabled}
-			disabled={disabled || isSaving || busy}
-			busy={isSaving || busy}
+			disabled={disabled || effectiveBusy}
+			busy={effectiveBusy}
 			onClick={disabled ? undefined : onSave}
 		>
 			{children}
