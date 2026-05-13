@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-tooltip renders 1`] = `
-<sc-tooltip type="info">
+<sc-tooltip placement="top" type="info">
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
