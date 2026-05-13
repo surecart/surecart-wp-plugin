@@ -3,6 +3,7 @@ import { Address } from '../../../types';
 import { countryChoices, getCountryDetails } from '../../../functions/address';
 import { __ } from '@wordpress/i18n';
 import { reportChildrenValidity } from '../../../functions/form-data';
+import { getCurrentUserCountryCode } from '../../../functions/google-maps';
 
 /**
  * @part base - The elements base wrapper.
@@ -136,7 +137,20 @@ export class ScCompactAddress {
     if (country) {
       this.updateAddress({ country });
     }
+    this.fetchUserCountry();
   }
+
+  async fetchUserCountry() {
+    if (this.address?.country) {
+      return;
+    }
+
+    const countryCode = await getCurrentUserCountryCode();
+    if (countryCode) {
+      this.updateAddress({ country: countryCode });
+    }
+  }
+
   async initCountryChoices() {
     this.countryChoices = await countryChoices();
   }
