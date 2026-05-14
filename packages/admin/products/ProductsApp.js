@@ -13,6 +13,10 @@ export default createListEditApp({
 	ListComponent: ProductsList,
 	loadEditComponent: () =>
 		import(/* webpackChunkName: "sc-products-detail" */ './Product'),
+	loadBulkDeleteComponent: () =>
+		import(
+			/* webpackChunkName: "sc-products-bulk-delete" */ './BulkDeleteConfirm'
+		),
 });
 
 export function getProductsUrl(extra = {}) {

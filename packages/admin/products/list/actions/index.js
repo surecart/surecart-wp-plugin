@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Icon, Spinner } from '@wordpress/components';
-import { addQueryArgs } from '@wordpress/url';
+import { Icon } from '@wordpress/components';
 import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import {
 	ConfirmActionModal,
@@ -18,36 +17,20 @@ import {
 const productOnly = (extra) => (item) =>
 	!isVariantRow(item) && (extra ? extra(item) : true);
 
-// Hand bulk delete to the dedicated page — same route the PHP list
-// table uses, with the Action-Scheduler-backed deletion + progress UI.
-const buildBulkDeleteUrl = (items) => {
-	return addQueryArgs('admin.php', {
-		page: 'sc-products',
-		action: 'delete',
-		bulk_action_product_ids: items.map((item) => item.id),
-	});
-};
-
-const BulkDeleteRedirect = ({ items, closeModal }) => {
+/**
+ * Bulk delete bridge — DataViews' action API only gives us a `RenderModal`
+ * hook, so we render a 0-paint component that, on mount, dismisses the modal
+ * and navigates the SPA to the bulk-delete route. No spinner: the SPA
+ * transition is instant and the receiving view shows its own loading state.
+ */
+const NavigateToBulkDelete = ({ items, closeModal, navigation }) => {
 	useEffect(() => {
 		closeModal();
-		window.location.href = buildBulkDeleteUrl(items);
+		navigation.goToBulkDelete(items.map((item) => item.id));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return (
-		<div
-			style={{
-				display: 'flex',
-				alignItems: 'center',
-				gap: 12,
-				padding: 16,
-			}}
-		>
-			<Spinner />
-			<span>{__('Opening bulk delete page…', 'surecart')}</span>
-		</div>
-	);
+	return null;
 };
 
 export const buildProductActions = ({
@@ -194,11 +177,15 @@ export const buildProductActions = ({
 			isEligible: productOnly(),
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => {
+				// Bulk delete → SPA route to the dedicated confirm view (which
+				// owns the Action-Scheduler pipeline). Single delete keeps the
+				// inline confirm modal — no need to route away for one row.
 				if (items.length > 1) {
 					return (
-						<BulkDeleteRedirect
+						<NavigateToBulkDelete
 							items={items}
 							closeModal={closeModal}
+							navigation={navigation}
 						/>
 					);
 				}

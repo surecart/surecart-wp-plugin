@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { getQueryArgs } from '@wordpress/url';
 import { useHistory, useLocation } from '../router';
 
 export default function (pageSlug) {
@@ -8,6 +9,18 @@ export default function (pageSlug) {
 	const params = location?.params || {};
 	const action = params.action || null;
 	const id = params.id || null;
+
+	const arrayParams = useMemo(() => {
+		const search = location?.search || '';
+		if (!search) return {};
+		return getQueryArgs(`http://_${search}`);
+	}, [location?.search]);
+
+	const bulkDeleteIds = useMemo(() => {
+		const raw = arrayParams.bulk_action_product_ids;
+		if (!raw) return [];
+		return Array.isArray(raw) ? raw : [raw];
+	}, [arrayParams]);
 
 	const buildParams = useCallback(
 		(next) => {
@@ -37,6 +50,14 @@ export default function (pageSlug) {
 			navigateTo({ action: 'edit', id: editId, ...extra }),
 		[navigateTo]
 	);
+	const goToBulkDelete = useCallback(
+		(ids) =>
+			navigateTo({
+				action: 'delete',
+				bulk_action_product_ids: ids,
+			}),
+		[navigateTo]
+	);
 
 	return useMemo(
 		() => ({
@@ -45,12 +66,25 @@ export default function (pageSlug) {
 			isList: !action,
 			isCreate: action === 'edit' && !id,
 			isEdit: action === 'edit' && !!id,
+			isBulkDelete: action === 'delete',
+			bulkDeleteIds,
 			pageSlug,
 			navigateTo,
 			goToList,
 			goToCreate,
 			goToEdit,
+			goToBulkDelete,
 		}),
-		[action, id, pageSlug, navigateTo, goToList, goToCreate, goToEdit]
+		[
+			action,
+			id,
+			bulkDeleteIds,
+			pageSlug,
+			navigateTo,
+			goToList,
+			goToCreate,
+			goToEdit,
+			goToBulkDelete,
+		]
 	);
 }

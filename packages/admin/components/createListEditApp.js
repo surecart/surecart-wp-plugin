@@ -5,14 +5,6 @@ import { RouterProvider } from '../router';
 import ErrorBoundary from './error-boundary';
 import useAdminSpaNavigation from '../hooks/useAdminSpaNavigation';
 
-/**
- * Toggle the PHP-rendered `#sc-admin-header` in sync with the SPA route.
- *
- * The server-side header (breadcrumb bar) is rendered on first load for the
- * list view. When the SPA navigates client-side to edit/create, the edit view
- * renders its own breadcrumb, so the server-side bar has to be hidden to avoid
- * two stacked headers. It's restored when the user returns to the list.
- */
 function useServerHeaderVisibility(isVisible) {
 	useEffect(() => {
 		const header = document.getElementById('sc-admin-header');
@@ -31,8 +23,12 @@ export default function createListEditApp({
 	pageSlug,
 	ListComponent,
 	loadEditComponent,
+	loadBulkDeleteComponent,
 }) {
 	const EditComponent = lazy(loadEditComponent);
+	const BulkDeleteComponent = loadBulkDeleteComponent
+		? lazy(loadBulkDeleteComponent)
+		: null;
 
 	function Router() {
 		const navigation = useAdminSpaNavigation(pageSlug);
@@ -62,12 +58,13 @@ export default function createListEditApp({
 			);
 		}
 
-		// Fallback is `null` on purpose: the edit component renders its own
-		// skeleton that matches its final layout. A generic fallback here
-		// causes a double-skeleton flash and layout shift.
 		return (
 			<Suspense fallback={null}>
-				<EditComponent navigation={navigation} />
+				{navigation.isBulkDelete && BulkDeleteComponent ? (
+					<BulkDeleteComponent navigation={navigation} />
+				) : (
+					<EditComponent navigation={navigation} />
+				)}
 			</Suspense>
 		);
 	}

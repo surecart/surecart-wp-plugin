@@ -58,6 +58,17 @@ class ProductsController extends AdminController {
 	 */
 	protected function renderSpaView() {
 		$this->enqueueSpaScripts( ProductScriptsController::class );
+
+		$bulk_action_service = new BulkActionService();
+		$bulk_action_service->bootstrap();
+
+		add_action(
+			'admin_notices',
+			function () use ( $bulk_action_service ) {
+				$bulk_action_service->showBulkActionAdminNotice( 'delete_products' );
+			}
+		);
+
 		return $this->renderSpaShell( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
 	}
 
@@ -96,6 +107,10 @@ class ProductsController extends AdminController {
 					esc_html__( 'Go Back', 'surecart' )
 				)
 			);
+		}
+
+		if ( $this->isEnhancedAdminViewsEnabled() ) {
+			return $this->renderSpaView();
 		}
 
 		$products = Product::where(
