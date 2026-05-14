@@ -269,9 +269,8 @@ class UpsellsListTable extends ListTable {
 
 		switch ( $column_name ) {
 			case 'name':
-				return ' < a href     = "' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" > ' . esc_html( $upsell_funnel->name ) . ' < / a > ';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '">' . esc_html( $upsell_funnel->name ) . '</a>';
 
-			case 'name':
 			case 'description':
 				return esc_html( $upsell_funnel->$column_name ?? '' );
 		}
