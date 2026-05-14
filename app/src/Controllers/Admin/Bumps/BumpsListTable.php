@@ -279,7 +279,7 @@ class BumpsListTable extends ListTable {
 
 		switch ( $column_name ) {
 			case 'description':
-				return $bump->$column_name ?? '';
+				return esc_html( $bump->$column_name ?? '' );
 		}
 	}
 }

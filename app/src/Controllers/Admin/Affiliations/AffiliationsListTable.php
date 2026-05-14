@@ -251,7 +251,7 @@ class AffiliationsListTable extends ListTable {
 		switch ( $column_name ) {
 			case 'description':
 			case 'email':
-				return $affiliation->$column_name ?? '';
+				return esc_html( $affiliation->$column_name ?? '' );
 		}
 	}
 

@@ -234,7 +234,7 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_method( $order ) {
 		if ( isset( $order->checkout->manual_payment_method->name ) ) {
-			return '<sc-tag>' . $order->checkout->manual_payment_method->name . '</sc-tag>';
+			return '<sc-tag>' . esc_html( $order->checkout->manual_payment_method->name ) . '</sc-tag>';
 		}
 		ob_start();
 		?>

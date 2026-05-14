@@ -143,7 +143,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_referrer( $click ) {
-		return ! empty( $click->referrer ) ? $click->referrer : '-';
+		return ! empty( $click->referrer ) ? esc_html( $click->referrer ) : '-';
 	}
 
 
@@ -280,7 +280,7 @@ class AffiliationClicksListTable extends ListTable {
 		// Call the parent method to handle custom columns
         parent::column_default( $item, $column_name );
 
-		return $item->$column_name ?? '';
+		return esc_html( $item->$column_name ?? '' );
 	}
 
 	/**

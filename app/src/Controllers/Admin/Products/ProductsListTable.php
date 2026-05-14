@@ -555,10 +555,10 @@ class ProductsListTable extends ListTable {
 
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '">' . esc_html( $product->name ) . '</a>';
 			case 'name':
 			case 'description':
-				return $product->$column_name ?? '';
+				return esc_html( $product->$column_name ?? '' );
 		}
 	}
 
