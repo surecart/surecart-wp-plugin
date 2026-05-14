@@ -13,6 +13,7 @@
 | `heading`    | `heading`     |             | `string` | `undefined`                            |
 | `productId`  | `product-id`  |             | `string` | `undefined`                            |
 | `query`      | `query`       |             | `any`    | `{     page: 1,     per_page: 20,   }` |
+| `variantId`  | `variant-id`  |             | `string` | `undefined`                            |
 
 
 ## Shadow Parts

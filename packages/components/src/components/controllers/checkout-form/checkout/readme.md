@@ -140,9 +140,10 @@ graph TD;
   sc-form-components-validator --> sc-line-item-trial
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
-  sc-address --> sc-form-control
   sc-address --> sc-select
   sc-address --> sc-input
+  sc-address --> sc-address-suggestions
+  sc-address --> sc-form-control
   sc-address --> sc-block-ui
   sc-select --> sc-icon
   sc-select --> sc-menu-label
@@ -152,6 +153,9 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
+  sc-address-suggestions --> sc-button
+  sc-address-suggestions --> sc-icon
+  sc-address-suggestions --> sc-input
   sc-compact-address --> sc-form-control
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input

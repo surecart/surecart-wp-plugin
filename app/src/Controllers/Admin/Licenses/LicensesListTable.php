@@ -105,7 +105,7 @@ class LicensesListTable extends ListTable {
 		ob_start();
 		?>
 		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit License', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'licenses', $license->id ) ); ?>">
-			<?php echo wp_kses_post( $license->key ); ?>
+			<?php echo esc_html( $license->key ); ?>
 		</a>
 
 		<?php
@@ -136,7 +136,7 @@ class LicensesListTable extends ListTable {
 		ob_start();
 		?>
 		<a aria-label="<?php esc_attr_e( 'Edit Customer', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'customers', $license->purchase->customer->id ) ); ?>">
-			<?php echo wp_kses_post( $license->purchase->customer->name ?? $license->purchase->customer->email ); ?>
+			<?php echo esc_html( $license->purchase->customer->name ?? $license->purchase->customer->email ); ?>
 			<?php if ( ! empty( $license->purchase->customer->name ) ) : ?>
 				&mdash;
 				<?php echo esc_html( $license->purchase->customer->email ); ?>
@@ -153,7 +153,7 @@ class LicensesListTable extends ListTable {
 		ob_start();
 		?>
 		<a aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $license->purchase->product->id ) ); ?>">
-			<?php echo wp_kses_post( $license->purchase->product->name ); ?>
+			<?php echo esc_html( $license->purchase->product->name ); ?>
 		</a>
 		<?php
 		return ob_get_clean();
@@ -193,7 +193,7 @@ class LicensesListTable extends ListTable {
 
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'product', $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '">' . esc_html( $product->name ) . '</a>';
 			case 'name':
 			case 'description':
 				return $product->$column_name ?? '';

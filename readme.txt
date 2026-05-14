@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 4.1.1
+Stable tag: 4.2.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -421,6 +421,35 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.2.3 - May 6th, 2026 = 
+- Improvement: Add Razorpay UPI payment method for recurring (subscription) checkouts.
+- Fix: Minor security issue (props to Patchstack).
+- Fix: Issue with PayPal SDK throwing error when site has bare language code.
+
+= 4.2.2 - April 30th, 2026 = 
+- Fix: Issue with not being able to edit deprecated tabbed customer dashboard.
+
+= 4.2.1 - April 27th, 2026 = 
+- Fix: Z-index issue with address suggestion dropdown sometimes appearing behind city/state fields.
+- Fix: Security issue with shop worker role (props to Tenable for reporting it responsibly to our team).
+- Fix: Issue where upsell variants sometimes receives the first variant instead of the selected one.
+- Fix: Conflict where product urls could redirect to attachment page if slugs match.
+- Fix: Default translation of "This is a secure, encrypted payment".
+
+= 4.2.0 - April 21st, 2026 = 
+- New: Address autocomplete — Google Maps-powered suggestions at checkout that auto-fill city, state, postal code, and country as customers type.
+- New: Variant downloads — override parent product files on a per-variant basis so each variant can ship its own downloads and licensing.
+- New: MCP Server — dedicated settings page to connect AI clients (Claude, Cursor, VS Code, Continue, and more) to your store.
+- Improvement: Improved query performance of shop pages.
+- Improvement: Much faster settings page navigation. Tabs no longer require full page reloads.
+- Improvement: Moved the Learn page to its own standalone admin page.
+- Fix: Quantity selector width issue on certain Safari versions.
+- Fix: Product review form dialog could sometimes block the cart/buy buttons.
+- Fix: Alignment issue with tags in the customer dashboard.
+- Fix: PayPal locale issue where buttons could render in the user's browser language instead of the site language.
+- Fix: Edge case with translating amount off in some languages leading to error.
+- Fix: Issue with TutorLMS caching WP_Error which can cause issues displaying prices on course pages.
 
 = 4.1.1 - April 8th, 2026 =
 - New: SureCart Abilities API for AI-powered store management.

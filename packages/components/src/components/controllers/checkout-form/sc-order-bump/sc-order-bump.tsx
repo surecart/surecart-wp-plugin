@@ -94,20 +94,21 @@ export class ScOrderBump {
     }
 
     if (!!this.bump?.percent_off) {
+      const percent = `${this.bump.percent_off}%`;
       return (
         <div
           class="bump__tag"
           part="tag"
           aria-label={
-            /** translators: %s: amount percent off */
-            sprintf(__('You save %s%%.', 'surecart'), this.bump?.percent_off)
+            /** translators: %s is the discount percentage (e.g. "10%"). */
+            sprintf(__('You save %s.', 'surecart'), percent)
           }
         >
           <span aria-hidden="true">
             {sprintf(
-              /** translators: %s: amount percent off */
-              _x('Save %s%%', 'Save money', 'surecart'),
-              this.bump?.percent_off,
+              /** translators: %s is the discount percentage (e.g. "10%"). */
+              _x('Save %s', 'Save money', 'surecart'),
+              percent,
             )}
           </span>
         </div>
@@ -174,18 +175,14 @@ export class ScOrderBump {
     const product = (this.bump?.price as Price)?.product as Product;
     const lineItem = this.lineItem();
     return (
-      <sc-choice
-        value={this.bump?.id}
-        type="checkbox"
-        showControl={false}
-        checked={!!lineItem}
-        exportparts="base:choice__base, content:choice__content"
-      >
+      <sc-choice value={this.bump?.id} type="checkbox" showControl={false} checked={!!lineItem} exportparts="base:choice__base, content:choice__content">
         <div
           part="base-content"
           class="bump"
           onClick={e => e.stopPropagation()}
-          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') e.stopPropagation();
+          }}
         >
           {!!product?.line_item_image?.src && <img {...(product?.line_item_image as any)} class="bump__image" part="image" />}
           <div class="bump__text" part="text">

@@ -17,7 +17,9 @@ export default (props) => {
 
 	const formattedDiscount = (item) => {
 		if (item?.percent_off) {
-			return sprintf(__('%s%% off', 'surecart'), item?.percent_off);
+			const percent = `${item.percent_off}%`;
+			// translators: %s is the discount percentage (e.g. "10%").
+			return sprintf(__('%s off', 'surecart'), percent);
 		}
 		if (item?.amount_off) {
 			return sprintf(

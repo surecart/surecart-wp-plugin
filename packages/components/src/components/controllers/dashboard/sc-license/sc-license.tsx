@@ -212,7 +212,7 @@ export class ScLicense {
           {this.renderLicenseHeader()}
           <sc-card noPadding>
             <sc-stacked-list>
-              <sc-stacked-list-row style={{ '--columns': '2', '--sc-stacked-list-row-align-items': 'center' }}>
+              <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('License Status', 'surecart')}</div>
                 {this.renderStatus()}
               </sc-stacked-list-row>
