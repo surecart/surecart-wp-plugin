@@ -29,7 +29,7 @@ export default ({ id, ...props }) => {
 	return (
 		<FilterItem
 			loading={!hasLoadedItem}
-			imageUrl={item?.image_url}
+			image={item?.line_item_image}
 			icon={'image'}
 			{...props}
 		>

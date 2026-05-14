@@ -61,6 +61,7 @@ class AbilityPermissionsTest extends SureCartUnitTestCase {
 		$user->add_cap( 'read_sc_licenses' );
 		$user->add_cap( 'read_sc_refunds' );
 		$user->add_cap( 'read_sc_prices' );
+		$user->add_cap( 'read_sc_checkouts' );
 		$user->add_cap( 'view_sc_shop_reports' );
 		$user->add_cap( 'publish_sc_products' );
 		$user->add_cap( 'publish_sc_prices' );

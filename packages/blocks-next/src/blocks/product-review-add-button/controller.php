@@ -19,31 +19,21 @@ $alignment              = ! empty( $attributes['style']['typography']['textAlign
 $width_class            = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
 $show_loading_indicator = $attributes['show_loading_indicator'] ?? false;
 
-$style = ! empty( $gap )
+$styles = sc_get_block_styles();
+
+// Gap and alignment are layout concerns, not block support styles.
+$button_style = ! empty( $gap )
 	? esc_attr( safecss_filter_attr( 'gap:' . $gap ) ) . ';'
 	: '';
 
 if ( ! empty( $alignment ) ) {
-	$style .= 'justify-content:' . esc_attr( $alignment ) . ';';
+	$button_style .= esc_attr( safecss_filter_attr( 'justify-content:' . $alignment ) ) . ';';
 }
 
-// Hanlde Colors from third party block editors like Bricks.
-if ( ! empty( $attributes['style']['color']['text'] ) ) {
-	$style .= esc_attr( safecss_filter_attr( 'color:' . $attributes['style']['color']['text'] ) ) . ';';
-}
-if ( ! empty( $attributes['style']['color']['background'] ) ) {
-	$style .= esc_attr( safecss_filter_attr( 'background-color:' . $attributes['style']['color']['background'] ) ) . ';';
-}
-
-$styles = sc_get_block_styles();
-
-$wrapper_style = '';
-
-if ( ! empty( $styles['declarations'] ) ) {
-	$wrapper_style .= ! empty( $styles['declarations']['margin-top'] ) ? esc_attr( safecss_filter_attr( 'margin-top:' . $styles['declarations']['margin-top'] ) ) . ';' : '';
-	$wrapper_style .= ! empty( $styles['declarations']['margin-bottom'] ) ? esc_attr( safecss_filter_attr( 'margin-bottom:' . $styles['declarations']['margin-bottom'] ) ) . ';' : '';
-	$wrapper_style .= ! empty( $styles['declarations']['margin-left'] ) ? esc_attr( safecss_filter_attr( 'margin-left:' . $styles['declarations']['margin-left'] ) ) . ';' : '';
-	$wrapper_style .= ! empty( $styles['declarations']['margin-right'] ) ? esc_attr( safecss_filter_attr( 'margin-right:' . $styles['declarations']['margin-right'] ) ) . ';' : '';
+// Append block support styles (border, padding, colors).
+// sc_get_block_styles() already handles colors from $attributes['style']['color'] and presets.
+if ( ! empty( $styles['css'] ) ) {
+	$button_style .= $styles['css'];
 }
 
 // if no authenticated user found, redirect to Customer dashboard login with the redirect URL set to product page.

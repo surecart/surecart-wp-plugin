@@ -36,10 +36,10 @@ class UsersService {
 			remove_action( 'profile_update', array( $this, 'syncUserProfile' ), 10 );
 
 			// update user.
+			// Intentionally NOT syncing user_email from the webhook payload — CVE-2026-7655 (account takeover via lost-password).
 			wp_update_user(
 				array(
 					'ID'         => $wp_user->ID,
-					'user_email' => ! empty( $customer->email ) ? $customer->email : $wp_user->user_email,
 					'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
 					'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
 					'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,

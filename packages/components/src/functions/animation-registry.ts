@@ -1,10 +1,15 @@
 interface ElementAnimation {
   keyframes: Keyframe[];
+  rtlKeyframes?: Keyframe[];
   options?: KeyframeAnimationOptions;
 }
 
 interface ElementAnimationMap {
   [animationName: string]: ElementAnimation;
+}
+
+interface GetAnimationOptions {
+  dir?: 'ltr' | 'rtl';
 }
 
 const defaultAnimationRegistry = new Map<string, ElementAnimation>();
@@ -31,24 +36,19 @@ export function setAnimation(el: Element, animationName: string, animation: Elem
 
 //
 // Gets an element's animation. Falls back to the default if no animation is found.
+// Pass `{ dir: 'rtl' }` to receive the mirrored keyframes (when the animation provides them).
 //
-export function getAnimation(el: Element, animationName: string) {
+export function getAnimation(el: Element, animationName: string, options: GetAnimationOptions = {}): ElementAnimation {
   const customAnimation = customAnimationRegistry.get(el);
+  const animation = customAnimation?.[animationName] ?? defaultAnimationRegistry.get(animationName);
 
-  // Check for a custom animation
-  if (customAnimation?.[animationName]) {
-    return customAnimation[animationName];
+  if (!animation) {
+    return { keyframes: [], options: { duration: 0 } };
   }
 
-  // Check for a default animation
-  const defaultAnimation = defaultAnimationRegistry.get(animationName);
-  if (defaultAnimation) {
-    return defaultAnimation;
+  if (options.dir === 'rtl' && animation.rtlKeyframes) {
+    return { ...animation, keyframes: animation.rtlKeyframes };
   }
 
-  // Fall back to an empty animation
-  return {
-    keyframes: [],
-    options: { duration: 0 },
-  };
+  return animation;
 }

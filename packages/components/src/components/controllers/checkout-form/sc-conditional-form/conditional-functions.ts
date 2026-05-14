@@ -27,6 +27,8 @@ export const hasRulesPassed = (rules: Rule[], { checkout, processor }) => {
           return compareNumberValues(parseFloat(checkout.total_amount), parseFloat(ruleValue as string), rule?.operator as NumberOperators);
         case 'products':
           return compareObjectValues(getCartProductIds(checkout), ruleValue as string[], rule?.operator as ArrayOperators);
+        case 'prices':
+          return compareObjectValues(getCartPriceIds(checkout), ruleValue as string[], rule?.operator as ArrayOperators);
         case 'coupons':
           return compareObjectValues(getCartCouponIds(checkout), ruleValue as string[], rule?.operator as ArrayOperators);
         case 'shipping_country':
@@ -50,6 +52,16 @@ export const hasRulesPassed = (rules: Rule[], { checkout, processor }) => {
  */
 export const getCartProductIds = (checkout: Checkout) => {
   return (checkout?.line_items?.data || []).map(({ price }) => (price?.product as Product)?.id);
+};
+
+/**
+ * Get array of price ids from checkout.
+ *
+ * @param {object} checkout Checkout data.
+ * @returns {array}
+ */
+export const getCartPriceIds = (checkout: Checkout) => {
+  return (checkout?.line_items?.data || []).map(({ price }) => price?.id).filter(Boolean) as string[];
 };
 
 /**

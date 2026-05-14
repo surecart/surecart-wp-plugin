@@ -41,6 +41,9 @@ export class ScIcon {
   /** The name of a registered custom icon library. */
   @Prop() library = 'default';
 
+  /** Mutate the icon */
+  @Prop() mutate = true;
+
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
@@ -83,7 +86,7 @@ export class ScIcon {
           const svgEl = doc.body.querySelector('svg');
 
           if (svgEl) {
-            if (library && library.mutator) {
+            if (library && library.mutator && this.mutate) {
               library.mutator(svgEl);
             }
 
