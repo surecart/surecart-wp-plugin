@@ -29,7 +29,6 @@ class ProductReviewShortcodesTest extends SureCartUnitTestCase {
 					\SureCart\WordPress\Pages\PageServiceProvider::class,
 					\SureCart\Sync\SyncServiceProvider::class,
 					\SureCart\WordPress\Posts\PostServiceProvider::class,
-					ShortcodesServiceProvider::class,
 				],
 			],
 			false
