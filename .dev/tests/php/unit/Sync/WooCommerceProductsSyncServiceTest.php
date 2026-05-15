@@ -926,7 +926,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_finds_existing_collection() {
 			$term         = (object) [ 'name' => 'Shoes', 'slug' => 'shoes', 'description' => '', 'term_id' => 1 ];
-			$collection   = (object) [ 'id' => 'coll_123', 'slug' => 'shoes' ];
+			$collection   = (object) [ 'id' => 'coll_123', 'name' => 'Shoes', 'slug' => 'shoes' ];
 
 			// Mock the static calls on ProductCollection.
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
@@ -972,7 +972,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_uses_cache_on_second_call() {
 			$term       = (object) [ 'name' => 'Boots', 'slug' => 'boots', 'description' => '', 'term_id' => 3 ];
-			$collection = (object) [ 'id' => 'coll_789', 'slug' => 'boots' ];
+			$collection = (object) [ 'id' => 'coll_789', 'name' => 'Boots', 'slug' => 'boots' ];
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->once()->andReturnSelf(); // Called only once!
@@ -999,7 +999,7 @@ namespace SureCart\Tests\Sync {
 		 */
 		public function test_get_or_create_collections_normalizes_slug_to_lowercase() {
 			$term       = (object) [ 'name' => 'Summer Sale', 'slug' => 'Summer-Sale', 'description' => '', 'term_id' => 4 ];
-			$collection = (object) [ 'id' => 'coll_norm', 'slug' => 'summer-sale' ];
+			$collection = (object) [ 'id' => 'coll_norm', 'name' => 'Summer Sale', 'slug' => 'summer-sale' ];
 
 			$mock = \Mockery::mock( 'alias:SureCart\Models\ProductCollection' );
 			$mock->shouldReceive( 'where' )->andReturnSelf();
