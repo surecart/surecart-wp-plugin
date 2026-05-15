@@ -110,92 +110,35 @@
 
 // Bundle components section
 .bundle-components {
-  border: solid 1px var(--sc-input-border-color);
-  border-radius: var(--sc-border-radius-medium);
-  overflow: hidden;
-  margin-top: var(--sc-spacing-xx-small);
-}
-
-.bundle-components__toggle {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: var(--sc-spacing-x-small) var(--sc-spacing-small);
-  background: var(--sc-color-gray-50);
-  border: none;
-  cursor: pointer;
-  font-size: var(--sc-font-size-small);
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--sc-spacing-xx-small);
   color: var(--sc-input-label-color);
-  line-height: var(--sc-line-height-dense);
-
-  &:hover {
-    background: var(--sc-color-gray-100);
-  }
-
-  sc-icon {
-    font-size: 0.85em;
-  }
-}
-
-.bundle-components__list {
-  display: grid;
-  gap: 0;
+  font-size: var(--sc-font-size-small);
+  line-height: 1.4;
 }
 
 .bundle-component {
   display: flex;
-  align-items: center;
-  gap: var(--sc-spacing-small);
-  padding: var(--sc-spacing-x-small) var(--sc-spacing-small);
-  border-top: solid 1px var(--sc-input-border-color);
-  font-size: var(--sc-font-size-small);
-  line-height: var(--sc-line-height-dense);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sc-spacing-x-small);
+
+  &:empty {
+    display: none;
+  }
 }
 
-.bundle-component__image {
-  width: 28px;
-  height: 28px;
-  object-fit: cover;
-  border-radius: 3px;
-  border: solid 1px var(--sc-input-border-color);
-  flex-shrink: 0;
-}
-
-.bundle-component__info {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.bundle-component__label {
+  flex: 1 1 auto;
   min-width: 0;
-  flex: 1;
-}
-
-.bundle-component__name {
-  font-weight: var(--sc-font-weight-normal);
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.bundle-component__variant {
-  color: var(--sc-input-label-color);
-  font-size: var(--sc-font-size-x-small);
+  white-space: nowrap;
 }
 
 .bundle-component__qty {
-  color: var(--sc-input-label-color);
-  font-size: var(--sc-font-size-small);
-  flex-shrink: 0;
-}
-
-// Bundle savings badge
-.bundle-savings {
-  font-size: var(--sc-font-size-x-small);
-  font-weight: var(--sc-font-weight-semibold);
-  color: var(--sc-color-success-700, #15803d);
-  background: var(--sc-color-success-50, #f0fdf4);
-  padding: 2px var(--sc-spacing-x-small);
-  border-radius: var(--sc-border-radius-small);
+  flex: 0 0 auto;
   white-space: nowrap;
-  line-height: var(--sc-line-height-dense);
 }

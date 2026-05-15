@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withSyncEvent,
+} from '@wordpress/interactivity';
 const { __, sprintf, _n } = wp.i18n;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 let announceTimeout = null;
@@ -192,7 +197,9 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			if (!line_item?.price?.product?.bundle) return [];
 			return (state?.checkout?.line_items?.data || []).filter(
-				(item) => item?.component_line_item && item?.bundle_line_item?.id === line_item.id
+				(item) =>
+					item?.component_line_item &&
+					item?.bundle_line_item?.id === line_item.id
 			);
 		},
 
@@ -213,15 +220,7 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Format a single bundle component for display in the cart drawer.
-		 *
-		 * Called from inside a nested `data-wp-each--bundle_component` template,
-		 * so getContext() includes the component line item under
-		 * `bundle_component`.
-		 *
-		 * Output mirrors lineItemVariant's joining convention so the cart reads
-		 * consistently: "Mens Watch - Black / Leather" or just "Mens Sunglass"
-		 * when the component has no variants.
+		 * Label half of a bundle component row.
 		 */
 		get lineItemBundleComponent() {
 			const { bundle_component } = getContext();
@@ -233,6 +232,19 @@ const { state, actions } = store('surecart/checkout', {
 				.join(' / ');
 
 			return variants ? `${name} - ${variants}` : name;
+		},
+
+		/**
+		 * "× N" multiplier for a bundle component row. Returns '' when the
+		 * block's `showSingleQuantity` attribute is off and qty is 1, so the
+		 * span collapses via `:empty`.
+		 */
+		get lineItemBundleComponentQty() {
+			const { bundle_component, showSingleQuantity = true } =
+				getContext();
+			const qty = Math.max(Number(bundle_component?.quantity) || 1, 1);
+			if (qty <= 1 && !showSingleQuantity) return '';
+			return `× ${qty}`;
 		},
 
 		/**
@@ -578,7 +590,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Toggle the discount input.
 		 */
-		toggleDiscountInput: withSyncEvent(function(e) {
+		toggleDiscountInput: withSyncEvent(function (e) {
 			// check if keydown event and not enter/space key.
 			if (isNotKeySubmit(e)) {
 				return true;
@@ -626,7 +638,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * We're handling it additionally here to maintain an order with
 		 * escape key calling for this input and cart drawer.
 		 */
-		maybeApplyDiscountOnKeyChange: withSyncEvent(function(e) {
+		maybeApplyDiscountOnKeyChange: withSyncEvent(function (e) {
 			if (e.key === 'Escape' || e.key === 'Enter') {
 				e.preventDefault();
 				e.stopPropagation();

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { LineItem, Price, Product } from '../../../types';
@@ -37,9 +37,6 @@ export class ScBundleLineItem {
 
   /** Max quantity. */
   @Prop() max: number;
-
-  /** Whether the components are expanded. */
-  @State() expanded: boolean = true;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
@@ -119,46 +116,30 @@ export class ScBundleLineItem {
               </div>
             )}
 
-            {/* Row 4: Bundle components */}
+            {/* Bundle components — plain list, mirrors the next-gen
+                cart-line-item-bundle-components block. Each row: label on
+                the left, `× N` pinned right. `× N` is always rendered
+                (even at qty 1) so every row has the same shape — no layout
+                jitter between mixed-quantity components. The component
+                line item's quantity is the total being shipped
+                (bundle_qty × per-bundle component qty). */}
             {!!this.components?.length && (
               <div class="bundle-components" part="components">
-                <button
-                  class="bundle-components__toggle"
-                  onClick={() => {
-                    this.expanded = !this.expanded;
-                  }}
-                  aria-expanded={this.expanded ? 'true' : 'false'}
-                >
-                  <span>
-                    {sprintf(
-                      /** translators: %d: number of items */
-                      __('Includes %d items', 'surecart'),
-                      this.components.length,
-                    )}
-                  </span>
-                  <sc-icon name={this.expanded ? 'chevron-up' : 'chevron-down'} />
-                </button>
-
-                {this.expanded && (
-                  <div class="bundle-components__list">
-                    {this.components.map(component => {
-                      const componentPrice = component?.price as Price;
-                      const componentProduct = componentPrice?.product as Product;
-                      const componentImage = component?.image;
-
-                      return (
-                        <div class="bundle-component" part="component">
-                          {!!componentImage?.src && <img {...(componentImage as any)} class="bundle-component__image" />}
-                          <div class="bundle-component__info">
-                            <span class="bundle-component__name">{componentProduct?.name}</span>
-                            {!!component?.variant_display_options && <span class="bundle-component__variant">{component.variant_display_options}</span>}
-                          </div>
-                          {component?.quantity > 1 && <span class="bundle-component__qty">&times; {component.quantity}</span>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
+                {this.components.map(component => {
+                  const componentPrice = component?.price as Price;
+                  const componentProduct = componentPrice?.product as Product;
+                  const name = componentProduct?.name || '';
+                  const variants = component?.variant_display_options || '';
+                  const qty = Math.max(Number(component?.quantity) || 1, 1);
+                  const label = variants ? `${name} - ${variants}` : name;
+                  if (!label) return null;
+                  return (
+                    <div class="bundle-component" part="component">
+                      <span class="bundle-component__label">{label}</span>
+                      <span class="bundle-component__qty">× {qty}</span>
+                    </div>
+                  );
+                })}
               </div>
             )}
 

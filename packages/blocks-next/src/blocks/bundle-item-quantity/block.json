@@ -12,6 +12,12 @@
 		"surecart/bundleItemOption",
 		"surecart/bundleItemOptionNumber"
 	],
+	"attributes": {
+		"showSingleQuantity": {
+			"type": "boolean",
+			"default": true
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"inserter": false,

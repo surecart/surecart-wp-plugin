@@ -1,20 +1,41 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { PanelBody, ToggleControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
-export default ({ context: { 'surecart/bundleItem': bundleItem } }) => {
+export default ({
+	attributes,
+	setAttributes,
+	context: { 'surecart/bundleItem': bundleItem },
+}) => {
+	const { showSingleQuantity = true } = attributes;
 	const blockProps = useBlockProps({
 		className: 'sc-bundle-item__qty',
 	});
 
-	// Always show a sample "× 2" in the editor so the slot stays visible.
-	// The runtime view hides this block entirely when quantity <= 1.
-	const quantity = bundleItem?.quantity ?? 2;
+	const quantity = Math.max(1, Number(bundleItem?.quantity) || 1);
+	const hide = !showSingleQuantity && quantity <= 1;
 
 	return (
-		<span {...blockProps}>
-			&times; {quantity > 1 ? quantity : 2}
-		</span>
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Quantity display', 'surecart')}>
+					<ToggleControl
+						label={__('Show for single items', 'surecart')}
+						help={__(
+							'When off, "× 1" is hidden so only components with a higher quantity show the multiplier.',
+							'surecart'
+						)}
+						checked={showSingleQuantity}
+						onChange={(value) =>
+							setAttributes({ showSingleQuantity: value })
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			{hide ? null : <span {...blockProps}>&times; {quantity}</span>}
+		</>
 	);
 };

@@ -1,14 +1,36 @@
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-cart-line-item-bundle-components' ) ) ); ?>
-	data-wp-bind--hidden="!state.hasBundleComponents"
+	<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class'                => 'sc-cart-line-item-bundle-components',
+				'data-wp-bind--hidden' => '!state.hasBundleComponents',
+				// Per-block setting flows down to descendants via Interactivity
+				// context. The qty getter reads `showSingleQuantity` to decide
+				// whether to render "× 1" or return empty.
+				'data-wp-context'      => wp_json_encode(
+					array(
+						'showSingleQuantity' => (bool) ( $attributes['showSingleQuantity'] ?? true ),
+					)
+				),
+			)
+		)
+	);
+	?>
 >
 	<template
 		data-wp-each--bundle_component="state.bundleComponents"
 		data-wp-each-key="context.bundle_component.id"
 	>
-		<div
-			class="sc-cart-line-item-bundle-components__item"
-			data-wp-text="state.lineItemBundleComponent"
-		></div>
+		<div class="sc-cart-line-item-bundle-components__item">
+			<span
+				class="sc-cart-line-item-bundle-components__label"
+				data-wp-text="state.lineItemBundleComponent"
+			></span>
+			<span
+				class="sc-cart-line-item-bundle-components__qty"
+				data-wp-text="state.lineItemBundleComponentQty"
+			></span>
+		</div>
 	</template>
 </div>

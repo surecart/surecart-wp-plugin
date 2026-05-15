@@ -10,8 +10,11 @@
 		"surecart/slide-out-cart-items",
 		"surecart/slide-out-cart-line-items"
 	],
-	"blockHooks": {
-		"surecart/cart-line-item-variant": "after"
+	"attributes": {
+		"showSingleQuantity": {
+			"type": "boolean",
+			"default": true
+		}
 	},
 	"example": {},
 	"supports": {
