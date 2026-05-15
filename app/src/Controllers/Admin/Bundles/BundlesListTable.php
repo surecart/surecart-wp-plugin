@@ -257,95 +257,55 @@ class BundlesListTable extends ListTable {
 	 * @return object|\WP_Error
 	 */
 	private function table_data() {
-		$is_archived  = $this->getArchiveStatus();
-		$per_page     = $this->get_items_per_page( 'bundles' );
-		$current_page = $this->get_pagenum();
+		$is_archived = $this->getArchiveStatus();
 
-		// TODO: Drop the page-walking once the upstream products endpoint supports a `bundle` filter.
-		$upstream_per_page  = 100;
-		$max_upstream_pages = 10;
+		$bundle_query = Product::where(
+			array(
+				'archived' => $is_archived,
+				'bundle'   => true,
+				'query'    => $this->get_search_query(),
+				'cached'   => false,
+			)
+		)->with(
+			array(
+				'prices',
+				'bundle_items',
+				'bundle_items.component_product',
+				'product_collections',
+				'featured_product_media',
+				'commission_structure',
+			)
+		);
 
-		$collected = array();
-
-		for ( $upstream_page = 1; $upstream_page <= $max_upstream_pages; $upstream_page++ ) {
-			$bundle_query = Product::where(
+		// Filter by collection if requested.
+		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$bundle_query->where(
 				array(
-					'archived' => $is_archived,
-					'query'    => $this->get_search_query(),
-					'cached'   => false,
-				)
-			)->with(
-				array(
-					'prices',
-					'bundle_items',
-					'bundle_items.component_product',
-					'product_collections',
-					'featured_product_media',
-					'commission_structure',
-				)
-			);
-
-			// Filter by collection if requested.
-			if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$bundle_query->where(
-					array(
-						'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-					)
-				);
-			}
-
-			// Sorting.
-			$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'cataloged_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$order   = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$order   = ( 'asc' === strtolower( $order ) ) ? 'asc' : 'desc';
-
-			$sort_map = $this->get_sort_map();
-			if ( isset( $sort_map[ $orderby ] ) ) {
-				$bundle_query->where(
-					array(
-						'sort' => $sort_map[ $orderby ] . ':' . $order,
-					)
-				);
-			}
-
-			$result = $bundle_query->paginate(
-				array(
-					'per_page' => $upstream_per_page,
-					'page'     => $upstream_page,
+					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				)
 			);
-
-			if ( is_wp_error( $result ) ) {
-				return $result;
-			}
-
-			$page_items = is_array( $result->data ?? null ) ? $result->data : array();
-			foreach ( $page_items as $product ) {
-				if ( ! empty( $product->bundle ) ) {
-					$collected[] = $product;
-				}
-			}
-
-			$page_count = (int) ( $result->pagination->page_count ?? 0 );
-			if ( $page_count > 0 && $upstream_page >= $page_count ) {
-				break;
-			}
-			if ( count( $page_items ) < $upstream_per_page ) {
-				break;
-			}
 		}
 
-		// Locally slice the filtered set into the current admin page.
-		$total  = count( $collected );
-		$offset = max( 0, ( $current_page - 1 ) * $per_page );
-		$items  = array_slice( $collected, $offset, $per_page );
+		// Sorting.
+		$orderby = ! empty( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'cataloged_at'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order   = ! empty( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order   = ( 'asc' === strtolower( $order ) ) ? 'asc' : 'desc';
 
-		$paged                    = new \stdClass();
-		$paged->data              = $items;
-		$paged->pagination        = new \stdClass();
-		$paged->pagination->count = $total;
+		$sort_map = $this->get_sort_map();
+		if ( isset( $sort_map[ $orderby ] ) ) {
+			$bundle_query->where(
+				array(
+					'sort' => $sort_map[ $orderby ] . ':' . $order,
+				)
+			);
+		}
 
-		return $paged;
+		return $bundle_query->paginate(
+			array(
+				'per_page' => $this->get_items_per_page( 'bundles' ),
+				'page'     => $this->get_pagenum(),
+			)
+		);
 	}
 
 	/**

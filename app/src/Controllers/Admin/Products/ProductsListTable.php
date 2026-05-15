@@ -84,15 +84,7 @@ class ProductsListTable extends ListTable {
 			)
 		);
 
-		// TODO: Move this to $this->items = $query->data; once bundle filter supported to product list.
-		$this->items = array_values(
-			array_filter(
-				is_array( $query->data ) ? $query->data : array(),
-				function ( $product ) {
-					return empty( $product->bundle );
-				}
-			)
-		);
+		$this->items = is_array( $query->data ) ? $query->data : array();
 	}
 
 	/**
@@ -290,6 +282,7 @@ class ProductsListTable extends ListTable {
 		$product_query = Product::where(
 			array(
 				'archived' => $is_archived,
+				'bundle'   => false,
 				'query'    => $this->get_search_query(),
 				'cached'   => false,
 			)
