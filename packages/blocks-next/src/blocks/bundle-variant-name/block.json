@@ -11,6 +11,12 @@
 		"surecart/bundleItem",
 		"surecart/bundleItemOption"
 	],
+	"attributes": {
+		"separator": {
+			"type": "string",
+			"default": " – "
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"inserter": false,

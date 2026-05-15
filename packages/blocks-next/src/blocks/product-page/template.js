@@ -224,10 +224,6 @@ export default [
 										},
 										[
 											['surecart/bundle-product-name'],
-											[
-												'core/paragraph',
-												{ content: '-' },
-											],
 											['surecart/bundle-variant-name'],
 											['surecart/bundle-item-quantity'],
 										],

@@ -49,7 +49,6 @@ const buildDefaultTree = () =>
 				},
 				[
 					createBlock('surecart/bundle-product-name'),
-					createBlock('core/paragraph', { content: '-' }),
 					createBlock('surecart/bundle-variant-name'),
 					createBlock('surecart/bundle-item-quantity'),
 				]
