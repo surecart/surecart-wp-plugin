@@ -27,7 +27,7 @@ class CreatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Create a new price for an existing SureCart product. Requires the product ID, amount in the smallest currency unit (e.g., cents for USD), and currency code. Supports one-time and recurring pricing.', 'surecart' );
+		return __( 'Create a new price for an existing SureCart product. Requires the product ID and currency code. For fixed prices, an amount in the smallest currency unit (e.g., cents for USD) is required. For ad-hoc prices (customer or merchant supplies the amount at checkout/invoice time), set ad_hoc to true; amount becomes optional and is treated as a default. Supports one-time and recurring pricing.', 'surecart' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class CreatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Requires a valid product ID. The amount is in the smallest currency unit (e.g., 1000 = $10.00 USD). For recurring prices, set recurring_interval (day, week, month, year) and recurring_interval_count. Each call creates a new price — do not call multiple times for the same price.';
+		return 'Requires a valid product ID and currency. The amount is in the smallest currency unit (e.g., 1000 = $10.00 USD). For fixed prices, amount is required and must be greater than zero. For ad-hoc prices (where the amount is supplied at invoice/checkout time — e.g., custom invoicing), pass ad_hoc=true; amount then becomes optional and, if provided, is used as a suggested default. ad_hoc_min_amount and ad_hoc_max_amount (both in smallest currency unit) optionally constrain the allowed range. For recurring prices, set recurring_interval (day, week, month, year) and recurring_interval_count. Each call creates a new price — do not call multiple times for the same price.';
 	}
 
 	/**
@@ -68,11 +68,23 @@ class CreatePrice extends AbstractAbility {
 				),
 				'amount'                   => array(
 					'type'        => 'integer',
-					'description' => __( 'Price amount in the smallest currency unit (e.g., cents).', 'surecart' ),
+					'description' => __( 'Price amount in the smallest currency unit (e.g., cents). Required when ad_hoc is false or omitted. When ad_hoc is true, this is optional and acts as a suggested default.', 'surecart' ),
 				),
 				'currency'                 => array(
 					'type'        => 'string',
 					'description' => __( 'Three-letter ISO currency code (e.g., usd).', 'surecart' ),
+				),
+				'ad_hoc'                   => array(
+					'type'        => 'boolean',
+					'description' => __( 'When true, the amount is supplied at invoice/checkout time instead of being fixed. Useful for custom invoicing.', 'surecart' ),
+				),
+				'ad_hoc_min_amount'        => array(
+					'type'        => 'integer',
+					'description' => __( 'Optional minimum allowed amount (smallest currency unit) for ad-hoc prices.', 'surecart' ),
+				),
+				'ad_hoc_max_amount'        => array(
+					'type'        => 'integer',
+					'description' => __( 'Optional maximum allowed amount (smallest currency unit) for ad-hoc prices.', 'surecart' ),
 				),
 				'recurring_interval'       => array(
 					'type'        => 'string',
@@ -88,7 +100,7 @@ class CreatePrice extends AbstractAbility {
 					'description' => __( 'Display name for the price.', 'surecart' ),
 				),
 			),
-			'required'   => array( 'product', 'amount', 'currency' ),
+			'required'   => array( 'product', 'currency' ),
 		);
 	}
 
@@ -111,16 +123,46 @@ class CreatePrice extends AbstractAbility {
 	 * @param array $input The input data.
 	 */
 	public function execute( array $input ) {
-		$amount = intval( $input['amount'] );
-		if ( $amount <= 0 ) {
-			return $this->error( 'invalid_amount', __( 'Amount must be greater than zero.', 'surecart' ) );
+		$is_ad_hoc  = ! empty( $input['ad_hoc'] );
+		$has_amount = isset( $input['amount'] );
+		$amount     = $has_amount ? intval( $input['amount'] ) : null;
+
+		// Fixed prices: amount is required and must be positive.
+		// Ad-hoc prices: amount is optional; if provided, it acts as a suggested default and may be zero (no default) but not negative.
+		if ( ! $is_ad_hoc ) {
+			if ( ! $has_amount ) {
+				return $this->error( 'missing_amount', __( 'Amount is required for fixed prices.', 'surecart' ) );
+			}
+			if ( $amount <= 0 ) {
+				return $this->error( 'invalid_amount', __( 'Amount must be greater than zero.', 'surecart' ) );
+			}
+		} elseif ( $has_amount && $amount < 0 ) {
+			return $this->error( 'invalid_amount', __( 'Amount must be zero or greater.', 'surecart' ) );
 		}
 
 		$data = array(
 			'product'  => sanitize_text_field( $input['product'] ),
-			'amount'   => $amount,
 			'currency' => sanitize_text_field( $input['currency'] ),
 		);
+
+		if ( $has_amount ) {
+			$data['amount'] = $amount;
+		}
+
+		if ( $is_ad_hoc ) {
+			$data['ad_hoc'] = true;
+
+			if ( isset( $input['ad_hoc_min_amount'] ) ) {
+				$data['ad_hoc_min_amount'] = absint( $input['ad_hoc_min_amount'] );
+			}
+			if ( isset( $input['ad_hoc_max_amount'] ) ) {
+				$data['ad_hoc_max_amount'] = absint( $input['ad_hoc_max_amount'] );
+			}
+
+			if ( isset( $data['ad_hoc_min_amount'], $data['ad_hoc_max_amount'] ) && $data['ad_hoc_min_amount'] > $data['ad_hoc_max_amount'] ) {
+				return $this->error( 'invalid_ad_hoc_range', __( 'ad_hoc_min_amount cannot be greater than ad_hoc_max_amount.', 'surecart' ) );
+			}
+		}
 
 		if ( ! empty( $input['recurring_interval'] ) ) {
 			$allowed_intervals = array( 'day', 'week', 'month', 'year' );
