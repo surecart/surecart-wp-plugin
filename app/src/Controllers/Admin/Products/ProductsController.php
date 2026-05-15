@@ -30,6 +30,123 @@ class ProductsController extends AdminController {
 	}
 
 	/**
+	 * Admin page slug used for redirects from this controller.
+	 *
+	 * @var string
+	 */
+	protected $page_slug = 'sc-products';
+
+	/**
+	 * Key passed to \SureCart::getUrl()->index().
+	 *
+	 * @var string
+	 */
+	protected $url_key = 'products';
+
+	/**
+	 * View path prefix (no trailing slash).
+	 *
+	 * @var string
+	 */
+	protected $view_prefix = 'admin/products';
+
+	/**
+	 * ScriptsController class enqueued on the edit screen.
+	 *
+	 * @var string
+	 */
+	protected $scripts_controller_class = ProductScriptsController::class;
+
+	/**
+	 * ListTable class used by index().
+	 *
+	 * @var string
+	 */
+	protected $list_table_class = ProductsListTable::class;
+
+	/**
+	 * Variable name the confirm-bulk-delete view expects in scope.
+	 *
+	 * @var string
+	 */
+	protected $bulk_delete_view_key = 'products';
+
+	/**
+	 * Index breadcrumb shape used by withHeader().
+	 *
+	 * @return array
+	 */
+	protected function indexBreadcrumb() {
+		return array(
+			'products' => array(
+				'title' => __( 'Products', 'surecart' ),
+			),
+		);
+	}
+
+	/**
+	 * Status-query
+	 *
+	 * @return array
+	 */
+	protected function indexNotices() {
+		return array(
+			'sync_success' => __( 'Product synced successfully.', 'surecart' ),
+			'archived'     => __( 'Product archived.', 'surecart' ),
+			'unarchived'   => __( 'Product unarchived.', 'surecart' ),
+			'duplicated'   => __( 'Product duplicated successfully.', 'surecart' ),
+		);
+	}
+
+	/**
+	 * Admin-bar "View {entity}" link on the edit screen.
+	 *
+	 * @return array
+	 */
+	protected function adminBarViewEntry() {
+		return array(
+			'id'    => 'view-product-page',
+			'title' => __( 'View Product', 'surecart' ),
+		);
+	}
+
+	/**
+	 * Message when bulk-delete is opened with no IDs selected.
+	 *
+	 * @return string
+	 */
+	protected function bulkDeleteEmptyMessage() {
+		return __( 'No products selected. Please choose at least one product to delete.', 'surecart' );
+	}
+
+	/**
+	 * Message when bulk-delete targets ids that no longer exist.
+	 *
+	 * @param int $count Number of ids requested for deletion.
+	 *
+	 * @return string
+	 */
+	protected function bulkDeleteAlreadyDeletedMessage( $count ) {
+		return _n(
+			'This product has already been deleted.',
+			'These products have already been deleted.',
+			$count,
+			'surecart'
+		);
+	}
+
+	/**
+	 * Header title on the confirm-bulk-delete screen.
+	 *
+	 * @param int $count Number of items being deleted.
+	 *
+	 * @return string
+	 */
+	protected function bulkDeleteHeaderTitle( $count ) {
+		return _n( 'Delete Product', 'Delete Products.', $count, 'surecart' );
+	}
+
+	/**
 	 * Products index.
 	 */
 	public function index() {
@@ -37,34 +154,24 @@ class ProductsController extends AdminController {
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
 
-		// instantiate the products list table.
-		$table = new ProductsListTable( $bulk_action_service );
+		// instantiate the list table.
+		$table_class = $this->list_table_class;
+		$table       = new $table_class( $bulk_action_service );
 		$table->prepare_items();
 
 		// add header.
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
-					'products' => [
-						'title' => __( 'Products', 'surecart' ),
-					],
-				],
+				'breadcrumbs' => $this->indexBreadcrumb(),
 				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			),
 		);
 
 		// add notices.
-		$this->withNotices(
-			array(
-				'sync_success' => __( 'Product synced successfully.', 'surecart' ),
-				'archived'     => __( 'Product archived.', 'surecart' ),
-				'unarchived'   => __( 'Product unarchived.', 'surecart' ),
-				'duplicated'   => __( 'Product duplicated successfully.', 'surecart' ),
-			)
-		);
+		$this->withNotices( $this->indexNotices() );
 
 		// return view.
-		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( $this->view_prefix . '/index' )->with( [ 'table' => $table ] );
 	}
 
 	/**
@@ -97,8 +204,8 @@ class ProductsController extends AdminController {
 			wp_die(
 				sprintf(
 					'%s <a href="%s">%s</a>',
-					esc_html__( 'No products selected. Please choose at least one product to delete.', 'surecart' ),
-					esc_url( admin_url( 'admin.php?page=sc-products' ) ),
+					esc_html( $this->bulkDeleteEmptyMessage() ),
+					esc_url( admin_url( 'admin.php?page=' . $this->page_slug ) ),
 					esc_html__( 'Go Back', 'surecart' )
 				)
 			);
@@ -112,7 +219,7 @@ class ProductsController extends AdminController {
 
 		// handle empty.
 		if ( empty( $products ) ) {
-			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_die( esc_html( $this->bulkDeleteAlreadyDeletedMessage( count( $_REQUEST['bulk_action_product_ids'] ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		// handle error.
@@ -124,13 +231,16 @@ class ProductsController extends AdminController {
 		$this->withHeader(
 			[
 				'delete' => [
-					'title' => _n( 'Delete Product', 'Delete Products.', count( $products ), 'surecart' ),
+					'title' => $this->bulkDeleteHeaderTitle( count( $products ) ),
 				],
 			],
 		);
 
-		// return view.
-		return \SureCart::view( 'admin/products/confirm-bulk-delete' )->with( [ 'products' => $products ] );
+		// return view. The view payload key is overridable so subclasses
+		// (e.g. BundlesController) can keep their own variable name (`$bundles`)
+		// in the template without losing semantics.
+		return \SureCart::view( $this->view_prefix . '/confirm-bulk-delete' )
+			->with( [ $this->bulk_delete_view_key => $products ] );
 	}
 
 	/**
@@ -179,7 +289,7 @@ class ProductsController extends AdminController {
 		}
 
 		// redirect.
-		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
+		return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=' . $this->page_slug ) ) );
 	}
 
 	/**
@@ -189,7 +299,7 @@ class ProductsController extends AdminController {
 	 */
 	public function edit( $request ) {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( $this->scripts_controller_class, 'enqueue' ) );
 
 		// define product.
 		$product = null;
@@ -253,13 +363,14 @@ class ProductsController extends AdminController {
 		}
 
 		// add product link.
+		$admin_bar_entry = $this->adminBarViewEntry();
 		add_action(
 			'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $product ) {
+			function ( $wp_admin_bar ) use ( $product, $admin_bar_entry ) {
 				$wp_admin_bar->add_node(
 					[
-						'id'    => 'view-product-page',
-						'title' => __( 'View Product', 'surecart' ),
+						'id'    => $admin_bar_entry['id'],
+						'title' => $admin_bar_entry['title'],
 						'href'  => esc_url( $product->permalink ?? '#' ),
 						'meta'  => [
 							'class' => empty( $product->permalink ) ? 'hidden' : '',
@@ -301,7 +412,7 @@ class ProductsController extends AdminController {
 			esc_url_raw(
 				add_query_arg(
 					$updated->archived ? [ 'archived' => 1 ] : [ 'unarchived' => 1 ],
-					\SureCart::getUrl()->index( 'products' )
+					\SureCart::getUrl()->index( $this->url_key )
 				)
 			)
 		);
@@ -317,7 +428,7 @@ class ProductsController extends AdminController {
 		\SureCart::sync()->products()->dispatch();
 
 		// redirect to products page.
-		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( 'products' ) ) );
+		return \SureCart::redirect()->to( esc_url_raw( \SureCart::getUrl()->index( $this->url_key ) ) );
 	}
 
 	/**
@@ -431,7 +542,7 @@ class ProductsController extends AdminController {
 				if ( 'succeeded' === ( $row->status ?? '' ) ) {
 					++$succeeded_count;
 				} else {
-					$import_data = $row->import_data ?? null;
+					$import_data   = $row->import_data ?? null;
 					$failed_rows[] = [
 						'name'   => is_object( $import_data ) ? ( $import_data->name ?? __( 'Unknown', 'surecart' ) ) : __( 'Unknown', 'surecart' ),
 						'reason' => $row->failure_reason ?? __( 'Unknown error', 'surecart' ),
@@ -486,7 +597,7 @@ class ProductsController extends AdminController {
 			esc_url_raw(
 				add_query_arg(
 					[ 'sync_success' => true ],
-					\SureCart::getUrl()->index( 'products' )
+					\SureCart::getUrl()->index( $this->url_key )
 				)
 			)
 		);
@@ -512,7 +623,7 @@ class ProductsController extends AdminController {
 					[
 						'duplicated' => true,
 					],
-					\SureCart::getUrl()->index( 'products' )
+					\SureCart::getUrl()->index( $this->url_key )
 				)
 			)
 		);

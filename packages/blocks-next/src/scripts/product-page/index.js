@@ -653,20 +653,6 @@ const { state, actions } = store('surecart/product-page', {
 					})
 				);
 			}
-
-			// Bridge to the Stencil product store (legacy buy-button path).
-			try {
-				const stencilState = window.surecart?.product?.state;
-				const bundleId = product?.id;
-				if (stencilState && bundleId) {
-					stencilState[bundleId] = stencilState[bundleId] || {};
-					stencilState[bundleId].bundleComponentVariants = {
-						...bundleComponentVariants,
-					};
-				}
-			} catch (err) {
-				// non-fatal — next-gen path already has the data.
-			}
 		}),
 
 		/**

@@ -11,21 +11,6 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
 
-const TEMPLATE = [
-	[
-		'surecart/bundle-item-template',
-		{
-			layout: {
-				type: 'flex',
-				orientation: 'vertical',
-			},
-		},
-	],
-];
-
-// Every child in the bundle subtree has `inserter: false`, so the vanilla
-// `template` prop of useInnerBlocksProps doesn't auto-create them on first
-// mount in the site editor. We force the initial tree via replaceInnerBlocks.
 const buildDefaultTree = () =>
 	createBlock(
 		'surecart/bundle-item-template',
@@ -71,7 +56,6 @@ export default ({ clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{ className: 'sc-bundle-items__list' },
 		{
-			template: TEMPLATE,
 			templateLock: false,
 			allowedBlocks: ['surecart/bundle-item-template'],
 			renderAppender: false,

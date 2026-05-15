@@ -202,4 +202,243 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 
 		$this->assertFalse( $result );
 	}
+
+	/* ------------------------------------------------------------------
+	 * findBundleComponentVariantFromUrl
+	 *
+	 * Bypass the constructor (which pulls a URL service from the SureCart
+	 * container) and inject a small stub via reflection so we can drive the
+	 * algorithm directly. The algorithm itself is what we care about — the
+	 * URL parsing layer is exercised via the stub's $args map.
+	 * ------------------------------------------------------------------ */
+
+	/**
+	 * Build a ProductPageBlock with a stub URL service whose getArg() returns
+	 * values from $args by key.
+	 */
+	private function buildBlockWithUrlArgs( array $args ): ProductPageBlock {
+		$block = ( new \ReflectionClass( ProductPageBlock::class ) )->newInstanceWithoutConstructor();
+
+		$url = new class( $args ) {
+			private $args;
+			public function __construct( array $args ) {
+				$this->args = $args;
+			}
+			public function getArg( $name ) {
+				return $this->args[ $name ] ?? null;
+			}
+		};
+
+		$prop = new \ReflectionProperty( ProductPageBlock::class, 'url' );
+		$prop->setAccessible( true );
+		$prop->setValue( $block, $url );
+
+		return $block;
+	}
+
+	private function makeComponent( string $id, array $option_names, array $variants ) {
+		return (object) array(
+			'id'              => $id,
+			'variant_options' => (object) array(
+				'data' => array_map(
+					function ( $name, $values ) {
+						return (object) array(
+							'name'   => $name,
+							'values' => $values,
+						);
+					},
+					$option_names,
+					array_map(
+						function ( $name ) use ( $variants ) {
+							// Distinct value list per option, derived from variants.
+							$key = 'option_' . ( array_search( $name, array_keys( $variants[0] ), true ) );
+							return array();
+						},
+						$option_names
+					)
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array_map(
+					fn( $row ) => (object) $row,
+					$variants
+				),
+			),
+		);
+	}
+
+	/**
+	 * A single-option URL pick resolves to the matching variant.
+	 */
+	public function test_find_bundle_variant_from_url_matches_single_option() {
+		// Build component manually for clarity (helper above is generic).
+		$component = (object) array(
+			'id'              => 'comp-1',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium', 'Large' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+					(object) array(
+						'id'       => 'v-m',
+						'option_1' => 'Medium',
+					),
+					(object) array(
+						'id'       => 'v-l',
+						'option_1' => 'Large',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-1-size' => 'medium' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-m', $result->id );
+	}
+
+	/**
+	 * Two-option pick — both must match.
+	 */
+	public function test_find_bundle_variant_from_url_matches_two_options() {
+		$component = (object) array(
+			'id'              => 'comp-2',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Color',
+						'values' => array( 'Sand', 'Forest' ),
+					),
+					(object) array(
+						'name'   => 'Temp',
+						'values' => array( '10°C', '0°C', '-10°C' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-a',
+						'option_1' => 'Sand',
+						'option_2' => '10°C',
+					),
+					(object) array(
+						'id'       => 'v-b',
+						'option_1' => 'Sand',
+						'option_2' => '0°C',
+					),
+					(object) array(
+						'id'       => 'v-c',
+						'option_1' => 'Forest',
+						'option_2' => '10°C',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array(
+				'bundle-comp-2-color' => 'forest',
+				'bundle-comp-2-temp'  => '10c',
+			)
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		// Note: sanitize_title turns "10°C" into "10c", so the URL slug
+		// "10c" matches the value "10°C".
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-c', $result->id );
+	}
+
+	/**
+	 * URL slug doesn't match any value → returns null (caller falls back).
+	 */
+	public function test_find_bundle_variant_from_url_returns_null_when_no_match() {
+		$component = (object) array(
+			'id'              => 'comp-3',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-3-size' => 'extra-large' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	/**
+	 * No URL args at all → returns null (caller falls back to first in-stock).
+	 */
+	public function test_find_bundle_variant_from_url_returns_null_when_no_args() {
+		$component = (object) array(
+			'id'              => 'comp-4',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs( array() );
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	/**
+	 * Component without variants → returns null (no variants to match against).
+	 */
+	public function test_find_bundle_variant_from_url_returns_null_when_no_variants() {
+		$component = (object) array(
+			'id'              => 'comp-5',
+			'variant_options' => (object) array( 'data' => array() ),
+			'variants'        => (object) array( 'data' => array() ),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-5-size' => 'small' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
 }

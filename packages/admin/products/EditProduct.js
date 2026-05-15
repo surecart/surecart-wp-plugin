@@ -48,7 +48,8 @@ export default ({ id, setBrowserURL }) => {
 	const [saving, setSaving] = useState(false);
 	const [confirmUrl, setConfirmUrl] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, invalidateResolution } =
+		useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
 
 	const {
@@ -213,15 +214,33 @@ export default ({ id, setBrowserURL }) => {
 	 */
 	const onDeleteProduct = async () => {
 		const wasBundle = !!product?.bundle;
+
+		// Best-effort: invalidate the in-flight post lookup BEFORE the delete
+		// so core-data's REMOVE_ITEMS reducer has a clean queryItems entry to
+		// operate on. In practice the race still slips through in some renders
+		// (the reducer reads its own slice synchronously and an unrelated
+		// query can still leave itemIds undefined), so we also tolerate the
+		// known TypeError below.
+		invalidateResolution('getEntityRecords', [
+			'postType',
+			'sc_product',
+			{ sc_id: [id], per_page: 1 },
+		]);
+
 		try {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
 		} catch (e) {
-			// Known WP core-data quirk: REMOVE_ITEMS reducer does
-			// `queryItems.itemIds.filter(...)` without a guard, and an
-			// in-flight `getEntityRecords` query can leave `itemIds`
-			// undefined → TypeError. The API DELETE already succeeded by
-			// then, so we let this one through and surface anything else.
+			// Known WP core-data REMOVE_ITEMS reducer bug: it does
+			// `queryItems.itemIds.filter(...)` without guarding against an
+			// undefined itemIds left behind by an in-flight getEntityRecords.
+			// The API DELETE itself succeeded by the time this throws — we
+			// surface anything else, but let this specific TypeError through
+			// so the success path still runs (notice + redirect).
+			//
+			// TODO: file the upstream issue and drop this guard once core
+			// ships a fix; the proactive invalidateResolution() above is
+			// the first line of defense.
 			const isReducerBug =
 				e?.name === 'TypeError' &&
 				/undefined.*filter/i.test(e?.message || '');
@@ -387,6 +406,8 @@ export default ({ id, setBrowserURL }) => {
 						>
 							{willPublish()
 								? __('Save & Publish', 'surecart')
+								: product?.bundle
+								? __('Save Bundle', 'surecart')
 								: __('Save Product', 'surecart')}
 						</SaveButton>
 					</div>

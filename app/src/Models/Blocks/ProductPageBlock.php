@@ -299,16 +299,12 @@ class ProductPageBlock {
 
 	/**
 	 * Pick a sensible default variant for a bundle component product.
-	 * Honour shopper picks from the URL first (?{prefix-}bundle-{id}-{slug}=
-	 * value, written by setBundleComponentOption); fall back to the first
-	 * in-stock variant; finally fall back to the first variant so pills
-	 * still highlight.
 	 *
 	 * @param object $component Component product.
 	 *
 	 * @return object|null
 	 */
-	protected function findInitialBundleComponentVariant( $component ) {
+	public function findInitialBundleComponentVariant( $component ) {
 		$variants = $component->variants->data ?? array();
 		if ( empty( $variants ) ) {
 			return null;

@@ -21,59 +21,8 @@ $variants_payload = array_map(
 	$variants
 );
 
-// Honour shopper picks persisted in the URL by setBundleComponentOption
-// (?{prefix-}bundle-{componentId}-{optionSlug}={valueSlug}). Falls back
-// to the first in-stock variant, then to the first variant overall so
-// pills always highlight something.
-$component_id            = $component->id ?? '';
-$url_picked_option_values = array();
-foreach ( $variant_options as $key => $option ) {
-	$arg_key  = 'bundle-' . $component_id . '-' . sanitize_title( $option->name );
-	$arg_slug = isset( $_GET[ $arg_key ] ) ? sanitize_title( wp_unslash( $_GET[ $arg_key ] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	if ( empty( $arg_slug ) ) {
-		continue;
-	}
-
-	foreach ( $option->values as $value ) {
-		if ( sanitize_title( $value ) === $arg_slug ) {
-			$url_picked_option_values[ 'option_' . ( $key + 1 ) ] = $value;
-			break;
-		}
-	}
-}
-
-$initial_variant = null;
-if ( ! empty( $url_picked_option_values ) ) {
-	foreach ( $variants as $variant ) {
-		$match = true;
-		foreach ( $url_picked_option_values as $option_key => $value ) {
-			if ( ( $variant->{$option_key} ?? null ) !== $value ) {
-				$match = false;
-				break;
-			}
-		}
-		if ( $match ) {
-			$initial_variant = $variant;
-			break;
-		}
-	}
-}
-
-if ( ! $initial_variant && ! empty( $variants ) ) {
-	if ( ! empty( $component->has_unlimited_stock ) ) {
-		$initial_variant = $variants[0];
-	} else {
-		foreach ( $variants as $variant ) {
-			if ( ( $variant->available_stock ?? 0 ) > 0 && empty( $variant->archived ) ) {
-				$initial_variant = $variant;
-				break;
-			}
-		}
-		if ( ! $initial_variant ) {
-			$initial_variant = $variants[0];
-		}
-	}
-}
+$initial_variant = ( new \SureCart\Models\Blocks\ProductPageBlock() )
+	->findInitialBundleComponentVariant( $component );
 
 $initial_option_values = $initial_variant
 	? (object) array_filter(

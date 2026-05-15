@@ -2,6 +2,7 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Controllers\Admin\Bundles\BundlesController;
 use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Sync\CustomerSyncService;
 use SureCart\Sync\WooCommerce\WooCommerceImportJob;
@@ -71,16 +72,21 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
 		$container['surecart.sync.woocommerce_products'] = fn ( $c ) => new WooCommerceImportService( $app, $c['surecart.sync.import_state.woo'] );
-		$container['surecart.sync.woo_import_cleanup']  = fn () => new WooCommerceImportCleanupService();
+		$container['surecart.sync.woo_import_cleanup']   = fn () => new WooCommerceImportCleanupService();
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
 
 		$container['surecart.sync.content'] = fn () => new ContentSyncService( $app );
 
 		// Admin ProductsController needs ImportState; GenericFactory uses new Class() unless FQCN is bound.
 		// Handler passes namespace+class with a leading "\" (see admin routes setNamespace); ::class has none — register both keys.
-		$products_controller_factory = fn ( $c ) => new ProductsController( $c['surecart.sync.import_state.woo'] );
-		$container[ ProductsController::class ] = $products_controller_factory;
+		$products_controller_factory                   = fn ( $c ) => new ProductsController( $c['surecart.sync.import_state.woo'] );
+		$container[ ProductsController::class ]        = $products_controller_factory;
 		$container[ '\\' . ProductsController::class ] = $products_controller_factory;
+
+		// BundlesController extends ProductsController, so it inherits the same ImportState dependency.
+		$bundles_controller_factory                   = fn ( $c ) => new BundlesController( $c['surecart.sync.import_state.woo'] );
+		$container[ BundlesController::class ]        = $bundles_controller_factory;
+		$container[ '\\' . BundlesController::class ] = $bundles_controller_factory;
 
 		// Alias the sync service.
 		$app->alias( 'sync', 'surecart.sync' );
