@@ -68,96 +68,139 @@ class ShortcodesService {
 	 * @param string $name Name of the shortcode.
 	 * @param string $block_name The registered block name.
 	 * @param array  $defaults Default attributes.
+	 * @param bool   $supports_product_id Whether the shortcode accepts a `product_id` attribute to render outside the product wrapper (escape hatch for landing pages, etc.).
 	 *
 	 * @return void
 	 */
-	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array() ) {
-		add_shortcode(
-			$name,
-			function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
-				if ( empty( $block_name ) ) {
-					return '';
-				}
-				if ( $this->cannotRenderShortcode( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
-					return $this->renderShortcodeNotice( $name );
-				}
+	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array(), $supports_product_id = false ) {
+		$render = function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+			if ( empty( $block_name ) ) {
+				return '';
+			}
+			if ( $this->cannotRenderShortcode( $name ) ) { // If we are in the editor of any Page Builders & Block is Product List, render the shortcode itself.
+				return $this->renderShortcodeNotice( $name );
+			}
 
-				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
-				wp_enqueue_global_styles(); // Enqueue global styles.
+			add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
+			wp_enqueue_global_styles(); // Enqueue global styles.
 
-				// convert comma separated attributes to array.
-				if ( is_array( $attributes ) ) {
-					foreach ( $attributes as $key => $value ) {
-						if ( strpos( $value, ',' ) !== 0 && isset( $defaults[ $key ] ) && is_array( $defaults[ $key ] ) ) {
-							$attributes[ $key ] = explode( ',', $value );
-						}
+			// convert comma separated attributes to array.
+			if ( is_array( $attributes ) ) {
+				foreach ( $attributes as $key => $value ) {
+					if ( strpos( $value, ',' ) !== 0 && isset( $defaults[ $key ] ) && is_array( $defaults[ $key ] ) ) {
+						$attributes[ $key ] = explode( ',', $value );
 					}
 				}
-
-				$shortcode_attrs = wp_parse_args(
-					$attributes,
-					$defaults
-				);
-
-				$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
-
-				// If the block is old block, we need to process it differently.
-				$block = (object) [
-					'parsed_block' => [
-						'blockName' => $block_name,
-						'attrs'     => $shortcode_attrs,
-					],
-				];
-
-				// we need to remove this since this is processed twice for some blocks.
-				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
-
-				if ( ! empty( $this->old_blocks_by_name[ $block_name ] ) ) {
-					$old_block = \SureCart::block()
-						->productPageBlocksMigration( $block, $this->old_blocks_by_name[ $block_name ] )
-						->maybeRenderOldBlockFromShortcode( $name );
-				}
-
-				if ( ! empty( $old_block ) ) {
-					remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
-					return $old_block;
-				}
-
-				$content = $this->processBlock( $block_name, $shortcode_attrs, $content );
-
-				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
-
-				return $content;
 			}
-		);
+
+			$shortcode_attrs = wp_parse_args(
+				$attributes,
+				$defaults
+			);
+
+			$shortcode_attrs = apply_filters( "shortcode_atts_{$name}", $shortcode_attrs, $shortcode_attrs, $shortcode_attrs, $name );
+
+			// If the block is old block, we need to process it differently.
+			$block = (object) [
+				'parsed_block' => [
+					'blockName' => $block_name,
+					'attrs'     => $shortcode_attrs,
+				],
+			];
+
+			// we need to remove this since this is processed twice for some blocks.
+			add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
+
+			if ( ! empty( $this->old_blocks_by_name[ $block_name ] ) ) {
+				$old_block = \SureCart::block()
+					->productPageBlocksMigration( $block, $this->old_blocks_by_name[ $block_name ] )
+					->maybeRenderOldBlockFromShortcode( $name );
+			}
+
+			if ( ! empty( $old_block ) ) {
+				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+				return $old_block;
+			}
+
+			$content = $this->processBlock( $block_name, $shortcode_attrs, $content );
+
+			remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+
+			return $content;
+		};
+
+		add_shortcode( $name, $this->maybeWrapWithProductContext( $render, $supports_product_id ) );
 	}
 
 	/**
 	 * Register a pattern file as a shortcode.
 	 *
-	 * @param string $name         Shortcode name (e.g. 'sc_product_review_list').
-	 * @param string $pattern_file Pattern filename without path or extension (e.g. 'product-review-standard').
+	 * @param string $name                Shortcode name (e.g. 'sc_product_review_list').
+	 * @param string $pattern_file        Pattern filename without path or extension (e.g. 'product-review-standard').
+	 * @param bool   $supports_product_id Whether the shortcode accepts a `product_id` attribute to render outside the product wrapper.
 	 *
 	 * @return void
 	 */
-	public function registerPatternShortcodeByName( $name, $pattern_file ) {
-		add_shortcode(
-			$name,
-			function () use ( $pattern_file ) {
-				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/' . $pattern_file . '.php';
-				$block_html = $pattern['content'] ?? '';
+	public function registerPatternShortcodeByName( $name, $pattern_file, $supports_product_id = false ) {
+		$render = function () use ( $pattern_file ) {
+			$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/' . $pattern_file . '.php';
+			$block_html = $pattern['content'] ?? '';
 
-				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
-				wp_enqueue_global_styles();
-				add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
+			add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 );
+			wp_enqueue_global_styles();
+			add_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10, 2 );
 
-				$output = wp_interactivity_process_directives( do_blocks( $block_html ) );
+			$output = wp_interactivity_process_directives( do_blocks( $block_html ) );
 
-				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
+			remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
 
-				return $output;
+			return $output;
+		};
+
+		add_shortcode( $name, $this->maybeWrapWithProductContext( $render, $supports_product_id ) );
+	}
+
+	/**
+	 * Wrap a shortcode callback so it accepts a `product_id` attribute.
+	 *
+	 * @param callable $callback            The shortcode's render callback.
+	 * @param bool     $supports_product_id Whether the shortcode opts in.
+	 *
+	 * @return callable
+	 */
+	protected function maybeWrapWithProductContext( callable $callback, bool $supports_product_id = false ) {
+		if ( ! $supports_product_id ) {
+			return $callback;
+		}
+
+		return function ( $attributes = '', $content = null ) use ( $callback ) {
+			if ( ! is_array( $attributes ) || empty( $attributes['product_id'] ) ) {
+				return $callback( $attributes, $content );
 			}
-		);
+
+			$product_id = (string) $attributes['product_id'];
+			unset( $attributes['product_id'] );
+
+			$previous = get_query_var( 'surecart_current_product' );
+
+			// Clear so sc_get_product() doesn't short-circuit to the page's product.
+			set_query_var( 'surecart_current_product', null );
+
+			$product = sc_get_product( $product_id );
+
+			// Unresolved id: render empty rather than silently showing the page's product.
+			if ( empty( $product ) || empty( $product->id ) ) {
+				set_query_var( 'surecart_current_product', $previous );
+				return '';
+			}
+
+			set_query_var( 'surecart_current_product', $product );
+			try {
+				return $callback( $attributes, $content );
+			} finally {
+				set_query_var( 'surecart_current_product', $previous );
+			}
+		};
 	}
 
 	/**

@@ -300,7 +300,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			);
 		}
 
-		// Register product review shortcode aliases with friendly names.
+		/*
+		 * Review shortcodes.
+		 */
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_rating_stars',
 			'surecart/product-review-average-rating-stars',
@@ -308,7 +310,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'size'            => '20px',
 				'fill_color'      => '',
 				'link_to_reviews' => false,
-			]
+			],
+			true
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_rating_value',
@@ -316,7 +319,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'link_to_reviews' => false,
 				'format'          => 'none',
-			]
+			],
+			true
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_total_count',
@@ -325,7 +329,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'show_label'            => true,
 				'show_for_zero_reviews' => true,
 				'link_to_reviews'       => true,
-			]
+			],
+			true
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_breakdown',
@@ -335,7 +340,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'fill_color'           => '',
 				'bar_fill_color'       => '',
 				'bar_background_color' => '',
-			]
+			],
+			true
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_add_button',
@@ -345,7 +351,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'button_type' => 'both',
 				'icon'        => 'edit-2',
 				'className'   => 'is-style-fill',
-			]
+			],
+			true
 		);
 
 		/*
@@ -354,7 +361,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		 */
 		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
 			'sc_product_review_list',
-			'product-review-standard' // Pattern file name without path or extension.
+			'product-review-standard', // Pattern file name without path or extension.
+			true
 		);
 	}
 
