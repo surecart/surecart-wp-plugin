@@ -26,6 +26,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.shortcodes'] = function () {
 			return new ShortcodesService();
 		};
+
+		$container['surecart.shortcodes.product_context_wrapper'] = function () {
+			return new ProductContextShortcodeWrapper();
+		};
 	}
 
 	/**
@@ -36,6 +40,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
+
+		// Attach cross-cutting wrappers before any shortcode is registered.
+		$container['surecart.shortcodes.product_context_wrapper']->bootstrap();
+
 		add_action( 'init', [ $this, 'registerShortcodes' ] );
 	}
 
@@ -311,7 +319,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'fill_color'      => '',
 				'link_to_reviews' => false,
 			],
-			true
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_rating_value',
@@ -320,7 +328,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'link_to_reviews' => false,
 				'format'          => 'none',
 			],
-			true
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_total_count',
@@ -330,7 +338,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'show_for_zero_reviews' => true,
 				'link_to_reviews'       => true,
 			],
-			true
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_breakdown',
@@ -341,7 +349,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'bar_fill_color'       => '',
 				'bar_background_color' => '',
 			],
-			true
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_add_button',
@@ -352,7 +360,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'icon'        => 'edit-2',
 				'className'   => 'is-style-fill',
 			],
-			true
+			[ 'supports_product_id' => true ]
 		);
 
 		/*
@@ -362,7 +370,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
 			'sc_product_review_list',
 			'product-review-standard', // Pattern file name without path or extension.
-			true
+			[ 'supports_product_id' => true ]
 		);
 	}
 
@@ -474,9 +482,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		// if shortcode exists.
 		if (
-		preg_match_all( '/' . get_shortcode_regex() . '/s', $content, $matches )
-		&& array_key_exists( 2, $matches )
-		&& in_array( $name, $matches[2] )
+			preg_match_all( '/' . get_shortcode_regex() . '/s', $content, $matches )
+			&& array_key_exists( 2, $matches )
+			&& in_array( $name, $matches[2] )
 		) {
 			foreach ( (array) $matches[0] as $key => $value ) {
 				if ( strpos( $value, $name ) !== false ) {

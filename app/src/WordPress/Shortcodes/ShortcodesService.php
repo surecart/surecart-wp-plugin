@@ -65,14 +65,14 @@ class ShortcodesService {
 	/**
 	 * Register shortcode by name
 	 *
-	 * @param string $name Name of the shortcode.
+	 * @param string $name       Name of the shortcode.
 	 * @param string $block_name The registered block name.
-	 * @param array  $defaults Default attributes.
-	 * @param bool   $supports_product_id Whether the shortcode accepts a `product_id` attribute to render outside the product wrapper (escape hatch for landing pages, etc.).
+	 * @param array  $defaults   Default attributes.
+	 * @param array  $options    Opaque options bag forwarded to render-callback listeners.
 	 *
 	 * @return void
 	 */
-	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array(), $supports_product_id = false ) {
+	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array(), array $options = array() ) {
 		$render = function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
 			if ( empty( $block_name ) ) {
 				return '';
@@ -129,19 +129,19 @@ class ShortcodesService {
 			return $content;
 		};
 
-		add_shortcode( $name, $this->maybeWrapWithProductContext( $render, $supports_product_id ) );
+		add_shortcode( $name, $this->prepareRenderCallback( $render, $name, $options ) );
 	}
 
 	/**
 	 * Register a pattern file as a shortcode.
 	 *
-	 * @param string $name                Shortcode name (e.g. 'sc_product_review_list').
-	 * @param string $pattern_file        Pattern filename without path or extension (e.g. 'product-review-standard').
-	 * @param bool   $supports_product_id Whether the shortcode accepts a `product_id` attribute to render outside the product wrapper.
+	 * @param string $name         Shortcode name (e.g. 'sc_product_review_list').
+	 * @param string $pattern_file Pattern filename without path or extension (e.g. 'product-review-standard').
+	 * @param array  $options      Opaque options bag forwarded to render-callback listeners. See registerBlockShortcodeByName().
 	 *
 	 * @return void
 	 */
-	public function registerPatternShortcodeByName( $name, $pattern_file, $supports_product_id = false ) {
+	public function registerPatternShortcodeByName( $name, $pattern_file, array $options = array() ) {
 		$render = function () use ( $pattern_file ) {
 			$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/' . $pattern_file . '.php';
 			$block_html = $pattern['content'] ?? '';
@@ -157,50 +157,31 @@ class ShortcodesService {
 			return $output;
 		};
 
-		add_shortcode( $name, $this->maybeWrapWithProductContext( $render, $supports_product_id ) );
+		add_shortcode( $name, $this->prepareRenderCallback( $render, $name, $options ) );
 	}
 
 	/**
-	 * Wrap a shortcode callback so it accepts a `product_id` attribute.
+	 * Let other domains wrap the render callback before it's registered.
 	 *
-	 * @param callable $callback            The shortcode's render callback.
-	 * @param bool     $supports_product_id Whether the shortcode opts in.
+	 * Hook `surecart/shortcodes/render_callback` to add cross-cutting concerns
+	 * (e.g. product context resolution) without coupling them to this service.
+	 * `$options` is forwarded opaquely; listeners pick the keys they care about.
+	 *
+	 * @param callable $callback Render callback.
+	 * @param string   $name     Shortcode name.
+	 * @param array    $options  Caller-supplied options bag.
 	 *
 	 * @return callable
 	 */
-	protected function maybeWrapWithProductContext( callable $callback, bool $supports_product_id = false ) {
-		if ( ! $supports_product_id ) {
-			return $callback;
-		}
-
-		return function ( $attributes = '', $content = null ) use ( $callback ) {
-			if ( ! is_array( $attributes ) || empty( $attributes['product_id'] ) ) {
-				return $callback( $attributes, $content );
-			}
-
-			$product_id = (string) $attributes['product_id'];
-			unset( $attributes['product_id'] );
-
-			$previous = get_query_var( 'surecart_current_product' );
-
-			// Clear so sc_get_product() doesn't short-circuit to the page's product.
-			set_query_var( 'surecart_current_product', null );
-
-			$product = sc_get_product( $product_id );
-
-			// Unresolved id: render empty rather than silently showing the page's product.
-			if ( empty( $product ) || empty( $product->id ) ) {
-				set_query_var( 'surecart_current_product', $previous );
-				return '';
-			}
-
-			set_query_var( 'surecart_current_product', $product );
-			try {
-				return $callback( $attributes, $content );
-			} finally {
-				set_query_var( 'surecart_current_product', $previous );
-			}
-		};
+	protected function prepareRenderCallback( callable $callback, $name, array $options = array() ) {
+		/**
+		 * Filter the render callback for a shortcode before it's registered.
+		 *
+		 * @param callable $callback Render callback.
+		 * @param string   $name     Shortcode name.
+		 * @param array    $options  Caller-supplied options bag. Listeners pick the keys they care about.
+		 */
+		return apply_filters( 'surecart/shortcodes/render_callback', $callback, $name, $options );
 	}
 
 	/**
