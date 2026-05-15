@@ -105,7 +105,6 @@ const TABS = [
 		icon: 'star',
 		label: __('Reviews', 'surecart'),
 		requiresToken: true,
-		badge: true,
 	},
 	{
 		tab: 'tax_protocol',
