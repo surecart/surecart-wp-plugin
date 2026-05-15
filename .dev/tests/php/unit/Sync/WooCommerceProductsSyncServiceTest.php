@@ -923,6 +923,8 @@ namespace SureCart\Tests\Sync {
 
 		/**
 		 * @group woo_import
+		 * @runInSeparateProcess
+		 * @preserveGlobalState disabled
 		 */
 		public function test_get_or_create_collections_finds_existing_collection() {
 			$term         = (object) [ 'name' => 'Shoes', 'slug' => 'shoes', 'description' => '', 'term_id' => 1 ];
@@ -946,6 +948,8 @@ namespace SureCart\Tests\Sync {
 
 		/**
 		 * @group woo_import
+		 * @runInSeparateProcess
+		 * @preserveGlobalState disabled
 		 */
 		public function test_get_or_create_collections_creates_new_when_not_found() {
 			$term       = (object) [ 'name' => 'Hats', 'slug' => 'hats', 'description' => 'Hat collection', 'term_id' => 2 ];
@@ -969,6 +973,8 @@ namespace SureCart\Tests\Sync {
 
 		/**
 		 * @group woo_import
+		 * @runInSeparateProcess
+		 * @preserveGlobalState disabled
 		 */
 		public function test_get_or_create_collections_uses_cache_on_second_call() {
 			$term       = (object) [ 'name' => 'Boots', 'slug' => 'boots', 'description' => '', 'term_id' => 3 ];
@@ -996,6 +1002,8 @@ namespace SureCart\Tests\Sync {
 
 		/**
 		 * @group woo_import
+		 * @runInSeparateProcess
+		 * @preserveGlobalState disabled
 		 */
 		public function test_get_or_create_collections_normalizes_slug_to_lowercase() {
 			$term       = (object) [ 'name' => 'Summer Sale', 'slug' => 'Summer-Sale', 'description' => '', 'term_id' => 4 ];
@@ -1015,6 +1023,8 @@ namespace SureCart\Tests\Sync {
 
 		/**
 		 * @group woo_import
+		 * @runInSeparateProcess
+		 * @preserveGlobalState disabled
 		 */
 		public function test_get_or_create_collections_handles_wp_error_from_create() {
 			$term = (object) [ 'name' => 'Error Cat', 'slug' => 'error-cat', 'description' => '', 'term_id' => 5 ];
