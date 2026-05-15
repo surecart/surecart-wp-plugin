@@ -239,28 +239,21 @@ class ProductReviewShortcodesTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Non-opted-in shortcodes leave `product_id` untouched in shortcode attrs —
-	 * scope guard for the deliberate decision to keep this an embed-anywhere
-	 * escape hatch limited to review shortcodes for now.
+	 * Without `supports_product_id` the wrapper returns the original callback
+	 * unchanged — scope guard for the deliberate decision to keep this an
+	 * embed-anywhere escape hatch limited to review shortcodes for now.
 	 *
 	 * @group product-reviews-product-id
 	 */
-	public function test_product_id_is_not_stripped_for_non_opted_in_shortcodes() {
-		$this->registerShortcodes();
+	public function test_wrapper_passes_through_when_not_opted_in() {
+		$wrapper  = new \SureCart\WordPress\Shortcodes\ProductContextShortcodeWrapper();
+		$original = function ( $attrs, $content ) {
+			return 'rendered';
+		};
 
-		$captured = null;
-		add_filter(
-			'shortcode_atts_sc_customer_orders',
-			function ( $attrs ) use ( &$captured ) {
-				$captured = $attrs;
-				return $attrs;
-			}
-		);
+		$wrapped = $wrapper->maybeWrap( $original, 'sc_anything', [] );
 
-		do_shortcode( '[sc_customer_orders product_id="prod_anything"]' );
-
-		$this->assertIsArray( $captured );
-		$this->assertArrayHasKey( 'product_id', $captured, 'product_id passes through unchanged on non-opted-in shortcodes.' );
+		$this->assertSame( $original, $wrapped, 'maybeWrap must pass through when supports_product_id is not set.' );
 	}
 
 	/**

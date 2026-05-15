@@ -27,9 +27,12 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return new ShortcodesService();
 		};
 
-		$container['surecart.shortcodes.product_context_wrapper'] = function () {
-			return new ProductContextShortcodeWrapper();
-		};
+		// Guarded so re-running register() in test setUp + helper doesn't try to overwrite a frozen service.
+		if ( ! isset( $container['surecart.shortcodes.product_context_wrapper'] ) ) {
+			$container['surecart.shortcodes.product_context_wrapper'] = function () {
+				return new ProductContextShortcodeWrapper();
+			};
+		}
 	}
 
 	/**
@@ -41,8 +44,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$this->container = $container;
 
-		// Attach cross-cutting wrappers before any shortcode is registered.
-		$container['surecart.shortcodes.product_context_wrapper']->bootstrap();
+		// Attach cross-cutting wrappers before any shortcode is registered. Guarded so repeated bootstraps don't double-hook.
+		if ( ! has_filter( 'surecart/shortcodes/render_callback' ) ) {
+			$container['surecart.shortcodes.product_context_wrapper']->bootstrap();
+		}
 
 		add_action( 'init', [ $this, 'registerShortcodes' ] );
 	}
