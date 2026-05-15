@@ -482,9 +482,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 
 		// if shortcode exists.
 		if (
-			preg_match_all( '/' . get_shortcode_regex() . '/s', $content, $matches )
-			&& array_key_exists( 2, $matches )
-			&& in_array( $name, $matches[2] )
+		preg_match_all( '/' . get_shortcode_regex() . '/s', $content, $matches )
+		&& array_key_exists( 2, $matches )
+		&& in_array( $name, $matches[2] )
 		) {
 			foreach ( (array) $matches[0] as $key => $value ) {
 				if ( strpos( $value, $name ) !== false ) {
