@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { ExternalLink } from '@wordpress/components';
 import { ScSwitch, ScAlert, ScIcon } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -78,20 +79,6 @@ export default () => {
 		);
 	}
 
-	// If the MCP Adapter plugin is not installed or not active, show install/activate prompt.
-	if (!isAdapterActive) {
-		return (
-			<SettingsTemplate
-				title={__('MCP', 'surecart')}
-				icon={<ScIcon name="cpu"></ScIcon>}
-				onSubmit={onSubmit}
-				noButton
-			>
-				<MCPAdapterNotice isInstalled={isAdapterInstalled} />
-			</SettingsTemplate>
-		);
-	}
-
 	return (
 		<SettingsTemplate
 			title={__('MCP', 'surecart')}
@@ -102,10 +89,17 @@ export default () => {
 
 			<SettingsBox
 				title={__('Enable Abilities', 'surecart')}
-				description={__(
-					'Choose what AI assistants are allowed to do with your store data.',
-					'surecart'
-				)}
+				description={
+					<>
+						{__(
+							'Choose what AI assistants are allowed to do with your store data.',
+							'surecart'
+						)}{' '}
+						<ExternalLink href="https://surecart.com/docs/surecart-abilities/">
+							{__('Learn more', 'surecart')}
+						</ExternalLink>
+					</>
+				}
 			>
 				<ScSwitch
 					checked={abilitiesEnabled}
@@ -161,10 +155,16 @@ export default () => {
 				)}
 			</SettingsBox>
 
+			{/* Adapter card is non-blocking — abilities are registered via wp_register_ability() regardless of which MCP server reads them. */}
+			{!isAdapterActive && (
+				<MCPAdapterNotice isInstalled={isAdapterInstalled} />
+			)}
+
 			{abilitiesEnabled && (
 				<AIClientInstructions
 					restUrl={mcpData.rest_url}
 					appPasswordsUrl={mcpData.app_passwords_url}
+					isAdapterActive={isAdapterActive}
 				/>
 			)}
 		</SettingsTemplate>

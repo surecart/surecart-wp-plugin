@@ -37,20 +37,31 @@ class WebhooksMiddleware {
 	/**
 	 * Verify the signature.
 	 *
+	 * Fails closed when no signing secret is registered — see CVE-2026-7655.
+	 * Uses hash_equals() for a timing-safe comparison.
+	 *
 	 * @return bool
 	 */
 	public function verifySignature() {
-		return $this->getSignature() === $this->computeHash();
+		$secret = $this->getSigningSecret();
+		if ( ! is_string( $secret ) || '' === $secret ) {
+			return false;
+		}
+		return hash_equals( (string) $this->computeHash( $secret ), (string) $this->getSignature() );
 	}
 
 	/**
 	 * Compute an HMAC with the SHA256 hash function.
 	 * Use the endpoint’s signing secret as the key, and use the signed_payload string as the message.
 	 *
+	 * @param string|null $secret Optional signing secret. Falls back to getSigningSecret() when null.
 	 * @return string
 	 */
-	public function computeHash() {
-		return hash_hmac( 'sha256', $this->getSignedPayload(), $this->getSigningSecret() );
+	public function computeHash( $secret = null ) {
+		if ( null === $secret ) {
+			$secret = $this->getSigningSecret();
+		}
+		return hash_hmac( 'sha256', $this->getSignedPayload(), (string) $secret );
 	}
 
 	/**

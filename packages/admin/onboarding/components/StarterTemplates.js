@@ -3,18 +3,29 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Step from './Step';
 import ProgressIndicator from './ProgressIndicator';
+import { ScIcon } from '@surecart/components-react';
+import { IMPORT_WOO_PRODUCTS_TEMPLATE } from '../constants';
 
 const templates = [
 	{
 		id: null,
 		name: __('Start From Scratch', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/scratch.png`,
+		icon: 'plus',
 	},
 	{
 		id: 'seed',
 		name: __('Start With Demo Products', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/seed.jpg`,
+		icon: 'shirt',
 	},
+	...(scData?.is_woocommerce_active
+		? [
+				{
+					id: IMPORT_WOO_PRODUCTS_TEMPLATE,
+					name: __('Import Products from Woo', 'surecart'),
+					icon: 'woo-text-logo',
+				},
+		  ]
+		: []),
 ];
 
 export default ({
@@ -45,16 +56,20 @@ export default ({
 				css={css`
 					display: grid;
 					grid-template-columns: repeat(1, 1fr);
-					gap: 20px;
+					gap: 24px;
 					padding: 20px 0 0;
 					margin: 0 auto;
 					@media (min-width: 680px) {
 						padding: 30px 20px;
-						max-width: 780px;
-						grid-template-columns: repeat(2, 1fr);
+						max-width: 600px;
+						grid-template-columns: repeat(
+							${templates?.length || 3},
+							1fr
+						);
 					}
 					@media (min-width: 1024px) {
-						max-width: 760px;
+						max-width: 600px;
+						height: 208px;
 					}
 				`}
 			>
@@ -79,93 +94,63 @@ export default ({
 function TemplateItem({ active, template, onItemClick }) {
 	return (
 		<div
+			role="button"
+			tabIndex={0}
+			aria-pressed={active}
 			css={css`
-				aspect-ratio: 1.16/1;
 				cursor: pointer;
-				background-color: #f3f3f3;
+				background-color: ${active
+					? 'var(--sc-color-brand-primary)'
+					: '#ffffff'};
 				border-radius: 12px;
 				overflow: hidden;
 				color: white;
 				border: 2px solid #f0f0f1;
-				box-shadow: 0 0 0 ${active ? '3px' : '0px'}
-					var(--sc-color-brand-primary);
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-				transition: box-shadow 200ms ease;
+				padding: 24px 30px;
+				display: flex;
+				flex-direction: column;
+				gap: 16px;
+				align-items: center;
 			`}
 			onClick={onItemClick}
-			style={{
-				backgroundImage: `url(${template?.imgUrl})`,
+			onKeyDown={(e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					onItemClick();
+				}
 			}}
 		>
 			<div
 				css={css`
-					position: relative;
-					width: 100%;
-					height: 100%;
-					border-radius: 12px;
+					width: 75px;
+					height: 75px;
+					display: flex;
+					padding: 15px;
+					align-items: center;
+					justify-content: center;
+					color: ${active ? '#ffffff' : '#111827'};
 				`}
 			>
-				<div
+				<ScIcon
 					css={css`
-						position: absolute;
-						inset: 0;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						transition: all 200ms ease;
-						background-color: ${active
-							? 'var(--sc-color-brand-primary)'
-							: 'var(--sc-color-gray-900)'};
-						opacity: ${active ? 1 : 0.4};
-						mix-blend-mode: multiply;
-						border-radius: 12px;
+						width: 100%;
+						height: 100%;
 					`}
+					name={template.icon}
+					mutate={'woo-text-logo' !== template.icon}
 				/>
-				<div
-					css={css`
-						position: absolute;
-						left: 50%;
-						top: 50%;
-						transform: translate(-50%, -50%);
-					`}
-				>
-					<span
-						css={css`
-							opacity: ${active ? '1' : '0'};
-							transition: opacity 200ms ease;
-						`}
-					>
-						<svg
-							width="32"
-							height="32"
-							viewBox="0 0 32 32"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M0 16C0 7.1875 7.125 0 16 0C24.8125 0 32 7.1875 32 16C32 24.875 24.8125 32 16 32C7.125 32 0 24.875 0 16ZM23.1875 13.25C23.875 12.5625 23.875 11.5 23.1875 10.8125C22.5 10.125 21.4375 10.125 20.75 10.8125L14 17.5625L11.1875 14.8125C10.5 14.125 9.4375 14.125 8.75 14.8125C8.0625 15.5 8.0625 16.5625 8.75 17.25L12.75 21.25C13.4375 21.9375 14.5 21.9375 15.1875 21.25L23.1875 13.25Z"
-								fill="white"
-							/>
-						</svg>
-					</span>
-				</div>
-				<span
-					css={css`
-						font-size: 18px;
-						font-weight: 500;
-						position: absolute;
-						bottom: 16px;
-						left: 50%;
-						transform: translateX(-50%);
-						white-space: nowrap;
-					`}
-				>
-					{template.name}
-				</span>
 			</div>
+			<span
+				css={css`
+					font-size: 15px;
+					line-height: 24px;
+					font-weight: 600;
+					text-align: center;
+					color: ${active ? '#ffffff' : '#111827'};
+				`}
+			>
+				{template.name}
+			</span>
 		</div>
 	);
 }

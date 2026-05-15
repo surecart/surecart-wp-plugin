@@ -367,6 +367,7 @@ export interface Variant {
   product: string | Product;
   sku?: string | null;
   display_amount?: string;
+  has_unlimited_stock?: boolean | null;
   downloads_enabled?: boolean | null;
   current_release_download?: string | Download | null;
   downloads?: {
@@ -445,6 +446,7 @@ export interface Product extends Object {
   };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
+  has_unlimited_stock: boolean;
   stock: number;
   available_stock: number;
   held_stock: number;
@@ -1405,7 +1407,7 @@ export type TaxZones = {
   [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
 };
 
-export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type RuleName = 'total' | 'coupons' | 'products' | 'prices' | 'shipping_country' | 'billing_country' | 'processors';
 export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
 export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
 export interface RuleGroup {

@@ -44,6 +44,24 @@ class Variant extends Model {
 	}
 
 	/**
+	 * Get whether stock tracking is effectively disabled for this variant.
+	 * Returns null when not set on the variant, so callers can fall back to the product.
+	 *
+	 * @return bool|null
+	 */
+	public function getHasUnlimitedStockAttribute() {
+		if ( null === $this->stock_enabled ) {
+			return null;
+		}
+
+		if ( empty( $this->stock_enabled ) ) {
+			return true;
+		}
+
+		return (bool) $this->allow_out_of_stock_purchases;
+	}
+
+	/**
 	 * Set the current_release_download attribute
 	 *
 	 * @param  mixed $value Download properties.

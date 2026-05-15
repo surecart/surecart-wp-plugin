@@ -97,6 +97,9 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/list-orders',
 			'surecart/get-order',
 			'surecart/get-order-statistics',
+			// Abandoned Checkouts.
+			'surecart/list-abandoned-checkouts',
+			'surecart/get-abandoned-checkout',
 			// Customers.
 			'surecart/list-customers',
 			'surecart/get-customer',
