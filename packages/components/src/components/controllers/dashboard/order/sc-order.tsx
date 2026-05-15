@@ -83,8 +83,6 @@ export class ScOrder {
           'line_item.bundle_line_item',
           'variant.image',
           'price.product',
-          'product.bundle_items',
-          'bundle_item.component_product',
           'checkout.manual_payment_method',
           'checkout.payment_method',
           'checkout.selected_shipping_choice',
@@ -169,15 +167,7 @@ export class ScOrder {
       <Fragment>
         {bundleParents.map(parent => {
           const components = componentsByParent[parent.id] || [];
-          return (
-            <sc-bundle-line-item
-              key={parent.id}
-              item={parent}
-              components={components}
-              editable={false}
-              removable={false}
-            />
-          );
+          return <sc-bundle-line-item key={parent.id} item={parent} components={components} editable={false} removable={false} />;
         })}
 
         {regular.map(item => {

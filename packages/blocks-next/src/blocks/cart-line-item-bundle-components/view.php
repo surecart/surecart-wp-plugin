@@ -5,9 +5,6 @@
 			array(
 				'class'                => 'sc-cart-line-item-bundle-components',
 				'data-wp-bind--hidden' => '!state.hasBundleComponents',
-				// Per-block setting flows down to descendants via Interactivity
-				// context. The qty getter reads `showSingleQuantity` to decide
-				// whether to render "× 1" or return empty.
 				'data-wp-context'      => wp_json_encode(
 					array(
 						'showSingleQuantity' => (bool) ( $attributes['showSingleQuantity'] ?? true ),

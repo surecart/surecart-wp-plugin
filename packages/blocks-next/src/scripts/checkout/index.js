@@ -78,10 +78,13 @@ const { state, actions } = store('surecart/checkout', {
 		oldCheckout: {},
 
 		/**
-		 * Get the number of items in checkout.
+		 * Get the number of items in checkout. Sums quantities of top-level items only.
 		 */
 		get itemsCount() {
-			return state.checkout?.line_items_count || 0;
+			return state.cartLineItems.reduce(
+				(sum, item) => sum + (Number(item?.quantity) || 0),
+				0
+			);
 		},
 
 		/**
@@ -235,9 +238,7 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * "× N" multiplier for a bundle component row. Returns '' when the
-		 * block's `showSingleQuantity` attribute is off and qty is 1, so the
-		 * span collapses via `:empty`.
+		 * "× N" multiplier for a bundle component row.
 		 */
 		get lineItemBundleComponentQty() {
 			const { bundle_component, showSingleQuantity = true } =

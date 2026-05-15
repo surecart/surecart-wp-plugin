@@ -54,14 +54,14 @@ Renders a bundle parent line item with its component items nested inside.
 
 ### Depends on
 
-- [sc-icon](../icon)
 - [sc-quantity-select](../quantity-select)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-bundle-line-item --> sc-icon
   sc-bundle-line-item --> sc-quantity-select
+  sc-bundle-line-item --> sc-icon
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-bundle-line-item
   sc-order --> sc-bundle-line-item

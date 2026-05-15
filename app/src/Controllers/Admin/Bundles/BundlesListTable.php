@@ -270,7 +270,6 @@ class BundlesListTable extends ListTable {
 			array(
 				'prices',
 				'bundle_items',
-				'bundle_items.component_product',
 				'product_collections',
 				'featured_product_media',
 				'commission_structure',

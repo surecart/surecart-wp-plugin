@@ -54,8 +54,8 @@ graph TD;
   sc-line-items --> sc-bundle-line-item
   sc-line-items --> sc-product-line-item
   sc-line-items --> sc-swap
-  sc-bundle-line-item --> sc-icon
   sc-bundle-line-item --> sc-quantity-select
+  sc-bundle-line-item --> sc-icon
   sc-quantity-select --> sc-icon
   sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select

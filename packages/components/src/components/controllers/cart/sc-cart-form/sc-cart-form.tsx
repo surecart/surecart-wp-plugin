@@ -13,8 +13,6 @@ const query = {
     'line_item.price',
     'line_item.bundle_line_item',
     'price.product',
-    'product.bundle_items',
-    'bundle_item.component_product',
     'customer',
     'customer.shipping_address',
     'payment_intent',

@@ -42,8 +42,6 @@ export const expand = [
   'shipping_choices',
   'shipping_choice.shipping_method',
   'invoice',
-  'product.bundle_items',
-  'bundle_item.component_product',
   'line_item.bundle_line_item',
 ];
 
