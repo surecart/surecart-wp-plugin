@@ -80,11 +80,11 @@ class CreatePrice extends AbstractAbility {
 				),
 				'ad_hoc_min_amount'        => array(
 					'type'        => 'integer',
-					'description' => __( 'Optional minimum allowed amount (smallest currency unit) for ad-hoc prices.', 'surecart' ),
+					'description' => __( 'Optional minimum allowed amount (smallest currency unit) for ad-hoc prices. Only applicable when ad_hoc is true; ignored otherwise.', 'surecart' ),
 				),
 				'ad_hoc_max_amount'        => array(
 					'type'        => 'integer',
-					'description' => __( 'Optional maximum allowed amount (smallest currency unit) for ad-hoc prices.', 'surecart' ),
+					'description' => __( 'Optional maximum allowed amount (smallest currency unit) for ad-hoc prices. Only applicable when ad_hoc is true; ignored otherwise.', 'surecart' ),
 				),
 				'recurring_interval'       => array(
 					'type'        => 'string',
@@ -153,10 +153,18 @@ class CreatePrice extends AbstractAbility {
 			$data['ad_hoc'] = true;
 
 			if ( isset( $input['ad_hoc_min_amount'] ) ) {
-				$data['ad_hoc_min_amount'] = absint( $input['ad_hoc_min_amount'] );
+				$ad_hoc_min = intval( $input['ad_hoc_min_amount'] );
+				if ( $ad_hoc_min < 0 ) {
+					return $this->error( 'invalid_ad_hoc_min_amount', __( 'ad_hoc_min_amount must be zero or greater.', 'surecart' ) );
+				}
+				$data['ad_hoc_min_amount'] = $ad_hoc_min;
 			}
 			if ( isset( $input['ad_hoc_max_amount'] ) ) {
-				$data['ad_hoc_max_amount'] = absint( $input['ad_hoc_max_amount'] );
+				$ad_hoc_max = intval( $input['ad_hoc_max_amount'] );
+				if ( $ad_hoc_max < 0 ) {
+					return $this->error( 'invalid_ad_hoc_max_amount', __( 'ad_hoc_max_amount must be zero or greater.', 'surecart' ) );
+				}
+				$data['ad_hoc_max_amount'] = $ad_hoc_max;
 			}
 
 			if ( isset( $data['ad_hoc_min_amount'], $data['ad_hoc_max_amount'] ) && $data['ad_hoc_min_amount'] > $data['ad_hoc_max_amount'] ) {
