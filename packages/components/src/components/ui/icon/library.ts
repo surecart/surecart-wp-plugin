@@ -27,7 +27,7 @@ function writeRegistry(next: IconLibrary[]): void {
 
 function redrawForLibrary(name: string): void {
   watchedIcons.forEach(icon => {
-    if (icon.library === name) icon.redraw?.();
+    if (icon.library === name) icon.redraw();
   });
 }
 
@@ -55,9 +55,7 @@ export function registerIconLibrary(name: string, options: IconLibraryOptions) {
   next.push({ name, ...options });
   writeRegistry(next);
 
-  redrawForLibrary(name);
-
-  // Broadcast so icons in other bundles can redraw too.
+  // Notify all bundles — listener below handles redraws.
   try {
     win?.dispatchEvent(new CustomEvent(EVENT_REGISTERED, { detail: { name } }));
   } catch {}
