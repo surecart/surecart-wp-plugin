@@ -86,6 +86,7 @@ declare global {
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
+    scIconLibraries: IconLibrary[];
   }
 }
 

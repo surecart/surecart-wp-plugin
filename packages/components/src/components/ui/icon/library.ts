@@ -9,10 +9,10 @@ interface WatchedIcon {
 }
 
 // Namespaced key to avoid colliding with `window.registry` from other plugins.
-const REGISTRY_KEY = '__sureCartIconLibraryRegistry__';
+const REGISTRY_KEY = 'scIconLibraries';
 const EVENT_REGISTERED = 'surecart:icon-library-registered';
 
-const win: any = typeof window !== 'undefined' ? window : undefined;
+const win = typeof window !== 'undefined' ? window : undefined;
 const watchedIcons = new Set<WatchedIcon>();
 
 function readRegistry(): IconLibrary[] {
