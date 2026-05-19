@@ -1,10 +1,16 @@
 import { ObservableMap } from '@stencil/store';
-import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
+
+export type IconLibraryResolver = (name: string) => string;
+export type IconLibraryMutator = (svg: SVGElement) => void;
+
+export interface IconLibraryOptions {
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
 
 declare global {
   interface Window {
-    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
@@ -38,7 +44,7 @@ declare global {
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
-    registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
+    registerSureCartIconLibrary: (name: string, options: IconLibraryOptions) => void;
     scIcons: { path: string };
     scData: {
       cdn_root: string;
@@ -92,10 +98,8 @@ interface Model {
   updated_at: number;
 }
 
-export interface IconLibrary {
+export interface IconLibrary extends IconLibraryOptions {
   name: string;
-  resolver: IconLibraryResolver;
-  mutator?: IconLibraryMutator;
 }
 export interface ChoiceItem extends Object {
   value: string;

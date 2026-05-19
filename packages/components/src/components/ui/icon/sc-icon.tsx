@@ -1,5 +1,5 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { getIconLibrary } from './library';
+import { getIconLibrary, watchIcon, unwatchIcon } from './library';
 import { requestIcon } from './request';
 import { __ } from '@wordpress/i18n';
 
@@ -53,7 +53,13 @@ export class ScIcon {
   }
 
   componentWillLoad() {
+    // Get redrawn if our library is registered after we mount.
+    watchIcon(this);
     this.setIcon();
+  }
+
+  disconnectedCallback() {
+    unwatchIcon(this);
   }
 
   getLabel() {
