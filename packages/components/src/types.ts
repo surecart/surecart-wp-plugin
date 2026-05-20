@@ -561,25 +561,10 @@ export interface LineItem extends Object {
   is_swappable?: boolean;
   note?: string;
   display_note?: string;
-  /**
-   * Whether this line item is a bundle component (auto-generated child).
-   * Always paired with a `bundle_line_item` expansion pointing at the parent.
-   * Component LIs always have unit_amount: 0 and tax_amount: 0.
-   */
   component_line_item?: boolean;
-  /** On a component LI, the parent bundle line item (expansion). */
-  bundle_line_item?: string | LineItem;
-  /**
-   * On the bundle parent LI, the shopper's variant selections, keyed by
-   * component_product_id. Required for any component product that has variants.
-   */
+  component_line_items?: { data: LineItem[] };
   bundle_component_variants?: Record<string, string>;
-  /**
-   * On a component LI, the portion of the bundle's price allocated to this
-   * component (used internally for tax calculation). Cents.
-   */
   bundle_allocated_unit_amount?: number;
-  /** Tax rate (decimal, e.g. 0.0875). Populated on both parent and components. */
   tax_rate?: number;
 }
 

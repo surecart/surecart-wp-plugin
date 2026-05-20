@@ -192,18 +192,11 @@ const { state, actions } = store('surecart/checkout', {
 
 		/**
 		 * Get the bundle components for the current line item (from context).
-		 *
-		 * Children point at their parent via the bundle_line_item expansion;
-		 * we group by the parent line_item's id.
 		 */
 		get bundleComponents() {
 			const { line_item } = getContext();
 			if (!line_item?.price?.product?.bundle) return [];
-			return (state?.checkout?.line_items?.data || []).filter(
-				(item) =>
-					item?.component_line_item &&
-					item?.bundle_line_item?.id === line_item.id
-			);
+			return line_item?.component_line_items?.data || [];
 		},
 
 		/**

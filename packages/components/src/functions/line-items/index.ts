@@ -13,21 +13,15 @@ export const groupBundleLineItems = (items: LineItem[] = []) => {
   const componentsByParent: Record<string, LineItem[]> = {};
 
   (items || []).forEach(item => {
+    // Skip components surfaced at the top level — they're rendered nested.
     if (item?.component_line_item) {
-      const parent = item?.bundle_line_item as LineItem | undefined;
-      const parentId = parent?.id;
-      if (parentId) {
-        if (!componentsByParent[parentId]) {
-          componentsByParent[parentId] = [];
-        }
-        componentsByParent[parentId].push(item);
-      }
       return;
     }
 
     const product = (item?.price as Price)?.product as Product | undefined;
     if (product?.bundle) {
       bundleParents.push(item);
+      componentsByParent[item.id] = item?.component_line_items?.data || [];
       return;
     }
 
@@ -57,14 +51,16 @@ export const convertLineItemsToLineItemData = (
   quantity: number;
   variant_id?: string;
 }> => {
-  return (lineItems?.data || []).map(item => {
-    return {
-      ...(!!item?.id ? { id: item.id } : {}),
-      price_id: item.price.id,
-      quantity: item.quantity,
-      variant_id: item.variant?.id,
-    };
-  });
+  return (lineItems?.data || [])
+    .filter(item => !item?.component_line_item)
+    .map(item => {
+      return {
+        ...(!!item?.id ? { id: item.id } : {}),
+        price_id: item.price.id,
+        quantity: item.quantity,
+        variant_id: item.variant?.id,
+      };
+    });
 };
 
 export const addLineItem = (lineItems: RecursivePartial<lineItems>, data: { price_id: string; quantity: number }) => {

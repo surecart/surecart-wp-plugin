@@ -43,17 +43,13 @@ class LineItem extends Model {
 	}
 
 	/**
-	 * The parent bundle line item this component belongs to (expandable).
+	 * The component line items belonging to this bundle parent (expandable).
 	 *
-	 * Only present on component line items. The parent is the row the customer
-	 * actually sees priced; this expansion lets a component find its parent so
-	 * the UI can group siblings under it.
-	 *
-	 * @param string|array $value Line item id or expanded payload.
+	 * @param object|array $value Collection payload.
 	 * @return void
 	 */
-	public function setBundleLineItemAttribute( $value ) {
-		$this->setRelation( 'bundle_line_item', $value, self::class );
+	public function setComponentLineItemsAttribute( $value ) {
+		$this->setCollection( 'component_line_items', $value, self::class );
 	}
 
 	/**
