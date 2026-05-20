@@ -583,7 +583,7 @@ class ProductPageBlock {
 					return ( $option_values[ 'option_' . $option_number ] ?? null ) === $option_value;
 				},
 
-				// Shopify-style: pill stays visible when sold out, but selecting it disables Add to cart.
+				// Sold-out pill stays visible (so the full variant matrix is shown) but selecting it disables Add to cart.
 				'isBundleComponentOptionUnavailable' => function () {
 					$context = wp_interactivity_get_context();
 					if ( ! empty( $context['componentHasUnlimitedStock'] ) ) {

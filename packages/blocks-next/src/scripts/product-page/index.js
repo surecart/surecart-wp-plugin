@@ -326,9 +326,8 @@ const { state, actions } = store('surecart/product-page', {
 		},
 
 		/**
-		 * Bundle pill: Shopify-style sold-out marker. Stays visible but
-		 * marks the pill as unavailable so the shopper sees the full
-		 * variant matrix.
+		 * Sold-out marker for a bundle pill: stays visible so the shopper
+		 * sees the full variant matrix, but the pill is marked unavailable.
 		 */
 		get isBundleComponentOptionUnavailable() {
 			const context = getContext();
