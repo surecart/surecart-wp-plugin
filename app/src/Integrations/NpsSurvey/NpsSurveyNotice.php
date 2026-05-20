@@ -54,7 +54,7 @@ class NpsSurveyNotice {
 		add_filter( 'nps_survey_should_skip_status_update', [ $this, 'handleStatusUpdate' ], 10, 2 );
 		add_filter( 'nps_survey_vars', [ $this, 'ensureNpsSurveyVars' ], 10 );
 
-		// The notice only renders in the admin footer, so skip front-end work entirely.
+		// Asset loading and the admin footer notice are admin-only; the nps_survey_* filters above stay registered unconditionally because the upstream library may invoke them from admin-AJAX or REST contexts where is_admin() is false.
 		if ( ! is_admin() ) {
 			return;
 		}

@@ -287,9 +287,7 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 	}
 
 	public function test_force_nps_asset_src_returns_null_when_src_is_null(): void {
-		$this->setUpSureCartScreen();
-
-		// Query Monitor enumerates dependency-only handles with src=null on the front end.
+		// The is_string( $src ) guard short-circuits before any screen check, so no screen setup needed.
 		$result = $this->notice->forceNpsAssetSrc( null, 'nps-survey-script' );
 
 		$this->assertNull( $result );

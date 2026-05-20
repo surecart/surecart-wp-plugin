@@ -82,9 +82,11 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$notice = $container['surecart.nps.survey.notice'];
 
-		// NPS library filters remain registered regardless of admin context.
+		// NPS library filters remain registered regardless of admin context (they may fire from admin-AJAX / REST in non-admin scope).
 		$this->assertNotFalse( has_filter( 'nps_survey_post_data', [ $notice, 'getNpsSurveyPostData' ] ) );
 		$this->assertNotFalse( has_filter( 'nps_survey_api_endpoint', [ $notice, 'getNpsSurveyApiEndpoint' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_should_skip_status_update', [ $notice, 'handleStatusUpdate' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_vars', [ $notice, 'ensureNpsSurveyVars' ] ) );
 
 		// Asset-loader filters and the admin_footer action must NOT be registered on the front end.
 		$this->assertFalse( has_filter( 'script_loader_src', [ $notice, 'forceNpsAssetSrc' ] ) );
