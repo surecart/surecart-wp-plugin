@@ -15,14 +15,6 @@ import {
 import HelpTooltip from '../../../components/HelpTooltip';
 import { componentProductOf } from './utils';
 
-/**
- * Per-bundle-item edit drawer. Mirrors the Pricing drawer structure but
- * scoped to a single component row: quantity + basis amount.
- *
- * The component product itself is shown as a non-editable preview — swapping
- * components is equivalent to delete-and-add, which is the explicit path via
- * the ellipsis menu.
- */
 const BasisAmountTooltip = () => (
 	<HelpTooltip
 		position="bottom right"

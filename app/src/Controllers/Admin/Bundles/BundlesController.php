@@ -6,23 +6,14 @@ use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Sync\ImportState;
 
 /**
- * Handles bundle admin requests.
- *
- * A bundle is a Product with bundle:true, so the admin flow (index, edit,
- * archive, duplicate, sync, bulk delete) is reused from ProductsController.
- * This subclass overrides only what differs: page slug, URL key, view path,
- * ScriptsController/ListTable class refs, and the bundle-flavored copy
- * (notices, admin-bar label, bulk-delete strings).
+ * Bundle admin controller. Bundles are Products with `bundle: true`, so most
+ * of the flow is inherited from ProductsController — this subclass only
+ * overrides what differs (slugs, view paths, list-table refs, copy).
  */
 class BundlesController extends ProductsController {
 	/**
-	 * Constructor.
-	 *
-	 * Re-declared so the DI factory resolves `ImportState` for the subclass
-	 * — auto-resolution skips inherited constructors. Bundles don't actually
-	 * use the Woo import path (no `importResults` route on this controller),
-	 * but parent::__construct() still needs the dependency to satisfy the
-	 * type hint and keep $woo_import_state populated for any future hooks.
+	 * Re-declared so the DI factory resolves `ImportState` for the subclass —
+	 * auto-resolution skips inherited constructors.
 	 *
 	 * @param ImportState $woo_import_state Import state for WooCommerce runs.
 	 */
@@ -30,11 +21,7 @@ class BundlesController extends ProductsController {
 		parent::__construct( $woo_import_state );
 	}
 
-	/**
-	 * Admin page slug used for redirects from this controller.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $page_slug = 'sc-bundles';
 
 	/**
@@ -51,25 +38,13 @@ class BundlesController extends ProductsController {
 	 */
 	protected $view_prefix = 'admin/bundles';
 
-	/**
-	 * ScriptsController class enqueued on the edit screen.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $scripts_controller_class = BundleScriptsController::class;
 
-	/**
-	 * ListTable class used by index().
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $list_table_class = BundlesListTable::class;
 
-	/**
-	 * Variable name the confirm-bulk-delete view expects in scope.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $bulk_delete_view_key = 'bundles';
 
 	/**

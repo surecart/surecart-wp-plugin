@@ -29,11 +29,7 @@ class ProductsController extends AdminController {
 		$this->woo_import_state = $woo_import_state;
 	}
 
-	/**
-	 * Admin page slug used for redirects from this controller.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $page_slug = 'sc-products';
 
 	/**
@@ -50,25 +46,13 @@ class ProductsController extends AdminController {
 	 */
 	protected $view_prefix = 'admin/products';
 
-	/**
-	 * ScriptsController class enqueued on the edit screen.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $scripts_controller_class = ProductScriptsController::class;
 
-	/**
-	 * ListTable class used by index().
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $list_table_class = ProductsListTable::class;
 
-	/**
-	 * Variable name the confirm-bulk-delete view expects in scope.
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $bulk_delete_view_key = 'products';
 
 	/**

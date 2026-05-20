@@ -3,13 +3,7 @@
 namespace SureCart\Models;
 
 /**
- * BundleItem model.
- *
- * A bundle item is the join between a bundle Product and one of its component
- * Products. Variant selection happens at checkout (via the bundle line item's
- * `bundle_component_variants` map), not on the bundle item itself.
- *
- * All CRUD proxies to api.surecart.com/bundle_items.
+ * BundleItem model — the join between a bundle Product and a component Product.
  */
 class BundleItem extends Model {
 	/**

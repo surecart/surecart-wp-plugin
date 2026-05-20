@@ -1,11 +1,6 @@
 <?php
 /**
- * Product Bundle Items — outer container that renders on a bundle product's
- * detail page. Iterates the product's BundleItems via the inner template.
- *
- * Bundle is a Product attribute post-refactor (was on Price). Each BundleItem
- * exposes its component via `component_product`. Variant choice is the
- * shopper's at checkout — it's not on the bundle item.
+ * Outer container for the bundle items list on a bundle product page.
  */
 $product = sc_get_product();
 
