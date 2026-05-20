@@ -19,8 +19,6 @@ export default ({
 	children,
 	ad_hoc = true,
 	variable = true,
-	trial = true,
-	setup_fee = true,
 	exclude = [],
 	excludeProducts = [],
 	loading,
@@ -68,14 +66,6 @@ export default ({
 				choices: (product?.prices?.data || [])
 					.filter((price) => {
 						if (!ad_hoc && price?.ad_hoc) {
-							return false;
-						}
-						// `bundle` filter removed — bundle is no longer a Price attribute
-						// (moved to Product). The dead filter has been deleted.
-						if (!trial && !!price?.trial_duration_days) {
-							return false;
-						}
-						if (!setup_fee && !!price?.setup_fee_enabled) {
 							return false;
 						}
 						return true;

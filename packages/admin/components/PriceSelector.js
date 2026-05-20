@@ -13,8 +13,6 @@ export default ({
 	onSelect,
 	ad_hoc,
 	variable,
-	trial,
-	setup_fee,
 	value,
 	open = false,
 	requestQuery,
@@ -190,8 +188,6 @@ export default ({
 			value={value}
 			ad_hoc={ad_hoc}
 			variable={variable}
-			trial={trial}
-			setup_fee={setup_fee}
 			open={open}
 			products={accumulatedProducts}
 			onQuery={handleQuery}
