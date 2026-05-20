@@ -127,7 +127,7 @@ class ProductsController extends AdminController {
 	 * @return string
 	 */
 	protected function bulkDeleteHeaderTitle( $count ) {
-		return _n( 'Delete Product', 'Delete Products.', $count, 'surecart' );
+		return _n( 'Delete Product', 'Delete Products', $count, 'surecart' );
 	}
 
 	/**

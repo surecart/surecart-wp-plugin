@@ -119,6 +119,6 @@ class BundlesController extends ProductsController {
 	 * @return string
 	 */
 	protected function bulkDeleteHeaderTitle( $count ) {
-		return _n( 'Delete Bundle', 'Delete Bundles.', $count, 'surecart' );
+		return _n( 'Delete Bundle', 'Delete Bundles', $count, 'surecart' );
 	}
 }
