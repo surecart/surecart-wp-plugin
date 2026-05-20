@@ -7,7 +7,7 @@ import { DropdownMenu, MenuItem } from '@wordpress/components';
 import { moreHorizontal, edit as editIcon, trash } from '@wordpress/icons';
 import { SortableKnob } from 'react-easy-sort';
 
-import { ScIcon, ScInput } from '@surecart/components-react';
+import { ScIcon, ScQuantitySelect } from '@surecart/components-react';
 
 import Confirm from '../../../components/confirm';
 import { componentProductOf } from './utils';
@@ -38,20 +38,14 @@ export default ({
 	const [isOpen, setIsOpen] = useState(false);
 	const [confirmingDelete, setConfirmingDelete] = useState(false);
 
-	// Commit on every change — Stencil scBlur fires async, so committing on
-	// blur let the parent's edit record lag behind what the user saw.
 	const [qty, setQty] = useState(item?.quantity ?? 1);
 
 	useEffect(() => setQty(item?.quantity ?? 1), [item?.quantity]);
 
 	const pushQty = (raw) => {
 		const next = Math.max(1, parseInt(raw, 10) || 1);
+		setQty(next);
 		if (next !== item?.quantity) onUpdate({ quantity: next });
-	};
-
-	const normaliseQtyOnBlur = () => {
-		const next = Math.max(1, parseInt(qty, 10) || 1);
-		if (String(next) !== String(qty)) setQty(next);
 	};
 
 	const confirmDeleteMessage = sprintf(
@@ -169,20 +163,17 @@ export default ({
 				</div>
 
 				<div
+					aria-label={__('Quantity', 'surecart')}
 					css={css`
-						width: 84px;
+						flex-shrink: 0;
 					`}
 				>
-					<ScInput
-						label={__('Quantity', 'surecart')}
-						type="number"
-						min="1"
-						value={String(qty)}
-						onScChange={(e) => {
-							setQty(e.target.value);
-							pushQty(e.target.value);
-						}}
-						onScBlur={normaliseQtyOnBlur}
+					<ScQuantitySelect
+						min={1}
+						size="small"
+						quantity={Number(qty) || 1}
+						productName={componentName}
+						onScChange={(e) => pushQty(e.detail)}
 					/>
 				</div>
 
