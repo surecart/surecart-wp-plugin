@@ -117,13 +117,6 @@
 									<span class="sc-bundle-components__item-name" data-wp-text="context.component.price.product.name"></span>
 								</div>
 							</template>
-							<div
-								class="sc-bundle-components__savings"
-								data-wp-bind--hidden="!state.bundleSavingsAmount"
-								hidden
-							>
-								<span data-wp-text="state.bundleSavingsAmount"></span>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -259,10 +259,6 @@ const { state, actions } = store('surecart/checkout', {
 				: '';
 		},
 
-		get bundleSavingsAmount() {
-			return '';
-		},
-
 		/**
 		 * Get the line item fees.
 		 */
