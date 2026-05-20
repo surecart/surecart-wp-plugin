@@ -81,7 +81,7 @@ export default ({ id, onCreateProduct }) => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`display: flex; gap: var(--sc-spacing-small);`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}

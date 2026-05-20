@@ -19,7 +19,7 @@ export default ({ excludeIds, onSelect, disabled }) => {
 				{
 					context: 'edit',
 					bundle: false,
-					per_page: 50,
+					per_page: 100,
 					...(query ? { query } : {}),
 				},
 			];

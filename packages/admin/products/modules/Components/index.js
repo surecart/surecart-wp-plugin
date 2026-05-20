@@ -14,8 +14,6 @@ import BundleProductPicker from './BundleProductPicker';
 import { componentProductIdOf, normalizeBundleItem } from './utils';
 
 export default ({ product, updateProduct, loading }) => {
-	if (!product?.bundle) return null;
-
 	const rawBundleItems = product?.bundle_items;
 	const items = (
 		Array.isArray(rawBundleItems)
@@ -53,6 +51,9 @@ export default ({ product, updateProduct, loading }) => {
 			.map((it) => `${it.id || ''}|${componentProductIdOf(it) || ''}`)
 			.join(','),
 	]);
+
+	// Bail after hooks so the hook call order stays stable across renders.
+	if (!product?.bundle) return null;
 
 	const replace = (next) =>
 		updateProduct({ bundle_items: next.map(normalizeBundleItem) });
