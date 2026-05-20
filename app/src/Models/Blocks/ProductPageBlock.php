@@ -243,9 +243,8 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Get the IDs of bundle component products that have variant options.
-	 * Non-variable components don't need a shopper selection; we only block
-	 * the buy button when one of THESE is unfilled.
+	 * IDs of bundle components with variant options — the only ones the buy
+	 * button gates on when unfilled.
 	 *
 	 * @param object $product The bundle product (or non-bundle — returns []).
 	 *
@@ -267,10 +266,8 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Seed bundleComponentVariants with each variable component's first
-	 * available variant so the bundle PDP opens with a valid default
-	 * selection (parity with how the main product auto-picks an in-stock
-	 * variant).
+	 * Seed each variable component with a default variant so the bundle PDP
+	 * opens valid — parity with the main product's auto-pick.
 	 *
 	 * @param object $product The bundle product (or non-bundle — returns {}).
 	 *
@@ -329,8 +326,7 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Resolve a bundle component's variant from the option slugs the user
-	 * picked previously (persisted in the URL by setBundleComponentOption).
+	 * Resolve a component's variant from URL slugs (written by setBundleComponentOption).
 	 *
 	 * @param object $component Component product.
 	 *
@@ -380,8 +376,7 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Build a stock-only snapshot of each bundle component for the
-	 * product-page store to derive sold-out state from.
+	 * Stock-only snapshot of each bundle component (drives sold-out state).
 	 *
 	 * @param object $product The bundle product (or non-bundle — returns {}).
 	 *
@@ -558,9 +553,7 @@ class ProductPageBlock {
 					return false;
 				},
 
-				// Bundle: true when this PDP has variable components and at
-				// least one hasn't had a variant picked yet. Drives the
-				// "Select options" button text and disables Add to cart.
+				// Drives the "Select options" button text and disables Add to cart.
 				'isBundleIncomplete'                 => function () {
 					$context      = wp_interactivity_get_context();
 					$variable_ids = $context['bundleVariableComponentIds'] ?? array();
@@ -578,8 +571,6 @@ class ProductPageBlock {
 					return false;
 				},
 
-				// Bundle pill: is this option_value currently selected in its
-				// component? Scoped to the bundle-item-variant block's context.
 				'isBundleComponentOptionSelected'    => function () {
 					$context       = wp_interactivity_get_context();
 					$option_number = $context['optionNumber'] ?? null;
@@ -592,9 +583,7 @@ class ProductPageBlock {
 					return ( $option_values[ 'option_' . $option_number ] ?? null ) === $option_value;
 				},
 
-				// Bundle pill: sold-out check for this option_value within the
-				// component's variant matrix (Shopify-style — pill stays visible
-				// but is marked unavailable and disables Add to cart on select).
+				// Shopify-style: pill stays visible when sold out, but selecting it disables Add to cart.
 				'isBundleComponentOptionUnavailable' => function () {
 					$context = wp_interactivity_get_context();
 					if ( ! empty( $context['componentHasUnlimitedStock'] ) ) {
