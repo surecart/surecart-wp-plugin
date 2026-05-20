@@ -15,7 +15,8 @@
 			[
 				'product_id'   => $product_id,
 				'redirect_url' => $redirect_url,
-			]
+			],
+			'surecart/product-review-form'
 		)
 	);
 	?>
