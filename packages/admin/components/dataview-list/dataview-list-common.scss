@@ -32,7 +32,13 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
+	// Approximate height of `.sc-list-header` — used to offset the sticky
+	// thead so it pins directly below the title header. Pages can override
+	// per layout if they slot in taller content.
+	--sc-list-header-height: 72px;
+
 	.dataviews-view-table {
+		border-top: 1px solid #f0f0f0;
 		// Always show selection checkboxes (upstream defaults to
 		// hover-reveal). The doubled class on `__input` matches
 		// upstream's `.x.x` specificity trick so this override wins.
@@ -71,11 +77,6 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 		}
 	}
 
-	.dataviews-view-table-wrapper {
-		width: 100%;
-		overflow-x: auto;
-	}
-
 	.dataviews__view-actions,
 	.dataviews-footer,
 	.dataviews-filters__container {
@@ -85,10 +86,16 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 
 	.dataviews-wrapper {
 		--wp-components-color-gray-100: var(--sc-color-brand-main-background);
+		border-radius: 8px;
 	}
 
 	.dataviews-view-table tr.is-hovered {
 		background-color: var(--sc-color-brand-main-background);
+	}
+
+	td.dataviews-view-table__checkbox-column
+		.dataviews-view-table__cell-content-wrapper {
+		min-height: 43px;
 	}
 
 	// Hide isPrimary action icons until row hover/focus to keep the table clean.
@@ -113,10 +120,63 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 	}
 
 	.dataviews-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		min-height: 48px;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+
+	// Upstream `.dataviews-wrapper { overflow: auto; height: 100% }` assumes the
+	// wrapper is the scroll container, which only works when its parent gives it
+	// a definite height. In our layouts the parent height is auto, so the wrapper
+	// never actually scrolls — but `overflow: auto` still scopes the upstream
+	// sticky footer to it, breaking the sticky. Flatten the wrapper so the outer
+	// scroll context (page body in off-mode, white card in enhanced-mode) drives
+	// the sticky footer instead. `min-height` keeps the flex column tall enough
+	// that `.dataviews-loading` / `.dataviews-no-results` (both `flex-grow: 1`
+	// upstream) can fill the middle and pin the footer to the wrapper bottom
+	// during loading and empty states.
+	.dataviews-wrapper {
+		overflow: visible;
+		height: auto;
+		min-height: calc(100vh - 130px);
+	}
+
+	// Sticky page header in both view modes. Override the global
+	// `.sc-list-header { margin: 20px 20px 0 20px }` here so the sticky
+	// background spans the full card width — otherwise rows would bleed
+	// through the side gaps as they scroll under the sticky bar.
+	.sc-list-header {
+		margin: 0;
+		padding: 16px 20px;
+		border-bottom: 1px solid #f0f0f0;
+		position: sticky;
+		top: 0;
+		z-index: 11;
+		background: #fff;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+	}
+
+	// Sticky table column headers pinned directly under `.sc-list-header`.
+	// Target `th` (not `thead`) for broader browser support — sticky on
+	// `thead`/`tr` is newer; sticky on table cells is well-supported. Use
+	// `box-shadow` for the bottom hairline since real borders on sticky
+	// table cells disappear during scroll under `border-collapse: collapse`.
+	.dataviews-view-table thead th {
+		position: sticky;
+		top: var(--sc-list-header-height);
+		z-index: 9;
+		background: #fff;
+		box-shadow: inset 0 -1px 0 #f0f0f0;
+	}
+
+	// Upstream adds `border-top: 1px solid #f0f0f0` to *every* `<tr>`, which
+	// renders a second 1px line directly below the sticky thead's box-shadow
+	// (box-shadow doesn't merge with adjacent borders under
+	// `border-collapse: collapse`). Drop it on the first body row so only the
+	// thead's shadow paints the divider.
+	.dataviews-view-table tbody tr:first-child {
+		border-top: 0;
 	}
 
 	.dataviews-bulk-actions-footer__container {
@@ -135,6 +195,61 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 	}
 }
 
+// OFF-mode: white card visual matching the enhanced view chrome. No
+// `overflow: hidden` here — it would scope the sticky descendants to this
+// wrapper instead of body scroll and break them. The sticky header gets its
+// own top-corner radius below so the rounded look survives without clipping.
+.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+	background: #fff;
+	margin: -10px -20px;
+	box-sizing: border-box;
+	border-top: 1px solid #f0f0f0;
+
+	// Offset the sticky bars by the WP admin bar height so they pin below it
+	// instead of disappearing under it.
+	.sc-list-header {
+		top: 32px;
+	}
+
+	.dataviews-view-table thead th {
+		top: calc(32px + var(--sc-list-header-height));
+	}
+}
+
+// Mobile WP admin bar is taller (46px). Bump the sticky offsets accordingly.
+@media screen and (max-width: 782px) {
+	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+		.sc-list-header {
+			top: 46px;
+		}
+
+		.dataviews-view-table thead th {
+			top: calc(46px + var(--sc-list-header-height));
+		}
+	}
+
+	// On narrow viewports the table can have more columns than fit. Put the
+	// horizontal scroll on `.dataviews-wrapper` (not the `<table>` itself) so
+	// the table keeps its native `display: table` layout — `white-space: nowrap`
+	// on cells stays effective and column auto-sizing works. The table is
+	// allowed to grow past 100% of the wrapper via `width: max-content` so
+	// `nowrap` cells extend horizontally and the wrapper scrolls.
+	//
+	// Per CSS spec, `overflow-x: auto` implicitly computes `overflow-y: auto`,
+	// which scopes inner sticky elements (thead, footer) to this wrapper. With
+	// no fixed wrapper height, those internal stickies stop engaging on mobile
+	// — accepted trade-off. The page header (`.sc-list-header`) is outside the
+	// wrapper so it stays sticky to the body scroll.
+	.sc-dataview-list-wrapper .dataviews-wrapper {
+		overflow-x: auto;
+	}
+
+	.sc-dataview-list-wrapper .dataviews-view-table {
+		width: max-content;
+		min-width: 100%;
+	}
+}
+
 // NOTE: This is OUTSIDE the wrapper because WP Popover renders as a portal
 // at the body level, not inside the DataView wrapper DOM.
 .dataviews-view-config {
@@ -145,8 +260,7 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 // Shared list page header — rendered by packages/admin/components/ListHeader.js.
 .sc-list-header {
 	padding-bottom: 0;
-	margin-top: var(--sc-spacing-large);
-	margin-bottom: var(--sc-spacing-large);
+	margin: 20px 20px 0 20px; // match the padding of the table
 
 	.sc-list-header__bar {
 		display: flex;
@@ -158,6 +272,7 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 
 	.wp-heading-inline {
 		margin-right: 0;
+		padding: 0;
 	}
 
 	.sc-list-header__action {
