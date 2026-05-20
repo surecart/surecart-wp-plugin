@@ -228,37 +228,6 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		return $block;
 	}
 
-	private function makeComponent( string $id, array $option_names, array $variants ) {
-		return (object) array(
-			'id'              => $id,
-			'variant_options' => (object) array(
-				'data' => array_map(
-					function ( $name, $values ) {
-						return (object) array(
-							'name'   => $name,
-							'values' => $values,
-						);
-					},
-					$option_names,
-					array_map(
-						function ( $name ) use ( $variants ) {
-							// Distinct value list per option, derived from variants.
-							$key = 'option_' . ( array_search( $name, array_keys( $variants[0] ), true ) );
-							return array();
-						},
-						$option_names
-					)
-				),
-			),
-			'variants'        => (object) array(
-				'data' => array_map(
-					fn( $row ) => (object) $row,
-					$variants
-				),
-			),
-		);
-	}
-
 	public function test_find_bundle_variant_from_url_matches_single_option() {
 		$component = (object) array(
 			'id'              => 'comp-1',

@@ -332,7 +332,7 @@ class ProductPageBlock {
 	 *
 	 * @return object|null
 	 */
-	protected function findBundleComponentVariantFromUrl( $component ) {
+	public function findBundleComponentVariantFromUrl( $component ) {
 		$variant_options = $component->variant_options->data ?? array();
 		$variants        = $component->variants->data ?? array();
 		if ( empty( $variant_options ) || empty( $variants ) ) {
@@ -560,9 +560,8 @@ class ProductPageBlock {
 					if ( empty( $variable_ids ) ) {
 						return false;
 					}
-					$selections = $context['bundleComponentVariants'] ?? array();
-					// Server-side: stdClass before JS writes; cast for traversal.
-					$selections = is_object( $selections ) ? (array) $selections : (array) $selections;
+					// Cast for traversal — server hydration may give stdClass before JS writes.
+					$selections = (array) ( $context['bundleComponentVariants'] ?? array() );
 					foreach ( $variable_ids as $id ) {
 						if ( empty( $selections[ $id ] ) ) {
 							return true;
