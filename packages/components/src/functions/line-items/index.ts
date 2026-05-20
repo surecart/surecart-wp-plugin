@@ -3,9 +3,7 @@ import { getQueryArg } from '@wordpress/url';
 import { Bump, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
 
 /**
- * Separate line items into bundle parents, their components, and everything
- * else. Used by any surface that needs to render bundle line items grouped
- * (checkout, cart, order confirmation, receipts).
+ * Group line items into bundle parents (with components nested) and regulars.
  */
 export const groupBundleLineItems = (items: LineItem[] = []) => {
   const regular: LineItem[] = [];

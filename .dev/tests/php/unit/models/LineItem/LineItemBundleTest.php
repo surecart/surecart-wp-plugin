@@ -28,9 +28,6 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 		parent::setUp();
 	}
 
-	/**
-	 * A non-bundle product is not a bundle parent.
-	 */
 	public function test_is_bundle_parent_false_for_regular_product() {
 		$item = new LineItem(
 			array(
@@ -47,9 +44,6 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 		$this->assertFalse( $item->is_bundle_parent );
 	}
 
-	/**
-	 * A bundle product line item with no component_line_item flag is a bundle parent.
-	 */
 	public function test_is_bundle_parent_true_when_product_is_bundle() {
 		$item = new LineItem(
 			array(
@@ -67,8 +61,8 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Even if its product is a bundle, a component line item is never the parent —
-	 * `component_line_item: true` short-circuits the check.
+	 * `component_line_item: true` short-circuits — a component is never the parent,
+	 * even if its product happens to be a bundle.
 	 */
 	public function test_is_bundle_parent_false_when_component_line_item_is_true() {
 		$item = new LineItem(
@@ -87,8 +81,7 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Without an expanded price.product, we can't know if it's a bundle parent —
-	 * the getter should bail to false rather than throwing on missing relations.
+	 * Missing price.product expansion should bail to false, not throw.
 	 */
 	public function test_is_bundle_parent_false_when_price_not_expanded() {
 		$item = new LineItem(
@@ -102,9 +95,6 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 		$this->assertFalse( $item->is_bundle_parent );
 	}
 
-	/**
-	 * `component_line_item: true` makes it a component, regardless of anything else.
-	 */
 	public function test_is_bundle_component_true_when_flag_set() {
 		$item = new LineItem(
 			array(
@@ -115,9 +105,6 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 		$this->assertTrue( $item->is_bundle_component );
 	}
 
-	/**
-	 * Without the flag, it's not a component.
-	 */
 	public function test_is_bundle_component_false_when_flag_unset() {
 		$item = new LineItem(
 			array(
@@ -129,8 +116,7 @@ class LineItemBundleTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * `bundle_component_variants` setter must coerce non-arrays to `[]` — the
-	 * platform's downstream consumers expect array shape.
+	 * Setter must coerce non-arrays to `[]` — downstream consumers expect array shape.
 	 */
 	public function test_bundle_component_variants_setter_coerces_to_array() {
 		$item = new LineItem(

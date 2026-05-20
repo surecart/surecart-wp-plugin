@@ -29,10 +29,6 @@ class BundleItemTest extends SureCartUnitTestCase {
 		parent::setUp();
 	}
 
-	/**
-	 * Expanded component_product hydrates into a Product relation, and the
-	 * BundleItem's `name` accessor pulls through from it.
-	 */
 	public function test_component_product_relation_hydrates() {
 		$item = new BundleItem(
 			array(
@@ -51,9 +47,7 @@ class BundleItemTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * When component_product is just an ID string (not yet expanded), we still
-	 * surface the id but don't fabricate a Product object — and `name` should
-	 * gracefully return empty rather than throw.
+	 * Unexpanded relation: keep the id, return empty for `name` instead of throwing.
 	 */
 	public function test_component_product_unexpanded_keeps_id_only() {
 		$item = new BundleItem(
@@ -67,10 +61,6 @@ class BundleItemTest extends SureCartUnitTestCase {
 		$this->assertSame( '', $item->name );
 	}
 
-	/**
-	 * bundle_product is the parent bundle Product (the one with bundle:true).
-	 * The relation hydrates the same way component_product does.
-	 */
 	public function test_bundle_product_relation_hydrates() {
 		$item = new BundleItem(
 			array(
@@ -88,10 +78,6 @@ class BundleItemTest extends SureCartUnitTestCase {
 		$this->assertTrue( (bool) $item->bundle_product->bundle );
 	}
 
-	/**
-	 * The line_item_image accessor returns the component product's line_item_image
-	 * verbatim when present, or an empty object when the relation isn't expanded.
-	 */
 	public function test_line_item_image_pulls_from_component_product() {
 		$item = new BundleItem(
 			array(

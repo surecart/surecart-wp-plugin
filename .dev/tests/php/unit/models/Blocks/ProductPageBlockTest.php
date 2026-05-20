@@ -203,18 +203,10 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		$this->assertFalse( $result );
 	}
 
-	/* ------------------------------------------------------------------
-	 * findBundleComponentVariantFromUrl
-	 *
-	 * Bypass the constructor (which pulls a URL service from the SureCart
-	 * container) and inject a small stub via reflection so we can drive the
-	 * algorithm directly. The algorithm itself is what we care about — the
-	 * URL parsing layer is exercised via the stub's $args map.
-	 * ------------------------------------------------------------------ */
-
 	/**
-	 * Build a ProductPageBlock with a stub URL service whose getArg() returns
-	 * values from $args by key.
+	 * Build a ProductPageBlock with a stub URL service. Bypasses the
+	 * constructor's container lookup so we can drive findBundleComponentVariantFromUrl
+	 * directly with controlled URL args.
 	 */
 	private function buildBlockWithUrlArgs( array $args ): ProductPageBlock {
 		$block = ( new \ReflectionClass( ProductPageBlock::class ) )->newInstanceWithoutConstructor();
@@ -267,11 +259,7 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		);
 	}
 
-	/**
-	 * A single-option URL pick resolves to the matching variant.
-	 */
 	public function test_find_bundle_variant_from_url_matches_single_option() {
-		// Build component manually for clarity (helper above is generic).
 		$component = (object) array(
 			'id'              => 'comp-1',
 			'variant_options' => (object) array(
@@ -309,9 +297,6 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		$this->assertSame( 'v-m', $result->id );
 	}
 
-	/**
-	 * Two-option pick — both must match.
-	 */
 	public function test_find_bundle_variant_from_url_matches_two_options() {
 		$component = (object) array(
 			'id'              => 'comp-2',
@@ -356,15 +341,11 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		);
 		$result = $block->findBundleComponentVariantFromUrl( $component );
 
-		// Note: sanitize_title turns "10°C" into "10c", so the URL slug
-		// "10c" matches the value "10°C".
+		// sanitize_title turns "10°C" into "10c" — the slug match handles that.
 		$this->assertNotNull( $result );
 		$this->assertSame( 'v-c', $result->id );
 	}
 
-	/**
-	 * URL slug doesn't match any value → returns null (caller falls back).
-	 */
 	public function test_find_bundle_variant_from_url_returns_null_when_no_match() {
 		$component = (object) array(
 			'id'              => 'comp-3',
@@ -394,9 +375,6 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		$this->assertNull( $result );
 	}
 
-	/**
-	 * No URL args at all → returns null (caller falls back to first in-stock).
-	 */
 	public function test_find_bundle_variant_from_url_returns_null_when_no_args() {
 		$component = (object) array(
 			'id'              => 'comp-4',
@@ -424,9 +402,6 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		$this->assertNull( $result );
 	}
 
-	/**
-	 * Component without variants → returns null (no variants to match against).
-	 */
 	public function test_find_bundle_variant_from_url_returns_null_when_no_variants() {
 		$component = (object) array(
 			'id'              => 'comp-5',

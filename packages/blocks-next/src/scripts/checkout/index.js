@@ -169,8 +169,8 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Get only regular (non-bundle-component) line items for cart display.
-		 * Bundle components are filtered out — they render nested under their parent.
+		 * Non-component line items for cart display; components render nested
+		 * under their parent.
 		 */
 		get cartLineItems() {
 			return state.checkoutLineItems.filter(
@@ -179,10 +179,7 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Check if the current line item (from context) is a bundle parent.
-		 *
-		 * A parent has component_line_item:false AND its price.product is a
-		 * bundle product (bundle is a Product attribute post-refactor).
+		 * Is the context line item a bundle parent? Components are never parents.
 		 */
 		get isBundleParent() {
 			const { line_item } = getContext();
@@ -208,8 +205,6 @@ const { state, actions } = store('surecart/checkout', {
 
 		/**
 		 * Whether the current line item has bundle components to display.
-		 * Implicitly false for non-bundle parents and for component line items
-		 * themselves — bundleComponents returns [] in those cases.
 		 */
 		get hasBundleComponents() {
 			return state.bundleComponentsCount > 0;
