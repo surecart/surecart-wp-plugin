@@ -162,17 +162,13 @@ export class ScOrder {
 
     const items = (checkout?.line_items?.data || []) as LineItem[];
     const { regular, bundleParents, componentsByParent } = groupBundleLineItems(items);
+    const orderedItems = [...bundleParents, ...regular];
 
     return (
       <Fragment>
-        {bundleParents.map(parent => {
-          const components = componentsByParent[parent.id] || [];
-          return <sc-bundle-line-item key={parent.id} item={parent} components={components} editable={false} removable={false} />;
-        })}
-
-        {regular.map(item => {
+        {orderedItems.map(item => {
           const product = item?.price?.product as Product;
-
+          const isBundle = !!product?.bundle;
           return (
             <sc-product-line-item
               key={item.id}
@@ -191,6 +187,7 @@ export class ScOrder {
               purchasableStatus={item?.purchasable_status_display}
               fees={item?.fees?.data}
               reviewButtonLink={product?.review_url || ''}
+              bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
             />
           );
         })}

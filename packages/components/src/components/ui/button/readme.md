@@ -51,6 +51,7 @@
 ### Used by
 
  - [sc-address-suggestions](../address-suggestion)
+ - [sc-bundle-line-item](../bundle-line-item)
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
@@ -115,6 +116,7 @@
 graph TD;
   sc-button --> sc-spinner
   sc-address-suggestions --> sc-button
+  sc-bundle-line-item --> sc-button
   sc-cancel-dialog --> sc-button
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button

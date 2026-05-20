@@ -1,5 +1,5 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
@@ -218,7 +218,7 @@ export class ScSubscriptionDetails {
           <sc-icon name={this.bundleExpanded ? 'chevron-up' : 'chevron-down'}></sc-icon>
           {sprintf(
             /* translators: %d: number of bundle component items */
-            __('Includes %d items', 'surecart'),
+            _n('Includes %d item', 'Includes %d items', items.length, 'surecart'),
             items.length,
           )}
         </button>

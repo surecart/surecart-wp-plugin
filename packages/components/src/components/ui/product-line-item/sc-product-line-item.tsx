@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, ImageAttributes } from '../../../types';
+import { Fee, ImageAttributes, LineItem, Price, Product } from '../../../types';
 
 /**
  * @part base - The component base
@@ -23,6 +23,8 @@ import { Fee, ImageAttributes } from '../../../types';
  * @part quantity__plus-icon - The product quantity plus icon
  * @part quantity__input - The product quantity input
  * @part line-item__price-description - The line item price description
+ * @part components - The bundle components list (when bundleComponents is set)
+ * @part component - A single bundle component row
  */
 @Component({
   tag: 'sc-product-line-item',
@@ -89,6 +91,14 @@ export class ScProductLineItem {
   /** The review button link. If set, a review button will be shown linking to this URL. */
   @Prop() reviewButtonLink: string = '';
 
+  /**
+   * Bundle components — when this line item is a bundle parent, pass the
+   * component line items to render them as a read-only nested list under
+   * the main row. Each row shows the component product name (with variant
+   * options) on the left and the per-bundle quantity on the right.
+   */
+  @Prop() bundleComponents: LineItem[] = [];
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -154,6 +164,25 @@ export class ScProductLineItem {
                 })}
               </div>
             </div>
+
+            {!!this.bundleComponents?.length && (
+              <div class="bundle-components" part="components">
+                {this.bundleComponents.map(component => {
+                  const componentProduct = (component?.price as Price)?.product as Product;
+                  const name = componentProduct?.name || '';
+                  const variants = component?.variant_display_options || '';
+                  const qty = Math.max(Number(component?.quantity) || 1, 1);
+                  const label = variants ? `${name} - ${variants}` : name;
+                  if (!label) return null;
+                  return (
+                    <div class="bundle-component" part="component">
+                      <span class="bundle-component__label">{label}</span>
+                      <span class="bundle-component__qty">× {qty}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             <div class="item__row stick-bottom">
               {this.editable ? (

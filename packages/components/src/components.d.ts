@@ -169,31 +169,6 @@ export namespace Components {
          */
         "label": string;
     }
-    /**
-     * Renders a bundle parent line item with its component items nested inside.
-     */
-    interface ScBundleLineItem {
-        /**
-          * The component line items.
-         */
-        "components": LineItem[];
-        /**
-          * Is the line item editable?
-         */
-        "editable": boolean;
-        /**
-          * The bundle parent line item.
-         */
-        "item": LineItem;
-        /**
-          * Max quantity.
-         */
-        "max": number;
-        /**
-          * Is the line item removable?
-         */
-        "removable": boolean;
-    }
     interface ScButton {
         /**
           * Tells the browser to autofocus.
@@ -3168,6 +3143,10 @@ export namespace Components {
          */
         "amount": string;
         /**
+          * Bundle components — when this line item is a bundle parent, pass the component line items to render them as a read-only nested list under the main row. Each row shows the component product name (with variant options) on the left and the per-bundle quantity on the right.
+         */
+        "bundleComponents": LineItem[];
+        /**
           * Product display amount
          */
         "displayAmount": string;
@@ -4329,10 +4308,6 @@ export interface ScAlertCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScAlertElement;
 }
-export interface ScBundleLineItemCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScBundleLineItemElement;
-}
 export interface ScButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScButtonElement;
@@ -4686,27 +4661,6 @@ declare global {
     var HTMLScBreadcrumbsElement: {
         prototype: HTMLScBreadcrumbsElement;
         new (): HTMLScBreadcrumbsElement;
-    };
-    interface HTMLScBundleLineItemElementEventMap {
-        "scUpdateQuantity": number;
-        "scRemove": void;
-    }
-    /**
-     * Renders a bundle parent line item with its component items nested inside.
-     */
-    interface HTMLScBundleLineItemElement extends Components.ScBundleLineItem, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLScBundleLineItemElementEventMap>(type: K, listener: (this: HTMLScBundleLineItemElement, ev: ScBundleLineItemCustomEvent<HTMLScBundleLineItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLScBundleLineItemElementEventMap>(type: K, listener: (this: HTMLScBundleLineItemElement, ev: ScBundleLineItemCustomEvent<HTMLScBundleLineItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLScBundleLineItemElement: {
-        prototype: HTMLScBundleLineItemElement;
-        new (): HTMLScBundleLineItemElement;
     };
     interface HTMLScButtonElementEventMap {
         "scBlur": void;
@@ -6957,7 +6911,6 @@ declare global {
         "sc-block-ui": HTMLScBlockUiElement;
         "sc-breadcrumb": HTMLScBreadcrumbElement;
         "sc-breadcrumbs": HTMLScBreadcrumbsElement;
-        "sc-bundle-line-item": HTMLScBundleLineItemElement;
         "sc-button": HTMLScButtonElement;
         "sc-button-group": HTMLScButtonGroupElement;
         "sc-cancel-dialog": HTMLScCancelDialogElement;
@@ -7361,39 +7314,6 @@ declare namespace LocalJSX {
           * The label to use for the breadcrumb control. This will not be shown, but it will be announced by screen readers and other assistive devices.
          */
         "label"?: string;
-    }
-    /**
-     * Renders a bundle parent line item with its component items nested inside.
-     */
-    interface ScBundleLineItem {
-        /**
-          * The component line items.
-         */
-        "components"?: LineItem[];
-        /**
-          * Is the line item editable?
-         */
-        "editable"?: boolean;
-        /**
-          * The bundle parent line item.
-         */
-        "item"?: LineItem;
-        /**
-          * Max quantity.
-         */
-        "max"?: number;
-        /**
-          * Emitted when the item is removed.
-         */
-        "onScRemove"?: (event: ScBundleLineItemCustomEvent<void>) => void;
-        /**
-          * Emitted when the quantity changes.
-         */
-        "onScUpdateQuantity"?: (event: ScBundleLineItemCustomEvent<number>) => void;
-        /**
-          * Is the line item removable?
-         */
-        "removable"?: boolean;
     }
     interface ScButton {
         /**
@@ -10605,6 +10525,10 @@ declare namespace LocalJSX {
          */
         "amount"?: string;
         /**
+          * Bundle components — when this line item is a bundle parent, pass the component line items to render them as a read-only nested list under the main row. Each row shows the component product name (with variant options) on the left and the per-bundle quantity on the right.
+         */
+        "bundleComponents"?: LineItem[];
+        /**
           * Product display amount
          */
         "displayAmount"?: string;
@@ -11893,7 +11817,6 @@ declare namespace LocalJSX {
         "sc-block-ui": ScBlockUi;
         "sc-breadcrumb": ScBreadcrumb;
         "sc-breadcrumbs": ScBreadcrumbs;
-        "sc-bundle-line-item": ScBundleLineItem;
         "sc-button": ScButton;
         "sc-button-group": ScButtonGroup;
         "sc-cancel-dialog": ScCancelDialog;
@@ -12136,10 +12059,6 @@ declare module "@stencil/core" {
             "sc-block-ui": LocalJSX.ScBlockUi & JSXBase.HTMLAttributes<HTMLScBlockUiElement>;
             "sc-breadcrumb": LocalJSX.ScBreadcrumb & JSXBase.HTMLAttributes<HTMLScBreadcrumbElement>;
             "sc-breadcrumbs": LocalJSX.ScBreadcrumbs & JSXBase.HTMLAttributes<HTMLScBreadcrumbsElement>;
-            /**
-             * Renders a bundle parent line item with its component items nested inside.
-             */
-            "sc-bundle-line-item": LocalJSX.ScBundleLineItem & JSXBase.HTMLAttributes<HTMLScBundleLineItemElement>;
             "sc-button": LocalJSX.ScButton & JSXBase.HTMLAttributes<HTMLScButtonElement>;
             "sc-button-group": LocalJSX.ScButtonGroup & JSXBase.HTMLAttributes<HTMLScButtonGroupElement>;
             "sc-cancel-dialog": LocalJSX.ScCancelDialog & JSXBase.HTMLAttributes<HTMLScCancelDialogElement>;
