@@ -165,6 +165,16 @@ class AdminToolbarService {
 				)
 			);
 
+			// Add Bundle link.
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-sc-product',
+					'id'     => 'new-sc-bundle',
+					'title'  => __( 'Bundle', 'surecart' ),
+					'href'   => esc_url( admin_url( 'admin.php?page=sc-bundles&action=edit' ) ),
+				)
+			);
+
 			// Add Product Collection link.
 			$wp_admin_bar->add_node(
 				array(

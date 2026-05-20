@@ -199,7 +199,7 @@ class AdminMenuPageService {
 		$is_product_menu_opened = in_array( $_GET['page'] ?? '', array( 'sc-products', 'sc-bundles', 'sc-product-groups', 'sc-product-collections', 'sc-reviews' ), true ) || in_array( $_GET['taxonomy'] ?? '', array_merge( $taxonomies, array( 'sc_collection' ) ), true );
 		if ( $is_product_menu_opened ) {
 			$this->pages += array(
-				'bundles'             => \add_submenu_page( $this->slug, __( 'Bundles', 'surecart' ), '↳ ' . __( 'Bundles', 'surecart' ) . '<span class="sc-new-badge"><span>', 'edit_sc_products', 'sc-bundles', '__return_false' ),
+				'bundles'             => \add_submenu_page( $this->slug, __( 'Bundles', 'surecart' ), '↳ ' . __( 'Bundles', 'surecart' ) . '<span class="sc-new-badge"></span>', 'edit_sc_products', 'sc-bundles', '__return_false' ),
 				'product-collections' => \add_submenu_page( $this->slug, __( 'Product Collections', 'surecart' ), '↳ ' . __( 'Collections', 'surecart' ), 'edit_sc_products', 'sc-product-collections', '__return_false' ),
 			);
 			if ( ! empty( $taxonomies ) && is_array( $taxonomies ) ) {
