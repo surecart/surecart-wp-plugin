@@ -13,7 +13,6 @@ import { LineItem, Price, Product } from '../../../types';
  * @part price - The bundle price
  * @part components - The bundle components list
  * @part component - A single bundle component
- * @part savings - The savings badge
  */
 @Component({
   tag: 'sc-bundle-line-item',
@@ -94,7 +93,7 @@ export class ScBundleLineItem {
               </div>
             </div>
 
-            {/* Row 2: Price name + Savings badge */}
+            {/* Row 2: Price name */}
             <div class="item__row">
               <div class="item__description">
                 {price?.name && <div>{price.name}</div>}

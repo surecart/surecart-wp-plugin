@@ -236,9 +236,7 @@ class ProductsController extends AdminController {
 			],
 		);
 
-		// return view. The view payload key is overridable so subclasses
-		// (e.g. BundlesController) can keep their own variable name (`$bundles`)
-		// in the template without losing semantics.
+		// return view.
 		return \SureCart::view( $this->view_prefix . '/confirm-bulk-delete' )
 			->with( [ $this->bulk_delete_view_key => $products ] );
 	}

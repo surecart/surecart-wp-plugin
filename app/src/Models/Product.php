@@ -70,15 +70,6 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
-	 * Whether this product is a bundle.
-	 *
-	 * @return bool
-	 */
-	public function isBundle(): bool {
-		return ! empty( $this->bundle );
-	}
-
-	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
