@@ -246,6 +246,12 @@ export default ({ id, setBrowserURL }) => {
 				setError(e);
 				return;
 			}
+			// Log the swallowed error so a future WP patch / message change
+			// stays visible in monitoring instead of silently breaking deletes.
+			console.warn(
+				'[surecart] tolerated WP core-data REMOVE_ITEMS TypeError after product delete:',
+				e
+			);
 		}
 
 		createSuccessNotice(deletedNotice, { type: 'snackbar' });

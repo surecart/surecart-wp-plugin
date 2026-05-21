@@ -69,7 +69,7 @@ class ProductsController extends AdminController {
 	}
 
 	/**
-	 * Status-query
+	 * Status-query → notice message map for the index page.
 	 *
 	 * @return array
 	 */

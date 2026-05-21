@@ -17,12 +17,13 @@ import ComponentName from './ComponentName';
 import { productView } from './utils';
 import useBundleItemProduct from './useBundleItemProduct';
 
-// Draft state is initialised from `item` on mount. The parent remounts this
-// component with `key={item.id}` whenever a different item is opened, so we
-// don't need an effect to re-seed state.
 export default ({ item, currency, isOpen, onClose, onSave }) => {
 	const product = useBundleItemProduct(item);
-	const { name: componentName, image, link: productLink } = productView(product);
+	const {
+		name: componentName,
+		image,
+		link: productLink,
+	} = productView(product);
 
 	const [qty, setQty] = useState(item?.quantity ?? 1);
 	const [basis, setBasis] = useState(item?.basis_amount ?? '');
@@ -31,6 +32,8 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 		e?.stopPropagation?.();
 		const nextQty = Math.max(1, parseInt(qty, 10) || 1);
 		const trimmed = String(basis ?? '').trim();
+		// `basis_amount` is stored in minor currency units (integer cents) on the API,
+		// matching the rest of SureCart's monetary fields — so `parseInt` is intentional.
 		const nextBasis =
 			trimmed === '' ? null : Math.max(0, parseInt(trimmed, 10) || 0);
 
@@ -127,7 +130,9 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 									);
 									color: var(--sc-input-label-color);
 									font-size: var(--sc-input-label-font-size);
-									font-weight: var(--sc-input-label-font-weight);
+									font-weight: var(
+										--sc-input-label-font-weight
+									);
 								`}
 							>
 								{__('Basis amount', 'surecart')}
@@ -203,7 +208,7 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 								`}
 							>
 								{__(
-									'Leave blank to split tax evenly by quantity.',
+									"Leave blank to split evenly by quantity. A common starting point is each component's standalone price.",
 									'surecart'
 								)}
 							</div>
