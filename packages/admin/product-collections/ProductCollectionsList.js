@@ -9,7 +9,10 @@ import { store as noticesStore } from '@wordpress/notices';
 import {
 	DataViewListLayout,
 	useDataViewState,
+	StatusSidebar,
+	useEnhancedView,
 	applyDefaultFieldsExtensions,
+	ModernViewIntroModal,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import { buildCollectionFields } from './list/fields';
@@ -34,6 +37,8 @@ export default ({ navigation }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
+	const { toggle: toggleEnhancedView } = useEnhancedView();
+
 	const defaultFields = useMemo(
 		() =>
 			applyDefaultFieldsExtensions('product-collections', DEFAULT_FIELDS),
@@ -54,6 +59,7 @@ export default ({ navigation }) => {
 		defaultFields,
 		layoutStyles: LAYOUT_STYLES,
 		preferenceKey: PREFERENCE_KEY,
+		pageSlug: 'sc-product-collections',
 		buildQueryArgs: ({ view: currentView }) => {
 			const full = buildCollectionsQuery(currentView);
 			delete full.per_page;
@@ -119,16 +125,39 @@ export default ({ navigation }) => {
 
 	return (
 		<>
-			<ListHeader
-				title={__('Product Collections', 'surecart')}
-				actionLabel={__('Add Collection', 'surecart')}
-				actionHref={addQueryArgs('admin.php', {
-					page: 'sc-product-collections',
-					action: 'edit',
-				})}
-				onAction={() => navigation.goToCreate()}
-			/>
 			<DataViewListLayout
+				pageHeader={
+					<ListHeader
+						title={__('Product Collections', 'surecart')}
+						actionLabel={__('Add Collection', 'surecart')}
+						actionHref={addQueryArgs('admin.php', {
+							page: 'sc-product-collections',
+							action: 'edit',
+						})}
+						onAction={() => navigation.goToCreate()}
+					/>
+				}
+				statusSidebar={
+					<StatusSidebar
+						siteName={
+							window?.scData?.site_name ||
+							(window?.location?.hostname ?? '')
+						}
+						siteHref={
+							window?.scData?.home_url || window?.location?.origin
+						}
+						siteIconUrl={window?.scData?.site_icon_url || ''}
+						dashboardHref="index.php"
+						heading={__('Product Collections', 'surecart')}
+						description={__(
+							'Group products into collections to organize your storefront.',
+							'surecart'
+						)}
+						onBack={toggleEnhancedView}
+						tabs={[]}
+					/>
+				}
+				defaultLayouts={{ table: {} }}
 				data={records}
 				fields={fields}
 				view={view}
@@ -137,6 +166,17 @@ export default ({ navigation }) => {
 				actions={actions}
 				isLoading={!hasResolved}
 			/>
+
+			{window?.scData?.modern_view_intro?.enabled && (
+				<ModernViewIntroModal
+					enabled={!!window.scData.modern_view_intro.enabled}
+					dismissed={!!window.scData.modern_view_intro.dismissed}
+					imageUrl={window.scData.modern_view_intro.image_url}
+					toggleId={window.scData.modern_view_intro.toggle_id}
+					dismissUrl={window.scData.modern_view_intro.dismiss_url}
+					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
+				/>
+			)}
 		</>
 	);
 };
