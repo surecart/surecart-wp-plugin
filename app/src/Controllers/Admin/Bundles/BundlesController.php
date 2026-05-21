@@ -26,10 +26,11 @@ class BundlesController extends ProductsController {
 
 	/**
 	 * Key passed to \SureCart::getUrl()->index().
+	 * Plural — mirrors ProductsController's `$url_key = 'products'`.
 	 *
 	 * @var string
 	 */
-	protected $url_key = 'bundle';
+	protected $url_key = 'bundles';
 
 	/**
 	 * View path prefix (no trailing slash).

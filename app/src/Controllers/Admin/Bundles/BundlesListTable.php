@@ -126,42 +126,6 @@ class BundlesListTable extends ProductsListTable {
 	}
 
 	/**
-	 * Build the toggle-archive URL.
-	 *
-	 * @param object $item Bundle model.
-	 *
-	 * @return string
-	 */
-	protected function toggleArchiveUrl( $item ) {
-		return add_query_arg(
-			array(
-				'action' => 'toggle_archive',
-				'nonce'  => wp_create_nonce( 'archive_product' ),
-				'id'     => $item->id,
-			),
-			admin_url( 'admin.php?page=' . $this->page_slug )
-		);
-	}
-
-	/**
-	 * Build the duplicate URL.
-	 *
-	 * @param object $item Bundle model.
-	 *
-	 * @return string
-	 */
-	protected function duplicateUrl( $item ) {
-		return add_query_arg(
-			array(
-				'action' => 'duplicate',
-				'nonce'  => wp_create_nonce( 'duplicate_product' ),
-				'id'     => $item->id,
-			),
-			admin_url( 'admin.php?page=' . $this->page_slug )
-		);
-	}
-
-	/**
 	 * Entity columns.
 	 *
 	 * @return array
@@ -189,7 +153,8 @@ class BundlesListTable extends ProductsListTable {
 	 * @return string
 	 */
 	public function column_bundle_items( $bundle ) {
-		$items = $bundle->bundle_items->data ?? array();
+		$raw   = $bundle->bundle_items ?? array();
+		$items = is_array( $raw ) ? $raw : ( $raw->data ?? array() );
 		$count = is_array( $items ) ? count( $items ) : 0;
 
 		// translators: %d is the number of items in the bundle.

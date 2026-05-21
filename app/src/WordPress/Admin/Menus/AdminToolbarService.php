@@ -171,7 +171,7 @@ class AdminToolbarService {
 					'parent' => 'new-sc-product',
 					'id'     => 'new-sc-bundle',
 					'title'  => __( 'Bundle', 'surecart' ),
-					'href'   => esc_url( admin_url( 'admin.php?page=sc-bundles&action=edit' ) ),
+					'href'   => esc_url( \SureCart::getUrl()->edit( 'bundle' ) ),
 				)
 			);
 
