@@ -43,11 +43,10 @@ class BundleItemTest extends SureCartUnitTestCase {
 
 		$this->assertInstanceOf( Product::class, $item->component_product );
 		$this->assertSame( 'p-component', $item->component_product_id );
-		$this->assertSame( 'Trail Tent', $item->name );
 	}
 
 	/**
-	 * Unexpanded relation: keep the id, return empty for `name` instead of throwing.
+	 * Unexpanded relation: keep the id, no Product hydration.
 	 */
 	public function test_component_product_unexpanded_keeps_id_only() {
 		$item = new BundleItem(
@@ -58,7 +57,6 @@ class BundleItemTest extends SureCartUnitTestCase {
 		);
 
 		$this->assertSame( 'p-component-only-id', $item->component_product_id );
-		$this->assertSame( '', $item->name );
 	}
 
 	public function test_bundle_product_relation_hydrates() {
@@ -76,33 +74,5 @@ class BundleItemTest extends SureCartUnitTestCase {
 		$this->assertInstanceOf( Product::class, $item->bundle_product );
 		$this->assertSame( 'p-bundle', $item->bundle_product_id );
 		$this->assertTrue( (bool) $item->bundle_product->bundle );
-	}
-
-	public function test_line_item_image_pulls_from_component_product() {
-		$item = new BundleItem(
-			array(
-				'component_product' => array(
-					'id'              => 'p-component',
-					'name'            => 'Trail Tent',
-					'line_item_image' => array(
-						'src'   => 'http://example.com/tent.jpg',
-						'width' => 150,
-					),
-				),
-			)
-		);
-
-		$this->assertNotEmpty( $item->line_item_image );
-		$this->assertSame( 'http://example.com/tent.jpg', $item->line_item_image->src );
-	}
-
-	public function test_line_item_image_empty_when_component_unexpanded() {
-		$item = new BundleItem(
-			array(
-				'component_product' => 'just-an-id',
-			)
-		);
-
-		$this->assertEquals( (object) array(), $item->line_item_image );
 	}
 }

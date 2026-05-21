@@ -55,30 +55,4 @@ class BundleItem extends Model {
 	public function getComponentProductIdAttribute() {
 		return $this->getRelationId( 'component_product' );
 	}
-
-	/**
-	 * Display name of the component product.
-	 *
-	 * @return string
-	 */
-	public function getNameAttribute() {
-		$product = $this->component_product ?? null;
-		return is_a( $product, Product::class ) ? (string) ( $product->name ?? '' ) : '';
-	}
-
-	/**
-	 * Component product's line-item image (small, for list rendering).
-	 *
-	 * @return object
-	 */
-	public function getLineItemImageAttribute() {
-		$product = $this->component_product ?? null;
-		if ( is_a( $product, Product::class ) ) {
-			$image = $product->line_item_image ?? null;
-			if ( ! empty( $image ) ) {
-				return $image;
-			}
-		}
-		return (object) array();
-	}
 }
