@@ -44,18 +44,14 @@ graph TD;
   sc-alert --> sc-icon
   sc-order-confirmation-line-items --> sc-line-item
   sc-order-confirmation-line-items --> sc-skeleton
-  sc-order-confirmation-line-items --> sc-bundle-line-item
   sc-order-confirmation-line-items --> sc-product-line-item
-  sc-bundle-line-item --> sc-quantity-select
-  sc-bundle-line-item --> sc-button
-  sc-bundle-line-item --> sc-icon
-  sc-quantity-select --> sc-icon
-  sc-button --> sc-spinner
   sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-button
   sc-product-line-item --> sc-icon
   sc-product-line-item-note --> sc-icon
+  sc-quantity-select --> sc-icon
+  sc-button --> sc-spinner
   sc-order-confirmation-totals --> sc-line-item
   sc-order-confirmation-totals --> sc-tag
   sc-order-confirmation-totals --> sc-divider
