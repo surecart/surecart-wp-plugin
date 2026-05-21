@@ -1,5 +1,5 @@
 import { store } from '@surecart/data';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
@@ -7,7 +7,7 @@ import CreateBundle from './CreateBundle';
 import EditProduct from '../products/EditProduct';
 
 /**
- * Returns the Model Edit URL.
+ * Returns the bundle edit URL.
  *
  * @param {number} id Bundle ID.
  *
@@ -16,23 +16,18 @@ import EditProduct from '../products/EditProduct';
 export function getEditURL({ id, ...query }) {
 	return addQueryArgs(removeQueryArgs(window.location.href, 'status'), {
 		id,
-		...(!!query ? query : {}),
+		...(query || {}),
 	});
 }
 
 export default () => {
 	const [history, setHistory] = useState(null);
 
-	/**
-	 * Replaces the browser URL with an edit link for a given id.
-	 *
-	 * @param {Object} args Args including `id`.
-	 */
 	const setBrowserURL = (args) => {
 		const { id } = args;
 		if (!id) return;
 		if (JSON.stringify(args) === JSON.stringify(history)) return;
-		window.history.replaceState({ id }, 'Post ' + id, getEditURL(args));
+		window.history.replaceState({ id }, 'Bundle ' + id, getEditURL(args));
 		setHistory(args);
 	};
 

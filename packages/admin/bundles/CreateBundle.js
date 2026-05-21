@@ -3,19 +3,20 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 
-import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
+import { ScButton, ScForm, ScInput } from '@surecart/components-react';
+import Error from '../components/Error';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ id, onCreateProduct }) => {
+export default ({ onCreateProduct }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
-	// create the bundle.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -43,16 +44,14 @@ export default ({ id, onCreateProduct }) => {
 			onCreateProduct(product.id);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 			setIsSaving(false);
 		}
 	};
 
 	return (
-		<CreateTemplate id={id}>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
+		<CreateTemplate>
+			<Error error={error} setError={setError} />
 
 			<Box title={__('Create New Bundle', 'surecart')}>
 				<ScForm
@@ -71,7 +70,7 @@ export default ({ id, onCreateProduct }) => {
 					>
 						<ScInput
 							label={__('Bundle Name', 'surecart')}
-							className="sc-product-name hydrated"
+							className="sc-bundle-name hydrated"
 							help={__('A name for your bundle.', 'surecart')}
 							onScInput={(e) => setName(e.target.value)}
 							value={name}
@@ -81,13 +80,18 @@ export default ({ id, onCreateProduct }) => {
 						/>
 
 						<div
-							css={css`display: flex; gap: var(--sc-spacing-small);`}
+							css={css`
+								display: flex;
+								gap: var(--sc-spacing-small);
+							`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-bundles'}
+								href={addQueryArgs('admin.php', {
+									page: 'sc-bundles',
+								})}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}
