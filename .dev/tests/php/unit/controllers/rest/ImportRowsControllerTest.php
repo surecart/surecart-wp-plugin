@@ -27,16 +27,22 @@ class ImportRowsControllerTest extends SureCartUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('import_rows')
-			->andReturn([
-				(object) [
-					'id' => 'row_1',
-					'object' => 'import_row',
-					'status' => 'pending',
+			->andReturn((object) [
+				'data' => [
+					(object) [
+						'id' => 'row_1',
+						'object' => 'import_row',
+						'status' => 'pending',
+					],
+					(object) [
+						'id' => 'row_2',
+						'object' => 'import_row',
+						'status' => 'completed',
+					],
 				],
-				(object) [
-					'id' => 'row_2',
-					'object' => 'import_row',
-					'status' => 'completed',
+				'pagination' => (object) [
+					'count' => 2,
+					'limit' => 20,
 				],
 			]);
 
@@ -53,8 +59,10 @@ class ImportRowsControllerTest extends SureCartUnitTestCase {
 
 		// Assert results
 		$this->assertNotWPError($response);
-		$this->assertIsArray($response);
-		$this->assertCount(2, $response);
+		$this->assertInstanceOf(\WP_REST_Response::class, $response);
+		$data = $response->get_data();
+		$this->assertIsArray($data);
+		$this->assertCount(2, $data);
 	}
 
 	public function test_create_creates_import_row() {
@@ -220,7 +228,13 @@ class ImportRowsControllerTest extends SureCartUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('import_rows')
-			->andReturn([]);
+			->andReturn((object) [
+				'data' => [],
+				'pagination' => (object) [
+					'count' => 0,
+					'limit' => 20,
+				],
+			]);
 
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
@@ -239,6 +253,8 @@ class ImportRowsControllerTest extends SureCartUnitTestCase {
 
 		// Assert request was processed (no errors)
 		$this->assertNotWPError($response);
-		$this->assertIsArray($response);
+		$this->assertInstanceOf(\WP_REST_Response::class, $response);
+		$data = $response->get_data();
+		$this->assertIsArray($data);
 	}
 }
