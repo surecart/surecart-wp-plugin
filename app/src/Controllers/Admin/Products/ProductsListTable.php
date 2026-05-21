@@ -368,7 +368,7 @@ class ProductsListTable extends ListTable {
 		$product_collections_tags = array();
 
 		foreach ( $product_collections as $product_collection ) {
-			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=' . $this->page_slug . '&sc_collection=' . $product_collection['id'] ) ) . '">' . $product_collection['name'] . '</a>';
+			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=' . $this->page_slug . '&sc_collection=' . $product_collection['id'] ) ) . '">' . esc_html( $product_collection['name'] ) . '</a>';
 		}
 
 		return implode( ', ', $product_collections_tags );
