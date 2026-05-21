@@ -313,7 +313,7 @@ class ProductsListTable extends ListTable {
 		?>
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php echo esc_html( $this->selectAriaLabel() ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+		<?php
 	}
 
 	/**
@@ -619,7 +619,7 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-			<?php if ( ! empty( $product->featured_image ) ) { ?>
+		<?php if ( ! empty( $product->featured_image ) ) { ?>
 				<?php
 				echo wp_kses_post( $product->featured_image->html( 'thumbnail' ) );
 				?>
@@ -632,15 +632,15 @@ class ProductsListTable extends ListTable {
 			<?php } ?>
 		<div>
 		<a class="row-title" aria-label="<?php echo esc_attr( $this->entityLabelEdit() ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( $this->url_key, $product->id ) ); ?>">
-			<?php echo esc_html( $product->name ); ?>
+				<?php echo esc_html( $product->name ); ?>
 		</a>
 
-		<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
+			<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
 		</div>
 
 		</div>
-		<?php
-		return ob_get_clean();
+			<?php
+			return ob_get_clean();
 	}
 
 	/**
@@ -702,14 +702,14 @@ class ProductsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
-		// Call the parent method to handle custom columns
+		// Call the parent method to handle custom columns.
 		parent::column_default( $product, $column_name );
 
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( $this->url_key, $product->id ) . '">' . $product->name . '</a>';
+				return '<a href="' . \SureCart::getUrl()->edit( $this->url_key, $product->id ) . '">' . esc_html( $product->name ) . '</a>';
 			case 'description':
-				return $product->$column_name ?? '';
+				return esc_html( $product->$column_name ?? '' );
 		}
 	}
 

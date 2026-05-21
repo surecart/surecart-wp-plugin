@@ -55,6 +55,9 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 
 		$container['surecart.account'] = (object) [ 'is_connected' => true ];
 
+		// Force admin context so the is_admin() gate in NpsSurveyNotice::bootstrap() passes.
+		set_current_screen( 'dashboard' );
+
 		$this->provider->bootstrap( $container );
 
 		$notice = $container['surecart.nps.survey.notice'];
@@ -62,5 +65,32 @@ class NpsSurveyServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertNotFalse( has_filter( 'nps_survey_post_data', [ $notice, 'getNpsSurveyPostData' ] ) );
 		$this->assertNotFalse( has_filter( 'nps_survey_api_endpoint', [ $notice, 'getNpsSurveyApiEndpoint' ] ) );
 		$this->assertNotFalse( has_filter( 'nps_survey_should_skip_status_update', [ $notice, 'handleStatusUpdate' ] ) );
+		$this->assertNotFalse( has_filter( 'script_loader_src', [ $notice, 'forceNpsAssetSrc' ] ) );
+		$this->assertNotFalse( has_filter( 'style_loader_src', [ $notice, 'forceNpsAssetSrc' ] ) );
+	}
+
+	public function test_bootstrap_does_not_register_loader_filters_on_frontend(): void {
+		$container = \SureCart::container();
+		$this->provider->register( $container );
+
+		$container['surecart.account'] = (object) [ 'is_connected' => true ];
+
+		// Force front-end context so is_admin() returns false.
+		set_current_screen( 'front' );
+
+		$this->provider->bootstrap( $container );
+
+		$notice = $container['surecart.nps.survey.notice'];
+
+		// NPS library filters remain registered regardless of admin context (they may fire from admin-AJAX / REST in non-admin scope).
+		$this->assertNotFalse( has_filter( 'nps_survey_post_data', [ $notice, 'getNpsSurveyPostData' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_api_endpoint', [ $notice, 'getNpsSurveyApiEndpoint' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_should_skip_status_update', [ $notice, 'handleStatusUpdate' ] ) );
+		$this->assertNotFalse( has_filter( 'nps_survey_vars', [ $notice, 'ensureNpsSurveyVars' ] ) );
+
+		// Asset-loader filters and the admin_footer action must NOT be registered on the front end.
+		$this->assertFalse( has_filter( 'script_loader_src', [ $notice, 'forceNpsAssetSrc' ] ) );
+		$this->assertFalse( has_filter( 'style_loader_src', [ $notice, 'forceNpsAssetSrc' ] ) );
+		$this->assertFalse( has_action( 'admin_footer', [ $notice, 'showNpsNotice' ] ) );
 	}
 }

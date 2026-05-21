@@ -259,12 +259,12 @@ class SubscriptionsListTable extends ListTable {
 
 	private function getProductDisplay( $subscription ) {
 		if ( empty( $subscription->price->product->name ) ) {
-			return $subscription->price->name ?? __( 'No Product', 'surecart' );
+			return esc_html( $subscription->price->name ?? __( 'No Product', 'surecart' ) );
 		}
 
-		$price_name = ! empty( $subscription->price->name ) ? ' - ' . $subscription->price->name : '';
+		$price_name = ! empty( $subscription->price->name ) ? ' - ' . esc_html( $subscription->price->name ) : '';
 
-		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>' . $price_name;
+		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . esc_html( $subscription->price->product->name ) . '</a>' . $price_name;
 	}
 
 	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
