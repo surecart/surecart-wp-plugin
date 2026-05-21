@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { DataViews } from '@wordpress/dataviews/wp';
 import { Spinner } from '@wordpress/components';
 import { InterfaceSkeleton, FullscreenMode } from '@wordpress/interface';
+import { useViewportMatch } from '@wordpress/compose';
 import Notifications from '../Notifications';
 import EnhancedViewToggle from './EnhancedViewToggle';
 import useEnhancedView from './useEnhancedView';
@@ -27,6 +28,10 @@ export default ({
 }) => {
 	const { enabled, toggle } = useEnhancedView();
 
+	// Workspace shell only fits tablet-and-up; force off-mode below.
+	const isLargeViewport = useViewportMatch('medium');
+	const showWorkspace = enabled && isLargeViewport;
+
 	const headerWithToggle = (
 		<div
 			css={css`
@@ -37,7 +42,7 @@ export default ({
 			`}
 		>
 			{header}
-			{enhancedViewControl ? (
+			{enhancedViewControl && isLargeViewport ? (
 				<EnhancedViewToggle enabled={enabled} onToggle={toggle} />
 			) : null}
 		</div>
@@ -49,7 +54,7 @@ export default ({
 				position: relative;
 			`}
 		>
-			{tabs && !enabled ? <div>{tabs}</div> : null}
+			{tabs && !showWorkspace ? <div>{tabs}</div> : null}
 			<DataViews
 				data={data}
 				fields={fields}
@@ -87,7 +92,7 @@ export default ({
 		</div>
 	);
 
-	if (statusSidebar && enabled) {
+	if (statusSidebar && showWorkspace) {
 		return (
 			<div
 				className={`sc-dataview-list-wrapper ${className}`.trim()}

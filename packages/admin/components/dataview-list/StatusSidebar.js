@@ -194,70 +194,72 @@ export default ({
 			</VStack>
 		) : null}
 
-		<ItemGroup
-			role="tablist"
-			aria-label={heading || __('Status', 'surecart')}
-			css={css`
-				padding: 8px 8px 16px;
-			`}
-		>
-			{tabs.map((tab) => {
-				const isActive = tab.value === activeValue;
-				return (
-					<Item
-						key={String(tab.value)}
-						role="tab"
-						aria-selected={isActive}
-						aria-current={isActive ? 'page' : undefined}
-						onClick={() => onChange(tab.value)}
-						css={css`
-							cursor: pointer;
-							padding: 10px 12px !important;
-							border-radius: 4px;
-							font-size: 14px !important;
+		{tabs?.length ? (
+			<ItemGroup
+				role="tablist"
+				aria-label={heading || __('Status', 'surecart')}
+				css={css`
+					padding: 8px 8px 16px;
+				`}
+			>
+				{tabs.map((tab) => {
+					const isActive = tab.value === activeValue;
+					return (
+						<Item
+							key={String(tab.value)}
+							role="tab"
+							aria-selected={isActive}
+							aria-current={isActive ? 'page' : undefined}
+							onClick={() => onChange(tab.value)}
+							css={css`
+								cursor: pointer;
+								padding: 10px 12px !important;
+								border-radius: 4px;
+								font-size: 14px !important;
 
-							${isActive &&
-							css`
-								color: #fff !important;
-								font-weight: 600 !important;
-							`}
-						`}
-					>
-						<HStack spacing={3} alignment="center">
-							{tab.icon ? (
-								<span
-									aria-hidden="true"
-									css={css`
-										display: inline-flex;
-										flex: 0 0 24px;
-									`}
-								>
-									{tab.icon}
-								</span>
-							) : null}
-							<span
-								css={css`
-									flex: 1 1 auto;
-									text-align: left;
+								${isActive &&
+								css`
+									color: #fff !important;
+									font-weight: 600 !important;
 								`}
-							>
-								{tab.label}
-							</span>
-							{typeof tab.count === 'number' && (
+							`}
+						>
+							<HStack spacing={3} alignment="center">
+								{tab.icon ? (
+									<span
+										aria-hidden="true"
+										css={css`
+											display: inline-flex;
+											flex: 0 0 24px;
+										`}
+									>
+										{tab.icon}
+									</span>
+								) : null}
 								<span
 									css={css`
-										font-size: 13px;
-										color: #949494;
-										font-weight: 400;
+										flex: 1 1 auto;
+										text-align: left;
 									`}
 								>
-									{tab.count}
+									{tab.label}
 								</span>
-							)}
-						</HStack>
-					</Item>
-				);
-			})}
-		</ItemGroup>
+								{typeof tab.count === 'number' && (
+									<span
+										css={css`
+											font-size: 13px;
+											color: #949494;
+											font-weight: 400;
+										`}
+									>
+										{tab.count}
+									</span>
+								)}
+							</HStack>
+						</Item>
+					);
+				})}
+			</ItemGroup>
+		) : null}
 	</div>
 );

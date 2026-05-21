@@ -24,6 +24,16 @@
 		justify-content: flex-end;
 		gap: 1em;
 	}
+
+	/* Mobile: the 16rem suffix slot squeezes the breadcrumb onto two lines. */
+	@media screen and (max-width: 782px) {
+		#sc-admin-container {
+			padding: 10px 12px;
+		}
+		.sc-admin-suffix {
+			display: none;
+		}
+	}
 </style>
 
 <div id="sc-admin-header">

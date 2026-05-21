@@ -1,33 +1,37 @@
 $padding-size: 20px;
 
-body.is-fullscreen-mode.sc-enhanced-view {
-	#sc-admin-header,
-	#wpfooter {
-		display: none !important;
-	}
+// Enhanced fullscreen workspace — desktop only; the JS suppresses the shell
+// on mobile, so these rules must not fire there even with a stale body class.
+@media screen and (min-width: 783px) {
+	body.is-fullscreen-mode.sc-enhanced-view {
+		#sc-admin-header,
+		#wpfooter {
+			display: none !important;
+		}
 
-	overflow: hidden;
-	height: 100vh;
-
-	#wpbody-content {
-		padding: 0 !important;
-		margin: 0 !important;
-	}
-
-	.wrap {
-		margin: 0;
-		padding: 0;
-	}
-
-	.sc-dataview-list-wrapper[data-enhanced-view="on"] {
+		overflow: hidden;
 		height: 100vh;
-	}
-}
 
-html:has(body.is-fullscreen-mode.sc-enhanced-view) {
-	margin-top: 0 !important;
-	height: 100vh;
-	overflow: hidden;
+		#wpbody-content {
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+
+		.wrap {
+			margin: 0;
+			padding: 0;
+		}
+
+		.sc-dataview-list-wrapper[data-enhanced-view="on"] {
+			height: 100vh;
+		}
+	}
+
+	html:has(body.is-fullscreen-mode.sc-enhanced-view) {
+		margin-top: 0 !important;
+		height: 100vh;
+		overflow: hidden;
+	}
 }
 
 // Apply to .sc-dataview-list-wrapper (or entity-specific variant).
@@ -125,6 +129,12 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 		border-bottom-right-radius: 8px;
 	}
 
+	// Page-number select defaults to ~39px — the chevron padding leaves
+	// almost no room for the digit. Give it room for 3 digits.
+	.dataviews-pagination__page-select .components-select-control__input {
+		min-width: 64px;
+	}
+
 	// Upstream `.dataviews-wrapper { overflow: auto; height: 100% }` assumes the
 	// wrapper is the scroll container, which only works when its parent gives it
 	// a definite height. In our layouts the parent height is auto, so the wrapper
@@ -216,37 +226,74 @@ html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 	}
 }
 
-// Mobile WP admin bar is taller (46px). Bump the sticky offsets accordingly.
+// Action label rendering — pairs with `dataview-list/iconLabel.js`. Icon
+// in row primary buttons, text in menu items and modals. Lives outside the
+// wrapper so it reaches the menu portal at body level.
+.dataviews-action-icon {
+	display: none;
+}
+.dataviews-item-actions
+	.components-button:not(.dataviews-all-actions-button) {
+	.dataviews-action-icon {
+		display: inline-flex;
+	}
+	.dataviews-action-label {
+		display: none;
+	}
+}
+
+// Desktop has `overflow: visible` on the wrapper — h-scroll impossible, so
+// the `--stuck` indicator is noise. Also masks an upstream mount-timing bug
+// in `useIsHorizontalScrollEnd` that leaves the class stuck-on. Selectors
+// match WP's specificity so this override actually wins.
+@media screen and (min-width: 783px) {
+	.sc-dataview-list-wrapper
+		.dataviews-view-table
+		th.dataviews-view-table__actions-column--stuck::after,
+	.sc-dataview-list-wrapper
+		.dataviews-view-table
+		td.dataviews-view-table__actions-column--stuck::after {
+		display: none;
+	}
+}
+
+// Mobile (≤782px). Workspace shell suppressed in JS; off-mode layout takes
+// over. sc-list-header static, thead sticky at admin-bar offset, wrapper
+// allows h-scroll, table keeps its natural width.
 @media screen and (max-width: 782px) {
 	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+		// WP collapses `.wrap` gutter to 10px on mobile.
+		margin: -10px -10px;
+
 		.sc-list-header {
-			top: 46px;
+			position: static;
+			padding: 12px 16px;
+		}
+
+		.sc-list-header .wp-heading-inline {
+			font-size: 18px;
 		}
 
 		.dataviews-view-table thead th {
-			top: calc(46px + var(--sc-list-header-height));
+			top: 46px;
 		}
 	}
 
-	// On narrow viewports the table can have more columns than fit. Put the
-	// horizontal scroll on `.dataviews-wrapper` (not the `<table>` itself) so
-	// the table keeps its native `display: table` layout — `white-space: nowrap`
-	// on cells stays effective and column auto-sizing works. The table is
-	// allowed to grow past 100% of the wrapper via `width: max-content` so
-	// `nowrap` cells extend horizontally and the wrapper scrolls.
-	//
-	// Per CSS spec, `overflow-x: auto` implicitly computes `overflow-y: auto`,
-	// which scopes inner sticky elements (thead, footer) to this wrapper. With
-	// no fixed wrapper height, those internal stickies stop engaging on mobile
-	// — accepted trade-off. The page header (`.sc-list-header`) is outside the
-	// wrapper so it stays sticky to the body scroll.
 	.sc-dataview-list-wrapper .dataviews-wrapper {
+		min-height: auto;
 		overflow-x: auto;
 	}
 
 	.sc-dataview-list-wrapper .dataviews-view-table {
 		width: max-content;
 		min-width: 100%;
+	}
+
+	.sc-dataview-list-wrapper
+		.dataviews-view-table__row
+		.dataviews-item-actions
+		.components-button {
+		visibility: visible;
 	}
 }
 
