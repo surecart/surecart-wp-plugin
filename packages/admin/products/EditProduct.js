@@ -14,6 +14,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
+import useBundleLabels from './hooks/useBundleLabels';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
@@ -21,7 +22,7 @@ import SaveButton from './components/product/SaveButton';
 import BuyLink from './modules/BuyLink';
 
 import Advanced from './modules/Advanced';
-import Components from './modules/Components';
+import BundleItems from './modules/BundleItems';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
 import Media from './modules/Media';
@@ -70,6 +71,8 @@ export default ({ id, setBrowserURL }) => {
 			'bundle_items.component_product.product_medias',
 		],
 	});
+
+	const labels = useBundleLabels(product);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
@@ -213,14 +216,13 @@ export default ({ id, setBrowserURL }) => {
 	 * Toggle product delete.
 	 */
 	const onDeleteProduct = async () => {
-		const wasBundle = !!product?.bundle;
+		const { deletedNotice, indexHref } = labels;
 
 		// Best-effort: invalidate the in-flight post lookup BEFORE the delete
 		// so core-data's REMOVE_ITEMS reducer has a clean queryItems entry to
-		// operate on. In practice the race still slips through in some renders
-		// (the reducer reads its own slice synchronously and an unrelated
-		// query can still leave itemIds undefined), so we also tolerate the
-		// known TypeError below.
+		// operate on. The reducer reads its own slice synchronously and an
+		// unrelated query can still leave itemIds undefined, so we also
+		// tolerate the known TypeError below.
 		invalidateResolution('getEntityRecords', [
 			'postType',
 			'sc_product',
@@ -237,10 +239,6 @@ export default ({ id, setBrowserURL }) => {
 			// The API DELETE itself succeeded by the time this throws — we
 			// surface anything else, but let this specific TypeError through
 			// so the success path still runs (notice + redirect).
-			//
-			// TODO: file the upstream issue and drop this guard once core
-			// ships a fix; the proactive invalidateResolution() above is
-			// the first line of defense.
 			const isReducerBug =
 				e?.name === 'TypeError' &&
 				/undefined.*filter/i.test(e?.message || '');
@@ -250,16 +248,8 @@ export default ({ id, setBrowserURL }) => {
 			}
 		}
 
-		createSuccessNotice(
-			wasBundle
-				? __('Bundle deleted.', 'surecart')
-				: __('Product deleted.', 'surecart'),
-			{ type: 'snackbar' }
-		);
-
-		window.location.href = addQueryArgs('admin.php', {
-			page: wasBundle ? 'sc-bundles' : 'sc-products',
-		});
+		createSuccessNotice(deletedNotice, { type: 'snackbar' });
+		window.location.href = indexHref;
 	};
 
 	/**
@@ -325,37 +315,19 @@ export default ({ id, setBrowserURL }) => {
 							gap: 1em;
 						`}
 					>
-						<ScButton
-							circle
-							size="small"
-							href={
-								product?.bundle
-									? 'admin.php?page=sc-bundles'
-									: 'admin.php?page=sc-products'
-							}
-						>
+						<ScButton circle size="small" href={labels.indexHref}>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
 						<sc-breadcrumbs>
 							<sc-breadcrumb>
 								<Logo display="block" />
 							</sc-breadcrumb>
-							<sc-breadcrumb
-								href={
-									product?.bundle
-										? 'admin.php?page=sc-bundles'
-										: 'admin.php?page=sc-products'
-								}
-							>
-								{product?.bundle
-									? __('Bundles', 'surecart')
-									: __('Products', 'surecart')}
+							<sc-breadcrumb href={labels.indexHref}>
+								{labels.entitiesLabel}
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
-									{product?.bundle
-										? __('Edit Bundle', 'surecart')
-										: __('Edit Product', 'surecart')}
+									{labels.editLabel}
 									{renderStatusBadge()}
 								</sc-flex>
 							</sc-breadcrumb>
@@ -406,9 +378,7 @@ export default ({ id, setBrowserURL }) => {
 						>
 							{willPublish()
 								? __('Save & Publish', 'surecart')
-								: product?.bundle
-								? __('Save Bundle', 'surecart')
-								: __('Save Product', 'surecart')}
+								: labels.saveLabel}
 						</SaveButton>
 					</div>
 				}
@@ -487,11 +457,13 @@ export default ({ id, setBrowserURL }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Components
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+					{product?.bundle && (
+						<BundleItems
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Media
 						productId={id}

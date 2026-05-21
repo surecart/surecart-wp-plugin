@@ -2,26 +2,23 @@
 import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import { ScEmpty, ScSpacing } from '@surecart/components-react';
 
 import Box from '../../../ui/Box';
-import BundleProductItem from './BundleProductItem';
-import BundleProductPicker from './BundleProductPicker';
+import BundleItem from './BundleItem';
+import BundleItemDrawer from './BundleItemDrawer';
+import BundleItemPicker from './BundleItemPicker';
 import { componentProductIdOf, normalizeBundleItem } from './utils';
 
+const sortByPosition = (a, b) => (a.position ?? 0) - (b.position ?? 0);
+const readItems = (raw) => (Array.isArray(raw) ? raw : raw?.data ?? []);
+
 export default ({ product, updateProduct, loading }) => {
-	const rawBundleItems = product?.bundle_items;
-	const items = (
-		Array.isArray(rawBundleItems)
-			? rawBundleItems
-			: rawBundleItems?.data || []
-	)
-		.slice()
-		.sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+	const items = readItems(product?.bundle_items).slice().sort(sortByPosition);
 
 	const displayCurrency = useSelect(
 		(select) =>
@@ -30,42 +27,13 @@ export default ({ product, updateProduct, loading }) => {
 		[]
 	);
 
-	const [productCache, setProductCache] = useState({});
-
-	useEffect(() => {
-		const next = {};
-		let changed = false;
-		items.forEach((it) => {
-			const cp = it?.component_product;
-			if (cp && typeof cp === 'object' && cp.id && !productCache[cp.id]) {
-				next[cp.id] = cp;
-				changed = true;
-			}
-		});
-		if (changed) {
-			setProductCache((prev) => ({ ...prev, ...next }));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		items
-			.map((it) => `${it.id || ''}|${componentProductIdOf(it) || ''}`)
-			.join(','),
-	]);
-
-	// Bail after hooks so the hook call order stays stable across renders.
-	if (!product?.bundle) return null;
+	const [editingIndex, setEditingIndex] = useState(null);
+	const editingItem = editingIndex !== null ? items[editingIndex] : null;
 
 	const replace = (next) =>
 		updateProduct({ bundle_items: next.map(normalizeBundleItem) });
 
-	const addComponent = (componentProductId, componentProduct) => {
-		if (componentProduct?.id) {
-			setProductCache((prev) =>
-				prev[componentProductId] === componentProduct
-					? prev
-					: { ...prev, [componentProductId]: componentProduct }
-			);
-		}
+	const addComponent = (componentProductId) => {
 		replace([
 			...items,
 			{
@@ -103,7 +71,7 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	const picker = (
-		<BundleProductPicker
+		<BundleItemPicker
 			excludeIds={excludeIds}
 			onSelect={addComponent}
 			disabled={loading}
@@ -156,12 +124,9 @@ export default ({ product, updateProduct, loading }) => {
 							}
 						>
 							<div>
-								<BundleProductItem
+								<BundleItem
 									item={item}
-									cachedProduct={
-										productCache[componentProductIdOf(item)]
-									}
-									currency={displayCurrency}
+									onEdit={() => setEditingIndex(index)}
 									onUpdate={(patch) => updateAt(index, patch)}
 									onRemove={() => removeAt(index)}
 									mixedBasisWarning={hasMixedBasis(item)}
@@ -170,6 +135,17 @@ export default ({ product, updateProduct, loading }) => {
 						</SortableItem>
 					))}
 				</SortableList>
+			)}
+
+			{editingItem && (
+				<BundleItemDrawer
+					key={editingItem.id || componentProductIdOf(editingItem)}
+					item={editingItem}
+					currency={displayCurrency}
+					isOpen={true}
+					onClose={() => setEditingIndex(null)}
+					onSave={(patch) => updateAt(editingIndex, patch)}
+				/>
 			)}
 		</Box>
 	);
