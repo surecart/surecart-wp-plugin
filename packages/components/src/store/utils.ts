@@ -1,4 +1,4 @@
-import { Product } from '../types';
+import { Product, Variant } from '../types';
 
 const isObject = item => item && typeof item === 'object' && !Array.isArray(item);
 
@@ -20,29 +20,35 @@ export const getSerializedState = () => {
  * Is this variant option sold out.
  */
 export const isProductVariantOptionSoldOut = (optionNumber, option, variantValues, product: Product) => {
-  // product stock is not enabled or out of stock purchases are allowed.
-  if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return false;
+  const getEffectiveStock = (variant: Variant): number => {
+    // null means "inherit from product" — fall back to product's has_unlimited_stock
+    const effectiveUnlimited = variant?.has_unlimited_stock ?? product?.has_unlimited_stock;
+    if (effectiveUnlimited) return Infinity;
+    return variant.available_stock;
+  };
+
+  const isGroupSoldOut = (items: Variant[]): boolean => {
+    if (!items.length) return false;
+    return Math.max(...items.map(getEffectiveStock)) <= 0;
+  };
 
   // if this is option 1, check to see if there are any variants with this option.
   if (optionNumber === 1) {
     const items = (product.variants?.data || []).filter?.(variant => variant.option_1 === option);
-    const highestStock = Math.max(...items.map(item => item.available_stock));
-    return highestStock <= 0;
+    return isGroupSoldOut(items);
   }
 
   // if this is option 2, check to see if there are any variants with this option and option 1
   if (optionNumber === 2) {
     const items = (product.variants?.data || []).filter(variant => variant?.option_1 === variantValues.option_1 && variant.option_2 === option);
-    const highestStock = Math.max(...items.map(item => item.available_stock));
-    return highestStock <= 0;
+    return isGroupSoldOut(items);
   }
 
-  // if this is option 4, check to see if there are any variants with all the options.
+  // if this is option 3, check to see if there are any variants with all the options.
   const items = (product.variants?.data || []).filter(
     variant => variant?.option_1 === variantValues.option_1 && variant?.option_2 === variantValues.option_2 && variant.option_3 === option,
   );
-  const highestStock = Math.max(...items.map(item => item.available_stock));
-  return highestStock <= 0;
+  return isGroupSoldOut(items);
 };
 
 /**

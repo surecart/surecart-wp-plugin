@@ -64,12 +64,13 @@
 </style>
 
 <div class="wrap">
+	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 	<?php
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Products', 'surecart' ),
-			'new_link' => \SureCart::getUrl()->edit( 'product' ),
+			'title'       => __( 'Products', 'surecart' ),
+			'after_title' => \SureCart::view( 'admin/products/add-new-product-button' )->toString(),
 		]
 	);
 	?>

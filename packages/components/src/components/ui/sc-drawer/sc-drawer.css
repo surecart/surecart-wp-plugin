@@ -45,9 +45,9 @@
 }
 .drawer--end .drawer__panel {
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   bottom: auto;
-  left: auto;
+  inset-inline-start: auto;
   width: 100%;
   max-width: var(--sc-drawer-size, 400px);
   height: 100%;
@@ -62,9 +62,9 @@
 }
 .drawer--start .drawer__panel {
   top: 0;
-  right: auto;
+  inset-inline-end: auto;
   bottom: auto;
-  left: 0;
+  inset-inline-start: 0;
   width: var(--sc-drawer-size, 400px);
   height: 100%;
 }

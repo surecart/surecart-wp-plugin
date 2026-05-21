@@ -94,8 +94,18 @@ class ProvisionalAccount extends Model {
 			}
 		}
 
-		// clear account cache.
+		// clear account cache first (before potential early return).
 		\SureCart::account()->clearCache();
+
+		if ( ! empty( $attributes['import_woocommerce_products'] ) ) {
+			$service = \SureCart::sync()->woocommerce_products();
+			if ( ! $service->isRunning() ) {
+				$import = $service->dispatch();
+				if ( is_wp_error( $import ) ) {
+					error_log( 'SureCart: WooCommerce import dispatch failed during onboarding - ' . $import->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				}
+			}
+		}
 
 		// create the products.
 		return $created;

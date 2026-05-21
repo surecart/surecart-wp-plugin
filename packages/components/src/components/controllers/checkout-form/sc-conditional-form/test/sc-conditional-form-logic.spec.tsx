@@ -1,5 +1,5 @@
 import { Checkout } from '../../../../../types';
-import { hasAnyRuleGroupPassed, compareNumberValues, compareObjectValues, hasRulesPassed } from '../conditional-functions';
+import { hasAnyRuleGroupPassed, compareNumberValues, compareObjectValues, hasRulesPassed, getCartPriceIds } from '../conditional-functions';
 
 describe('Conditional form logic', () => {
   describe('hasAnyRuleGroupPassed', () => {
@@ -66,6 +66,60 @@ describe('Conditional form logic', () => {
           },
         ),
       ).toBe(false);
+    });
+
+    it('Prices condition', () => {
+      const checkout = {
+        line_items: { data: [{ price: { id: 'price_abc' } }] },
+      } as Checkout;
+      expect(
+        hasRulesPassed(
+          [{ condition: 'prices', operator: 'any', value: ['price_abc'] }],
+          { checkout, processor: 'stripe' },
+        ),
+      ).toBe(true);
+      expect(
+        hasRulesPassed(
+          [{ condition: 'prices', operator: 'none', value: ['price_xyz'] }],
+          { checkout, processor: 'stripe' },
+        ),
+      ).toBe(true);
+      expect(
+        hasRulesPassed(
+          [{ condition: 'prices', operator: 'all', value: ['price_abc', 'price_xyz'] }],
+          { checkout, processor: 'stripe' },
+        ),
+      ).toBe(false);
+    });
+  });
+
+  describe('getCartPriceIds', () => {
+    it('extracts price ids from line items', () => {
+      const checkout = {
+        line_items: {
+          data: [
+            { price: { id: 'price_abc' } },
+            { price: { id: 'price_def' } },
+          ],
+        },
+      } as Checkout;
+      expect(getCartPriceIds(checkout)).toEqual(['price_abc', 'price_def']);
+    });
+
+    it('filters out line items with missing price ids (e.g. ad_hoc)', () => {
+      const checkout = {
+        line_items: {
+          data: [
+            { price: { id: 'price_abc' } },
+            { price: { id: null } },
+          ],
+        },
+      } as Checkout;
+      expect(getCartPriceIds(checkout)).toEqual(['price_abc']);
+    });
+
+    it('returns empty array when line_items is missing', () => {
+      expect(getCartPriceIds({} as Checkout)).toEqual([]);
     });
   });
 

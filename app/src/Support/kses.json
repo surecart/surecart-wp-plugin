@@ -846,6 +846,7 @@
   "sc-icon": {
     "label": true,
     "library": true,
+    "mutate": true,
     "name": true,
     "src": true,
     "style": true,
