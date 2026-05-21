@@ -77,6 +77,22 @@ class SettingService {
 	}
 
 	/**
+	 * Build the `modern_view_intro` data bag consumed by the React modal.
+	 *
+	 * @return array
+	 */
+	public static function getModernViewIntroData(): array {
+		return [
+			'enabled'       => (bool) get_option( 'surecart_enhanced_admin_views', true ),
+			'dismissed'     => self::isModernViewIntroDismissed(),
+			'image_url'     => trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/dataview/modern-view-change.svg',
+			'toggle_id'     => 'sc-enhanced-views-toggle',
+			'dismiss_url'   => admin_url( 'admin-post.php' ),
+			'dismiss_nonce' => wp_create_nonce( 'sc_dismiss_modern_view_intro' ),
+		];
+	}
+
+	/**
 	 * Register settings.
 	 *
 	 * @return void

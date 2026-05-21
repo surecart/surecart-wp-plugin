@@ -51,6 +51,7 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 		);
 		$this->data['availableTemplates']           = $available_templates;
 		$this->data['enhanced_admin_views_enabled'] = (bool) get_option( 'surecart_enhanced_admin_views', true );
+		$this->data['modern_view_intro']            = \SureCart\Settings\SettingService::getModernViewIntroData();
 		parent::enqueue();
 	}
 }

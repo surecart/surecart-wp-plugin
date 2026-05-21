@@ -49,14 +49,7 @@ class ProductScriptsController extends AdminModelEditController {
 		$this->data['availableTemplates']           = $available_templates;
 		$this->data['enhanced_admin_views_enabled'] = (bool) get_option( 'surecart_enhanced_admin_views', true );
 		$this->data['bulk_delete_nonce']            = wp_create_nonce( 'bulk_delete_nonce' );
-		$this->data['modern_view_intro']            = [
-			'enabled'       => (bool) get_option( 'surecart_enhanced_admin_views', true ),
-			'dismissed'     => \SureCart\Settings\SettingService::isModernViewIntroDismissed(),
-			'image_url'     => trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/dataview/modern-view-change.svg',
-			'toggle_id'     => 'sc-enhanced-views-toggle',
-			'dismiss_url'   => admin_url( 'admin-post.php' ),
-			'dismiss_nonce' => wp_create_nonce( 'sc_dismiss_modern_view_intro' ),
-		];
+		$this->data['modern_view_intro']            = \SureCart\Settings\SettingService::getModernViewIntroData();
 		parent::enqueue();
 	}
 
