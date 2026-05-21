@@ -5,6 +5,7 @@ import { trash, copy, archive, edit, external } from '@wordpress/icons';
 import {
 	ConfirmActionModal,
 	applyActionExtensions,
+	iconLabel,
 } from '../../../components/dataview-list';
 import {
 	isVariantRow,
@@ -44,7 +45,7 @@ export const buildProductActions = ({
 	const actions = [
 		{
 			id: 'edit',
-			label: __('Edit', 'surecart'),
+			label: iconLabel(<Icon icon={edit} />, __('Edit', 'surecart')),
 			icon: <Icon icon={edit} />,
 			isPrimary: true,
 			isEligible: productOnly(),
@@ -52,7 +53,7 @@ export const buildProductActions = ({
 		},
 		{
 			id: 'editVariant',
-			label: __('Edit variant', 'surecart'),
+			label: iconLabel(<Icon icon={edit} />, __('Edit variant', 'surecart')),
 			icon: <Icon icon={edit} />,
 			isPrimary: true,
 			isEligible: (item) => isVariantRow(item),
@@ -67,7 +68,6 @@ export const buildProductActions = ({
 			id: 'deleteVariant',
 			label: __('Delete variant', 'surecart'),
 			icon: <Icon icon={trash} />,
-			isDestructive: true,
 			isEligible: (item) => isVariantRow(item),
 			// Soft delete (status: 'draft') — same pattern as the
 			// in-product VariantItem menu. Drafts are filtered out of
@@ -156,7 +156,10 @@ export const buildProductActions = ({
 		},
 		{
 			id: 'view',
-			label: __('View Product', 'surecart'),
+			label: iconLabel(
+				<Icon icon={external} />,
+				__('View Product', 'surecart')
+			),
 			isPrimary: true,
 			icon: <Icon icon={external} />,
 			isEligible: productOnly((item) => !!item.permalink),
@@ -173,7 +176,6 @@ export const buildProductActions = ({
 			id: 'delete',
 			icon: <Icon icon={trash} />,
 			label: __('Delete permanently', 'surecart'),
-			isDestructive: true,
 			isEligible: productOnly(),
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => {

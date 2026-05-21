@@ -4,20 +4,24 @@ import { trash, edit, external } from '@wordpress/icons';
 import {
 	ConfirmActionModal,
 	applyActionExtensions,
+	iconLabel,
 } from '../../../components/dataview-list';
 
 export const buildCollectionActions = ({ navigation, handleDelete }) => {
 	const actions = [
 		{
 			id: 'edit',
-			label: __('Edit', 'surecart'),
+			label: iconLabel(<Icon icon={edit} />, __('Edit', 'surecart')),
 			icon: <Icon icon={edit} />,
 			isPrimary: true,
 			callback: ([item]) => navigation.goToEdit(item.id),
 		},
 		{
 			id: 'view',
-			label: __('View Collection', 'surecart'),
+			label: iconLabel(
+				<Icon icon={external} />,
+				__('View Collection', 'surecart')
+			),
 			icon: <Icon icon={external} />,
 			isPrimary: true,
 			isEligible: (item) => !!item.permalink,
@@ -27,7 +31,6 @@ export const buildCollectionActions = ({ navigation, handleDelete }) => {
 			id: 'delete',
 			icon: <Icon icon={trash} />,
 			label: __('Delete permanently', 'surecart'),
-			isDestructive: true,
 			supportsBulk: true,
 			RenderModal: ({ items, closeModal }) => (
 				<ConfirmActionModal
