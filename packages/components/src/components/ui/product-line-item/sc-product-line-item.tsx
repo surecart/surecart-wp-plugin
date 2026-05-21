@@ -1,7 +1,8 @@
 import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, ImageAttributes, LineItem, Price, Product } from '../../../types';
+import { getBundleComponentRowsFromLineItems } from '../../../functions/line-items';
+import { Fee, ImageAttributes, LineItem } from '../../../types';
 
 /**
  * @part base - The component base
@@ -167,20 +168,12 @@ export class ScProductLineItem {
 
             {!!this.bundleComponents?.length && (
               <div class="bundle-components" part="components">
-                {this.bundleComponents.map(component => {
-                  const componentProduct = (component?.price as Price)?.product as Product;
-                  const name = componentProduct?.name || '';
-                  const variants = component?.variant_display_options || '';
-                  const qty = Math.max(Number(component?.quantity) || 1, 1);
-                  const label = variants ? `${name} - ${variants}` : name;
-                  if (!label) return null;
-                  return (
-                    <div class="bundle-component" part="component">
-                      <span class="bundle-component__label">{label}</span>
-                      <span class="bundle-component__qty">× {qty}</span>
-                    </div>
-                  );
-                })}
+                {getBundleComponentRowsFromLineItems(this.bundleComponents).map(row => (
+                  <div class="bundle-component" part="component" key={row.id}>
+                    <span class="bundle-component__label">{row.label}</span>
+                    <span class="bundle-component__qty">× {row.qty}</span>
+                  </div>
+                ))}
               </div>
             )}
 

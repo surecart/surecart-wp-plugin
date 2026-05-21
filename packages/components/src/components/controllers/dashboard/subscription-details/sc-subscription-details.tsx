@@ -4,6 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
+import { getBundleComponentRowsFromBundleItems } from '../../../../functions/line-items';
 import { BundleItem, License, Price, Product, Purchase, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 import { formatNumber } from '../../../../../../admin/util';
@@ -200,8 +201,8 @@ export class ScSubscriptionDetails {
   }
 
   renderBundleComponents() {
-    const items = this.getBundleItems();
-    if (!items.length) return null;
+    const rows = getBundleComponentRowsFromBundleItems(this.getBundleItems());
+    if (!rows.length) return null;
 
     return (
       <div>
@@ -218,30 +219,26 @@ export class ScSubscriptionDetails {
           <sc-icon name={this.bundleExpanded ? 'chevron-up' : 'chevron-down'}></sc-icon>
           {sprintf(
             /* translators: %d: number of bundle component items */
-            _n('Includes %d item', 'Includes %d items', items.length, 'surecart'),
-            items.length,
+            _n('Includes %d item', 'Includes %d items', rows.length, 'surecart'),
+            rows.length,
           )}
         </button>
         {this.bundleExpanded && (
           <div class="subscription-details__bundle-components">
-            {items.map(item => {
-              const itemProduct = item?.component_product as Product;
-              return (
-                <div class="subscription-details__bundle-component" key={item?.id}>
-                  <sc-icon name="chevron-right" />
-                  <span>{itemProduct?.name}</span>
-                  {item?.quantity > 1 && (
-                    <span class="subscription-details__bundle-qty">
-                      {sprintf(
-                        /* translators: %d: quantity */
-                        __('× %d', 'surecart'),
-                        item.quantity,
-                      )}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
+            {rows.map(row => (
+              <div class="bundle-component subscription-details__bundle-component" key={row.id}>
+                <span class="bundle-component__label">{row.label}</span>
+                {row.qty > 1 && (
+                  <span class="bundle-component__qty subscription-details__bundle-qty">
+                    {sprintf(
+                      /* translators: %d: quantity */
+                      __('× %d', 'surecart'),
+                      row.qty,
+                    )}
+                  </span>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

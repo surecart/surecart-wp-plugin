@@ -1,6 +1,42 @@
 import { getQueryArg } from '@wordpress/url';
 
-import { Bump, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+
+/**
+ * Build a list of display rows from bundle component line items. Use this
+ * when you have actual LineItems (cart, checkout, order, customer dashboard).
+ * Rows include variant_display_options on the label when present.
+ */
+export const getBundleComponentRowsFromLineItems = (components: LineItem[] = []): BundleComponentRow[] => {
+  return (components || [])
+    .map(component => {
+      const componentProduct = (component?.price as Price)?.product as Product;
+      const name = componentProduct?.name || '';
+      const variants = component?.variant_display_options || '';
+      const qty = Math.max(Number(component?.quantity) || 1, 1);
+      const label = variants ? `${name} - ${variants}` : name;
+      if (!label) return null;
+      return { id: component?.id, label, qty };
+    })
+    .filter(Boolean) as BundleComponentRow[];
+};
+
+/**
+ * Build a list of display rows from BundleItems attached to a Product
+ * (subscription detail panel — no LineItems exist for components there,
+ * only the bundle definition).
+ */
+export const getBundleComponentRowsFromBundleItems = (items: BundleItem[] = []): BundleComponentRow[] => {
+  return (items || [])
+    .map(item => {
+      const componentProduct = item?.component_product as Product;
+      const name = componentProduct?.name || '';
+      const qty = Math.max(Number(item?.quantity) || 1, 1);
+      if (!name) return null;
+      return { id: item?.id, label: name, qty };
+    })
+    .filter(Boolean) as BundleComponentRow[];
+};
 
 /**
  * Group line items into bundle parents (with components nested) and regulars.

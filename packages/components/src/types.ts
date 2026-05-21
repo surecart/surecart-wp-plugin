@@ -612,6 +612,12 @@ export interface BundleItem {
   updated_at: number;
 }
 
+export interface BundleComponentRow {
+  id: string;
+  label: string;
+  qty: number;
+}
+
 export interface InvoiceItem extends LineItem {}
 export interface PriceChoice {
   id: string;
