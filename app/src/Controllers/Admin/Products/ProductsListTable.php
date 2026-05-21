@@ -121,15 +121,12 @@ class ProductsListTable extends ListTable {
 	protected $collection_dropdown_disable_filter = 'surecart/disable_product_collection_dropdown';
 
 	/**
-	 * Screen-reader label for the row checkbox.
-	 *
-	 * Note: kept as "Select comment" to preserve the legacy label seen in
-	 * the products screen accessibility tree. Subclasses may override.
+	 * Screen-reader label for the row checkbox. Subclasses may override.
 	 *
 	 * @return string
 	 */
 	protected function selectAriaLabel() {
-		return __( 'Select comment', 'surecart' );
+		return __( 'Select product', 'surecart' );
 	}
 
 	/**
