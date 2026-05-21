@@ -707,7 +707,7 @@ class ProductsListTable extends ListTable {
 
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( $this->url_key, $product->id ) . '">' . esc_html( $product->name ) . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( $this->url_key, $product->id ) ) . '">' . esc_html( $product->name ) . '</a>';
 			case 'description':
 				return esc_html( $product->$column_name ?? '' );
 		}
