@@ -191,7 +191,7 @@ class AutoFeesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $auto_fees ) {
-		return $auto_fees->name;
+		return esc_html( $auto_fees->name );
 	}
 
 	/**

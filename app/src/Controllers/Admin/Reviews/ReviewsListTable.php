@@ -303,7 +303,7 @@ class ReviewsListTable extends ListTable {
 		// Call the parent method to handle custom columns.
 		parent::column_default( $review, $column_name );
 
-		return $review->$column_name ?? '';
+		return esc_html( $review->$column_name ?? '' );
 	}
 
 	/**
