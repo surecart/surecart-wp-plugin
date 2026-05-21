@@ -78,13 +78,10 @@ const { state, actions } = store('surecart/checkout', {
 		oldCheckout: {},
 
 		/**
-		 * Get the number of items in checkout. Sums quantities of top-level items only.
+		 * Get the number of user-visible line items in checkout.
 		 */
 		get itemsCount() {
-			return state.cartLineItems.reduce(
-				(sum, item) => sum + (Number(item?.quantity) || 0),
-				0
-			);
+			return state.cartLineItems.length;
 		},
 
 		/**
