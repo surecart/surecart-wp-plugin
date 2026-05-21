@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
@@ -27,6 +27,13 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 
 	const [qty, setQty] = useState(item?.quantity ?? 1);
 	const [basis, setBasis] = useState(item?.basis_amount ?? '');
+
+	// Reset form state when the editing target changes.
+	const itemKey = item?.id ?? null;
+	useEffect(() => {
+		setQty(item?.quantity ?? 1);
+		setBasis(item?.basis_amount ?? '');
+	}, [itemKey]);
 
 	const handleSubmit = (e) => {
 		e?.stopPropagation?.();
