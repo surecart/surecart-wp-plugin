@@ -10,7 +10,7 @@ export default function StockCell({ tracked, available }) {
 					color: var(--sc-color-gray-500);
 				`}
 			>
-				{__('Not tracked', 'surecart')}
+				∞
 			</span>
 		);
 	}
