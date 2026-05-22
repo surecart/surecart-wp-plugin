@@ -224,6 +224,34 @@ $padding-size: 20px;
 	.dataviews-view-table thead th {
 		top: calc(32px + var(--sc-list-header-height));
 	}
+
+	// Constrain the table to the wrapper so wide cell content can't push the
+	// body horizontally (which drags the WP admin sidebar out of view). The
+	// LAYOUT_STYLES percentages on TH inline styles are honoured, and the
+	// upstream `width: 1%` on un-sized `<col>` elements gets overridden for
+	// actions / checkbox via the explicit pixel widths below. Specificity:
+	// upstream is (0,3,1) — the `.dataviews-view-table col.…` chain here is
+	// (0,4,1) and wins.
+	@media screen and (min-width: 783px) {
+		.dataviews-view-table {
+			table-layout: fixed;
+		}
+
+		.dataviews-view-table col.dataviews-view-table__col-actions {
+			width: 100px;
+		}
+
+		.dataviews-view-table col.dataviews-view-table__col-checkbox {
+			width: 44px;
+		}
+
+		// Flex children inside cells must be able to shrink past their
+		// content's intrinsic width or they push the cell wider than its
+		// allocated column.
+		.dataviews-view-table td > div {
+			min-width: 0;
+		}
+	}
 }
 
 // Action label rendering — pairs with `dataview-list/iconLabel.js`. Icon
@@ -315,6 +343,10 @@ $padding-size: 20px;
 		justify-content: space-between;
 		gap: 12px;
 		flex-wrap: wrap;
+		// Keep the bar tall enough for `--sc-list-header-height: 72px` even
+		// when no action button is present (e.g. Reviews). Otherwise the
+		// shorter header leaves a gap below it and rows leak through.
+		min-height: 40px;
 	}
 
 	.wp-heading-inline {

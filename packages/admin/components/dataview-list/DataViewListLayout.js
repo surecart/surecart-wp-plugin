@@ -130,7 +130,10 @@ export default ({
 									border-radius: 8px;
 									flex: 1 1 auto;
 									min-height: 0;
-									overflow-y: auto;
+									// Both axes — so wide tables scroll inside
+									// the card and the upstream sticky Actions
+									// column can pin instead of escaping right.
+									overflow: auto;
 									box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
 									box-sizing: border-box;
 								`}
