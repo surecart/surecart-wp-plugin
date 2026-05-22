@@ -1,4 +1,7 @@
-import { render } from '@wordpress/element';
+/**
+ * External dependencies.
+ */
+import { createRoot } from '@wordpress/element';
 
 /**
  * register store and entities.
@@ -6,11 +9,14 @@ import { render } from '@wordpress/element';
 import '../store/add-entities';
 
 /**
- * App
+ * App.
  */
-import ProductGroup from './ProductGroup';
+import ProductGroupsApp from './ProductGroupsApp';
 
 /**
- * Render
+ * Render.
  */
-render(<ProductGroup />, document.getElementById('app'));
+const container = document.getElementById('sc-product-groups-app');
+if (container) {
+	createRoot(container).render(<ProductGroupsApp />);
+}

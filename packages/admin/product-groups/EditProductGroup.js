@@ -1,5 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import {
 	ScButton,
 	ScDropdown,
@@ -10,7 +14,11 @@ import {
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
 
+/**
+ * Internal dependencies.
+ */
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
@@ -19,11 +27,9 @@ import Details from './modules/Details';
 import SaveButton from '../templates/SaveButton';
 import useSave from '../settings/UseSave';
 import Products from './modules/Products';
-import { useDispatch } from '@wordpress/data';
 
-export default ({ id }) => {
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+export default ({ id, navigation } = {}) => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const {
@@ -38,13 +44,18 @@ export default ({ id }) => {
 		hasLoadedItem,
 	} = useEntity('product-group', id);
 
-	/**
-	 * Handle the form submission
-	 */
+	const goBackToList = () => {
+		if (navigation) {
+			navigation.goToList();
+		} else {
+			window.location.assign('admin.php?page=sc-product-groups');
+		}
+	};
+
 	const onSubmit = async () => {
 		try {
 			setError(null);
-			save({ successMessage: __('Product group updated.', 'surecart') });
+			save({ successMessage: __('Upgrade group updated.', 'surecart') });
 		} catch (e) {
 			setError(e);
 		}
@@ -53,7 +64,7 @@ export default ({ id }) => {
 	const onDelete = async () => {
 		const r = confirm(
 			__(
-				'Permanently delete this product group? You cannot undo this action.',
+				'Permanently delete this upgrade group? You cannot undo this action.',
 				'surecart'
 			)
 		);
@@ -61,8 +72,8 @@ export default ({ id }) => {
 
 		try {
 			await deleteItem({ throwOnError: true });
-			createSuccessNotice(__('Product group deleted.', 'surecart'));
-			window.location.assign('admin.php?page=sc-product-groups');
+			createSuccessNotice(__('Upgrade group deleted.', 'surecart'));
+			goBackToList();
 		} catch (e) {
 			console.error(e?.message);
 			setError(e);
@@ -72,8 +83,8 @@ export default ({ id }) => {
 	const toggleArchive = async () => {
 		const r = confirm(
 			item?.archived
-				? __('Un-Archive this product group?', 'surecart')
-				: __('Archive this product group?', 'surecart')
+				? __('Un-Archive this upgrade group?', 'surecart')
+				: __('Archive this upgrade group?', 'surecart')
 		);
 
 		if (!r) return;
@@ -82,8 +93,8 @@ export default ({ id }) => {
 			await saveItem({ archived: !item?.archived });
 			createSuccessNotice(
 				!item?.archived
-					? __('Product group archived.', 'surecart')
-					: __('Product group un-archived.', 'surecart'),
+					? __('Upgrade group archived.', 'surecart')
+					: __('Upgrade group un-archived.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 		} catch (e) {
@@ -129,6 +140,15 @@ export default ({ id }) => {
 		</div>
 	);
 
+	const backProps = navigation
+		? {
+				onClick: (e) => {
+					e.preventDefault();
+					navigation.goToList();
+				},
+		  }
+		: {};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -144,6 +164,7 @@ export default ({ id }) => {
 						circle
 						size="small"
 						href="admin.php?page=sc-product-groups"
+						{...backProps}
 					>
 						<sc-icon name="arrow-left"></sc-icon>
 					</ScButton>
@@ -151,12 +172,15 @@ export default ({ id }) => {
 						<sc-breadcrumb>
 							<Logo display="block" />
 						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-product-groups">
-							{__('Product Groups', 'surecart')}
+						<sc-breadcrumb
+							href="admin.php?page=sc-product-groups"
+							{...backProps}
+						>
+							{__('Upgrade Groups', 'surecart')}
 						</sc-breadcrumb>
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
-								{__('Edit Product Group', 'surecart')}
+								{__('Edit Upgrade Group', 'surecart')}
 								{item?.archived && (
 									<>
 										{' '}
