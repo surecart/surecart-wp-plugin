@@ -88,8 +88,14 @@ class ProductCollectionsRestServiceProvider extends RestServiceProvider implemen
 				'items'       => [ 'type' => 'string' ],
 				'default'     => [],
 			],
-			'ids'      => [
+			'ids'         => [
 				'description' => __( 'Filter the result set to specific IDs.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [ 'type' => 'string' ],
+				'default'     => [],
+			],
+			'product_ids' => [
+				'description' => __( 'Only return collections that contain the given products.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [ 'type' => 'string' ],
 				'default'     => [],

@@ -9,11 +9,15 @@ const getProductsUrl = (collectionId) =>
 		sc_collection: collectionId,
 	});
 
-export default () => ({
+// Filterable on the visible column itself so the column-header gets "Add filter".
+export default ({ elements } = {}) => ({
 	id: 'products_count',
 	label: __('Products', 'surecart'),
 	enableSorting: true,
-	getValue: ({ item }) => item?.products_count ?? 0,
+	filterBy: { operators: ['isAny'] },
+	elements: Array.isArray(elements) ? elements : [],
+	getValue: ({ item }) =>
+		(item?.products?.data || []).map((p) => p.id),
 	render: ({ item }) => (
 		<a
 			href={getProductsUrl(item?.id)}

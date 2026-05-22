@@ -13,6 +13,7 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
+	useProductElements,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import { buildCollectionFields } from './list/fields';
@@ -22,6 +23,7 @@ import {
 	COLLECTIONS_DEFAULT_SORT,
 	COLLECTIONS_SORT_MAP,
 } from './list/buildQuery';
+import { COLLECTIONS_URL_FILTERS } from './list/urlFilters';
 import './product-collections-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -38,6 +40,8 @@ export default ({ navigation }) => {
 		useDispatch(noticesStore);
 
 	const { toggle: toggleEnhancedView } = useEnhancedView();
+
+	const productElements = useProductElements();
 
 	const defaultFields = useMemo(
 		() =>
@@ -60,6 +64,7 @@ export default ({ navigation }) => {
 		layoutStyles: LAYOUT_STYLES,
 		preferenceKey: PREFERENCE_KEY,
 		pageSlug: 'sc-product-collections',
+		urlFilters: COLLECTIONS_URL_FILTERS,
 		buildQueryArgs: ({ view: currentView }) => {
 			const full = buildCollectionsQuery(currentView);
 			delete full.per_page;
@@ -71,8 +76,8 @@ export default ({ navigation }) => {
 	});
 
 	const fields = useMemo(
-		() => buildCollectionFields({ navigation }),
-		[navigation]
+		() => buildCollectionFields({ navigation, elements: productElements }),
+		[navigation, productElements]
 	);
 
 	const handleDelete = useCallback(
