@@ -40,7 +40,8 @@ const TAB_DEFS = [
 	},
 ];
 
-export const useStatusTabs = ({ view, setView }) => {
+// `refreshKey` — bump after approve / reject / delete so count badges re-fetch.
+export const useStatusTabs = ({ view, setView, refreshKey = 0 }) => {
 	const activeValue =
 		view?.filters?.find((f) => f.field === 'status')?.value || 'all';
 
@@ -90,7 +91,7 @@ export const useStatusTabs = ({ view, setView }) => {
 			}
 			setCounts(next);
 		});
-	}, []);
+	}, [refreshKey]);
 
 	const tabs = useMemo(
 		() =>

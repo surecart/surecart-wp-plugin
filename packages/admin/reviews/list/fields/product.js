@@ -11,7 +11,7 @@ const reviewsByProductUrl = (productId) =>
 	});
 
 // `elements` must be a static array — see products/list/fields/product_collections.js.
-export default ({ elements } = {}) => ({
+export default ({ elements, navigation } = {}) => ({
 	id: 'product',
 	label: __('Product', 'surecart'),
 	enableSorting: false,
@@ -26,6 +26,20 @@ export default ({ elements } = {}) => ({
 			<a
 				href={reviewsByProductUrl(product.id)}
 				title={product.name}
+				onClick={(e) => {
+					// Modified clicks fall through to native (new tab etc.).
+					if (
+						navigation &&
+						!e.metaKey &&
+						!e.ctrlKey &&
+						!e.shiftKey &&
+						!e.altKey &&
+						e.button === 0
+					) {
+						e.preventDefault();
+						navigation.navigateTo({ sc_product: product.id });
+					}
+				}}
 				css={css`
 					display: inline-block;
 					max-width: 200px;

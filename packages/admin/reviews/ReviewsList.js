@@ -2,7 +2,7 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
-import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
+import { store as coreStore } from '@wordpress/core-data';
 import { useMemo, useCallback, useState } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
@@ -14,6 +14,8 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
+	useProductElements,
+	useTabRefreshKey,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import { buildReviewFields } from './list/fields';
@@ -28,22 +30,15 @@ import { useStatusTabs } from './list/useStatusTabs';
 import './reviews-list-style.scss';
 
 const LAYOUT_STYLES = {
-	review: { width: '28%' },
-	stars: { width: '10%' },
+	review: { width: '25%' },
+	stars: { width: '12%' },
 	customer: { width: '14%' },
 	product: { width: '14%' },
 	status: { width: '9%' },
 	created: { width: '14%' },
 };
 
-const DEFAULT_FIELDS = [
-	'review',
-	'stars',
-	'customer',
-	'product',
-	'status',
-	'created',
-];
+const DEFAULT_FIELDS = ['review', 'stars', 'product', 'status', 'created'];
 const PREFERENCE_KEY = 'reviews-list-view';
 
 export default ({ navigation }) => {
@@ -54,20 +49,7 @@ export default ({ navigation }) => {
 	const { toggle: toggleEnhancedView } = useEnhancedView();
 	const [isMutating, setIsMutating] = useState(false);
 
-	// Static elements list for the Product filter dropdown.
-	const { records: productRecords } = useEntityRecords(
-		'surecart',
-		'product',
-		{ per_page: 100, archived: false }
-	);
-	const productElements = useMemo(
-		() =>
-			(productRecords || []).map((p) => ({
-				value: p.id,
-				label: p.name,
-			})),
-		[productRecords]
-	);
+	const productElements = useProductElements();
 
 	const defaultFields = useMemo(
 		() => applyDefaultFieldsExtensions('reviews', DEFAULT_FIELDS),
@@ -100,7 +82,13 @@ export default ({ navigation }) => {
 		},
 	});
 
-	const { tabs, activeValue, setTab } = useStatusTabs({ view, setView });
+	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
+
+	const { tabs, activeValue, setTab } = useStatusTabs({
+		view,
+		setView,
+		refreshKey,
+	});
 
 	const fields = useMemo(
 		() => buildReviewFields({ navigation, elements: productElements }),
@@ -131,6 +119,7 @@ export default ({ navigation }) => {
 					);
 				}
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
 					sprintf(
 						_n(
@@ -155,6 +144,7 @@ export default ({ navigation }) => {
 		[
 			receiveEntityRecords,
 			invalidateList,
+			bumpTabRefresh,
 			createSuccessNotice,
 			createErrorNotice,
 		]
@@ -201,6 +191,7 @@ export default ({ navigation }) => {
 					)
 				);
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
 					sprintf(
 						_n(
@@ -227,6 +218,7 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
+			bumpTabRefresh,
 		]
 	);
 
