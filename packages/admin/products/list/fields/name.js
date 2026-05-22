@@ -24,36 +24,32 @@ export default ({ navigation } = {}) => ({
 				align-items: center;
 				gap: 12px;
 				min-width: 0;
-				white-space: normal;
 			`}
 		>
 			<ProductThumbnail product={item} />
-			<div
+			<a
+				href={getEditUrl(item?.id)}
+				title={item?.name}
+				onClick={(e) => {
+					e.preventDefault();
+					navigation?.goToEdit(item?.id);
+				}}
 				css={css`
-					min-width: 0;
+					font-weight: 600;
+					font-size: var(--sc-font-size-medium, 14px);
+					color: var(--sc-color-gray-900);
+					text-decoration: none;
 					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					min-width: 0;
+					&:hover {
+						color: var(--sc-color-primary-500);
+					}
 				`}
 			>
-				<a
-					href={getEditUrl(item?.id)}
-					onClick={(e) => {
-						e.preventDefault();
-						navigation?.goToEdit(item?.id);
-					}}
-					css={css`
-						font-weight: 600;
-						font-size: var(--sc-font-size-medium, 14px);
-						color: var(--sc-color-gray-900);
-						text-decoration: none;
-						word-break: break-word;
-						&:hover {
-							color: var(--sc-color-primary-500);
-						}
-					`}
-				>
-					{item?.name}
-				</a>
-			</div>
+				{item?.name}
+			</a>
 		</div>
 	),
 });
