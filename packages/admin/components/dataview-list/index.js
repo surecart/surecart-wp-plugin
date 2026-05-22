@@ -7,6 +7,8 @@ export { default as useEnhancedView } from './useEnhancedView';
 export { default as ModernViewIntroModal } from './ModernViewIntroModal';
 export { default as iconLabel } from './iconLabel';
 export { default as useAsyncEntityElements } from './useAsyncEntityElements';
+export { default as useProductElements } from './useProductElements';
+export { default as useTabRefreshKey } from './useTabRefreshKey';
 export {
 	buildBaseQuery,
 	buildQueryFromView,

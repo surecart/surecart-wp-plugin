@@ -109,6 +109,22 @@ $padding-size: 20px;
 		visibility: hidden;
 	}
 
+	// Size buttons to fit the SVG — upstream lets icons overflow narrow buttons.
+	.dataviews-view-table .dataviews-item-actions {
+		gap: 8px;
+
+		.components-button:not(.dataviews-all-actions-button) {
+			min-width: 24px;
+			width: 24px;
+			padding: 0;
+
+			svg {
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
 	.dataviews-view-table__row:hover .dataviews-item-actions .components-button,
 	.dataviews-view-table__row:focus-within
 		.dataviews-item-actions
@@ -215,42 +231,29 @@ $padding-size: 20px;
 	box-sizing: border-box;
 	border-top: 1px solid #f0f0f0;
 
-	// Offset the sticky bars by the WP admin bar height so they pin below it
-	// instead of disappearing under it.
+	// sc-list-header is a sibling of .dataviews-wrapper, so it's still
+	// sticky-to-body. Offset for the WP admin bar.
 	.sc-list-header {
 		top: 32px;
 	}
 
+	// thead is inside .dataviews-wrapper which becomes a scroll container
+	// below — sticky scope flips from body to wrapper. Pin to wrapper top.
 	.dataviews-view-table thead th {
-		top: calc(32px + var(--sc-list-header-height));
+		top: 0;
 	}
 
-	// Constrain the table to the wrapper so wide cell content can't push the
-	// body horizontally (which drags the WP admin sidebar out of view). The
-	// LAYOUT_STYLES percentages on TH inline styles are honoured, and the
-	// upstream `width: 1%` on un-sized `<col>` elements gets overridden for
-	// actions / checkbox via the explicit pixel widths below. Specificity:
-	// upstream is (0,3,1) — the `.dataviews-view-table col.…` chain here is
-	// (0,4,1) and wins.
-	@media screen and (min-width: 783px) {
-		.dataviews-view-table {
-			table-layout: fixed;
-		}
+	// Scope horizontal scroll to the inner wrapper so a wide table doesn't
+	// drag the WP admin sidebar out of view. Search bar + footer stay
+	// pinned to wrapper left; upstream sticky-right Actions pins to wrapper right.
+	.dataviews-wrapper {
+		overflow-x: auto;
+	}
 
-		.dataviews-view-table col.dataviews-view-table__col-actions {
-			width: 100px;
-		}
-
-		.dataviews-view-table col.dataviews-view-table__col-checkbox {
-			width: 44px;
-		}
-
-		// Flex children inside cells must be able to shrink past their
-		// content's intrinsic width or they push the cell wider than its
-		// allocated column.
-		.dataviews-view-table td > div {
-			min-width: 0;
-		}
+	.dataviews__view-actions,
+	.dataviews-footer {
+		position: sticky;
+		left: 0;
 	}
 }
 
@@ -266,21 +269,6 @@ $padding-size: 20px;
 		display: inline-flex;
 	}
 	.dataviews-action-label {
-		display: none;
-	}
-}
-
-// Desktop has `overflow: visible` on the wrapper — h-scroll impossible, so
-// the `--stuck` indicator is noise. Also masks an upstream mount-timing bug
-// in `useIsHorizontalScrollEnd` that leaves the class stuck-on. Selectors
-// match WP's specificity so this override actually wins.
-@media screen and (min-width: 783px) {
-	.sc-dataview-list-wrapper
-		.dataviews-view-table
-		th.dataviews-view-table__actions-column--stuck::after,
-	.sc-dataview-list-wrapper
-		.dataviews-view-table
-		td.dataviews-view-table__actions-column--stuck::after {
 		display: none;
 	}
 }

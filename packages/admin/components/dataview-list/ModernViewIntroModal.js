@@ -196,7 +196,7 @@ export default function ModernViewIntroModal({
 					`}
 				>
 					{__(
-						"We've redesigned the Products and Product Collections lists — cleaner layout, noticeably faster performance, and a better experience. Your data stays exactly the same.",
+						"We've redesigned the Products, Collections, Upgrade Groups, and Reviews lists — cleaner layout, noticeably faster performance, and a better experience. Your data stays exactly the same.",
 						'surecart'
 					)}
 				</p>
