@@ -207,7 +207,7 @@ class WooCommerceImportService {
 			 WHERE p.post_type = 'sc_product'
 			   AND pm.meta_key = 'product'
 			   AND pm.meta_value LIKE %s",
-			$wpdb->esc_like( '%wc_product_id%' )
+			'%' . $wpdb->esc_like( 'wc_product_id' ) . '%'
 		) );
 
 		$valid_ids = [];
