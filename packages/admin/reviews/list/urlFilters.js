@@ -12,4 +12,10 @@ export const REVIEWS_URL_FILTERS = [
 		operator: 'isAny',
 		multiple: true,
 	},
+	{
+		field: 'stars',
+		urlKey: 'stars',
+		operator: 'isAny',
+		multiple: true,
+	},
 ];

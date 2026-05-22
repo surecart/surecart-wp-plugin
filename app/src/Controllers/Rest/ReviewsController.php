@@ -31,32 +31,43 @@ class ReviewsController extends RestController {
 	 */
 	protected $with = [ 'product', 'product.price', 'product.featured_product_media' ];
 
+	/**
+	 * REST → platform key renames for filters the platform expects as
+	 * `key[]` but WP REST flattens (single-scalar values would otherwise
+	 * serialize as `?key=value` and the platform ignores them).
+	 *
+	 * @var array<string, string>
+	 */
+	protected $bracketed_arg_keys = [
+		'status' => 'status[]',
+	];
+
 	public function __construct() {
-		add_filter( 'surecart/reviews/list/query_args', [ $this, 'translateStatusArgKey' ], 10, 1 );
+		add_filter( 'surecart/reviews/list/query_args', [ $this, 'translateBracketedArgKeys' ], 10, 1 );
 	}
 
 	/**
-	 * Rename `status` → `status[]` so the outbound platform request uses
-	 * the bracketed key the platform filters on (legacy ListTable does the
-	 * same; WP REST strips brackets from incoming `$_GET` keys).
+	 * Rename non-bracketed REST keys to bracketed platform keys.
 	 *
 	 * @param array $args Query args from the REST request.
 	 *
 	 * @return array
 	 */
-	public function translateStatusArgKey( array $args ): array {
-		if ( ! array_key_exists( 'status', $args ) ) {
-			return $args;
+	public function translateBracketedArgKeys( array $args ): array {
+		foreach ( $this->bracketed_arg_keys as $from => $to ) {
+			if ( ! array_key_exists( $from, $args ) ) {
+				continue;
+			}
+
+			$value = $args[ $from ];
+			unset( $args[ $from ] );
+
+			if ( is_array( $value ) && empty( $value ) ) {
+				continue;
+			}
+
+			$args[ $to ] = $value;
 		}
-
-		$value = $args['status'];
-		unset( $args['status'] );
-
-		if ( is_array( $value ) && empty( $value ) ) {
-			return $args;
-		}
-
-		$args['status[]'] = $value;
 		return $args;
 	}
 

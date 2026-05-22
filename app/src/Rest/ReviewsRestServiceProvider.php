@@ -147,7 +147,7 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	public function get_collection_params() {
 		return [
 			'status'       => [
-				'description' => esc_html__( 'Filter by review status. Accepts an array of statuses to match the underlying platform API\'s `status[]` filter.', 'surecart' ),
+				'description' => esc_html__( 'Filter by review status.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
@@ -160,6 +160,15 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'stars'        => [
+				'description' => esc_html__( 'Filter by star rating (1-5).', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+					'enum' => [ '1', '2', '3', '4', '5' ],
 				],
 				'default'     => [],
 			],

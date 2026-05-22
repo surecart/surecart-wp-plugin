@@ -1,4 +1,3 @@
-// Direct imports — see comment in products/list/buildQuery.js.
 import {
 	buildQueryFromView,
 	getStringValues,
@@ -30,7 +29,20 @@ export const applyProductFilter = ({ view, args }) => {
 	args.product_ids = values;
 };
 
-const DEFAULT_HANDLERS = [applyStatusFilter, applyProductFilter];
+// Stars — controller renames to `stars[]` for the platform.
+export const applyStarsFilter = ({ view, args }) => {
+	const filter = findFilter(view, 'stars');
+	if (!filter) return;
+	const values = getStringValues(filter.value);
+	if (!values.length) return;
+	args.stars = values;
+};
+
+const DEFAULT_HANDLERS = [
+	applyStatusFilter,
+	applyProductFilter,
+	applyStarsFilter,
+];
 
 const extraArgs = () => ({
 	expand: ['customer', 'product'],
