@@ -17,11 +17,48 @@ class ReviewsController extends RestController {
 	protected $class = Review::class;
 
 	/**
+	 * Resource slug — enables the per-resource filter
+	 * `surecart/reviews/list/query_args` invoked by the base controller.
+	 *
+	 * @var string
+	 */
+	protected $resource = 'reviews';
+
+	/**
 	 * Always fetch with these subcollections.
 	 *
 	 * @var array<string>
 	 */
 	protected $with = [ 'product', 'product.price', 'product.featured_product_media' ];
+
+	public function __construct() {
+		add_filter( 'surecart/reviews/list/query_args', [ $this, 'translateStatusArgKey' ], 10, 1 );
+	}
+
+	/**
+	 * Rename `status` → `status[]` so the outbound platform request uses
+	 * the bracketed key the platform filters on (legacy ListTable does the
+	 * same; WP REST strips brackets from incoming `$_GET` keys).
+	 *
+	 * @param array $args Query args from the REST request.
+	 *
+	 * @return array
+	 */
+	public function translateStatusArgKey( array $args ): array {
+		if ( ! array_key_exists( 'status', $args ) ) {
+			return $args;
+		}
+
+		$value = $args['status'];
+		unset( $args['status'] );
+
+		if ( is_array( $value ) && empty( $value ) ) {
+			return $args;
+		}
+
+		$args['status[]'] = $value;
+		return $args;
+	}
 
 	/**
 	 * Middleware before we make the request.

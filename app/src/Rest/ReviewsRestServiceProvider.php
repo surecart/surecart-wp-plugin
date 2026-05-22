@@ -147,9 +147,13 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 	public function get_collection_params() {
 		return [
 			'status'       => [
-				'description' => esc_html__( 'Filter by review status.', 'surecart' ),
-				'type'        => 'string',
-				'enum'        => [ 'published', 'in_review', 'unpublished' ],
+				'description' => esc_html__( 'Filter by review status. Accepts an array of statuses to match the underlying platform API\'s `status[]` filter.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+					'enum' => [ 'published', 'in_review', 'unpublished' ],
+				],
+				'default'     => [],
 			],
 			'product_ids'  => [
 				'description' => esc_html__( 'Only return reviews for the given products.', 'surecart' ),
