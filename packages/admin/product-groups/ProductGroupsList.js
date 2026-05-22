@@ -14,6 +14,7 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
+	useTabRefreshKey,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import { buildGroupFields } from './list/fields';
@@ -76,7 +77,13 @@ export default ({ navigation }) => {
 		},
 	});
 
-	const { tabs, activeValue, setTab } = useStatusTabs({ view, setView });
+	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
+
+	const { tabs, activeValue, setTab } = useStatusTabs({
+		view,
+		setView,
+		refreshKey,
+	});
 
 	const fields = useMemo(
 		() => buildGroupFields({ navigation }),
@@ -112,6 +119,7 @@ export default ({ navigation }) => {
 					});
 				}
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
 					items.length === 1
 						? items[0].archived
@@ -139,7 +147,7 @@ export default ({ navigation }) => {
 				setIsMutating(false);
 			}
 		},
-		[saveEntityRecord, invalidateList, createSuccessNotice, createErrorNotice]
+		[saveEntityRecord, invalidateList, bumpTabRefresh, createSuccessNotice, createErrorNotice]
 	);
 
 	const handleDelete = useCallback(
@@ -153,6 +161,7 @@ export default ({ navigation }) => {
 					)
 				);
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
 					sprintf(
 						_n(
@@ -179,6 +188,7 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
+			bumpTabRefresh,
 		]
 	);
 

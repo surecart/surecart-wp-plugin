@@ -28,7 +28,7 @@ const TAB_DEFS = [
 	},
 ];
 
-export const useStatusTabs = ({ view, setView }) => {
+export const useStatusTabs = ({ view, setView, refreshKey = 0 }) => {
 	const activeValue =
 		view?.filters?.find((f) => f.field === 'archive_status')?.value ||
 		'active';
@@ -79,7 +79,7 @@ export const useStatusTabs = ({ view, setView }) => {
 			}
 			setCounts(next);
 		});
-	}, []);
+	}, [refreshKey]);
 
 	const tabs = useMemo(
 		() =>
