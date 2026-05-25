@@ -24,7 +24,7 @@ class SettingService {
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerSettings' ] );
 		add_action( 'admin_post_sc_set_enhanced_admin_views', [ $this, 'handleSetEnhancedAdminViews' ] );
-		add_action( 'admin_post_sc_dismiss_modern_view_intro', [ $this, 'handleDismissModernViewIntro' ] );
+		add_action( 'wp_ajax_sc_dismiss_modern_view_intro', [ $this, 'handleDismissModernViewIntro' ] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class SettingService {
 			'dismissed'     => self::isModernViewIntroDismissed(),
 			'image_url'     => trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/dataview/modern-view-change.svg',
 			'toggle_id'     => 'sc-enhanced-views-toggle',
-			'dismiss_url'   => admin_url( 'admin-post.php' ),
+			'dismiss_url'   => admin_url( 'admin-ajax.php' ),
 			'dismiss_nonce' => wp_create_nonce( 'sc_dismiss_modern_view_intro' ),
 		];
 	}
