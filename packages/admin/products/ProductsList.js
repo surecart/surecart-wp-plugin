@@ -16,6 +16,9 @@ import {
 	ModernViewIntroModal,
 	useTabRefreshKey,
 } from '../components/dataview-list';
+import useSiteContext from '../hooks/useSiteContext';
+import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
+import useListMutation from '../hooks/useListMutation';
 import ListHeader from '../components/ListHeader';
 import useProductIntegrations from './hooks/useProductIntegrations';
 import { buildProductFields } from './list/fields';
@@ -60,25 +63,23 @@ const DEFAULT_FIELDS = [
 ];
 const PREFERENCE_KEY = 'products-list-view';
 
+const productsQueryArgs = ({ view }) => buildProductsQuery(view);
+
 export default ({ navigation }) => {
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
-	// Enhanced-view state is also read by `DataViewListLayout` internally;
-	// pulling it here so the sidebar's back-chevron can call `toggle` to
-	// exit enhanced view without a page reload.
 	const { toggle: toggleEnhancedView } = useEnhancedView();
+	const siteContext = useSiteContext();
+	const introProps = useModernViewIntroProps();
 
-	const [isMutating, setIsMutating] = useState(false);
+	const { isMutating, run: runMutation } = useListMutation();
 
 	const expanded = useExpandedVariants();
 	const saving = useSavingVariantIds();
 	const [editingVariant, setEditingVariant] = useState(null);
 
-	// Pre-fetch collections for the filter dropdown. DataViews' `field.elements`
-	// expects a static array — async element resolvers aren't reliable across
-	// bundled WP versions yet, so we eager-fetch a generous batch.
 	const { records: collectionRecords } = useEntityRecords(
 		'surecart',
 		'product-collection',
@@ -115,16 +116,7 @@ export default ({ navigation }) => {
 		preferenceKey: PREFERENCE_KEY,
 		pageSlug: 'sc-products',
 		urlFilters: PRODUCTS_URL_FILTERS,
-		buildQueryArgs: ({ view: currentView }) => {
-			// Per-screen filter args; useDataViewState already adds
-			// per_page/page/sort/query.
-			const full = buildProductsQuery(currentView);
-			delete full.per_page;
-			delete full.page;
-			delete full.sort;
-			delete full.query;
-			return full;
-		},
+		buildQueryArgs: productsQueryArgs,
 	});
 
 	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
@@ -180,198 +172,182 @@ export default ({ navigation }) => {
 	);
 
 	const handleArchiveToggle = useCallback(
-		async (items) => {
+		(items) => {
 			const products = productOnlyItems(items);
 			if (!products.length) return;
 
-			setIsMutating(true);
-			try {
-				if (products.length === 1) {
-					// Single mutation — go direct so core-data caches the
-					// optimistic update and the row updates instantly.
-					const item = products[0];
-					await saveEntityRecord(
-						'surecart',
-						'product',
-						{ id: item.id, archived: !item.archived },
-						{ throwOnError: true }
+			return runMutation(
+				async () => {
+					if (products.length === 1) {
+						// Single mutation — go direct so core-data caches the
+						// optimistic update and the row updates instantly.
+						const item = products[0];
+						await saveEntityRecord(
+							'surecart',
+							'product',
+							{ id: item.id, archived: !item.archived },
+							{ throwOnError: true }
+						);
+					} else {
+						// Bulk — submit one Batch API request and let the platform
+						// process N PATCHes asynchronously. Far kinder to rate
+						// limits than the previous N-fanout from the browser.
+						await apiFetch({
+							path: '/surecart/v1/batches',
+							method: 'POST',
+							data: {
+								batch_operations: products.map((item) => ({
+									http_method: 'PATCH',
+									path: `/v1/products/${item.id}`,
+									body: {
+										product: { archived: !item.archived },
+									},
+								})),
+							},
+						});
+					}
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						products.length === 1
+							? products[0].archived
+								? __('Product unarchived.', 'surecart')
+								: __('Product archived.', 'surecart')
+							: sprintf(
+									/* translators: %d is the number of products in the batch. */
+									_n(
+										'Queued %d product for update. Refresh in a moment to see the result.',
+										'Queued %d products for update. Refresh in a moment to see the result.',
+										products.length,
+										'surecart'
+									),
+									products.length
+							  ),
+						{ type: 'snackbar' }
 					);
-				} else {
-					// Bulk — submit one Batch API request and let the platform
-					// process N PATCHes asynchronously. Far kinder to rate
-					// limits than the previous N-fanout from the browser.
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: products.map((item) => ({
-								http_method: 'PATCH',
-								path: `/v1/products/${item.id}`,
-								body: {
-									product: { archived: !item.archived },
-								},
-							})),
-						},
-					});
-				}
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					products.length === 1
-						? products[0].archived
-							? __('Product unarchived.', 'surecart')
-							: __('Product archived.', 'surecart')
-						: sprintf(
-								/* translators: %d is the number of products in the batch. */
-								_n(
-									'Queued %d product for update. Refresh in a moment to see the result.',
-									'Queued %d products for update. Refresh in a moment to see the result.',
-									products.length,
-									'surecart'
-								),
-								products.length
-						  ),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to update product.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-			} finally {
-				setIsMutating(false);
-			}
+				},
+				{ errorMessage: __('Failed to update product.', 'surecart') }
+			);
 		},
 		[
+			runMutation,
 			saveEntityRecord,
 			createSuccessNotice,
-			createErrorNotice,
 			invalidateList,
 			bumpTabRefresh,
 		]
 	);
 
 	const handleDelete = useCallback(
-		async (items) => {
+		(items) => {
 			const products = productOnlyItems(items);
 			if (!products.length) return;
 
-			try {
-				await Promise.all(
-					products.map((item) =>
-						deleteEntityRecord('surecart', 'product', item.id, {
-							throwOnError: true,
-						})
-					)
-				);
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					sprintf(
-						_n(
-							'Successfully deleted %d product.',
-							'Successfully deleted %d products.',
-							products.length,
-							'surecart'
+			return runMutation(
+				async () => {
+					await Promise.all(
+						products.map((item) =>
+							deleteEntityRecord('surecart', 'product', item.id, {
+								throwOnError: true,
+							})
+						)
+					);
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						sprintf(
+							_n(
+								'Successfully deleted %d product.',
+								'Successfully deleted %d products.',
+								products.length,
+								'surecart'
+							),
+							products.length
 						),
-						products.length
-					),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to delete product.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-				throw error;
-			}
+						{ type: 'snackbar' }
+					);
+				},
+				{ errorMessage: __('Failed to delete product.', 'surecart') }
+			);
 		},
 		[
+			runMutation,
 			deleteEntityRecord,
 			createSuccessNotice,
-			createErrorNotice,
 			invalidateList,
 			bumpTabRefresh,
 		]
 	);
 
 	const handleDeleteVariant = useCallback(
-		async ({ productId, variantId }) => {
+		({ productId, variantId }) => {
 			if (!productId || !variantId) return;
-			setIsMutating(true);
-			try {
-				// resolveSelect (not just select) — the list's fetcher
-				// doesn't always prime the per-record cache. Without
-				// this we'd read `{}` and PATCH `variants: []`, wiping siblings.
-				await resolveSelect(coreStore).getEntityRecord(
-					'surecart',
-					'product',
-					productId
-				);
 
-				const current = select(coreStore).getEditedEntityRecord(
-					'surecart',
-					'product',
-					productId
-				);
-				const sourceVariants = toVariantsArray(current?.variants);
-
-				// Belt-and-suspenders for the same data-loss scenario.
-				if (sourceVariants.length === 0) {
-					throw new Error(
-						__(
-							'Could not load the product variants. Refresh the page and try again.',
-							'surecart'
-						)
+			return runMutation(
+				async () => {
+					// resolveSelect (not just select) — the list's fetcher
+					// doesn't always prime the per-record cache. Without
+					// this we'd read `{}` and PATCH `variants: []`, wiping siblings.
+					await resolveSelect(coreStore).getEntityRecord(
+						'surecart',
+						'product',
+						productId
 					);
-				}
 
-				// Soft delete — flip just the targeted variant.
-				const next = sourceVariants.map((v) =>
-					v?.id !== variantId ? v : { ...v, status: 'draft' }
-				);
+					const current = select(coreStore).getEditedEntityRecord(
+						'surecart',
+						'product',
+						productId
+					);
+					const sourceVariants = toVariantsArray(current?.variants);
 
-				await dispatch(coreStore).editEntityRecord(
-					'surecart',
-					'product',
-					productId,
-					{ variants: next }
-				);
-				await dispatch(coreStore).saveEditedEntityRecord(
-					'surecart',
-					'product',
-					productId,
-					{ throwOnError: true }
-				);
+					// Belt-and-suspenders for the same data-loss scenario.
+					if (sourceVariants.length === 0) {
+						throw new Error(
+							__(
+								'Could not load the product variants. Refresh the page and try again.',
+								'surecart'
+							)
+						);
+					}
 
-				invalidateList();
-				createSuccessNotice(__('Variant deleted.', 'surecart'), {
-					type: 'snackbar',
-				});
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to delete variant.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-			} finally {
-				setIsMutating(false);
-			}
+					// Soft delete — flip just the targeted variant.
+					const next = sourceVariants.map((v) =>
+						v?.id !== variantId ? v : { ...v, status: 'draft' }
+					);
+
+					await dispatch(coreStore).editEntityRecord(
+						'surecart',
+						'product',
+						productId,
+						{ variants: next }
+					);
+					await dispatch(coreStore).saveEditedEntityRecord(
+						'surecart',
+						'product',
+						productId,
+						{ throwOnError: true }
+					);
+
+					invalidateList();
+					createSuccessNotice(__('Variant deleted.', 'surecart'), {
+						type: 'snackbar',
+					});
+				},
+				{ errorMessage: __('Failed to delete variant.', 'surecart') }
+			);
 		},
-		[invalidateList, createSuccessNotice, createErrorNotice]
+		[runMutation, invalidateList, createSuccessNotice]
 	);
 
+	// Partial-success path is handled below — only the all-failed branch
+	// re-throws so `runMutation` surfaces the snackbar error.
 	const handleDuplicate = useCallback(
-		async (items) => {
+		(items) => {
 			const products = productOnlyItems(items);
 			if (!products.length) return;
 
-			setIsMutating(true);
-			try {
-				// allSettled — bulk duplicates shouldn't fail-fast; partial
-				// success still warrants a refresh and an honest count.
+			return runMutation(async () => {
 				const results = await Promise.allSettled(
 					products.map((item) =>
 						apiFetch({
@@ -414,17 +390,20 @@ export default ({ navigation }) => {
 					const firstError = results.find(
 						(r) => r.status === 'rejected'
 					);
-					createErrorNotice(
+					throw new Error(
 						firstError?.reason?.message ||
-							__('Failed to duplicate product.', 'surecart'),
-						{ type: 'snackbar' }
+							__('Failed to duplicate product.', 'surecart')
 					);
 				}
-			} finally {
-				setIsMutating(false);
-			}
+			});
 		},
-		[createSuccessNotice, createErrorNotice, invalidateList, bumpTabRefresh]
+		[
+			runMutation,
+			createSuccessNotice,
+			createErrorNotice,
+			invalidateList,
+			bumpTabRefresh,
+		]
 	);
 
 	const actions = useMemo(
@@ -462,15 +441,7 @@ export default ({ navigation }) => {
 				}
 				statusSidebar={
 					<StatusSidebar
-						siteName={
-							window?.scData?.site_name ||
-							(window?.location?.hostname ?? '')
-						}
-						siteHref={
-							window?.scData?.home_url || window?.location?.origin
-						}
-						siteIconUrl={window?.scData?.site_icon_url || ''}
-						dashboardHref="index.php"
+						{...siteContext}
 						heading={__('Products', 'surecart')}
 						description={__(
 							'Add, edit, and manage the products you sell in your store.',
@@ -503,16 +474,7 @@ export default ({ navigation }) => {
 				/>
 			)}
 
-			{window?.scData?.modern_view_intro?.enabled && (
-				<ModernViewIntroModal
-					enabled={!!window.scData.modern_view_intro.enabled}
-					dismissed={!!window.scData.modern_view_intro.dismissed}
-					imageUrl={window.scData.modern_view_intro.image_url}
-					toggleId={window.scData.modern_view_intro.toggle_id}
-					dismissUrl={window.scData.modern_view_intro.dismiss_url}
-					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
-				/>
-			)}
+			{introProps && <ModernViewIntroModal {...introProps} />}
 		</>
 	);
 };

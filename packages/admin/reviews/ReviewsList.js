@@ -3,7 +3,7 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -17,6 +17,9 @@ import {
 	useProductElements,
 	useTabRefreshKey,
 } from '../components/dataview-list';
+import useSiteContext from '../hooks/useSiteContext';
+import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
+import useListMutation from '../hooks/useListMutation';
 import ListHeader from '../components/ListHeader';
 import { buildReviewFields } from './list/fields';
 import { buildReviewActions } from './list/actions';
@@ -41,13 +44,16 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = ['review', 'stars', 'product', 'status', 'created'];
 const PREFERENCE_KEY = 'reviews-list-view';
 
+const reviewsQueryArgs = ({ view }) => buildReviewsQuery(view);
+
 export default ({ navigation }) => {
 	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { toggle: toggleEnhancedView } = useEnhancedView();
-	const [isMutating, setIsMutating] = useState(false);
+	const siteContext = useSiteContext();
+	const introProps = useModernViewIntroProps();
+	const { isMutating, run: runMutation } = useListMutation();
 
 	const productElements = useProductElements();
 
@@ -72,14 +78,7 @@ export default ({ navigation }) => {
 		preferenceKey: PREFERENCE_KEY,
 		pageSlug: 'sc-reviews',
 		urlFilters: REVIEWS_URL_FILTERS,
-		buildQueryArgs: ({ view: currentView }) => {
-			const full = buildReviewsQuery(currentView);
-			delete full.per_page;
-			delete full.page;
-			delete full.sort;
-			delete full.query;
-			return full;
-		},
+		buildQueryArgs: reviewsQueryArgs,
 	});
 
 	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
@@ -97,56 +96,50 @@ export default ({ navigation }) => {
 
 	// Sequential, not Promise.all — platform per-resource locks reject parallel writes.
 	const mutateStatus = useCallback(
-		async (items, endpoint, nextStatus, successLabel, errorLabel) => {
-			setIsMutating(true);
-			try {
-				for (const item of items) {
-					const updated = await apiFetch({
-						path: `/surecart/v1/reviews/${item.id}/${endpoint}`,
-						method: 'PATCH',
-					});
-					// Prime the cache so the row's status badge flips
-					// immediately, before the list re-fetches.
-					receiveEntityRecords(
-						'surecart',
-						'review',
-						{
-							...updated,
-							status: nextStatus,
-						},
-						undefined,
-						false
-					);
-				}
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					sprintf(
-						_n(
-							successLabel.one,
-							successLabel.many,
-							items.length,
-							'surecart'
+		(items, endpoint, nextStatus, successLabel, errorLabel) =>
+			runMutation(
+				async () => {
+					for (const item of items) {
+						const updated = await apiFetch({
+							path: `/surecart/v1/reviews/${item.id}/${endpoint}`,
+							method: 'PATCH',
+						});
+						// Prime the cache so the row's status badge flips
+						// immediately, before the list re-fetches.
+						receiveEntityRecords(
+							'surecart',
+							'review',
+							{
+								...updated,
+								status: nextStatus,
+							},
+							undefined,
+							false
+						);
+					}
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						sprintf(
+							_n(
+								successLabel.one,
+								successLabel.many,
+								items.length,
+								'surecart'
+							),
+							items.length
 						),
-						items.length
-					),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(error?.message || errorLabel, {
-					type: 'snackbar',
-				});
-				throw error;
-			} finally {
-				setIsMutating(false);
-			}
-		},
+						{ type: 'snackbar' }
+					);
+				},
+				{ errorMessage: errorLabel }
+			),
 		[
+			runMutation,
 			receiveEntityRecords,
 			invalidateList,
 			bumpTabRefresh,
 			createSuccessNotice,
-			createErrorNotice,
 		]
 	);
 
@@ -181,42 +174,37 @@ export default ({ navigation }) => {
 	);
 
 	const handleDelete = useCallback(
-		async (items) => {
-			try {
-				await Promise.all(
-					items.map((item) =>
-						deleteEntityRecord('surecart', 'review', item.id, {
-							throwOnError: true,
-						})
-					)
-				);
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					sprintf(
-						_n(
-							'Successfully deleted %d review.',
-							'Successfully deleted %d reviews.',
-							items.length,
-							'surecart'
+		(items) =>
+			runMutation(
+				async () => {
+					await Promise.all(
+						items.map((item) =>
+							deleteEntityRecord('surecart', 'review', item.id, {
+								throwOnError: true,
+							})
+						)
+					);
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						sprintf(
+							_n(
+								'Successfully deleted %d review.',
+								'Successfully deleted %d reviews.',
+								items.length,
+								'surecart'
+							),
+							items.length
 						),
-						items.length
-					),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to delete review.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-				throw error;
-			}
-		},
+						{ type: 'snackbar' }
+					);
+				},
+				{ errorMessage: __('Failed to delete review.', 'surecart') }
+			),
 		[
+			runMutation,
 			deleteEntityRecord,
 			createSuccessNotice,
-			createErrorNotice,
 			invalidateList,
 			bumpTabRefresh,
 		]
@@ -239,15 +227,7 @@ export default ({ navigation }) => {
 				pageHeader={<ListHeader title={__('Reviews', 'surecart')} />}
 				statusSidebar={
 					<StatusSidebar
-						siteName={
-							window?.scData?.site_name ||
-							(window?.location?.hostname ?? '')
-						}
-						siteHref={
-							window?.scData?.home_url || window?.location?.origin
-						}
-						siteIconUrl={window?.scData?.site_icon_url || ''}
-						dashboardHref="index.php"
+						{...siteContext}
 						heading={__('Reviews', 'surecart')}
 						description={__(
 							'Approve, reject, and manage product reviews submitted by your customers.',
@@ -270,16 +250,7 @@ export default ({ navigation }) => {
 				isMutating={isMutating}
 			/>
 
-			{window?.scData?.modern_view_intro?.enabled && (
-				<ModernViewIntroModal
-					enabled={!!window.scData.modern_view_intro.enabled}
-					dismissed={!!window.scData.modern_view_intro.dismissed}
-					imageUrl={window.scData.modern_view_intro.image_url}
-					toggleId={window.scData.modern_view_intro.toggle_id}
-					dismissUrl={window.scData.modern_view_intro.dismiss_url}
-					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
-				/>
-			)}
+			{introProps && <ModernViewIntroModal {...introProps} />}
 		</>
 	);
 };

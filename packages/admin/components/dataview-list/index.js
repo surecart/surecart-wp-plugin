@@ -5,6 +5,7 @@ export { default as StatusSidebar } from './StatusSidebar';
 export { default as EnhancedViewToggle } from './EnhancedViewToggle';
 export { default as useEnhancedView } from './useEnhancedView';
 export { default as ModernViewIntroModal } from './ModernViewIntroModal';
+export { default as DismissibleInfo } from './DismissibleInfo';
 export { default as iconLabel } from './iconLabel';
 export { default as useAsyncEntityElements } from './useAsyncEntityElements';
 export { default as useProductElements } from './useProductElements';
@@ -13,6 +14,7 @@ export { default as useHorizontalScrollState } from './useHorizontalScrollState'
 export {
 	buildBaseQuery,
 	buildQueryFromView,
+	buildFilterArgsFromView,
 	getStringValues,
 	getNumericValues,
 	getNumericString,

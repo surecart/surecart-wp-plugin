@@ -15,6 +15,9 @@ import {
 	ModernViewIntroModal,
 	useProductElements,
 } from '../components/dataview-list';
+import useSiteContext from '../hooks/useSiteContext';
+import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
+import useListMutation from '../hooks/useListMutation';
 import ListHeader from '../components/ListHeader';
 import { buildCollectionFields } from './list/fields';
 import { buildCollectionActions } from './list/actions';
@@ -34,12 +37,16 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = ['name', 'products_count', 'description', 'created'];
 const PREFERENCE_KEY = 'product-collections-list-view';
 
+const collectionsQueryArgs = ({ view }) => buildCollectionsQuery(view);
+
 export default ({ navigation }) => {
 	const { deleteEntityRecord } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { toggle: toggleEnhancedView } = useEnhancedView();
+	const siteContext = useSiteContext();
+	const introProps = useModernViewIntroProps();
+	const { isMutating, run: runMutation } = useListMutation();
 
 	const productElements = useProductElements();
 
@@ -65,14 +72,7 @@ export default ({ navigation }) => {
 		preferenceKey: PREFERENCE_KEY,
 		pageSlug: 'sc-product-collections',
 		urlFilters: COLLECTIONS_URL_FILTERS,
-		buildQueryArgs: ({ view: currentView }) => {
-			const full = buildCollectionsQuery(currentView);
-			delete full.per_page;
-			delete full.page;
-			delete full.sort;
-			delete full.query;
-			return full;
-		},
+		buildQueryArgs: collectionsQueryArgs,
 	});
 
 	const fields = useMemo(
@@ -81,46 +81,36 @@ export default ({ navigation }) => {
 	);
 
 	const handleDelete = useCallback(
-		async (items) => {
-			try {
-				await Promise.all(
-					items.map((item) =>
-						deleteEntityRecord(
-							'surecart',
-							'product-collection',
-							item.id,
-							{ throwOnError: true }
+		(items) =>
+			runMutation(
+				async () => {
+					await Promise.all(
+						items.map((item) =>
+							deleteEntityRecord(
+								'surecart',
+								'product-collection',
+								item.id,
+								{ throwOnError: true }
+							)
 						)
-					)
-				);
-				invalidateList();
-				createSuccessNotice(
-					sprintf(
-						_n(
-							'Successfully deleted %d collection.',
-							'Successfully deleted %d collections.',
-							items.length,
-							'surecart'
+					);
+					invalidateList();
+					createSuccessNotice(
+						sprintf(
+							_n(
+								'Successfully deleted %d collection.',
+								'Successfully deleted %d collections.',
+								items.length,
+								'surecart'
+							),
+							items.length
 						),
-						items.length
-					),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to delete collection.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-				throw error;
-			}
-		},
-		[
-			deleteEntityRecord,
-			createSuccessNotice,
-			createErrorNotice,
-			invalidateList,
-		]
+						{ type: 'snackbar' }
+					);
+				},
+				{ errorMessage: __('Failed to delete collection.', 'surecart') }
+			),
+		[runMutation, deleteEntityRecord, createSuccessNotice, invalidateList]
 	);
 
 	const actions = useMemo(
@@ -144,15 +134,7 @@ export default ({ navigation }) => {
 				}
 				statusSidebar={
 					<StatusSidebar
-						siteName={
-							window?.scData?.site_name ||
-							(window?.location?.hostname ?? '')
-						}
-						siteHref={
-							window?.scData?.home_url || window?.location?.origin
-						}
-						siteIconUrl={window?.scData?.site_icon_url || ''}
-						dashboardHref="index.php"
+						{...siteContext}
 						heading={__('Product Collections', 'surecart')}
 						description={__(
 							'Group products into collections to organize your storefront.',
@@ -170,18 +152,10 @@ export default ({ navigation }) => {
 				paginationInfo={paginationInfo}
 				actions={actions}
 				isLoading={!hasResolved}
+				isMutating={isMutating}
 			/>
 
-			{window?.scData?.modern_view_intro?.enabled && (
-				<ModernViewIntroModal
-					enabled={!!window.scData.modern_view_intro.enabled}
-					dismissed={!!window.scData.modern_view_intro.dismissed}
-					imageUrl={window.scData.modern_view_intro.image_url}
-					toggleId={window.scData.modern_view_intro.toggle_id}
-					dismissUrl={window.scData.modern_view_intro.dismiss_url}
-					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
-				/>
-			)}
+			{introProps && <ModernViewIntroModal {...introProps} />}
 		</>
 	);
 };

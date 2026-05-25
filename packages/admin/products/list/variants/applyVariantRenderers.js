@@ -187,15 +187,17 @@ const decorateForVariants = (field, { savingVariantIds }) => {
 	};
 };
 
-export default function applyVariantRenderers(
-	fields,
-	{ expandedIds, onToggle, savingVariantIds }
-) {
-	return fields.map((field) => {
-		const variantAware = decorateForVariants(field, { savingVariantIds });
-		if (field.id === 'name') {
-			return decorateNameField(variantAware, { expandedIds, onToggle });
-		}
-		return variantAware;
-	});
+const compose = (...fns) => (input) => fns.reduce((acc, fn) => fn(acc), input);
+
+const getDecorators = (field, ctx) => {
+	const { expandedIds, onToggle, savingVariantIds } = ctx;
+	const decorators = [(f) => decorateForVariants(f, { savingVariantIds })];
+	if (field.id === 'name') {
+		decorators.push((f) => decorateNameField(f, { expandedIds, onToggle }));
+	}
+	return decorators;
+};
+
+export default function applyVariantRenderers(fields, ctx) {
+	return fields.map((field) => compose(...getDecorators(field, ctx))(field));
 }

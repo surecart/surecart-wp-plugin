@@ -4,7 +4,7 @@ import { jsx } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import {
@@ -15,7 +15,11 @@ import {
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
 	useTabRefreshKey,
+	DismissibleInfo,
 } from '../components/dataview-list';
+import useSiteContext from '../hooks/useSiteContext';
+import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
+import useListMutation from '../hooks/useListMutation';
 import ListHeader from '../components/ListHeader';
 import { buildGroupFields } from './list/fields';
 import { buildGroupActions } from './list/actions';
@@ -38,13 +42,16 @@ const LAYOUT_STYLES = {
 const DEFAULT_FIELDS = ['name', 'products_count', 'status', 'created'];
 const PREFERENCE_KEY = 'product-groups-list-view';
 
+const groupsQueryArgs = ({ view }) => buildGroupsQuery(view);
+
 export default ({ navigation }) => {
 	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { toggle: toggleEnhancedView } = useEnhancedView();
-	const [isMutating, setIsMutating] = useState(false);
+	const siteContext = useSiteContext();
+	const introProps = useModernViewIntroProps();
+	const { isMutating, run: runMutation } = useListMutation();
 
 	const defaultFields = useMemo(
 		() => applyDefaultFieldsExtensions('product-groups', DEFAULT_FIELDS),
@@ -67,14 +74,7 @@ export default ({ navigation }) => {
 		preferenceKey: PREFERENCE_KEY,
 		pageSlug: 'sc-product-groups',
 		urlFilters: GROUPS_URL_FILTERS,
-		buildQueryArgs: ({ view: currentView }) => {
-			const full = buildGroupsQuery(currentView);
-			delete full.per_page;
-			delete full.page;
-			delete full.sort;
-			delete full.query;
-			return full;
-		},
+		buildQueryArgs: groupsQueryArgs,
 	});
 
 	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
@@ -92,101 +92,108 @@ export default ({ navigation }) => {
 
 	// Direct save for single, Batch API for bulk — same pattern as Products.
 	const handleArchiveToggle = useCallback(
-		async (items) => {
-			setIsMutating(true);
-			try {
-				if (items.length === 1) {
-					const item = items[0];
-					await saveEntityRecord(
-						'surecart',
-						'product-group',
-						{ id: item.id, archived: !item.archived },
-						{ throwOnError: true }
+		(items) =>
+			runMutation(
+				async () => {
+					if (items.length === 1) {
+						const item = items[0];
+						await saveEntityRecord(
+							'surecart',
+							'product-group',
+							{ id: item.id, archived: !item.archived },
+							{ throwOnError: true }
+						);
+					} else {
+						await apiFetch({
+							path: '/surecart/v1/batches',
+							method: 'POST',
+							data: {
+								batch_operations: items.map((item) => ({
+									http_method: 'PATCH',
+									path: `/v1/product_groups/${item.id}`,
+									body: {
+										product_group: { archived: !item.archived },
+									},
+								})),
+							},
+						});
+					}
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						items.length === 1
+							? items[0].archived
+								? __('Upgrade group unarchived.', 'surecart')
+								: __('Upgrade group archived.', 'surecart')
+							: sprintf(
+									/* translators: %d is the number of groups in the batch. */
+									_n(
+										'Queued %d upgrade group for update. Refresh in a moment to see the result.',
+										'Queued %d upgrade groups for update. Refresh in a moment to see the result.',
+										items.length,
+										'surecart'
+									),
+									items.length
+							  ),
+						{ type: 'snackbar' }
 					);
-				} else {
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: items.map((item) => ({
-								http_method: 'PATCH',
-								path: `/v1/product_groups/${item.id}`,
-								body: {
-									product_group: { archived: !item.archived },
-								},
-							})),
-						},
-					});
+				},
+				{
+					errorMessage: __(
+						'Failed to update upgrade group.',
+						'surecart'
+					),
 				}
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					items.length === 1
-						? items[0].archived
-							? __('Upgrade group unarchived.', 'surecart')
-							: __('Upgrade group archived.', 'surecart')
-						: sprintf(
-								/* translators: %d is the number of groups in the batch. */
-								_n(
-									'Queued %d upgrade group for update. Refresh in a moment to see the result.',
-									'Queued %d upgrade groups for update. Refresh in a moment to see the result.',
-									items.length,
-									'surecart'
-								),
-								items.length
-						  ),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to update upgrade group.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-			} finally {
-				setIsMutating(false);
-			}
-		},
-		[saveEntityRecord, invalidateList, bumpTabRefresh, createSuccessNotice, createErrorNotice]
+			),
+		[
+			runMutation,
+			saveEntityRecord,
+			invalidateList,
+			bumpTabRefresh,
+			createSuccessNotice,
+		]
 	);
 
 	const handleDelete = useCallback(
-		async (items) => {
-			try {
-				await Promise.all(
-					items.map((item) =>
-						deleteEntityRecord('surecart', 'product-group', item.id, {
-							throwOnError: true,
-						})
-					)
-				);
-				invalidateList();
-				bumpTabRefresh();
-				createSuccessNotice(
-					sprintf(
-						_n(
-							'Successfully deleted %d upgrade group.',
-							'Successfully deleted %d upgrade groups.',
-							items.length,
-							'surecart'
+		(items) =>
+			runMutation(
+				async () => {
+					await Promise.all(
+						items.map((item) =>
+							deleteEntityRecord(
+								'surecart',
+								'product-group',
+								item.id,
+								{ throwOnError: true }
+							)
+						)
+					);
+					invalidateList();
+					bumpTabRefresh();
+					createSuccessNotice(
+						sprintf(
+							_n(
+								'Successfully deleted %d upgrade group.',
+								'Successfully deleted %d upgrade groups.',
+								items.length,
+								'surecart'
+							),
+							items.length
 						),
-						items.length
+						{ type: 'snackbar' }
+					);
+				},
+				{
+					errorMessage: __(
+						'Failed to delete upgrade group.',
+						'surecart'
 					),
-					{ type: 'snackbar' }
-				);
-			} catch (error) {
-				createErrorNotice(
-					error?.message ||
-						__('Failed to delete upgrade group.', 'surecart'),
-					{ type: 'snackbar' }
-				);
-				throw error;
-			}
-		},
+				}
+			),
 		[
+			runMutation,
 			deleteEntityRecord,
 			createSuccessNotice,
-			createErrorNotice,
 			invalidateList,
 			bumpTabRefresh,
 		]
@@ -206,27 +213,30 @@ export default ({ navigation }) => {
 		<>
 			<DataViewListLayout
 				pageHeader={
-					<ListHeader
-						title={__('Upgrade Groups', 'surecart')}
-						actionLabel={__('Add Upgrade Group', 'surecart')}
-						actionHref={addQueryArgs('admin.php', {
-							page: 'sc-product-groups',
-							action: 'edit',
-						})}
-						onAction={() => navigation.goToCreate()}
-					/>
+					<>
+						<ListHeader
+							title={__('Upgrade Groups', 'surecart')}
+							actionLabel={__('Add Upgrade Group', 'surecart')}
+							actionHref={addQueryArgs('admin.php', {
+								page: 'sc-product-groups',
+								action: 'edit',
+							})}
+							onAction={() => navigation.goToCreate()}
+						/>
+						<DismissibleInfo
+							id="product-groups-intro"
+							title={__('What are Upgrade Groups?', 'surecart')}
+						>
+							{__(
+								'An upgrade group is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased.',
+								'surecart'
+							)}
+						</DismissibleInfo>
+					</>
 				}
 				statusSidebar={
 					<StatusSidebar
-						siteName={
-							window?.scData?.site_name ||
-							(window?.location?.hostname ?? '')
-						}
-						siteHref={
-							window?.scData?.home_url || window?.location?.origin
-						}
-						siteIconUrl={window?.scData?.site_icon_url || ''}
-						dashboardHref="index.php"
+						{...siteContext}
 						heading={__('Upgrade Groups', 'surecart')}
 						description={__(
 							'Define the upgrade and downgrade paths customers see based on what they have already purchased.',
@@ -249,16 +259,7 @@ export default ({ navigation }) => {
 				isMutating={isMutating}
 			/>
 
-			{window?.scData?.modern_view_intro?.enabled && (
-				<ModernViewIntroModal
-					enabled={!!window.scData.modern_view_intro.enabled}
-					dismissed={!!window.scData.modern_view_intro.dismissed}
-					imageUrl={window.scData.modern_view_intro.image_url}
-					toggleId={window.scData.modern_view_intro.toggle_id}
-					dismissUrl={window.scData.modern_view_intro.dismiss_url}
-					dismissNonce={window.scData.modern_view_intro.dismiss_nonce}
-				/>
-			)}
+			{introProps && <ModernViewIntroModal {...introProps} />}
 		</>
 	);
 };

@@ -7,41 +7,43 @@ import { ScFlex, ScSkeleton } from '@surecart/components-react';
 
 const SKELETON_ROW_WIDTHS = ['160px', '120px', '180px'];
 
+const addIdsToPath = (base, ids, extras = {}) => {
+	const params = new URLSearchParams();
+	ids.forEach((id) => params.append('ids[]', id));
+	Object.entries(extras).forEach(([k, v]) => {
+		if (v !== undefined && v !== null) params.append(k, String(v));
+	});
+	return `${base}?${params.toString()}`;
+};
+
+const editProductUrl = (productId) => {
+	const url = new URL(window.location.href);
+	url.search = new URLSearchParams({
+		page: 'sc-products',
+		action: 'edit',
+		id: productId,
+	}).toString();
+	return url.toString();
+};
+
 export default function BulkDeleteConfirm({ navigation }) {
-	const { bulkDeleteIds, goToList } = navigation;
+	// Default to [] so the first paint can safely read `.length`/`.map` before
+	// the redirect effect below has had a chance to bounce us back to the list.
+	const { bulkDeleteIds = [], goToList } = navigation;
 
 	const [products, setProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [loadError, setLoadError] = useState(null);
 
-	const addIdsToPath = (base, ids, extras = {}) => {
-		const params = new URLSearchParams();
-		ids.forEach((id) => params.append('ids[]', id));
-		Object.entries(extras).forEach(([k, v]) => {
-			if (v !== undefined && v !== null) params.append(k, String(v));
-		});
-		return `${base}?${params.toString()}`;
-	};
-
-	const editProductUrl = (productId) => {
-		const url = new URL(window.location.href);
-		url.search = new URLSearchParams({
-			page: 'sc-products',
-			action: 'edit',
-			id: productId,
-		}).toString();
-		return url.toString();
-	};
-
 	useEffect(() => {
-		if (!bulkDeleteIds || bulkDeleteIds.length === 0) {
+		if (bulkDeleteIds.length === 0) {
 			goToList();
 		}
 	}, [bulkDeleteIds, goToList]);
 
 	useEffect(() => {
-		if (!bulkDeleteIds || bulkDeleteIds.length === 0) return;
+		if (bulkDeleteIds.length === 0) return;
 		let cancelled = false;
 
 		setIsLoading(true);
