@@ -243,37 +243,60 @@ export default ({ navigation }) => {
 			const products = productOnlyItems(items);
 			if (!products.length) return;
 
-			return runMutation(
-				async () => {
-					await Promise.all(
-						products.map((item) =>
-							deleteEntityRecord('surecart', 'product', item.id, {
-								throwOnError: true,
-							})
-						)
-					);
-					invalidateList();
-					bumpTabRefresh();
+			return runMutation(async () => {
+				const results = await Promise.allSettled(
+					products.map((item) =>
+						deleteEntityRecord('surecart', 'product', item.id, {
+							throwOnError: true,
+						})
+					)
+				);
+				const succeeded = results.filter(
+					(r) => r.status === 'fulfilled'
+				).length;
+				const failed = results.length - succeeded;
+				invalidateList();
+				bumpTabRefresh();
+				if (succeeded > 0 && failed === 0) {
 					createSuccessNotice(
 						sprintf(
+							/* translators: %d is the number of deleted products. */
 							_n(
 								'Successfully deleted %d product.',
 								'Successfully deleted %d products.',
-								products.length,
+								succeeded,
 								'surecart'
 							),
-							products.length
+							succeeded
 						),
 						{ type: 'snackbar' }
 					);
-				},
-				{ errorMessage: __('Failed to delete product.', 'surecart') }
-			);
+				} else if (succeeded > 0 && failed > 0) {
+					createErrorNotice(
+						sprintf(
+							/* translators: 1: succeeded count, 2: failed count. */
+							__('Deleted %1$d, failed %2$d.', 'surecart'),
+							succeeded,
+							failed
+						),
+						{ type: 'snackbar' }
+					);
+				} else {
+					const firstError = results.find(
+						(r) => r.status === 'rejected'
+					);
+					throw new Error(
+						firstError?.reason?.message ||
+							__('Failed to delete product.', 'surecart')
+					);
+				}
+			});
 		},
 		[
 			runMutation,
 			deleteEntityRecord,
 			createSuccessNotice,
+			createErrorNotice,
 			invalidateList,
 			bumpTabRefresh,
 		]

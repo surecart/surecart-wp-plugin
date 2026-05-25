@@ -115,8 +115,12 @@ class ProductsController extends AdminController {
 	 * Confirm Bulk Delete.
 	 */
 	public function confirmBulkDelete() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view; nonce is enforced on the downstream POST to bulkDelete().
+		$raw_ids     = isset( $_REQUEST['bulk_action_product_ids'] ) ? wp_unslash( $_REQUEST['bulk_action_product_ids'] ) : [];
+		$product_ids = is_array( $raw_ids ) ? array_map( 'sanitize_text_field', $raw_ids ) : [];
+
 		// find the products queued for bulk deletion.
-		if ( empty( $_REQUEST['bulk_action_product_ids'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $product_ids ) ) {
 			wp_die(
 				sprintf(
 					'%s <a href="%s">%s</a>',
@@ -133,13 +137,13 @@ class ProductsController extends AdminController {
 
 		$products = Product::where(
 			[
-				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'ids' => $product_ids,
 			]
 		)->get();
 
 		// handle empty.
 		if ( empty( $products ) ) {
-			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $product_ids ), 'surecart' ) ) );
 		}
 
 		// handle error.
@@ -164,10 +168,15 @@ class ProductsController extends AdminController {
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
-		$product_ids = array_map(
-			'sanitize_text_field',
-			$_REQUEST['bulk_action_product_ids'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		);
+		// Route middleware `nonce:bulk_delete_nonce` has already verified the
+		// nonce; we only need to coerce the payload to a sanitized array here.
+		$product_ids = isset( $_REQUEST['bulk_action_product_ids'] ) && is_array( $_REQUEST['bulk_action_product_ids'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['bulk_action_product_ids'] ) )
+			: [];
+
+		if ( empty( $product_ids ) ) {
+			return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
+		}
 
 		// get all posts where the sc_id meta key is in the product_ids using wp_query.
 		$query = new \WP_Query(
