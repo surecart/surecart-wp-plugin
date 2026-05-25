@@ -38,12 +38,22 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Sanitised `?page` query arg.
+	 *
+	 * @return string
+	 */
+	protected function getCurrentPage(): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return ! empty( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+	}
+
+	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
 	 */
 	public function get_columns() {
-		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		$current_page = $this->getCurrentPage();
 
 		/**
 		 * Filters the columns displayed in the Coupons list table.
@@ -59,7 +69,7 @@ abstract class ListTable extends \WP_List_Table {
 	 * @param string  $column_name The current column name.
 	 */
 	public function column_default( $item, $column_name ) {
-		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		$current_page = $this->getCurrentPage();
 		/**
 		 * Fires for each custom column of any SureCart List Table.
 		 *

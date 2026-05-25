@@ -198,6 +198,11 @@ abstract class AdminModelEditController {
 			);
 		}
 
+		if ( $this->needs_dataviews_style ) {
+			$this->data['enhanced_admin_views_enabled'] = (bool) get_option( 'surecart_enhanced_admin_views', true );
+			$this->data['modern_view_intro']            = \SureCart\Settings\SettingService::getModernViewIntroData();
+		}
+
 		// pass app url.
 		$this->data['upgrade_url']           = \SureCart::config()->links->purchase;
 		$this->data['surecart_app_url']      = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
