@@ -41,7 +41,8 @@ const readInitialFiltersFromUrl = (filters = []) => {
 	for (const cfg of filters) {
 		const raw = params[cfg.urlKey];
 		const deserialize = cfg.deserialize || defaultDeserialize;
-		const value = deserialize(raw, !!cfg.multiple);
+		const fromUrl = deserialize(raw, !!cfg.multiple);
+		const value = fromUrl !== undefined ? fromUrl : cfg.defaultValue;
 		if (value === undefined) continue;
 		out.push({
 			field: cfg.field,

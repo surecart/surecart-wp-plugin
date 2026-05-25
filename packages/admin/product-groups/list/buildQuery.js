@@ -1,6 +1,6 @@
 // Direct imports — see comment in products/list/buildQuery.js.
 import {
-	buildQueryFromView,
+	buildFilterArgsFromView,
 	findFilter,
 } from '../../components/dataview-list/buildBaseQuery';
 import { applyFilterHandlerExtensions } from '../../components/dataview-list/applyExtensions';
@@ -31,10 +31,8 @@ export const buildGroupsQuery = (view) => {
 		DEFAULT_HANDLERS,
 		{ view }
 	);
-	return buildQueryFromView({
+	return buildFilterArgsFromView({
 		view,
-		defaultSort: DEFAULT_SORT,
-		sortMap: SORT_MAP,
 		filterHandlers,
 	});
 };

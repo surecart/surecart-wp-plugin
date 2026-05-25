@@ -19,36 +19,20 @@ const baseView = {
 };
 
 describe('buildProductsQuery', () => {
-	test('builds default args (active products, expands relations)', () => {
+	test('builds default filter args (active products, expands relations)', () => {
 		const args = buildProductsQuery(baseView);
-		expect(args).toMatchObject({
-			per_page: 20,
-			page: 1,
-			sort: 'cataloged_at:desc',
+		expect(args).toEqual({
 			archived: false,
 			expand: ['product_collections', 'commission_structure'],
 		});
 	});
 
-	test('forwards search as `query`', () => {
-		expect(buildProductsQuery({ ...baseView, search: 'shoes' }).query).toBe(
-			'shoes'
-		);
-	});
-
-	test('aliases sort fields per SORT_MAP', () => {
-		expect(
-			buildProductsQuery({
-				...baseView,
-				sort: { field: 'name', direction: 'asc' },
-			}).sort
-		).toBe('name:asc');
-		expect(
-			buildProductsQuery({
-				...baseView,
-				sort: { field: 'created_at', direction: 'asc' },
-			}).sort
-		).toBe('cataloged_at:asc');
+	test('does not emit pagination/sort/search — those belong to useDataViewState', () => {
+		const args = buildProductsQuery({ ...baseView, search: 'shoes' });
+		expect(args.per_page).toBeUndefined();
+		expect(args.page).toBeUndefined();
+		expect(args.sort).toBeUndefined();
+		expect(args.query).toBeUndefined();
 	});
 });
 
@@ -123,12 +107,8 @@ describe('applyCollectionsFilter', () => {
 });
 
 describe('multiple filters compose correctly', () => {
-	test('archive + collections coexist with sort and search', () => {
+	test('archive + collections coexist', () => {
 		const args = buildProductsQuery({
-			perPage: 10,
-			page: 2,
-			sort: { field: 'name', direction: 'asc' },
-			search: 'tee',
 			fields: ['name'],
 			filters: [
 				{ field: 'archive_status', operator: 'is', value: 'archived' },
@@ -141,12 +121,9 @@ describe('multiple filters compose correctly', () => {
 		});
 
 		expect(args).toMatchObject({
-			per_page: 10,
-			page: 2,
-			sort: 'name:asc',
-			query: 'tee',
 			archived: true,
 			product_collection_ids: ['col_a'],
+			expand: ['product_collections', 'commission_structure'],
 		});
 	});
 });

@@ -1,7 +1,5 @@
-// Direct imports (not via the barrel) so unit tests don't transitively load
-// the React/`@wordpress/dataviews` modules that would break a node test runner.
 import {
-	buildQueryFromView,
+	buildFilterArgsFromView,
 	getStringValues,
 	findFilter,
 } from '../../components/dataview-list/buildBaseQuery';
@@ -46,10 +44,8 @@ export const buildProductsQuery = (view) => {
 		DEFAULT_HANDLERS,
 		{ view }
 	);
-	return buildQueryFromView({
+	return buildFilterArgsFromView({
 		view,
-		defaultSort: DEFAULT_SORT,
-		sortMap: SORT_MAP,
 		filterHandlers,
 		extraArgs,
 	});

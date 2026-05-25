@@ -1,5 +1,5 @@
 import {
-	buildQueryFromView,
+	buildFilterArgsFromView,
 	getStringValues,
 	findFilter,
 } from '../../components/dataview-list/buildBaseQuery';
@@ -54,10 +54,8 @@ export const buildReviewsQuery = (view) => {
 		DEFAULT_HANDLERS,
 		{ view }
 	);
-	return buildQueryFromView({
+	return buildFilterArgsFromView({
 		view,
-		defaultSort: DEFAULT_SORT,
-		sortMap: SORT_MAP,
 		filterHandlers,
 		extraArgs,
 	});

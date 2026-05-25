@@ -67,14 +67,12 @@ export const findFilter = (view, field) =>
 
 // Each handler receives `{ view, args }` and either mutates `args` or
 // returns a partial object to merge.
-export const buildQueryFromView = ({
+export const buildFilterArgsFromView = ({
 	view,
-	defaultSort,
-	sortMap,
 	filterHandlers = [],
 	extraArgs,
 }) => {
-	const args = buildBaseQuery({ view, defaultSort, sortMap });
+	const args = {};
 
 	if (extraArgs) {
 		const extra = extraArgs({ view });
@@ -90,3 +88,14 @@ export const buildQueryFromView = ({
 
 	return args;
 };
+
+export const buildQueryFromView = ({
+	view,
+	defaultSort,
+	sortMap,
+	filterHandlers = [],
+	extraArgs,
+}) => ({
+	...buildBaseQuery({ view, defaultSort, sortMap }),
+	...buildFilterArgsFromView({ view, filterHandlers, extraArgs }),
+});
