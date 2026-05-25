@@ -175,12 +175,12 @@ class AffiliationRequestsListTable extends ListTable {
         parent::column_default( $affiliate_request, $column_name );
 
 		if ( 'name' === $column_name ) {
-			return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
-				. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
+			return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) ) . '">'
+				. esc_html( $affiliate_request->first_name . ' ' . $affiliate_request->last_name )
 				. '</a>';
 		}
 
-		return $affiliate_request->$column_name ?? '';
+		return esc_html( $affiliate_request->$column_name ?? '' );
 	}
 
 	/**

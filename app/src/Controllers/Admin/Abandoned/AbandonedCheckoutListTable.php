@@ -203,7 +203,7 @@ class AbandonedCheckoutListTable extends ListTable {
 			case 'unassisted_recovered':
 				return '<sc-tag type="info">' . __( 'Recovered Before Email Was Sent', 'surecart' ) . '</sc-tag>';
 		}
-		return '<sc-tag type="success">' . $abandoned->recovery_status . '</sc-tag>';
+		return '<sc-tag type="success">' . esc_html( $abandoned->recovery_status ) . '</sc-tag>';
 	}
 
 	/**

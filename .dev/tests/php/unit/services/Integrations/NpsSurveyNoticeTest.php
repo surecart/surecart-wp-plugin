@@ -285,4 +285,41 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 
 		$this->assertSame( $astra_src, $result );
 	}
+
+	public function test_force_nps_asset_src_returns_null_when_src_is_null(): void {
+		// The is_string( $src ) guard short-circuits before any screen check, so no screen setup needed.
+		$result = $this->notice->forceNpsAssetSrc( null, 'nps-survey-script' );
+
+		$this->assertNull( $result );
+	}
+
+	public function test_force_nps_asset_src_returns_src_unchanged_when_handle_is_null(): void {
+		$this->setUpSureCartScreen();
+
+		$src    = 'https://example.com/nps-survey/dist/main.js?ver=1.0.0';
+		$result = $this->notice->forceNpsAssetSrc( $src, null );
+
+		$this->assertSame( $src, $result );
+	}
+
+	public function test_force_nps_asset_src_returns_src_unchanged_when_handle_not_in_map_on_surecart_screen(): void {
+		$this->setUpSureCartScreen();
+
+		$src    = 'https://example.com/some-other-script.js?ver=1.0.0';
+		$result = $this->notice->forceNpsAssetSrc( $src, 'some-unrelated-handle' );
+
+		$this->assertSame( $src, $result );
+	}
+
+	public function test_force_nps_asset_src_rewrites_to_vendor_copy_on_surecart_screen_preserving_query_string(): void {
+		$this->setUpSureCartScreen();
+
+		$src    = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.2.3';
+		$result = $this->notice->forceNpsAssetSrc( $src, 'nps-survey-script' );
+
+		$this->assertIsString( $result );
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/main.js', $result );
+		$this->assertStringEndsWith( '?ver=1.2.3', $result );
+		$this->assertStringNotContainsString( 'astra', $result );
+	}
 }
