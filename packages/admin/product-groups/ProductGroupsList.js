@@ -112,7 +112,9 @@ export default ({ navigation }) => {
 									http_method: 'PATCH',
 									path: `/v1/product_groups/${item.id}`,
 									body: {
-										product_group: { archived: !item.archived },
+										product_group: {
+											archived: !item.archived,
+										},
 									},
 								})),
 							},
@@ -158,23 +160,40 @@ export default ({ navigation }) => {
 		(items) =>
 			runMutation(
 				async () => {
-					await Promise.all(
-						items.map((item) =>
-							deleteEntityRecord(
-								'surecart',
-								'product-group',
-								item.id,
-								{ throwOnError: true }
-							)
-						)
-					);
+					if (items.length === 1) {
+						await deleteEntityRecord(
+							'surecart',
+							'product-group',
+							items[0].id,
+							{ throwOnError: true }
+						);
+						invalidateList();
+						bumpTabRefresh();
+						createSuccessNotice(
+							__('Upgrade group deleted.', 'surecart'),
+							{ type: 'snackbar' }
+						);
+						return;
+					}
+
+					await apiFetch({
+						path: '/surecart/v1/batches',
+						method: 'POST',
+						data: {
+							batch_operations: items.map((item) => ({
+								http_method: 'DELETE',
+								path: `/v1/product_groups/${item.id}`,
+							})),
+						},
+					});
 					invalidateList();
 					bumpTabRefresh();
 					createSuccessNotice(
 						sprintf(
+							/* translators: %d is the number of upgrade groups queued for deletion. */
 							_n(
-								'Successfully deleted %d upgrade group.',
-								'Successfully deleted %d upgrade groups.',
+								'Queued %d upgrade group for deletion. Refresh in a moment to see the result.',
+								'Queued %d upgrade groups for deletion. Refresh in a moment to see the result.',
 								items.length,
 								'surecart'
 							),

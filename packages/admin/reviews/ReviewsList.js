@@ -94,14 +94,21 @@ export default ({ navigation }) => {
 		[navigation, productElements]
 	);
 
-	// Sequential, not Promise.all — platform per-resource locks reject parallel writes.
+	// Use batch endpoints for status changes to avoid per-resource locks that delay the UI when processing many items.
 	const mutateStatus = useCallback(
-		(items, endpoint, nextStatus, successLabel, errorLabel) =>
+		(
+			items,
+			endpoint,
+			nextStatus,
+			instantMessage,
+			queuedMessage,
+			errorLabel
+		) =>
 			runMutation(
 				async () => {
-					for (const item of items) {
+					if (items.length === 1) {
 						const updated = await apiFetch({
-							path: `/surecart/v1/reviews/${item.id}/${endpoint}`,
+							path: `/surecart/v1/reviews/${items[0].id}/${endpoint}`,
 							method: 'PATCH',
 						});
 						// Prime the cache so the row's status badge flips
@@ -109,28 +116,30 @@ export default ({ navigation }) => {
 						receiveEntityRecords(
 							'surecart',
 							'review',
-							{
-								...updated,
-								status: nextStatus,
-							},
+							{ ...updated, status: nextStatus },
 							undefined,
 							false
 						);
+						invalidateList();
+						bumpTabRefresh();
+						createSuccessNotice(instantMessage, {
+							type: 'snackbar',
+						});
+						return;
 					}
+					await apiFetch({
+						path: '/surecart/v1/batches',
+						method: 'POST',
+						data: {
+							batch_operations: items.map((item) => ({
+								http_method: 'PATCH',
+								path: `/v1/reviews/${item.id}/${endpoint}`,
+							})),
+						},
+					});
 					invalidateList();
 					bumpTabRefresh();
-					createSuccessNotice(
-						sprintf(
-							_n(
-								successLabel.one,
-								successLabel.many,
-								items.length,
-								'surecart'
-							),
-							items.length
-						),
-						{ type: 'snackbar' }
-					);
+					createSuccessNotice(queuedMessage, { type: 'snackbar' });
 				},
 				{ errorMessage: errorLabel }
 			),
@@ -149,10 +158,26 @@ export default ({ navigation }) => {
 				items,
 				'publish',
 				'published',
-				{
-					one: 'Approved %d review.',
-					many: 'Approved %d reviews.',
-				},
+				sprintf(
+					/* translators: %d is the number of approved reviews. */
+					_n(
+						'Approved %d review.',
+						'Approved %d reviews.',
+						items.length,
+						'surecart'
+					),
+					items.length
+				),
+				sprintf(
+					/* translators: %d is the number of reviews queued for approval. */
+					_n(
+						'Queued %d review for approval. Refresh in a moment to see the result.',
+						'Queued %d reviews for approval. Refresh in a moment to see the result.',
+						items.length,
+						'surecart'
+					),
+					items.length
+				),
 				__('Failed to approve review.', 'surecart')
 			),
 		[mutateStatus]
@@ -164,10 +189,26 @@ export default ({ navigation }) => {
 				items,
 				'unpublish',
 				'unpublished',
-				{
-					one: 'Rejected %d review.',
-					many: 'Rejected %d reviews.',
-				},
+				sprintf(
+					/* translators: %d is the number of rejected reviews. */
+					_n(
+						'Rejected %d review.',
+						'Rejected %d reviews.',
+						items.length,
+						'surecart'
+					),
+					items.length
+				),
+				sprintf(
+					/* translators: %d is the number of reviews queued for rejection. */
+					_n(
+						'Queued %d review for rejection. Refresh in a moment to see the result.',
+						'Queued %d reviews for rejection. Refresh in a moment to see the result.',
+						items.length,
+						'surecart'
+					),
+					items.length
+				),
 				__('Failed to reject review.', 'surecart')
 			),
 		[mutateStatus]
@@ -177,20 +218,46 @@ export default ({ navigation }) => {
 		(items) =>
 			runMutation(
 				async () => {
-					await Promise.all(
-						items.map((item) =>
-							deleteEntityRecord('surecart', 'review', item.id, {
+					if (items.length === 1) {
+						// Single — direct call so core-data drops the row
+						// from the cache instantly, no refresh needed.
+						await deleteEntityRecord(
+							'surecart',
+							'review',
+							items[0].id,
+							{
 								throwOnError: true,
-							})
-						)
-					);
+							}
+						);
+						invalidateList();
+						bumpTabRefresh();
+						createSuccessNotice(__('Review deleted.', 'surecart'), {
+							type: 'snackbar',
+						});
+						return;
+					}
+					// Bulk — one Batch API request. The platform processes
+					// N DELETEs asynchronously; far kinder to rate limits
+					// than N parallel browser requests (and avoids the
+					// per-resource lock that approve/reject hits).
+					await apiFetch({
+						path: '/surecart/v1/batches',
+						method: 'POST',
+						data: {
+							batch_operations: items.map((item) => ({
+								http_method: 'DELETE',
+								path: `/v1/reviews/${item.id}`,
+							})),
+						},
+					});
 					invalidateList();
 					bumpTabRefresh();
 					createSuccessNotice(
 						sprintf(
+							/* translators: %d is the number of reviews queued for deletion. */
 							_n(
-								'Successfully deleted %d review.',
-								'Successfully deleted %d reviews.',
+								'Queued %d review for deletion. Refresh in a moment to see the result.',
+								'Queued %d reviews for deletion. Refresh in a moment to see the result.',
 								items.length,
 								'surecart'
 							),

@@ -6,6 +6,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
+import apiFetch from '@wordpress/api-fetch';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -84,22 +85,38 @@ export default ({ navigation }) => {
 		(items) =>
 			runMutation(
 				async () => {
-					await Promise.all(
-						items.map((item) =>
-							deleteEntityRecord(
-								'surecart',
-								'product-collection',
-								item.id,
-								{ throwOnError: true }
-							)
-						)
-					);
+					if (items.length === 1) {
+						await deleteEntityRecord(
+							'surecart',
+							'product-collection',
+							items[0].id,
+							{ throwOnError: true }
+						);
+						invalidateList();
+						createSuccessNotice(
+							__('Collection deleted.', 'surecart'),
+							{ type: 'snackbar' }
+						);
+						return;
+					}
+
+					await apiFetch({
+						path: '/surecart/v1/batches',
+						method: 'POST',
+						data: {
+							batch_operations: items.map((item) => ({
+								http_method: 'DELETE',
+								path: `/v1/product_collections/${item.id}`,
+							})),
+						},
+					});
 					invalidateList();
 					createSuccessNotice(
 						sprintf(
+							/* translators: %d is the number of collections queued for deletion. */
 							_n(
-								'Successfully deleted %d collection.',
-								'Successfully deleted %d collections.',
+								'Queued %d collection for deletion. Refresh in a moment to see the result.',
+								'Queued %d collections for deletion. Refresh in a moment to see the result.',
 								items.length,
 								'surecart'
 							),
