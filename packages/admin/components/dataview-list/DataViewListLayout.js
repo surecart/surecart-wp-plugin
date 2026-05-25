@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
+import { useRef } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews/wp';
 import { Spinner } from '@wordpress/components';
 import { InterfaceSkeleton, FullscreenMode } from '@wordpress/interface';
@@ -7,6 +8,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import Notifications from '../Notifications';
 import EnhancedViewToggle from './EnhancedViewToggle';
 import useEnhancedView from './useEnhancedView';
+import useHorizontalScrollState from './useHorizontalScrollState';
 
 export default ({
 	header,
@@ -27,6 +29,8 @@ export default ({
 	...rest
 }) => {
 	const { enabled, toggle } = useEnhancedView();
+	const listRootRef = useRef(null);
+	useHorizontalScrollState(listRootRef);
 
 	// Workspace shell only fits tablet-and-up; force off-mode below.
 	const isLargeViewport = useViewportMatch('medium');
@@ -95,6 +99,7 @@ export default ({
 	if (statusSidebar && showWorkspace) {
 		return (
 			<div
+				ref={listRootRef}
 				className={`sc-dataview-list-wrapper ${className}`.trim()}
 				data-enhanced-view="on"
 			>
@@ -130,10 +135,8 @@ export default ({
 									border-radius: 8px;
 									flex: 1 1 auto;
 									min-height: 0;
-									// Both axes — so wide tables scroll inside
-									// the card and the upstream sticky Actions
-									// column can pin instead of escaping right.
-									overflow: auto;
+									overflow-y: auto;
+									overflow-x: hidden;
 									box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
 									box-sizing: border-box;
 								`}
@@ -151,6 +154,7 @@ export default ({
 
 	return (
 		<div
+			ref={listRootRef}
 			className={`sc-dataview-list-wrapper ${className}`.trim()}
 			data-enhanced-view="off"
 		>

@@ -60,3 +60,7 @@ export default function injectVariantRows(products, expandedIds) {
 export const isVariantRow = (item) => !!item?.[VARIANT_FLAG];
 export const getVariantParent = (item) => item?.[VARIANT_PARENT] || null;
 export const getVariantOriginalId = (item) => item?.[VARIANT_ID] || null;
+
+/** Strip injected variant rows before product-only bulk handlers. */
+export const productOnlyItems = (items) =>
+	(items || []).filter((item) => !isVariantRow(item));

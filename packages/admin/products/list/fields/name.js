@@ -19,10 +19,12 @@ export default ({ navigation } = {}) => ({
 	getValue: ({ item }) => item?.name || '',
 	render: ({ item }) => (
 		<div
+			className="sc-product-name-cell"
 			css={css`
 				display: flex;
 				align-items: center;
 				gap: 12px;
+				flex: 1;
 				min-width: 0;
 			`}
 		>
@@ -35,14 +37,19 @@ export default ({ navigation } = {}) => ({
 					navigation?.goToEdit(item?.id);
 				}}
 				css={css`
+					flex: 1;
+					min-width: 0;
 					font-weight: 600;
 					font-size: var(--sc-font-size-medium, 14px);
+					line-height: 1.4;
 					color: var(--sc-color-gray-900);
 					text-decoration: none;
 					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					min-width: 0;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 2;
+					white-space: normal;
+					word-break: break-word;
 					&:hover {
 						color: var(--sc-color-primary-500);
 					}

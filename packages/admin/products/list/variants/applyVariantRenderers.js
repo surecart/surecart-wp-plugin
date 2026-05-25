@@ -96,10 +96,12 @@ const decorateNameField = (field, { expandedIds, onToggle }) => {
 			if (!productHasVariants(item)) {
 				return (
 					<div
+						className="sc-product-name-row"
 						css={css`
 							display: flex;
 							align-items: center;
 							min-width: 0;
+							width: 100%;
 						`}
 					>
 						<ChevronSpacer />
@@ -111,10 +113,12 @@ const decorateNameField = (field, { expandedIds, onToggle }) => {
 			const variantCount = getActiveVariantCount(item);
 			return (
 				<div
+					className="sc-product-name-row"
 					css={css`
 						display: flex;
 						align-items: center;
 						min-width: 0;
+						width: 100%;
 					`}
 				>
 					<ChevronToggle

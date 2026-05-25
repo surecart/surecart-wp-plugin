@@ -14,6 +14,7 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
+	useTabRefreshKey,
 } from '../components/dataview-list';
 import ListHeader from '../components/ListHeader';
 import useProductIntegrations from './hooks/useProductIntegrations';
@@ -31,13 +32,14 @@ import {
 	useSavingVariantIds,
 	injectVariantRows,
 	applyVariantRenderers,
+	productOnlyItems,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
 import { toVariantsArray } from './modules/Variations/utils';
 import './product-list-style.scss';
 
 const LAYOUT_STYLES = {
-	name: { width: '25%' },
+	name: { width: '22%' },
 	sku: { width: '8%' },
 	price: { width: '7%' },
 	commission_amount: { width: '8%' },
@@ -125,7 +127,13 @@ export default ({ navigation }) => {
 		},
 	});
 
-	const { tabs, activeValue, setTab } = useStatusTabs({ view, setView });
+	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
+
+	const { tabs, activeValue, setTab } = useStatusTabs({
+		view,
+		setView,
+		refreshKey,
+	});
 
 	// Async-fetched integrations enrichment for the integrations column.
 	const integrationsEnabled = view.fields?.includes('integrations') ?? false;
@@ -140,6 +148,7 @@ export default ({ navigation }) => {
 		() =>
 			buildProductFields({
 				navigation,
+				setView,
 				elements: collectionElements,
 				integrationsByProduct,
 				providers,
@@ -147,6 +156,7 @@ export default ({ navigation }) => {
 			}),
 		[
 			navigation,
+			setView,
 			collectionElements,
 			integrationsByProduct,
 			providers,
@@ -171,12 +181,15 @@ export default ({ navigation }) => {
 
 	const handleArchiveToggle = useCallback(
 		async (items) => {
+			const products = productOnlyItems(items);
+			if (!products.length) return;
+
 			setIsMutating(true);
 			try {
-				if (items.length === 1) {
+				if (products.length === 1) {
 					// Single mutation — go direct so core-data caches the
 					// optimistic update and the row updates instantly.
-					const item = items[0];
+					const item = products[0];
 					await saveEntityRecord(
 						'surecart',
 						'product',
@@ -191,7 +204,7 @@ export default ({ navigation }) => {
 						path: '/surecart/v1/batches',
 						method: 'POST',
 						data: {
-							batch_operations: items.map((item) => ({
+							batch_operations: products.map((item) => ({
 								http_method: 'PATCH',
 								path: `/v1/products/${item.id}`,
 								body: {
@@ -202,9 +215,10 @@ export default ({ navigation }) => {
 					});
 				}
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
-					items.length === 1
-						? items[0].archived
+					products.length === 1
+						? products[0].archived
 							? __('Product unarchived.', 'surecart')
 							: __('Product archived.', 'surecart')
 						: sprintf(
@@ -212,10 +226,10 @@ export default ({ navigation }) => {
 								_n(
 									'Queued %d product for update. Refresh in a moment to see the result.',
 									'Queued %d products for update. Refresh in a moment to see the result.',
-									items.length,
+									products.length,
 									'surecart'
 								),
-								items.length
+								products.length
 						  ),
 					{ type: 'snackbar' }
 				);
@@ -234,29 +248,34 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
+			bumpTabRefresh,
 		]
 	);
 
 	const handleDelete = useCallback(
 		async (items) => {
+			const products = productOnlyItems(items);
+			if (!products.length) return;
+
 			try {
 				await Promise.all(
-					items.map((item) =>
+					products.map((item) =>
 						deleteEntityRecord('surecart', 'product', item.id, {
 							throwOnError: true,
 						})
 					)
 				);
 				invalidateList();
+				bumpTabRefresh();
 				createSuccessNotice(
 					sprintf(
 						_n(
 							'Successfully deleted %d product.',
 							'Successfully deleted %d products.',
-							items.length,
+							products.length,
 							'surecart'
 						),
-						items.length
+						products.length
 					),
 					{ type: 'snackbar' }
 				);
@@ -274,6 +293,7 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
+			bumpTabRefresh,
 		]
 	);
 
@@ -345,12 +365,15 @@ export default ({ navigation }) => {
 
 	const handleDuplicate = useCallback(
 		async (items) => {
+			const products = productOnlyItems(items);
+			if (!products.length) return;
+
 			setIsMutating(true);
 			try {
 				// allSettled — bulk duplicates shouldn't fail-fast; partial
 				// success still warrants a refresh and an honest count.
 				const results = await Promise.allSettled(
-					items.map((item) =>
+					products.map((item) =>
 						apiFetch({
 							path: `/surecart/v1/products/${item.id}/duplicate`,
 							method: 'POST',
@@ -362,6 +385,7 @@ export default ({ navigation }) => {
 				).length;
 				const failed = results.length - succeeded;
 				invalidateList();
+				bumpTabRefresh();
 				if (succeeded > 0 && failed === 0) {
 					createSuccessNotice(
 						sprintf(
@@ -400,7 +424,7 @@ export default ({ navigation }) => {
 				setIsMutating(false);
 			}
 		},
-		[createSuccessNotice, createErrorNotice, invalidateList]
+		[createSuccessNotice, createErrorNotice, invalidateList, bumpTabRefresh]
 	);
 
 	const actions = useMemo(

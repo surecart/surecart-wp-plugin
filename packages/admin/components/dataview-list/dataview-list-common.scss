@@ -151,20 +151,26 @@ $padding-size: 20px;
 		min-width: 64px;
 	}
 
-	// Upstream `.dataviews-wrapper { overflow: auto; height: 100% }` assumes the
-	// wrapper is the scroll container, which only works when its parent gives it
-	// a definite height. In our layouts the parent height is auto, so the wrapper
-	// never actually scrolls — but `overflow: auto` still scopes the upstream
-	// sticky footer to it, breaking the sticky. Flatten the wrapper so the outer
-	// scroll context (page body in off-mode, white card in enhanced-mode) drives
-	// the sticky footer instead. `min-height` keeps the flex column tall enough
-	// that `.dataviews-loading` / `.dataviews-no-results` (both `flex-grow: 1`
-	// upstream) can fill the middle and pin the footer to the wrapper bottom
-	// during loading and empty states.
+	// Horizontal scroll must live on `.dataviews-wrapper` — DataViews attaches
+	// `useIsHorizontalScrollEnd` to that ref and toggles the Actions column
+	// border via `--stuck` only when content overflows horizontally. If a parent
+	// scrolls instead (or overflow-x is visible), the hook sees overflow with
+	// scrollLeft stuck at 0 and the border shows even when nothing scrolls.
+	// Vertical scroll stays on the page body (off) or workspace card (on).
 	.dataviews-wrapper {
-		overflow: visible;
+		overflow-x: auto;
+		overflow-y: visible;
 		height: auto;
 		min-height: calc(100vh - 130px);
+	}
+
+	// DataViews' `--stuck` border can render without real overflow (ref timing /
+	// subpixel column widths). `useHorizontalScrollState` sets the attribute.
+	.dataviews-wrapper[data-horizontal-scroll="false"] {
+		th.dataviews-view-table__actions-column--stuck::after,
+		td.dataviews-view-table__actions-column--stuck::after {
+			display: none;
+		}
 	}
 
 	// Sticky page header in both view modes. Override the global

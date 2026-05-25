@@ -11,6 +11,7 @@ import {
 	isVariantRow,
 	getVariantParent,
 	getVariantOriginalId,
+	productOnlyItems,
 } from '../variants';
 
 // Compose each product action's `isEligible` against this so we don't
@@ -27,7 +28,8 @@ const productOnly = (extra) => (item) =>
 const NavigateToBulkDelete = ({ items, closeModal, navigation }) => {
 	useEffect(() => {
 		closeModal();
-		navigation.goToBulkDelete(items.map((item) => item.id));
+		const products = productOnlyItems(items);
+		navigation.goToBulkDelete(products.map((item) => item.id));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

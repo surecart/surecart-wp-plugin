@@ -7,6 +7,7 @@ export {
 	getVariantOriginalId,
 	productHasVariants,
 	getActiveVariantCount,
+	productOnlyItems,
 	VARIANT_FLAG,
 	VARIANT_PARENT,
 	VARIANT_ID,
