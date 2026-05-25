@@ -12,6 +12,45 @@ import {
 	VisuallyHidden,
 } from '@wordpress/components';
 import { chevronLeft } from '@wordpress/icons';
+import { useRef, useCallback } from 'react';
+
+// WAI-ARIA tablist keyboard contract — arrow keys move focus, Enter/Space activates.
+const handleTabKeyDown = (event, refs, tabs, onChange) => {
+	const tabCount = tabs.length;
+	if (!tabCount) return;
+
+	const currentIndex = refs.current.findIndex(
+		(node) => node === event.currentTarget
+	);
+	if (currentIndex < 0) return;
+
+	let nextIndex = currentIndex;
+	switch (event.key) {
+		case 'ArrowDown':
+		case 'ArrowRight':
+			nextIndex = (currentIndex + 1) % tabCount;
+			break;
+		case 'ArrowUp':
+		case 'ArrowLeft':
+			nextIndex = (currentIndex - 1 + tabCount) % tabCount;
+			break;
+		case 'Home':
+			nextIndex = 0;
+			break;
+		case 'End':
+			nextIndex = tabCount - 1;
+			break;
+		case 'Enter':
+		case ' ':
+			event.preventDefault();
+			onChange(tabs[currentIndex].value);
+			return;
+		default:
+			return;
+	}
+	event.preventDefault();
+	refs.current[nextIndex]?.focus();
+};
 
 const SiteIcon = ({ iconUrl, siteName }) => {
 	if (iconUrl) {
@@ -59,10 +98,18 @@ export default ({
 	siteHref,
 	siteIconUrl,
 	dashboardHref,
-}) => (
-	<div
-		role="region"
-		aria-label={heading || __('Filters', 'surecart')}
+}) => {
+	const tabRefs = useRef([]);
+	tabRefs.current.length = tabs?.length || 0;
+	const handleKeyDown = useCallback(
+		(event) => handleTabKeyDown(event, tabRefs, tabs || [], onChange),
+		[tabs, onChange]
+	);
+
+	return (
+		<div
+			role="region"
+			aria-label={heading || __('Filters', 'surecart')}
 		css={css`
 			display: flex;
 			flex-direction: column;
@@ -202,15 +249,21 @@ export default ({
 					padding: 8px 8px 16px;
 				`}
 			>
-				{tabs.map((tab) => {
+				{tabs.map((tab, index) => {
 					const isActive = tab.value === activeValue;
 					return (
 						<Item
 							key={String(tab.value)}
+							ref={(node) => {
+								tabRefs.current[index] = node;
+							}}
 							role="tab"
 							aria-selected={isActive}
 							aria-current={isActive ? 'page' : undefined}
+							// Roving tabindex: only the active tab is tab-stopped.
+							tabIndex={isActive ? 0 : -1}
 							onClick={() => onChange(tab.value)}
+							onKeyDown={handleKeyDown}
 							css={css`
 								cursor: pointer;
 								padding: 10px 12px !important;
@@ -261,5 +314,6 @@ export default ({
 				})}
 			</ItemGroup>
 		) : null}
-	</div>
-);
+		</div>
+	);
+};
