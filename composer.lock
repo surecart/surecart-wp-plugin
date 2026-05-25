@@ -597,7 +597,7 @@
 			"source": {
 				"type": "git",
 				"url": "https://github.com/surecart/wp-query-builder.git",
-				"reference": "fix/escaping-in-where-and-join-SUR-5139-redo"
+				"reference": "master"
 			},
 			"type": "library"
 		},
