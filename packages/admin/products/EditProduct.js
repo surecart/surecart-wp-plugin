@@ -204,24 +204,36 @@ export default ({ id, setBrowserURL, navigation }) => {
 	 * Toggle product delete.
 	 */
 	const onDeleteProduct = async () => {
+		setError(null);
 		try {
-			setError(null);
 			await deleteProduct({ throwOnError: true });
-
-			createSuccessNotice(__('Product deleted.', 'surecart'), {
-				type: 'snackbar',
-			});
-
-			// Navigate back to products list.
-			if (navigation) {
-				navigation.goToList();
-			} else {
-				window.location.href = addQueryArgs('admin.php', {
-					page: 'sc-products',
-				});
-			}
 		} catch (e) {
-			setError(e);
+			// Known WP core-data quirk: the REMOVE_ITEMS reducer runs
+			// `queryItems.itemIds.filter(...)` without a guard; an in-flight
+			// `getEntityRecords` query can leave `itemIds` undefined and
+			// throw TypeError *after* the API DELETE has already succeeded.
+			// Tolerate that one error and run the success path; surface
+			// anything else.
+			const isReducerBug =
+				e?.name === 'TypeError' &&
+				/undefined.*filter/i.test(e?.message || '');
+			if (!isReducerBug) {
+				setError(e);
+				return;
+			}
+		}
+
+		createSuccessNotice(__('Product deleted.', 'surecart'), {
+			type: 'snackbar',
+		});
+
+		// Navigate back to products list.
+		if (navigation) {
+			navigation.goToList();
+		} else {
+			window.location.href = addQueryArgs('admin.php', {
+				page: 'sc-products',
+			});
 		}
 	};
 
