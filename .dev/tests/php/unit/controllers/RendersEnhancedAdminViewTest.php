@@ -6,6 +6,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Controllers\Admin\ProductCollections\ProductCollectionsController;
+use SureCart\Sync\ImportState;
 use SureCart\Tests\SureCartUnitTestCase;
 
 /**
@@ -27,7 +28,10 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->products_controller            = new ProductsController();
+		// `ImportState` is `final`, so Mockery can't proxy it. Pass a real
+		// instance — the trait tests never hit `importResults()` where it
+		// would actually be exercised.
+		$this->products_controller            = new ProductsController( new ImportState( 'woo' ) );
 		$this->product_collections_controller = new ProductCollectionsController();
 	}
 
@@ -64,10 +68,14 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 	/**
 	 * Disabling the option returns both controllers to the legacy branch.
 	 *
+	 * Stored as int `0` rather than boolean `false`: `update_option(name, false)`
+	 * on a never-set option is a no-op because WP treats the implicit
+	 * `$old_value = false` as already-equal and skips the write.
+	 *
 	 * @group admin-views
 	 */
 	public function test_flag_is_off_when_option_disabled() {
-		update_option( 'surecart_enhanced_admin_views', false );
+		update_option( 'surecart_enhanced_admin_views', 0 );
 
 		$this->assertFalse( $this->products_controller->isEnhancedAdminViewsEnabled() );
 		$this->assertFalse( $this->product_collections_controller->isEnhancedAdminViewsEnabled() );
@@ -82,7 +90,7 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 	public function test_index_routes_to_spa_when_flag_is_on() {
 		update_option( 'surecart_enhanced_admin_views', true );
 
-		$controller = Mockery::mock( ProductsController::class )
+		$controller = Mockery::mock( ProductsController::class, [ new ImportState( 'woo' ) ] )
 			->makePartial()
 			->shouldAllowMockingProtectedMethods();
 
@@ -94,14 +102,15 @@ class RendersEnhancedAdminViewTest extends SureCartUnitTestCase {
 
 	/**
 	 * When the flag is off, `index()` dispatches to `renderWpListView()` and
-	 * never touches the SPA branch. The option must be explicitly set to false —
-	 * the absence of the option now defaults to the SPA, so `delete_option`
-	 * would route to the SPA branch instead.
+	 * never touches the SPA branch. The option must be explicitly set to a
+	 * falsy non-`false` value — the absence of the option now defaults to the
+	 * SPA, and `update_option(name, false)` on an unset option is a no-op
+	 * (WP skips the write when the new value equals the implicit default).
 	 *
 	 * @group admin-views
 	 */
 	public function test_index_routes_to_legacy_when_flag_is_off() {
-		update_option( 'surecart_enhanced_admin_views', false );
+		update_option( 'surecart_enhanced_admin_views', 0 );
 
 		$controller = Mockery::mock( ProductCollectionsController::class )
 			->makePartial()

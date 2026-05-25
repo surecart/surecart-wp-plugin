@@ -44,7 +44,7 @@
 				"source": {
 					"url": "https://github.com/surecart/wp-query-builder.git",
 					"type": "git",
-					"reference": "master"
+					"reference": "fix/escaping-in-where-and-join-SUR-5139-redo"
 				}
 			}
 		},
