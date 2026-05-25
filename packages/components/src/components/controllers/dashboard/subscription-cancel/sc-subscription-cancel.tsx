@@ -97,7 +97,6 @@ export class ScSubscriptionCancel {
           </sc-button>
 
           <sc-button
-            style={{ color: 'var(--sc-color-gray-500' }}
             type="text"
             onClick={() => this.scAbandon.emit()}
             loading={this.loading || this.busy}

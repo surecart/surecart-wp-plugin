@@ -53,6 +53,12 @@ class NpsSurveyNotice {
 		add_filter( 'nps_survey_api_endpoint', [ $this, 'getNpsSurveyApiEndpoint' ], 11, 2 );
 		add_filter( 'nps_survey_should_skip_status_update', [ $this, 'handleStatusUpdate' ], 10, 2 );
 		add_filter( 'nps_survey_vars', [ $this, 'ensureNpsSurveyVars' ], 10 );
+
+		// Asset loading and the admin footer notice are admin-only; the nps_survey_* filters above stay registered unconditionally because the upstream library may invoke them from admin-AJAX or REST contexts where is_admin() is false.
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		add_filter( 'script_loader_src', [ $this, 'forceNpsAssetSrc' ], 10, 2 );
 		add_filter( 'style_loader_src', [ $this, 'forceNpsAssetSrc' ], 10, 2 );
 		add_action( 'admin_footer', [ $this, 'showNpsNotice' ], 999 );
@@ -162,11 +168,19 @@ class NpsSurveyNotice {
 	/**
 	 * Force NPS survey assets to load from SureCart's vendor copy on SureCart admin pages.
 	 *
-	 * @param string $src    Asset source URL.
-	 * @param string $handle Asset handle name.
-	 * @return string
+	 * Bound to `script_loader_src` / `style_loader_src`, which may pass `null` for
+	 * dependency-only handles registered with `src = false`. Query Monitor and similar
+	 * tools enumerate every registered handle and can trigger this case.
+	 *
+	 * @param string|null $src    Asset source URL.
+	 * @param string|null $handle Asset handle name.
+	 * @return string|null
 	 */
-	public function forceNpsAssetSrc( string $src, string $handle ): string {
+	public function forceNpsAssetSrc( ?string $src, ?string $handle ): ?string {
+		if ( ! is_string( $src ) || ! is_string( $handle ) ) {
+			return $src;
+		}
+
 		$filename = self::NPS_ASSET_MAP[ $handle ] ?? null;
 		if ( ! $filename ) {
 			return $src;

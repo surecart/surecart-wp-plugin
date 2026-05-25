@@ -71,7 +71,7 @@ class InvoicesListTable extends ListTable {
 	 */
 	public function column_method( $invoice ) {
 		if ( isset( $invoice->checkout->manual_payment_method->name ) ) {
-			return '<sc-tag>' . $invoice->checkout->manual_payment_method->name . '</sc-tag>';
+			return '<sc-tag>' . esc_html( $invoice->checkout->manual_payment_method->name ) . '</sc-tag>';
 		}
 		ob_start();
 		?>

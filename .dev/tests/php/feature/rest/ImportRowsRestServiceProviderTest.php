@@ -98,18 +98,24 @@ class ImportRowsRestServiceProviderTest extends SureCartUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('import_rows')
-			->andReturn([
-				(object) [
-					'id' => 'row_1',
-					'object' => 'import_row',
-					'data' => 'test_data_1',
-					'status' => 'pending',
+			->andReturn((object) [
+				'data' => [
+					(object) [
+						'id' => 'row_1',
+						'object' => 'import_row',
+						'data' => 'test_data_1',
+						'status' => 'pending',
+					],
+					(object) [
+						'id' => 'row_2',
+						'object' => 'import_row',
+						'data' => 'test_data_2',
+						'status' => 'completed',
+					],
 				],
-				(object) [
-					'id' => 'row_2',
-					'object' => 'import_row',
-					'data' => 'test_data_2',
-					'status' => 'completed',
+				'pagination' => (object) [
+					'count' => 2,
+					'limit' => 20,
 				],
 			]);
 
@@ -177,11 +183,17 @@ class ImportRowsRestServiceProviderTest extends SureCartUnitTestCase {
 		$requests->shouldReceive('makeRequest')
 			->once()
 			->withSomeOfArgs('import_rows')
-			->andReturn([
-				(object) [
-					'id' => 'pending_row',
-					'object' => 'import_row',
-					'status' => 'pending',
+			->andReturn((object) [
+				'data' => [
+					(object) [
+						'id' => 'pending_row',
+						'object' => 'import_row',
+						'status' => 'pending',
+					],
+				],
+				'pagination' => (object) [
+					'count' => 1,
+					'limit' => 10,
 				],
 			]);
 
