@@ -45,7 +45,7 @@ class CreatePrice extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'Requires a valid product ID and currency. The amount is in the smallest currency unit (e.g., 1000 = $10.00 USD). For fixed prices, amount is required and must be greater than zero. For ad-hoc prices (where the amount is supplied at invoice/checkout time — e.g., custom invoicing), pass ad_hoc=true; amount then becomes optional and, if provided, is used as a suggested default. ad_hoc_min_amount and ad_hoc_max_amount (both in smallest currency unit) optionally constrain the allowed range. For recurring prices, set recurring_interval (day, week, month, year) and recurring_interval_count. Each call creates a new price — do not call multiple times for the same price.';
+		return 'Requires a valid product ID and currency. The amount is in the smallest currency unit (e.g., 1000 = $10.00 USD). For fixed prices, amount is required and must be greater than zero. For ad-hoc prices (where the amount is supplied at invoice/checkout time — e.g., custom invoicing), pass ad_hoc=true; amount then becomes optional and, if provided, is used as a suggested default. Even though amount is optional for ad-hoc, providing a sensible default within [ad_hoc_min_amount, ad_hoc_max_amount] is recommended — it pre-fills the buy form / invoice with a starting value instead of leaving it blank. ad_hoc_min_amount and ad_hoc_max_amount (both in smallest currency unit) optionally constrain the allowed range. For recurring prices, set recurring_interval (day, week, month, year) and recurring_interval_count. Each call creates a new price — do not call multiple times for the same price.';
 	}
 
 	/**
@@ -68,7 +68,7 @@ class CreatePrice extends AbstractAbility {
 				),
 				'amount'                   => array(
 					'type'        => 'integer',
-					'description' => __( 'Price amount in the smallest currency unit (e.g., cents). Required when ad_hoc is false or omitted. When ad_hoc is true, this is optional and acts as a suggested default.', 'surecart' ),
+					'description' => __( 'Price amount in the smallest currency unit (e.g., cents). Required when ad_hoc is false or omitted. When ad_hoc is true, this is optional and acts as a suggested default — providing one within [ad_hoc_min_amount, ad_hoc_max_amount] is recommended so the buy form / invoice pre-fills with a starting value instead of being blank.', 'surecart' ),
 				),
 				'currency'                 => array(
 					'type'        => 'string',
@@ -169,6 +169,25 @@ class CreatePrice extends AbstractAbility {
 
 			if ( isset( $data['ad_hoc_min_amount'], $data['ad_hoc_max_amount'] ) && $data['ad_hoc_min_amount'] > $data['ad_hoc_max_amount'] ) {
 				return $this->error( 'invalid_ad_hoc_range', __( 'ad_hoc_min_amount cannot be greater than ad_hoc_max_amount.', 'surecart' ) );
+			}
+
+			// The SureCart API rejects ad-hoc prices with a missing amount ("Amount can't be blank"),
+			// but the schema documents amount as optional for ad-hoc. Default to 0 so the documented
+			// contract holds — 0 is a valid "no suggested default" sentinel for ad-hoc.
+			if ( ! $has_amount ) {
+				$data['amount'] = 0;
+				$has_amount     = true;
+				$amount         = 0;
+			}
+
+			// The default amount, if provided, must fall within the configured ad-hoc range.
+			// Neither the API nor the previous PHP layer enforced this, allowing inconsistent
+			// records (e.g. amount: 1000 with min: 5000) to be persisted.
+			if ( $has_amount && isset( $data['ad_hoc_min_amount'] ) && $amount > 0 && $amount < $data['ad_hoc_min_amount'] ) {
+				return $this->error( 'invalid_amount', __( 'Amount cannot be less than ad_hoc_min_amount.', 'surecart' ) );
+			}
+			if ( $has_amount && isset( $data['ad_hoc_max_amount'] ) && $amount > $data['ad_hoc_max_amount'] ) {
+				return $this->error( 'invalid_amount', __( 'Amount cannot be greater than ad_hoc_max_amount.', 'surecart' ) );
 			}
 		}
 
