@@ -63,6 +63,14 @@ jobs:
       - name: Build packages
         run: yarn bootstrap && yarn workspace @surecart/blocks-next build
 
+      - name: Build root webpack assets
+        # Produces dist/store/*.asset.php, dist/blocks/library.asset.php,
+        # dist/templates/admin.asset.php, etc. Tests that use
+        # @runInSeparateProcess re-bootstrap the plugin and hit
+        # ScriptsService::include() against these paths — missing files
+        # raise PHP warnings that PHPUnit 9.6 converts to test errors.
+        run: yarn wp-scripts build
+
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
