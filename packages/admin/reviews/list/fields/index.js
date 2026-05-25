@@ -28,3 +28,7 @@ export {
 	statusField,
 	createdField,
 };
+
+// Re-exported for plugin extenders so they don't redefine the enums.
+export { STARS_ELEMENTS as REVIEW_STARS_ELEMENTS } from './stars';
+export { STATUS_ELEMENTS as REVIEW_STATUS_ELEMENTS } from './status';
