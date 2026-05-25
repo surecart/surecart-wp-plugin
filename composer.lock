@@ -4,7 +4,7 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "390cc72de734f456a600ccbcabff8636",
+	"content-hash": "b9dce34efcc86fc0cbd5b4acb6ef2c69",
 	"packages": [
 		{
 			"name": "brainstormforce/nps-survey",
