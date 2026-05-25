@@ -40,6 +40,7 @@ class ReviewsController extends RestController {
 	 */
 	protected $bracketed_arg_keys = [
 		'status' => 'status[]',
+		'stars'  => 'stars[]',
 	];
 
 	public function __construct() {
