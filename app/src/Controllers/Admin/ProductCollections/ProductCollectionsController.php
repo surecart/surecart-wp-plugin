@@ -49,7 +49,9 @@ class ProductCollectionsController extends AdminController {
 		);
 	}
 
-	/*
+	/**
+	 * Edit a product collection.
+	 *
 	 * @param \WP_REST_Request $request Request.
 	 */
 	public function edit( $request ) {

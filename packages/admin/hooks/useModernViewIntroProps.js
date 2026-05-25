@@ -1,4 +1,3 @@
-// Returns `null` when the modal is disabled server-side, so call sites can
 const useModernViewIntroProps = () => {
 	const intro =
 		typeof window !== 'undefined' && window.scData?.modern_view_intro;
