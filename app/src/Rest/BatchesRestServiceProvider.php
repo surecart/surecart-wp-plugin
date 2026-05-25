@@ -103,19 +103,123 @@ class BatchesRestServiceProvider extends RestServiceProvider implements RestServ
 	}
 
 	/**
-	 * Anyone with `edit_sc_products` (the typical bulk-action gate) can
-	 * create/list/retrieve batches. Tighten if a batch ever runs ops the
-	 * caller wouldn't otherwise be authorised for.
+	 * Resource segment → capability suffix. New resources must be listed here
+	 * before they can be batched; unknown paths are rejected.
+	 *
+	 * @var array<string, string>
 	 */
+	private const RESOURCE_CAP_SUFFIX = [
+		'products'            => 'sc_products',
+		'product_collections' => 'sc_products',
+		'product_groups'      => 'sc_products',
+		'prices'              => 'sc_prices',
+		'reviews'             => 'sc_reviews',
+		'orders'              => 'sc_orders',
+		'customers'           => 'sc_customers',
+		'subscriptions'       => 'sc_subscriptions',
+		'invoices'            => 'sc_invoices',
+		'coupons'             => 'sc_coupons',
+		'promotions'          => 'sc_promotions',
+		'affiliations'        => 'sc_affiliates',
+		'licenses'            => 'sc_licenses',
+		'webhooks'            => 'sc_webhooks',
+		'medias'              => 'sc_medias',
+	];
+
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		return $this->userCanUseBatches();
 	}
 
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		return $this->userCanUseBatches();
 	}
 
+	/**
+	 * Validates every operation against the cap the caller would have needed
+	 * to perform it directly — otherwise a user with `edit_sc_products` could
+	 * smuggle `DELETE /v1/customers/{id}` through the batch proxy.
+	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_products' );
+		if ( ! $this->userCanUseBatches() ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'You are not allowed to use the batch endpoint.', 'surecart' ),
+				[ 'status' => 403 ]
+			);
+		}
+
+		$operations = $request->get_param( 'batch_operations' );
+		if ( empty( $operations ) || ! is_array( $operations ) ) {
+			return new \WP_Error(
+				'rest_invalid_param',
+				__( 'A batch must contain at least one operation.', 'surecart' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		foreach ( $operations as $op ) {
+			$cap = $this->requiredCapabilityFor(
+				$op['http_method'] ?? '',
+				$op['path'] ?? ''
+			);
+			if ( ! $cap ) {
+				return new \WP_Error(
+					'rest_forbidden',
+					__( 'Unsupported operation in batch.', 'surecart' ),
+					[ 'status' => 403 ]
+				);
+			}
+			if ( ! current_user_can( $cap ) ) {
+				return new \WP_Error(
+					'rest_forbidden',
+					__( 'You are not allowed to perform one or more operations in this batch.', 'surecart' ),
+					[ 'status' => 403 ]
+				);
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Coarse gate for read-side endpoints; create_item enforces per-op auth.
+	 *
+	 * @return bool
+	 */
+	private function userCanUseBatches(): bool {
+		foreach ( self::RESOURCE_CAP_SUFFIX as $suffix ) {
+			if ( current_user_can( 'edit_' . $suffix ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Returns null for unknown paths — callers treat null as deny.
+	 *
+	 * @param string $http_method GET, POST, PATCH, PUT, DELETE.
+	 * @param string $path        e.g. `/v1/products/abc`.
+	 * @return string|null
+	 */
+	private function requiredCapabilityFor( string $http_method, string $path ): ?string {
+		if ( ! preg_match( '#^/v1/([a-z_]+)#i', $path, $matches ) ) {
+			return null;
+		}
+		$resource = strtolower( $matches[1] );
+		$suffix   = self::RESOURCE_CAP_SUFFIX[ $resource ] ?? null;
+		if ( ! $suffix ) {
+			return null;
+		}
+
+		$verb = strtoupper( $http_method );
+		if ( 'GET' === $verb ) {
+			return 'read_' . $suffix;
+		}
+		if ( 'DELETE' === $verb ) {
+			return 'delete_' . $suffix;
+		}
+
+		return 'edit_' . $suffix;
 	}
 }
