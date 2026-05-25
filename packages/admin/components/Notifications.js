@@ -23,7 +23,8 @@ const wrapperStyles = css`
 `;
 
 export default ({ className }) => {
-	const notices = useSelect((select) => select(noticesStore).getNotices());
+	const notices =
+		useSelect((select) => select(noticesStore).getNotices()) || [];
 	const { removeNotice } = useDispatch(noticesStore);
 	const snackbarNotices = notices.filter(({ type }) => type === 'snackbar');
 
