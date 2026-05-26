@@ -32,47 +32,6 @@ class ReviewsController extends RestController {
 	protected $with = [ 'product', 'product.price', 'product.featured_product_media' ];
 
 	/**
-	 * REST → platform key renames for filters the platform expects as
-	 * `key[]` but WP REST flattens (single-scalar values would otherwise
-	 * serialize as `?key=value` and the platform ignores them).
-	 *
-	 * @var array<string, string>
-	 */
-	protected $bracketed_arg_keys = [
-		'status' => 'status[]',
-		'stars'  => 'stars[]',
-	];
-
-	public function __construct() {
-		add_filter( 'surecart/reviews/list/query_args', [ $this, 'translateBracketedArgKeys' ], 10, 1 );
-	}
-
-	/**
-	 * Rename non-bracketed REST keys to bracketed platform keys.
-	 *
-	 * @param array $args Query args from the REST request.
-	 *
-	 * @return array
-	 */
-	public function translateBracketedArgKeys( array $args ): array {
-		foreach ( $this->bracketed_arg_keys as $from => $to ) {
-			if ( ! array_key_exists( $from, $args ) ) {
-				continue;
-			}
-
-			$value = $args[ $from ];
-			unset( $args[ $from ] );
-
-			if ( is_array( $value ) && empty( $value ) ) {
-				continue;
-			}
-
-			$args[ $to ] = $value;
-		}
-		return $args;
-	}
-
-	/**
 	 * Middleware before we make the request.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
