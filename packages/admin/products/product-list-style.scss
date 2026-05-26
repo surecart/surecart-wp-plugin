@@ -25,6 +25,11 @@
 	.components-checkbox-control__input-container {
 		visibility: hidden;
 	}
+
+	// Keep the actions column's background color consistent with the rest of the row when sticky.
+	.dataviews-view-table__actions-column--sticky {
+		background-color: inherit;
+	}
 }
 
 .dataviews-view-table tbody tr:has(.sc-variant-cell):hover {
