@@ -151,17 +151,17 @@ $padding-size: 20px;
 		min-width: 64px;
 	}
 
-	// Horizontal scroll must live on `.dataviews-wrapper` — DataViews attaches
-	// `useIsHorizontalScrollEnd` to that ref and toggles the Actions column
-	// border via `--stuck` only when content overflows horizontally. If a parent
-	// scrolls instead (or overflow-x is visible), the hook sees overflow with
-	// scrollLeft stuck at 0 and the border shows even when nothing scrolls.
-	// Vertical scroll stays on the page body (off) or workspace card (on).
+	// `overflow: visible` keeps sticky thead/footer scoped to body/card.
+	// `useHorizontalScrollState` flips the attribute below only when columns
+	// genuinely overflow — engaging `overflow-x: auto` (which per CSS spec
+	// also promotes `overflow-y` to auto, sacrificing sticky inside the wrapper).
 	.dataviews-wrapper {
-		overflow-x: auto;
-		overflow-y: visible;
+		overflow: visible;
 		height: auto;
 		min-height: calc(100vh - 130px);
+	}
+	.dataviews-wrapper[data-horizontal-scroll="true"] {
+		overflow-x: auto;
 	}
 
 	// DataViews' `--stuck` border can render without real overflow (ref timing /
@@ -237,29 +237,17 @@ $padding-size: 20px;
 	box-sizing: border-box;
 	border-top: 1px solid #f0f0f0;
 
-	// sc-list-header is a sibling of .dataviews-wrapper, so it's still
-	// sticky-to-body. Offset for the WP admin bar.
+	// sc-list-header is a sibling of .dataviews-wrapper, so it's sticky to
+	// body. Offset for the WP admin bar.
 	.sc-list-header {
 		top: 32px;
 	}
 
-	// thead is inside .dataviews-wrapper which becomes a scroll container
-	// below — sticky scope flips from body to wrapper. Pin to wrapper top.
+	// thead is sticky to body (wrapper is `overflow: visible` by default,
+	// so its descendants scope to the next ancestor scroll container = body).
+	// Stack it below the admin bar AND the sticky page header.
 	.dataviews-view-table thead th {
-		top: 0;
-	}
-
-	// Scope horizontal scroll to the inner wrapper so a wide table doesn't
-	// drag the WP admin sidebar out of view. Search bar + footer stay
-	// pinned to wrapper left; upstream sticky-right Actions pins to wrapper right.
-	.dataviews-wrapper {
-		overflow-x: auto;
-	}
-
-	.dataviews__view-actions,
-	.dataviews-footer {
-		position: sticky;
-		left: 0;
+		top: calc(32px + var(--sc-list-header-height));
 	}
 }
 
@@ -269,8 +257,7 @@ $padding-size: 20px;
 .dataviews-action-icon {
 	display: none;
 }
-.dataviews-item-actions
-	.components-button:not(.dataviews-all-actions-button) {
+.dataviews-item-actions .components-button:not(.dataviews-all-actions-button) {
 	.dataviews-action-icon {
 		display: inline-flex;
 	}
