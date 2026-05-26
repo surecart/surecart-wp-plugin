@@ -14,6 +14,5 @@ export default ({ enabled, onToggle }) => (
 		}
 		onClick={onToggle}
 		size="small"
-		variant="tertiary"
 	/>
 );
