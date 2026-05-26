@@ -89,6 +89,7 @@ return array(
 		\SureCart\Rest\RefundsRestServiceProvider::class,
 		\SureCart\Rest\DisputesRestServiceProvider::class,
 		\SureCart\Rest\DownloadRestServiceProvider::class,
+		\SureCart\Rest\ImportRowsRestServiceProvider::class,
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
 		\SureCart\Rest\ActivationRestServiceProvider::class,

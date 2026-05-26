@@ -2,5 +2,12 @@
 	width: 100%;
 	max-width: 250px;
 	min-height: 30px;
-    align-items: center;
+	align-items: center;
+
+	// Fix search field white artifact on hover
+	// input-group.scss sets border-radius: 4px !important on .sc-form-control
+	// !important here is required to override it for this block's pill shape
+	> .sc-form-control {
+		border-radius: inherit !important;
+	}
 }

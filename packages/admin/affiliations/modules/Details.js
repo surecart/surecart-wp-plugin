@@ -70,6 +70,7 @@ export default ({ affiliation, loading }) => {
 							align-items: center;
 							justify-content: space-between;
 							gap: 2em;
+							min-width: 0;
 						`}
 					>
 						<div
@@ -79,13 +80,19 @@ export default ({ affiliation, loading }) => {
 								justify-content: flex-start;
 								gap: 1em;
 								flex: 1;
+								min-width: 0;
 							`}
 						>
 							<ScAvatar
 								image={avatarUrl}
 								initials={(display_name || '').charAt(0)}
 							/>
-							<div>
+							<div
+								css={css`
+									min-width: 0;
+									overflow-wrap: break-word;
+								`}
+							>
 								<div>
 									<strong>{display_name}</strong>
 								</div>
