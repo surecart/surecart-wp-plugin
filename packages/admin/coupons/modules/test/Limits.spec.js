@@ -197,24 +197,19 @@ describe('Limits — when browser TZ equals site TZ (no regression for users wit
 		);
 
 		const props = DateTimePicker.mock.calls[0][0];
-		// Emit a string whose new Date() interpretation equals the stored instant
-		// in the current process timezone (browser-local).
-		const sameInstantString = new Date(stored * 1000)
-			.toISOString()
-			.slice(0, 19); // strip "Z" so it looks like the picker's no-TZ output
 
-		// Re-derive what the fix's transform produces from that string.
-		const expected =
-			Date.parse(new Date(sameInstantString).toUTCString()) / 1000;
+		// Emit the picker's no-TZ string in the current process TZ's wall clock —
+		// the matched-TZ mock interprets it as the same local TZ, so the round-trip
+		// must equal `stored` regardless of what TZ the test runner is in.
+		const d = new Date(stored * 1000);
+		const pad = (n) => String(n).padStart(2, '0');
+		const sameInstantString =
+			`${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
+			`T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
 		props.onChange(sameInstantString);
 
-		expect(updateCoupon).toHaveBeenCalledWith({ redeem_by: expected });
-		// And the expected value should equal `stored` in this matched-TZ scenario.
-		// (When jsdom's TZ matches our pretend "site TZ", the round-trip is identity.)
-		// We assert the equality only if the test environment lined up; otherwise
-		// document that the transform is invertible regardless of TZ.
-		expect(Number.isFinite(expected)).toBe(true);
+		expect(updateCoupon).toHaveBeenCalledWith({ redeem_by: stored });
 	});
 
 	it('does NOT mutate the stored value on mount (read-only invariant, matched TZ)', () => {
