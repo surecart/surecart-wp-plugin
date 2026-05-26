@@ -20,6 +20,7 @@ export const productView = (product) => ({
 	link: product?.id
 		? addQueryArgs('admin.php', {
 				page: 'sc-products',
+				action: 'edit',
 				id: product.id,
 		  })
 		: null,
