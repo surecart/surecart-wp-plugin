@@ -130,6 +130,32 @@ describe('Limits — Redeem By DateTimePicker timezone round-trip', () => {
 
 		expect(updateCoupon).toHaveBeenCalledWith({ redeem_by: stored });
 	});
+
+	it.each([
+		['null', null],
+		['undefined', undefined],
+	])(
+		'guards against onChange(%s) — does not write NaN to redeem_by',
+		(_label, value) => {
+			const stored = 1780466340;
+			const coupon = { redeem_by: stored };
+			TestRenderer.create(
+				<Limits
+					coupon={coupon}
+					loading={false}
+					updateCoupon={updateCoupon}
+				/>
+			);
+
+			const props = DateTimePicker.mock.calls[0][0];
+			props.onChange(value);
+
+			const redeemByCalls = updateCoupon.mock.calls.filter(
+				(c) => c[0] && Object.prototype.hasOwnProperty.call(c[0], 'redeem_by')
+			);
+			expect(redeemByCalls).toHaveLength(0);
+		}
+	);
 });
 
 describe('Limits — when browser TZ equals site TZ (no regression for users without the bug)', () => {
@@ -156,8 +182,7 @@ describe('Limits — when browser TZ equals site TZ (no regression for users wit
 	});
 
 	it('round-trips a no-TZ picker value back to the same UTC instant', () => {
-		const coupon = { redeem_by: 0 }; // forces the picker not to render initially
-		coupon.redeem_by = 1700000000; // any stored seed
+		const coupon = { redeem_by: 1700000000 };
 		TestRenderer.create(
 			<Limits coupon={coupon} loading={false} updateCoupon={updateCoupon} />
 		);

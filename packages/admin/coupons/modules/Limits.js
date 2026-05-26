@@ -156,9 +156,10 @@ export default ({ coupon, loading, updateCoupon }) => {
 								}
 								onChange={(redeem_by) => {
 									const date = getDate(redeem_by);
+									if (!date) return;
 									updateCoupon({
 										redeem_by:
-											Date.parse(date?.toUTCString()) /
+											Date.parse(date.toUTCString()) /
 											1000,
 									});
 								}}
