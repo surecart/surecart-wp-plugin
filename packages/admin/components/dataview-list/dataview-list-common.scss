@@ -154,7 +154,9 @@ $padding-size: 20px;
 	// `overflow: visible` keeps sticky thead/footer scoped to body/card.
 	// `useHorizontalScrollState` flips the attribute below only when columns
 	// genuinely overflow — engaging `overflow-x: auto` (which per CSS spec
-	// also promotes `overflow-y` to auto, sacrificing sticky inside the wrapper).
+	// also promotes `overflow-y` to auto, sacrificing sticky inside the wrapper
+	// at narrow viewports where columns don't fit. Fixing that properly needs
+	// upstream DOM restructuring; tracked as a follow-up).
 	.dataviews-wrapper {
 		overflow: visible;
 		height: auto;
@@ -223,7 +225,6 @@ $padding-size: 20px;
 		align-items: center;
 		justify-content: center;
 		min-height: 200px;
-		width: 100%;
 	}
 }
 
@@ -249,6 +250,42 @@ $padding-size: 20px;
 	.dataviews-view-table thead th {
 		top: calc(32px + var(--sc-list-header-height));
 	}
+
+	// Narrow-viewport inner-scroll: `overflow-x: auto` forces overflow-y to
+	// auto by spec, so make the wrapper the scroll container and pin the
+	// search bar + thead to its top.
+	.dataviews-wrapper[data-horizontal-scroll="true"] {
+		height: calc(100vh - 32px - var(--sc-list-header-height));
+		min-height: 0;
+
+		// Search/filter bar — pin to wrapper top so it doesn't scroll out of
+		// reach while the user moves through rows.
+		.dataviews__view-actions {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			background: #fff;
+		}
+
+		// thead sticks just below the search bar (which is ~64px tall here).
+		.dataviews-view-table thead th {
+			top: 64px;
+		}
+	}
+}
+
+// Pin body when the wrapper is in inner-scroll mode, else body scroll drags
+// it off-screen. `:has()` scopes the rule to that exact state.
+html:has(
+		.sc-dataview-list-wrapper[data-enhanced-view="off"]
+			.dataviews-wrapper[data-horizontal-scroll="true"]
+	),
+body:has(
+		.sc-dataview-list-wrapper[data-enhanced-view="off"]
+			.dataviews-wrapper[data-horizontal-scroll="true"]
+	) {
+	overflow: hidden;
+	height: 100vh;
 }
 
 // Action label rendering — pairs with `dataview-list/iconLabel.js`. Icon
