@@ -1,7 +1,6 @@
 $padding-size: 20px;
 
-// Enhanced fullscreen workspace — desktop only; the JS suppresses the shell
-// on mobile, so these rules must not fire there even with a stale body class.
+// Workspace shell — desktop only; JS suppresses it on mobile.
 @media screen and (min-width: 783px) {
 	body.is-fullscreen-mode.sc-enhanced-view {
 		#sc-admin-header,
@@ -34,18 +33,13 @@ $padding-size: 20px;
 	}
 }
 
-// Apply to .sc-dataview-list-wrapper (or entity-specific variant).
 .sc-dataview-list-wrapper {
-	// Approximate height of `.sc-list-header` — used to offset the sticky
-	// thead so it pins directly below the title header. Pages can override
-	// per layout if they slot in taller content.
+	// Sticky thead offset — pages can override per layout for taller headers.
 	--sc-list-header-height: 72px;
 
 	.dataviews-view-table {
-		border-top: 1px solid #f0f0f0;
-		// Always show selection checkboxes (upstream defaults to
-		// hover-reveal). The doubled class on `__input` matches
-		// upstream's `.x.x` specificity trick so this override wins.
+		// Always show selection checkboxes (upstream defaults to hover-reveal).
+		// Doubled class matches upstream's `.x.x` specificity trick.
 		tr td .components-checkbox-control__input-container,
 		thead th .components-checkbox-control__input-container,
 		tr
@@ -56,7 +50,6 @@ $padding-size: 20px;
 		}
 	}
 
-	// Column widths are controlled via `layout.styles` on each view so each list can set them per-field.
 	.dataviews-view-table {
 		width: 100%;
 
@@ -102,7 +95,7 @@ $padding-size: 20px;
 		min-height: 43px;
 	}
 
-	// Hide isPrimary action icons until row hover/focus to keep the table clean.
+	// Hide isPrimary action icons until row hover/focus.
 	.dataviews-view-table__row
 		.dataviews-item-actions
 		.components-button:not(.dataviews-all-actions-button) {
@@ -132,7 +125,6 @@ $padding-size: 20px;
 		visibility: visible;
 	}
 
-	// Touch devices: always show action icons since hover is unreliable.
 	@media (hover: none) {
 		.dataviews-view-table__row .dataviews-item-actions .components-button {
 			visibility: visible;
@@ -145,29 +137,51 @@ $padding-size: 20px;
 		border-bottom-right-radius: 8px;
 	}
 
-	// Page-number select defaults to ~39px — the chevron padding leaves
-	// almost no room for the digit. Give it room for 3 digits.
+	// Room for 3 digits in the page-number select.
 	.dataviews-pagination__page-select .components-select-control__input {
 		min-width: 64px;
 	}
 
-	// `overflow: visible` keeps sticky thead/footer scoped to body/card.
-	// `useHorizontalScrollState` flips the attribute below only when columns
-	// genuinely overflow — engaging `overflow-x: auto` (which per CSS spec
-	// also promotes `overflow-y` to auto, sacrificing sticky inside the wrapper
-	// at narrow viewports where columns don't fit. Fixing that properly needs
-	// upstream DOM restructuring; tracked as a follow-up).
+	// Body-scroll by default; switch to inner-scroll on horizontal overflow.
 	.dataviews-wrapper {
 		overflow: visible;
 		height: auto;
 		min-height: calc(100vh - 130px);
 	}
+
+	// Inner-scroll: wrapper becomes the scroll container. Height comes from
+	// `useHorizontalScrollState` since CSS can't measure the wrapper's
+	// natural top (varies with admin bar, notices, etc.).
 	.dataviews-wrapper[data-horizontal-scroll="true"] {
-		overflow-x: auto;
+		overflow: auto;
+		height: var(
+			--sc-dvw-inner-scroll-height,
+			calc(100vh - 32px - var(--sc-list-header-height))
+		);
+		min-height: 0;
+
+		.dataviews__view-actions {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			background: #fff;
+		}
+
+		.dataviews-view-table thead th {
+			top: 64px;
+		}
+
+		.dataviews-footer {
+			position: sticky;
+			bottom: 0;
+			left: 0;
+			z-index: 10;
+			background: #fff;
+		}
 	}
 
-	// DataViews' `--stuck` border can render without real overflow (ref timing /
-	// subpixel column widths). `useHorizontalScrollState` sets the attribute.
+	// Hide upstream's `--stuck` border in body-scroll mode — it can render
+	// without real overflow due to ref timing / subpixel column widths.
 	.dataviews-wrapper[data-horizontal-scroll="false"] {
 		th.dataviews-view-table__actions-column--stuck::after,
 		td.dataviews-view-table__actions-column--stuck::after {
@@ -175,10 +189,8 @@ $padding-size: 20px;
 		}
 	}
 
-	// Sticky page header in both view modes. Override the global
-	// `.sc-list-header { margin: 20px 20px 0 20px }` here so the sticky
-	// background spans the full card width — otherwise rows would bleed
-	// through the side gaps as they scroll under the sticky bar.
+	// Override the global `.sc-list-header { margin: 20px ... }` so the sticky
+	// background spans the full card width.
 	.sc-list-header {
 		margin: 0;
 		padding: 16px 20px;
@@ -191,24 +203,18 @@ $padding-size: 20px;
 		border-top-right-radius: 8px;
 	}
 
-	// Sticky table column headers pinned directly under `.sc-list-header`.
-	// Target `th` (not `thead`) for broader browser support — sticky on
-	// `thead`/`tr` is newer; sticky on table cells is well-supported. Use
-	// `box-shadow` for the bottom hairline since real borders on sticky
-	// table cells disappear during scroll under `border-collapse: collapse`.
+	// Stacked inset+outset shadows — a single 1px hairline rasterizes to <1px
+	// alpha on sticky cells at fractional y. Stacking guarantees one paints.
 	.dataviews-view-table thead th {
 		position: sticky;
 		top: var(--sc-list-header-height);
 		z-index: 9;
 		background: #fff;
-		box-shadow: inset 0 -1px 0 #f0f0f0;
+		box-shadow: inset 0 1px 0 #f0f0f0, 0 -1px 0 #f0f0f0,
+			inset 0 -1px 0 #f0f0f0, 0 1px 0 #f0f0f0;
 	}
 
-	// Upstream adds `border-top: 1px solid #f0f0f0` to *every* `<tr>`, which
-	// renders a second 1px line directly below the sticky thead's box-shadow
-	// (box-shadow doesn't merge with adjacent borders under
-	// `border-collapse: collapse`). Drop it on the first body row so only the
-	// thead's shadow paints the divider.
+	// Upstream's per-tr `border-top` would double the thead's bottom divider.
 	.dataviews-view-table tbody tr:first-child {
 		border-top: 0;
 	}
@@ -228,69 +234,35 @@ $padding-size: 20px;
 	}
 }
 
-// OFF-mode: white card visual matching the enhanced view chrome. No
-// `overflow: hidden` here — it would scope the sticky descendants to this
-// wrapper instead of body scroll and break them. The sticky header gets its
-// own top-corner radius below so the rounded look survives without clipping.
+// Body-scroll offsets for the WP admin bar.
 .sc-dataview-list-wrapper[data-enhanced-view="off"] {
 	background: #fff;
 	margin: -10px -20px;
 	box-sizing: border-box;
 	border-top: 1px solid #f0f0f0;
 
-	// sc-list-header is a sibling of .dataviews-wrapper, so it's sticky to
-	// body. Offset for the WP admin bar.
 	.sc-list-header {
 		top: 32px;
 	}
 
-	// thead is sticky to body (wrapper is `overflow: visible` by default,
-	// so its descendants scope to the next ancestor scroll container = body).
-	// Stack it below the admin bar AND the sticky page header.
 	.dataviews-view-table thead th {
 		top: calc(32px + var(--sc-list-header-height));
 	}
-
-	// Narrow-viewport inner-scroll: `overflow-x: auto` forces overflow-y to
-	// auto by spec, so make the wrapper the scroll container and pin the
-	// search bar + thead to its top.
-	.dataviews-wrapper[data-horizontal-scroll="true"] {
-		height: calc(100vh - 32px - var(--sc-list-header-height));
-		min-height: 0;
-
-		// Search/filter bar — pin to wrapper top so it doesn't scroll out of
-		// reach while the user moves through rows.
-		.dataviews__view-actions {
-			position: sticky;
-			top: 0;
-			z-index: 10;
-			background: #fff;
-		}
-
-		// thead sticks just below the search bar (which is ~64px tall here).
-		.dataviews-view-table thead th {
-			top: 64px;
-		}
-	}
 }
 
-// Pin body when the wrapper is in inner-scroll mode, else body scroll drags
-// it off-screen. `:has()` scopes the rule to that exact state.
-html:has(
-		.sc-dataview-list-wrapper[data-enhanced-view="off"]
-			.dataviews-wrapper[data-horizontal-scroll="true"]
-	),
+// Inner-scroll mode: lock body to one scroll surface (chaining between body
+// and wrapper feels jerky). Lock `body` only — locking `html` breaks WP's
+// `padding-top: 32px` and clips the SureCart header under the admin bar.
 body:has(
 		.sc-dataview-list-wrapper[data-enhanced-view="off"]
 			.dataviews-wrapper[data-horizontal-scroll="true"]
 	) {
 	overflow: hidden;
-	height: 100vh;
+	height: calc(100vh - 32px);
 }
 
-// Action label rendering — pairs with `dataview-list/iconLabel.js`. Icon
-// in row primary buttons, text in menu items and modals. Lives outside the
-// wrapper so it reaches the menu portal at body level.
+// Action label rendering — pseudo lives outside the wrapper so it reaches
+// the menu portal at body level. See `dataview-list/iconLabel.js`.
 .dataviews-action-icon {
 	display: none;
 }
@@ -303,12 +275,9 @@ body:has(
 	}
 }
 
-// Mobile (≤782px). Workspace shell suppressed in JS; off-mode layout takes
-// over. sc-list-header static, thead sticky at admin-bar offset, wrapper
-// allows h-scroll, table keeps its natural width.
+// Mobile (≤782px). Workspace is suppressed in JS; off-mode layout takes over.
 @media screen and (max-width: 782px) {
 	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
-		// WP collapses `.wrap` gutter to 10px on mobile.
 		margin: -10px -10px;
 
 		.sc-list-header {
@@ -343,17 +312,15 @@ body:has(
 	}
 }
 
-// NOTE: This is OUTSIDE the wrapper because WP Popover renders as a portal
-// at the body level, not inside the DataView wrapper DOM.
+// Outside the wrapper — WP Popover renders as a portal at body level.
 .dataviews-view-config {
 	width: 320px;
 	max-width: 320px;
 }
 
-// Shared list page header — rendered by packages/admin/components/ListHeader.js.
 .sc-list-header {
 	padding-bottom: 0;
-	margin: 20px 20px 0 20px; // match the padding of the table
+	margin: 20px 20px 0 20px;
 
 	.sc-list-header__bar {
 		display: flex;
@@ -361,9 +328,8 @@ body:has(
 		justify-content: space-between;
 		gap: 12px;
 		flex-wrap: wrap;
-		// Keep the bar tall enough for `--sc-list-header-height: 72px` even
-		// when no action button is present (e.g. Reviews). Otherwise the
-		// shorter header leaves a gap below it and rows leak through.
+		// Keep the bar tall enough for `--sc-list-header-height: 72px`
+		// even when no action button is present (e.g. Reviews).
 		min-height: 40px;
 	}
 
@@ -376,16 +342,12 @@ body:has(
 		flex-shrink: 0;
 	}
 
-	// WP hides `.wp-header-end` by default but it still takes layout space
-	// in some themes — force it out of flow.
 	.wp-header-end {
 		display: none;
 	}
 }
 
-// Astra (and other themes) leak `.components-modal__header .components-button
-// { width: 60px; height: 60px }` into every WP admin Modal — making the close
-// (X) icon oversized. Restore WordPress's default size on our admin screens.
+// Astra et al. leak oversized modal close buttons into WP admin — restore.
 body[class*="surecart_page_"] {
 	.components-modal__header .components-button.has-icon {
 		width: 32px;
