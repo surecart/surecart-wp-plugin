@@ -33,9 +33,9 @@ class CustomerController extends RestController {
 		}
 
 		// Set the ID in the request to fetch the customer record.
-		$request['id'] = $customer_id;
+		$request->set_param('id', $customer_id);
 
-		return $this->find( $request );
+		return $this->find( $request->get_params() );
 	}
 
 	/**
