@@ -71,15 +71,41 @@ export class ScCheckoutStockAlert {
 
   /**
    * Update the checkout line items stock to the max available.
+   *
+   * Bundle component OOS items can't be removed directly — they're
+   * synthesized server-side from the parent's bundle_component_variants.
+   * For each OOS component, find an in-stock variant of the same component
+   * product and swap via the parent, otherwise the dialog loops (the
+   * regenerated component reappears OOS on the next state read).
    */
   async onSubmit() {
     try {
       this.busy = true;
+
+      const items = checkoutState.checkout?.line_items?.data || [];
+      const parentOverrides = new Map<string, Record<string, string>>();
+      this.getOutOfStockLineItems().forEach(oos => {
+        if (!oos.component_line_item || !oos.bundle_line_item) return;
+        const parent = items.find(li => li.id === oos.bundle_line_item);
+        const product = oos.price?.product as Product;
+        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
+        if (!parent?.id || !product?.id || !swap?.id) return;
+        const map = parentOverrides.get(parent.id) || { ...(parent.bundle_component_variants || {}) };
+        map[product.id] = swap.id;
+        parentOverrides.set(parent.id, map);
+      });
+
+      const lineItems = this.getStockAdjustedLineItems()
+        .filter(lineItem => !!lineItem.quantity)
+        .map(lineItem =>
+          lineItem.id && parentOverrides.has(lineItem.id)
+            ? { ...lineItem, bundle_component_variants: parentOverrides.get(lineItem.id) }
+            : lineItem,
+        );
+
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
-        data: {
-          line_items: this.getStockAdjustedLineItems().filter(lineItem => !!lineItem.quantity),
-        },
+        data: { line_items: lineItems },
       })) as Checkout;
     } catch (error) {
       const additionalErrors = (error?.additional_errors || []).map(error => error?.message).filter(n => n);
