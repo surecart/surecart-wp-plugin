@@ -1,5 +1,5 @@
-import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
+import { __, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { getBundleComponentRowsFromLineItems } from '../../../functions/line-items';
 import { Fee, ImageAttributes, LineItem } from '../../../types';
@@ -106,6 +106,9 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
+  /** Collapse the bundle components list to the first row by default. */
+  @State() bundleComponentsExpanded = false;
+
   render() {
     const isImageFallback = this.image?.type === 'fallback';
 
@@ -166,16 +169,66 @@ export class ScProductLineItem {
               </div>
             </div>
 
-            {!!this.bundleComponents?.length && (
-              <div class="bundle-components" part="components">
-                {getBundleComponentRowsFromLineItems(this.bundleComponents).map(row => (
-                  <div class="bundle-component" part="component" key={row.id}>
-                    <span class="bundle-component__label">{row.label}</span>
-                    <span class="bundle-component__qty">× {row.qty}</span>
+            {!!this.bundleComponents?.length && (() => {
+              const rows = getBundleComponentRowsFromLineItems(this.bundleComponents);
+              if (!rows.length) return null;
+              // Mirrors sc-product-line-item-note: chevron sits inline next
+              // to the first row, expanding reveals the rest. No separate
+              // "Show N more" link row.
+              const collapsible = rows.length > 1;
+              const expanded = this.bundleComponentsExpanded;
+              const visibleRows = collapsible && !expanded ? rows.slice(0, 1) : rows;
+              const toggle = () => (this.bundleComponentsExpanded = !this.bundleComponentsExpanded);
+              return (
+                <div
+                  class={{
+                    'bundle-components': true,
+                    'bundle-components--collapsible': collapsible,
+                    'bundle-components--clickable': collapsible,
+                    'bundle-components--is-expanded': expanded,
+                  }}
+                  part="components"
+                  tabIndex={collapsible ? 0 : undefined}
+                  onClick={() => collapsible && toggle()}
+                  onKeyDown={e => {
+                    if (collapsible && (e.key === 'Enter' || e.key === ' ')) {
+                      e.preventDefault();
+                      toggle();
+                    }
+                  }}
+                >
+                  <div class="bundle-components__list">
+                    {visibleRows.map(row => (
+                      <div class="bundle-component" part="component" key={row.id}>
+                        <span class="bundle-component__label">{row.label}</span>
+                        {row.qty > 1 && <span class="bundle-component__qty">× {row.qty}</span>}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
+
+                  {collapsible && (
+                    <button
+                      class="bundle-components__toggle"
+                      type="button"
+                      part="components__toggle"
+                      aria-expanded={expanded ? 'true' : 'false'}
+                      aria-label={expanded ? __('Hide bundle items', 'surecart') : __('Show all bundle items', 'surecart')}
+                      title={expanded ? __('Hide bundle items', 'surecart') : __('Show all bundle items', 'surecart')}
+                      onClick={e => {
+                        e.stopPropagation();
+                        toggle();
+                      }}
+                    >
+                      <sc-icon
+                        class="bundle-components__toggle-icon"
+                        name="chevron-down"
+                        style={{ width: '16px', height: '16px' }}
+                      ></sc-icon>
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
 
             <div class="item__row stick-bottom">
               {this.editable ? (

@@ -251,18 +251,46 @@ sc-quantity-select::part(minus) {
 // item is a bundle parent.
 .bundle-components {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: flex-start;
+  // Don't stretch across .item__text-container's full width — without
+  // this the chevron lands on the far right edge (next to the price
+  // column) in wider layouts like the order details. Content-width keeps
+  // the chevron right next to the bundle row text.
+  align-self: flex-start;
+  gap: 0.25em;
   margin-top: var(--sc-spacing-xx-small);
   color: var(--sc-input-label-color);
   font-size: var(--sc-font-size-small);
   line-height: 1.4;
+  background: transparent;
+  outline: none;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    background: transparent;
+  }
+}
+
+.bundle-components--clickable {
+  cursor: pointer;
+}
+
+// Content-sized so the chevron sits right after the text instead of
+// pushed to the far edge of the row (which the wider order-details
+// layout otherwise produces). The wrapper still spans the full row,
+// so clicks anywhere on the row continue to toggle.
+.bundle-components__list {
+  flex: 0 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .bundle-component {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
   gap: var(--sc-spacing-x-small);
 
   &:empty {
@@ -271,10 +299,57 @@ sc-quantity-select::part(minus) {
 }
 
 .bundle-component__label {
-  flex: 1 1 auto;
   min-width: 0;
 }
 
 .bundle-component__qty {
   flex: 0 0 auto;
+}
+
+.bundle-components__toggle {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+  cursor: pointer;
+  border-radius: var(--sc-border-radius-small);
+  transition: color 0.2s ease;
+  // Defensive: nothing paints the button in any state.
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: transparent;
+    box-shadow: none;
+    // Darken instead of fading — opacity:0.8 on an already light gray
+    // dropped the icon under the visibility threshold.
+    color: var(--sc-color-gray-700, var(--sc-input-label-color));
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sc-color-primary-500);
+    outline-offset: 2px;
+  }
+}
+
+// Single chevron icon, rotated on expand. The transition gives the same
+// motion language as opening the row. Don't override sc-icon's host
+// `display: inline-block` — doing so breaks its --width/--height sizing.
+.bundle-components__toggle-icon {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.bundle-components--is-expanded .bundle-components__toggle-icon {
+  transform: rotate(180deg);
 }

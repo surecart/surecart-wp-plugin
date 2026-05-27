@@ -1,13 +1,41 @@
 .sc-cart-line-item-bundle-components {
 	display: flex;
-	flex-direction: column;
-	gap: 2px;
+	align-items: flex-start;
+	gap: 0.25em;
+	// No hover/focus background on the row itself — parity with
+	// sc-product-line-item-note. The cursor change is the only affordance.
+	background: transparent;
+	outline: none;
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		background: transparent;
+	}
+
+	&--clickable {
+		cursor: pointer;
+	}
+
+	&__list {
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
 
 	&__item {
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
 		gap: var(--sc-spacing-x-small, 0.5em);
+
+		// Author display rule beats UA [hidden] — restore it so the IA
+		// data-wp-bind--hidden on tail rows actually collapses them.
+		&[hidden] {
+			display: none;
+		}
 	}
 
 	&__label {
@@ -21,5 +49,61 @@
 		&:empty {
 			display: none;
 		}
+	}
+
+	&__toggle {
+		align-self: flex-start;
+		background: transparent;
+		border: 0;
+		padding: 0;
+		display: inline-flex;
+		align-items: center;
+		color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+		cursor: pointer;
+		border-radius: var(--sc-border-radius-small, 2px);
+		transition: color 0.2s ease;
+		// Defensive against WP theme button styles — IA blocks render in
+		// the light DOM, so a theme's `button:hover { background: <brand> }`
+		// would otherwise win.
+		appearance: none;
+		-webkit-appearance: none;
+		box-shadow: none;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background: transparent;
+			box-shadow: none;
+			// Darken instead of fading — opacity:0.8 on an already light
+			// gray dropped the icon under the visibility threshold.
+			color: var(--sc-color-gray-700, var(--sc-input-label-color));
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--sc-color-primary-500);
+			outline-offset: 2px;
+		}
+
+		// Author display rule beats UA [hidden] — restore it so the IA
+		// data-wp-bind--hidden actually collapses the toggle.
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	// Single chevron icon, rotated on expand via the wrapper modifier
+	// class — same motion language as sc-product-line-item.
+	&__toggle-icon {
+		display: inline-flex;
+		transition: transform 0.2s ease;
+		will-change: transform;
+	}
+
+	&--is-expanded &__toggle-icon {
+		transform: rotate(180deg);
 	}
 }
