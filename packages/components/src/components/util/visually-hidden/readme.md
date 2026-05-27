@@ -9,6 +9,7 @@
 
 ### Used by
 
+ - [sc-checkout-product-bundle-component-variants](../../controllers/checkout-form/sc-checkout-product-bundle-component-variants)
  - [sc-checkout-product-price-variant-selector](../../controllers/checkout-form/sc-checkout-product-price-variant-selector)
  - [sc-form-control](../../ui/form-control)
  - [sc-image-slider](../../ui/sc-image-slider)
@@ -26,6 +27,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-checkout-product-bundle-component-variants --> sc-visually-hidden
   sc-checkout-product-price-variant-selector --> sc-visually-hidden
   sc-form-control --> sc-visually-hidden
   sc-image-slider --> sc-visually-hidden

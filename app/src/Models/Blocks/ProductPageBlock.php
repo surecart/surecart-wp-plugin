@@ -273,7 +273,7 @@ class ProductPageBlock {
 	 *
 	 * @return object Map of component_product_id -> variant_id.
 	 */
-	protected function getInitialBundleComponentVariants( $product ) {
+	public function getInitialBundleComponentVariants( $product ) {
 		if ( empty( $product->bundle ) ) {
 			return (object) array();
 		}

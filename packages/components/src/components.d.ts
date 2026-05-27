@@ -549,6 +549,19 @@ export namespace Components {
     }
     interface ScCheckoutPaystackPaymentProvider {
     }
+    /**
+     * Instant-checkout-side picker for bundle component variants.
+     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
+     * selection straight into the existing bundle line item's
+     * `bundle_component_variants`, so the buy page can keep its Stencil-only
+     * checkout flow.
+     */
+    interface ScCheckoutProductBundleComponentVariants {
+        /**
+          * The bundle product (must include bundle_items.component_product variants/variant_options).
+         */
+        "product": Product;
+    }
     interface ScCheckoutProductPriceVariantSelector {
         /**
           * The label for the price.
@@ -4893,6 +4906,19 @@ declare global {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
     };
+    /**
+     * Instant-checkout-side picker for bundle component variants.
+     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
+     * selection straight into the existing bundle line item's
+     * `bundle_component_variants`, so the buy page can keep its Stencil-only
+     * checkout flow.
+     */
+    interface HTMLScCheckoutProductBundleComponentVariantsElement extends Components.ScCheckoutProductBundleComponentVariants, HTMLStencilElement {
+    }
+    var HTMLScCheckoutProductBundleComponentVariantsElement: {
+        prototype: HTMLScCheckoutProductBundleComponentVariantsElement;
+        new (): HTMLScCheckoutProductBundleComponentVariantsElement;
+    };
     interface HTMLScCheckoutProductPriceVariantSelectorElement extends Components.ScCheckoutProductPriceVariantSelector, HTMLStencilElement {
     }
     var HTMLScCheckoutProductPriceVariantSelectorElement: {
@@ -6933,6 +6959,7 @@ declare global {
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-product-bundle-component-variants": HTMLScCheckoutProductBundleComponentVariantsElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
@@ -7713,6 +7740,19 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    /**
+     * Instant-checkout-side picker for bundle component variants.
+     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
+     * selection straight into the existing bundle line item's
+     * `bundle_component_variants`, so the buy page can keep its Stencil-only
+     * checkout flow.
+     */
+    interface ScCheckoutProductBundleComponentVariants {
+        /**
+          * The bundle product (must include bundle_items.component_product variants/variant_options).
+         */
+        "product"?: Product;
     }
     interface ScCheckoutProductPriceVariantSelector {
         /**
@@ -11839,6 +11879,7 @@ declare namespace LocalJSX {
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-product-bundle-component-variants": ScCheckoutProductBundleComponentVariants;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
@@ -12084,6 +12125,14 @@ declare module "@stencil/core" {
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            /**
+             * Instant-checkout-side picker for bundle component variants.
+             * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
+             * selection straight into the existing bundle line item's
+             * `bundle_component_variants`, so the buy page can keep its Stencil-only
+             * checkout flow.
+             */
+            "sc-checkout-product-bundle-component-variants": LocalJSX.ScCheckoutProductBundleComponentVariants & JSXBase.HTMLAttributes<HTMLScCheckoutProductBundleComponentVariantsElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
             "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**

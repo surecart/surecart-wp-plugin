@@ -46,6 +46,7 @@
 | `"base"`                         | The component base                                        |
 | `"component"`                    | A single bundle component row                             |
 | `"components"`                   | The bundle components list (when bundleComponents is set) |
+| `"components__toggle"`           |                                                           |
 | `"description"`                  |                                                           |
 | `"image"`                        | The product image                                         |
 | `"line-item__price-description"` | The line item price description                           |
@@ -82,17 +83,17 @@
 ### Depends on
 
 - [sc-product-line-item-note](../product-line-item-note)
+- [sc-icon](../icon)
 - [sc-quantity-select](../quantity-select)
 - [sc-button](../button)
-- [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-product-line-item --> sc-product-line-item-note
+  sc-product-line-item --> sc-icon
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-button
-  sc-product-line-item --> sc-icon
   sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-button --> sc-spinner

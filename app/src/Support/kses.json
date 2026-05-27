@@ -308,6 +308,13 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-product-bundle-component-variants": {
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-product-price-variant-selector": {
     "label": true,
     "product": true,

@@ -71,10 +71,34 @@ class BuyPageController extends BasePageController {
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $id );
+		$this->model = \SureCart\Models\Product::with(
+			[
+				'image',
+				'prices',
+				'product_medias',
+				'product_media.media',
+				'variants',
+				'variant_options',
+				// API auto-includes nested resources on component_product, so the
+				// flat expand matches what the PDP relies on (sync_expands).
+				'bundle_items',
+				'bundle_items.component_product',
+			]
+		)->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
+		}
+
+		// For bundles, prefer the post-meta synced product as the source of
+		// truth for the bundle structure (flag + items + their component
+		// variants) — that's what the PDP renders from, so the buy page
+		// stays in lockstep. The live API still owns prices/availability;
+		// only the bundle fields are merged in.
+		$cached = $this->loadProductFromMeta( $id );
+		if ( ! empty( $cached->bundle ) ) {
+			$this->model->bundle       = $cached->bundle;
+			$this->model->bundle_items = $cached->bundle_items;
 		}
 
 		// if this buy page is not enabled, check read permissions.
@@ -113,6 +137,16 @@ class BuyPageController extends BasePageController {
 				],
 				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
 			);
+
+			// Bundles require a variant selection per variable component on checkout creation.
+			if ( ! empty( $this->model->bundle ) ) {
+				$bundle_component_variants = (array) ( new \SureCart\Models\Blocks\ProductPageBlock() )
+					->getInitialBundleComponentVariants( $this->model );
+				if ( ! empty( $bundle_component_variants ) ) {
+					$line_item['bundle_component_variants'] = $bundle_component_variants;
+				}
+			}
+
 			sc_initial_state(
 				[
 					'checkout' => [
@@ -253,5 +287,27 @@ class BuyPageController extends BasePageController {
 		?>
 		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
 		<?php
+	}
+
+	/**
+	 * Resolve the post-meta synced Product by slug — used to merge in
+	 * bundle structure that the live API may not deeply expand.
+	 *
+	 * @param string $slug Product slug from the URL.
+	 * @return \SureCart\Models\Product|null
+	 */
+	protected function loadProductFromMeta( string $slug ) {
+		$posts = get_posts(
+			[
+				'post_type'      => 'sc_product',
+				'name'           => $slug,
+				'post_status'    => [ 'publish', 'draft' ],
+				'posts_per_page' => 1,
+			]
+		);
+		if ( empty( $posts ) ) {
+			return null;
+		}
+		return sc_get_product( $posts[0] );
 	}
 }

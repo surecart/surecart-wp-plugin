@@ -493,6 +493,7 @@ export interface LineItemData extends Object {
   quantity: number;
   ad_hoc_amount?: number;
   variant?: string;
+  bundle_component_variants?: Record<string, string>;
 }
 
 export type LineItemsData = {
@@ -563,6 +564,8 @@ export interface LineItem extends Object {
   display_note?: string;
   component_line_item?: boolean;
   component_line_items?: { data: LineItem[] };
+  /** Id of the bundle parent line item (set on bundle component line items). */
+  bundle_line_item?: string | null;
   bundle_component_variants?: Record<string, string>;
   bundle_allocated_unit_amount?: number;
   tax_rate?: number;
