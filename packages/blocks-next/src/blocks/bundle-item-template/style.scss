@@ -46,6 +46,13 @@
 	color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
 	font-size: var(--sc-font-size-small, 0.875rem);
 	font-weight: var(--sc-font-weight-medium, 500);
+	white-space: nowrap;
+}
+
+// Variant label is a single word ("Size", "Color") — don't let a narrow
+// flex column break it mid-character when the product name is long.
+.sc-bundle-item__variant-name {
+	white-space: nowrap;
 }
 
 .sc-bundle-item .sc-pill-option__wrapper {

@@ -29,7 +29,7 @@ const buildDefaultTree = () =>
 						type: 'flex',
 						orientation: 'horizontal',
 						justifyContent: 'left',
-						flexWrap: 'nowrap',
+						flexWrap: 'wrap',
 					},
 				},
 				[

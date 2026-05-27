@@ -8,6 +8,13 @@ $component       = $bundle_item->component_product ?? null;
 $variant_options = $component->variant_options->data ?? array();
 $variants        = $component->variants->data ?? array();
 
+// Skip components with no selectable variants — there's nothing for the
+// customer to interact with, so the row (name, qty, anything else) would
+// just be dead weight on the bundle page.
+if ( empty( $variant_options ) ) {
+	return '';
+}
+
 $variants_payload = array_map(
 	function ( $variant ) {
 		return array(
@@ -63,18 +70,12 @@ $component_context = wp_interactivity_data_wp_context(
 );
 ?>
 <div <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'sc-bundle-item' ) ) ); ?> <?php echo wp_kses_data( $component_context ); ?>>
-	<?php if ( ! empty( $variant_options ) ) : ?>
-		<?php foreach ( $variant_options as $key => $option ) : ?>
-			<div
-				class="sc-bundle-item__row"
-				<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'optionNumber' => (int) $key + 1 ) ) ); ?>
-			>
-				<?php echo $render_inner_blocks( $option ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			</div>
-		<?php endforeach; ?>
-	<?php else : ?>
-		<div class="sc-bundle-item__row">
-			<?php echo $render_inner_blocks(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<?php foreach ( $variant_options as $key => $option ) : ?>
+		<div
+			class="sc-bundle-item__row"
+			<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'optionNumber' => (int) $key + 1 ) ) ); ?>
+		>
+			<?php echo $render_inner_blocks( $option ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
-	<?php endif; ?>
+	<?php endforeach; ?>
 </div>

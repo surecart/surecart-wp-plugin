@@ -10,7 +10,7 @@ export default ({
 	setAttributes,
 	context: { 'surecart/bundleItem': bundleItem },
 }) => {
-	const { showSingleQuantity = true } = attributes;
+	const { showSingleQuantity = false } = attributes;
 	const blockProps = useBlockProps({
 		className: 'sc-bundle-item__qty',
 	});

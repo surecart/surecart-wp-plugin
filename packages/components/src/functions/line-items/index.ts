@@ -5,17 +5,22 @@ import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, L
 /**
  * Build a list of display rows from bundle component line items. Use this
  * when you have actual LineItems (cart, checkout, order, customer dashboard).
- * Rows include variant_display_options on the label when present.
+ *
+ * Components without a variant selection are skipped — the customer made no
+ * choice for them, so listing them in the order summary is just noise. The
+ * full bundle definition still shows in the subscription details view via
+ * getBundleComponentRowsFromBundleItems.
  */
 export const getBundleComponentRowsFromLineItems = (components: LineItem[] = []): BundleComponentRow[] => {
   return (components || [])
     .map(component => {
+      const variants = component?.variant_display_options || '';
+      if (!variants) return null;
       const componentProduct = (component?.price as Price)?.product as Product;
       const name = componentProduct?.name || '';
-      const variants = component?.variant_display_options || '';
       const qty = Math.max(Number(component?.quantity) || 1, 1);
-      const label = variants ? `${name} - ${variants}` : name;
-      if (!label) return null;
+      const label = `${name} - ${variants}`;
+      if (!name) return null;
       return { id: component?.id, label, qty };
     })
     .filter(Boolean) as BundleComponentRow[];
