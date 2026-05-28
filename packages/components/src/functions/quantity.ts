@@ -6,11 +6,9 @@ export function getMaxStockQuantity(product: Product, selectedVariant?: Variant)
     return product?.purchase_limit;
   }
 
-  // Check if stock needs to be checked
-  const isStockNeedsToBeChecked = !!(product?.stock_enabled && !product?.allow_out_of_stock_purchases);
-
-  // If stock is not enabled, return null
-  if (!isStockNeedsToBeChecked) {
+  // If stock is not tracked, no max applies.
+  const hasUnlimitedStock = selectedVariant ? selectedVariant.has_unlimited_stock ?? product?.has_unlimited_stock : product?.has_unlimited_stock;
+  if (hasUnlimitedStock) {
     return null;
   }
 

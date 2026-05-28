@@ -14,7 +14,9 @@
 	?>
 	data-wp-on--click="surecart/cart::actions.toggle"
 	data-wp-on--keydown="surecart/cart::actions.toggle"
-	data-wp-bind--hidden="!state.showCartMenuIcon"
+	<?php if ( empty( $attributes['cart_menu_always_shown'] ) ) : ?>
+		data-wp-bind--hidden="!state.showCartMenuIcon"
+	<?php endif; ?>
 	tabindex="0"
 	role="button"
 	aria-label="<?php esc_attr_e( 'Open cart', 'surecart' ); ?>"
