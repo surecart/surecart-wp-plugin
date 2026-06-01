@@ -39,7 +39,6 @@ $padding-size: 20px;
 
 	.dataviews-view-table {
 		// Always show selection checkboxes (upstream defaults to hover-reveal).
-		// Doubled class matches upstream's `.x.x` specificity trick.
 		tr td .components-checkbox-control__input-container,
 		thead th .components-checkbox-control__input-container,
 		tr
