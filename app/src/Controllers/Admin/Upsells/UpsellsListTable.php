@@ -220,11 +220,12 @@ class UpsellsListTable extends ListTable {
 				'action' => 'toggle_enabled',
 				'nonce'  => wp_create_nonce( 'archive_product' ), // use archive product nonce.
 				'id'     => $upsell_funnel->id,
-			]
+			],
+			admin_url( 'admin.php?page=sc-upsell-funnels' )
 		);
 		?>
 		<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
-			onClick="window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $upsell_funnel->id ); ?>').style.display = '';"></sc-switch>
+			onClick="window.location.assign('<?php echo esc_url( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $upsell_funnel->id ); ?>').style.display = '';"></sc-switch>
 		<sc-block-ui id="loading-<?php echo esc_attr( $upsell_funnel->id ); ?>" spinner style="display: none;"></sc-block-ui>
 		<?php
 	}

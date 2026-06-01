@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
+import { getDate } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -148,14 +149,20 @@ export default ({ coupon, loading, updateCoupon }) => {
 								)}
 							</BaseControl.VisualLabel>
 							<DateTimePicker
-								currentDate={new Date(coupon?.redeem_by * 1000)}
-								onChange={(redeem_by) =>
+								currentDate={
+									coupon?.redeem_by
+										? getDate(coupon.redeem_by * 1000)
+										: null
+								}
+								onChange={(redeem_by) => {
+									const date = getDate(redeem_by);
+									if (!date) return;
 									updateCoupon({
 										redeem_by:
-											Date.parse(new Date(redeem_by)) /
+											Date.parse(date.toUTCString()) /
 											1000,
-									})
-								}
+									});
+								}}
 							/>
 						</div>
 					)}
