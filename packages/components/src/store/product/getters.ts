@@ -22,11 +22,23 @@ export const availablePrices = (productId: string): Price[] => (state[productId]
 export const getProduct = (productId?: string): ProductState => state[productId] ?? null;
 
 /**
- * Check if product label stock is enabled and not out of stock purchases are allowed.
+ * Check if stock needs to be checked for the current product or selected variant.
+ * Uses the pre-resolved has_unlimited_stock field supplied by the server.
  *
  * @returns {boolean} - Returns stock needs to be checked or not
  */
-export const isStockNeedsToBeChecked = (productId: string) => !!(state?.[productId]?.product?.stock_enabled && !state?.[productId]?.product?.allow_out_of_stock_purchases);
+export const isStockNeedsToBeChecked = (productId: string) => {
+  const product = state?.[productId]?.product;
+  const selectedVariant = state?.[productId]?.selectedVariant;
+
+  if (selectedVariant?.id) {
+    // null means "inherit from product" — fall back to product's has_unlimited_stock
+    const effectiveUnlimited = selectedVariant.has_unlimited_stock ?? product?.has_unlimited_stock;
+    return !effectiveUnlimited;
+  }
+
+  return !product?.has_unlimited_stock;
+};
 
 /**
  * Check if this option is out of stock base on the selected variant.

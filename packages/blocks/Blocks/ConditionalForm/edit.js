@@ -179,6 +179,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 					title={__('Configure Conditions', 'surecart')}
 					onRequestClose={() => setEditRules(false)}
 					shouldCloseOnClickOutside={false}
+					overlayClassName="sc-modal-overflow"
 					style={{
 						width: '75%',
 						maxWidth: '650px',
@@ -186,6 +187,11 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						'--sc-color-primary-text': '#fff',
 					}}
 				>
+					<style>{`
+						.sc-modal-overflow .components-modal__frame {
+							overflow: visible !important;
+						}
+					`}</style>
 					<Rules
 						attributes={attributes}
 						setAttributes={setAttributes}

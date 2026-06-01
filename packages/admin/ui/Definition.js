@@ -10,6 +10,7 @@ export default ({ title, children, className }) => {
 				align-items: baseline;
 				justify-content: space-between;
 				gap: 1em;
+				min-width: 0;
 			`}
 		>
 			<div
@@ -22,6 +23,8 @@ export default ({ title, children, className }) => {
 			<div
 				css={css`
 					text-align: right;
+					min-width: 0;
+					overflow-wrap: break-word;
 				`}
 			>
 				{children}

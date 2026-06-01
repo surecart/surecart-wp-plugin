@@ -63,7 +63,9 @@ export class ScProductCheckoutSelectVariantOption {
    * @returns {boolean} Whether the selected variant is out of stock.
    */
   isSelectedVariantOutOfStock() {
-    return this.product?.stock_enabled && this.hasVariants() && !this.product?.allow_out_of_stock_purchases && this.selectedVariant.available_stock < 1;
+    if (!this.selectedVariant) return false;
+    const hasUnlimitedStock = this.selectedVariant.has_unlimited_stock ?? this.product?.has_unlimited_stock;
+    return this.hasVariants() && !hasUnlimitedStock && this.selectedVariant.available_stock < 1;
   }
 
   /**

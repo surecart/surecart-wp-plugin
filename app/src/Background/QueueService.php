@@ -185,6 +185,18 @@ class QueueService {
 			],
 		);
 
+		// Also check in-progress actions — on fast environments the task may
+		// already be running by the time the next page load checks.
+		if ( empty( $next_action ) || ! is_array( $next_action ) ) {
+			$next_action = as_get_scheduled_actions(
+				[
+					'hook'     => $hook,
+					'status'   => \ActionScheduler_Store::STATUS_RUNNING,
+					'per_page' => 1,
+				],
+			);
+		}
+
 		if ( empty( $next_action ) || ! is_array( $next_action ) ) {
 			return false;
 		}
