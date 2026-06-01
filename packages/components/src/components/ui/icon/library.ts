@@ -1,43 +1,73 @@
-import { IconLibrary } from '../../../types';
+import { IconLibrary, IconLibraryOptions, IconLibraryMutator, IconLibraryResolver } from '../../../types';
 
-export type IconLibraryResolver = (name: string) => string;
-export type IconLibraryMutator = (svg: SVGElement) => void;
+// Re-export for back-compat with any external consumers importing from here.
+export type { IconLibrary, IconLibraryOptions, IconLibraryMutator, IconLibraryResolver };
 
-let registry: IconLibrary[] = [];
-let watchedIcons: any[] = [];
-
-export function watchIcon(icon: any) {
-  watchedIcons.push(icon);
+interface WatchedIcon {
+  library: string;
+  redraw: () => void;
 }
 
-export function unwatchIcon(icon: any) {
-  watchedIcons = watchedIcons.filter(el => el !== icon);
+// Namespaced key to avoid colliding with `window.registry` from other plugins.
+const REGISTRY_KEY = 'scIconLibraries';
+const EVENT_REGISTERED = 'surecart:icon-library-registered';
+
+const win = typeof window !== 'undefined' ? window : undefined;
+const watchedIcons = new Set<WatchedIcon>();
+
+function readRegistry(): IconLibrary[] {
+  if (!win) return [];
+  return Array.isArray(win[REGISTRY_KEY]) ? win[REGISTRY_KEY] : [];
 }
 
-export function getIconLibrary(name?: string) {
-  return window?.registry?.filter(lib => lib.name === name)[0];
+function writeRegistry(next: IconLibrary[]): void {
+  if (!win) return;
+  win[REGISTRY_KEY] = next;
 }
 
-export function registerIconLibrary(name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) {
-  unregisterIconLibrary(name);
-  registry.push({
-    name,
-    resolver: options.resolver,
-    mutator: options.mutator,
+function redrawForLibrary(name: string): void {
+  watchedIcons.forEach(icon => {
+    if (icon.library === name) icon.redraw();
   });
-  window.registry = registry;
+}
 
-  // Redraw watched icons
-  watchedIcons.map(icon => {
-    if (icon.library === name) {
-      icon.redraw();
-    }
-  });
+export function watchIcon(icon: WatchedIcon) {
+  watchedIcons.add(icon);
+}
+
+export function unwatchIcon(icon: WatchedIcon) {
+  watchedIcons.delete(icon);
+}
+
+export function getIconLibrary(name?: string): IconLibrary | undefined {
+  // Must never throw — a throw inside sc-icon's componentWillLoad breaks
+  // Stencil's lazy loader and surfaces as "Constructor for sc-*#undefined".
+  try {
+    return readRegistry().find(lib => lib?.name === name);
+  } catch {
+    return undefined;
+  }
+}
+
+export function registerIconLibrary(name: string, options: IconLibraryOptions) {
+  // Read-modify-write so concurrent bundles compose instead of clobbering.
+  const next = readRegistry().filter(lib => lib?.name !== name);
+  next.push({ name, ...options });
+  writeRegistry(next);
+
+  // Notify all bundles — listener below handles redraws.
+  try {
+    win?.dispatchEvent(new CustomEvent(EVENT_REGISTERED, { detail: { name } }));
+  } catch {}
 }
 
 export function unregisterIconLibrary(name: string) {
-  registry = registry.filter(lib => lib.name !== name);
-  window.registry = registry;
+  writeRegistry(readRegistry().filter(lib => lib?.name !== name));
 }
 
-window.ceRegisterIconLibrary = registerIconLibrary;
+win?.addEventListener?.(EVENT_REGISTERED, (e: Event) => {
+  const name = (e as CustomEvent<{ name: string }>).detail?.name;
+  if (name) redrawForLibrary(name);
+});
+
+if (win) win.ceRegisterIconLibrary = registerIconLibrary;
