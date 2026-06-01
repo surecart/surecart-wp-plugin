@@ -50,11 +50,13 @@ class BuyPageController extends BasePageController {
 		if ( empty( $this->model->id ) ) {
 			return;
 		}
+		$is_bundle = ! empty( $this->model->bundle );
+		$url_key   = $is_bundle ? 'bundle' : 'product';
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
-				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->model->id ) ),
+				'title' => $is_bundle ? __( 'Edit Bundle', 'surecart' ) : __( 'Edit Product', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( $url_key, $this->model->id ) ),
 			]
 		);
 	}
