@@ -196,7 +196,7 @@ export default ({ id, setBrowserURL }) => {
 			setBrowserURL({ id });
 
 			// save success.
-			createSuccessNotice(__('Product updated.', 'surecart'), {
+			createSuccessNotice(labels.updatedNotice, {
 				type: 'snackbar',
 			});
 
@@ -360,7 +360,7 @@ export default ({ id, setBrowserURL }) => {
 						{!!product?.permalink && (
 							<Button
 								icon={external}
-								label={__('View Product Page', 'surecart')}
+								label={labels.viewPageLabel}
 								href={product?.permalink}
 								showTooltip={true}
 								size="compact"

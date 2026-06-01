@@ -9,7 +9,10 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
 import { __ } from '@wordpress/i18n';
 import { TextControl, ExternalLink } from '@wordpress/components';
 
+import useBundleLabels from '../../hooks/useBundleLabels';
+
 export default ({ product, updateProduct, onClose }) => {
+	const { isBundle } = useBundleLabels(product);
 	return (
 		<div
 			css={css`
@@ -66,7 +69,9 @@ export default ({ product, updateProduct, onClose }) => {
 					display: block;
 				`}
 			>
-				{__('View Product')}
+				{isBundle
+					? __('View Bundle', 'surecart')
+					: __('View Product', 'surecart')}
 			</h3>
 
 			<p>
