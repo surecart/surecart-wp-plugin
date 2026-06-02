@@ -13,18 +13,23 @@ export const getCurrentCustomer = (mode: 'live' | 'test' = 'live') =>
     }),
   }) as Promise<Customer | null>;
 
-// Country is excluded — it's IP-detected and pushed before autofill runs, so it must not gate the check.
-// Other API metadata (id, object, created_at, …) is ignored by virtue of the whitelist.
+// Content fields only. Country is excluded here because it's IP-detected and pushed before
+// autofill runs — it must not make the checkout's address look "non-empty" and block autofill.
 const ADDRESS_CONTENT_FIELDS: Array<keyof Address> = ['name', 'line_1', 'line_2', 'city', 'state', 'postal_code'];
 
-/** True when the address has no meaningful content fields set. */
+// Fields that count as the customer having a saved address worth autofilling. Country is
+// included here: a customer may have only a saved country (and no street/city yet), and we
+// still want that country carried into the checkout.
+const ADDRESS_DATA_FIELDS: Array<keyof Address> = [...ADDRESS_CONTENT_FIELDS, 'country'];
+
+/** True when the address has no meaningful content fields set (country ignored — see above). */
 export const isAddressEmpty = (address: Partial<Address> | null | undefined): boolean => {
   if (!address) return true;
   return ADDRESS_CONTENT_FIELDS.every(key => !address[key]);
 };
 
-/** True when the value carries any meaningful address content. API returns `[]` for "none" — treat as empty. */
+/** True when the value carries any saved address data, including a country-only address. API returns `[]` for "none" — treat as empty. */
 export const hasAddressData = (value: Partial<Address> | [] | null | undefined): value is Partial<Address> => {
   if (!value || Array.isArray(value)) return false;
-  return ADDRESS_CONTENT_FIELDS.some(key => !!value[key]);
+  return ADDRESS_DATA_FIELDS.some(key => !!value[key]);
 };

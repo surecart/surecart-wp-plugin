@@ -67,6 +67,12 @@ export class ScCheckoutAutofillProvider {
         patch.phone = customer.phone;
       }
 
+      // Respect the customer's saved billing-matches-shipping preference so the checkout
+      // toggle reflects their profile instead of the checkout default.
+      if (typeof customer?.billing_matches_shipping === 'boolean' && checkoutState.checkout?.billing_matches_shipping !== customer.billing_matches_shipping) {
+        patch.billing_matches_shipping = customer.billing_matches_shipping;
+      }
+
       // Nothing to apply — skip the lock entirely.
       if (!Object.keys(patch).length) return;
 
