@@ -4296,6 +4296,10 @@ export namespace Components {
           * Total number of inputs
          */
         "total": number;
+        /**
+          * Focus the first code input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScVisuallyHidden {
     }

@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop, State, Host } from '@stencil/core';
+import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
@@ -33,6 +33,15 @@ export class ScCustomerLogin {
 
   /** Interval timer reference for cleanup */
   private cooldownInterval: any = null;
+
+  /** Password input ref (password view). */
+  private passwordInput?: HTMLScInputElement;
+
+  /** Verification code ref (code view). */
+  private verificationCode?: HTMLScVerificationCodeElement;
+
+  /** Focus the active view's field after the next render (set when the mode switches). */
+  private focusAfterRender = false;
 
   /** Error */
   @State() error: string = '';
@@ -183,6 +192,24 @@ export class ScCustomerLogin {
     this.startCooldown();
   }
 
+  /** When the user switches views, focus that view's first field after it renders. */
+  @Watch('mode')
+  handleModeChange() {
+    this.focusAfterRender = true;
+  }
+
+  componentDidRender() {
+    if (!this.focusAfterRender) return;
+    this.focusAfterRender = false;
+
+    // Wait for the freshly rendered child to be ready, then focus it.
+    if (this.mode === 'password') {
+      this.passwordInput?.componentOnReady?.().then(() => this.passwordInput?.triggerFocus());
+    } else {
+      this.verificationCode?.componentOnReady?.().then(() => this.verificationCode?.triggerFocus());
+    }
+  }
+
   disconnectedCallback() {
     clearInterval(this.cooldownInterval);
   }
@@ -294,6 +321,7 @@ export class ScCustomerLogin {
         {this.renderSentInfo()}
         <sc-flex alignItems="center">
           <sc-input
+            ref={el => (this.passwordInput = el)}
             type="password"
             style={{ flex: '1' }}
             placeholder={__('Password', 'surecart')}
@@ -345,7 +373,7 @@ export class ScCustomerLogin {
         {this.renderSentInfo()}
 
         <div>
-          <sc-verification-code total={6} loading={this.busy} onChange={((value: string) => this.verifyCode(value)) as any} />
+          <sc-verification-code ref={el => (this.verificationCode = el)} total={6} loading={this.busy} onChange={((value: string) => this.verifyCode(value)) as any} />
         </div>
 
         {isVerifying && (

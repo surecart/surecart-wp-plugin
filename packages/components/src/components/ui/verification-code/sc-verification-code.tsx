@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Element, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Element, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -94,6 +94,12 @@ export class ScVerificationCode {
     }
   }
 
+  /** Focus the first code input. */
+  @Method()
+  async triggerFocus() {
+    this.focusInput(0);
+  }
+
   getElementByIndex(index: number): HTMLInputElement | null {
     return this.el.querySelector(`#code-input-${index}`) as HTMLInputElement;
   }
@@ -117,7 +123,11 @@ export class ScVerificationCode {
       <div class="sc-verification-code">
         {Array.from({ length: this.total }).map((_, index) => (
           <Fragment>
-            {index === Math.floor(this.total / 2) && <span class="sc-verification-code__separator" aria-hidden="true">&mdash;</span>}
+            {index === Math.floor(this.total / 2) && (
+              <span class="sc-verification-code__separator" aria-hidden="true">
+                &mdash;
+              </span>
+            )}
             <input
               key={index}
               id={`code-input-${index}`}
