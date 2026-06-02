@@ -81,19 +81,37 @@ export class ScCheckoutStockAlert {
   async onSubmit() {
     try {
       this.busy = true;
+      this.error = null;
 
       const items = checkoutState.checkout?.line_items?.data || [];
       const parentOverrides = new Map<string, Record<string, string>>();
+      // Track bundle parents whose OOS component has no in-stock swap —
+      // we cannot recover those silently, so we surface a message instead
+      // of letting the platform 500 on a re-posted OOS bundle.
+      const unrecoverableBundleParents = new Set<string>();
       this.getOutOfStockLineItems().forEach(oos => {
         if (!oos.component_line_item || !oos.bundle_line_item) return;
         const parent = items.find(li => li.id === oos.bundle_line_item);
         const product = oos.price?.product as Product;
         const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
-        if (!parent?.id || !product?.id || !swap?.id) return;
+        if (!parent?.id || !product?.id) return;
+        if (!swap?.id) {
+          unrecoverableBundleParents.add(parent.id);
+          return;
+        }
         const map = parentOverrides.get(parent.id) || { ...(parent.bundle_component_variants || {}) };
         map[product.id] = swap.id;
         parentOverrides.set(parent.id, map);
       });
+
+      // If any bundle has an OOS component with no swap, don't pretend the
+      // update will succeed — bail with a clear message so the dialog
+      // doesn't loop into an "internal server error" from the platform.
+      const stillUnrecoverable = Array.from(unrecoverableBundleParents).filter(id => !parentOverrides.has(id));
+      if (stillUnrecoverable.length) {
+        this.error = __('One or more bundle items are out of stock and cannot be substituted. Please remove the item or choose a different bundle.', 'surecart');
+        return;
+      }
 
       const lineItems = this.getStockAdjustedLineItems()
         .filter(lineItem => !!lineItem.quantity)
@@ -108,8 +126,13 @@ export class ScCheckoutStockAlert {
         data: { line_items: lineItems },
       })) as Checkout;
     } catch (error) {
-      const additionalErrors = (error?.additional_errors || []).map(error => error?.message).filter(n => n);
-      this.error = `${error?.message || __('Something went wrong.', 'surecart')} ${additionalErrors?.length && ` ${additionalErrors.join('. ')}`}`;
+      // Build the message defensively — `additionalErrors?.length && ...` used
+      // to evaluate to the literal `0` when there were no additional errors,
+      // which then got stringified into the displayed error.
+      const additionalErrors = (error?.additional_errors || []).map(e => e?.message).filter(Boolean);
+      const parts = [error?.message || __('Something went wrong.', 'surecart')];
+      if (additionalErrors.length) parts.push(additionalErrors.join('. '));
+      this.error = parts.join(' ');
     } finally {
       this.busy = false;
     }

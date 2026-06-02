@@ -7,6 +7,7 @@ import { getVariantFromValues } from '../../../../functions/util';
 import { updateLineItem } from '@services/session';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
+import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
 
 /**
  * Instant-checkout-side picker for bundle component variants.
@@ -141,8 +142,27 @@ export class ScCheckoutProductBundleComponentVariants {
     return values;
   }
 
+  /**
+   * Compute whether a given option_value should render as disabled —
+   * either no variant carries the combination (missing) or every variant
+   * matching it is out of stock. Mirrors the PDP pill logic in
+   * `sc-product-pills-variant-option` so checkout stays in step with PDP.
+   */
+  private isOptionUnavailable(component: Product, optionIndex: number, value: string): boolean {
+    const componentValues = this.selectedValues[component.id] || {};
+    const optionNumber = optionIndex + 1;
+    return (
+      isProductVariantOptionSoldOut(optionNumber, value, componentValues, component) ||
+      isProductVariantOptionMissing(optionNumber, value, componentValues, component)
+    );
+  }
+
   /** Update one option for a single component, then resolve the variant. */
   private setOption(component: Product, optionIndex: number, value: string) {
+    // Don't let an unavailable pill commit a selection — visual disabled
+    // alone isn't enough since sc-pill-option only sets aria-disabled.
+    if (this.isOptionUnavailable(component, optionIndex, value)) return;
+
     const optionKey = `option_${optionIndex + 1}`;
     const next = {
       ...(this.selectedValues[component.id] || {}),
@@ -220,15 +240,18 @@ export class ScCheckoutProductBundleComponentVariants {
           <div class="sc-bundle-item__pills">
             {(values || []).map(value => {
               const isSelected = selected[optionKey] === value;
+              const isUnavailable = this.isOptionUnavailable(component, index, value);
               return (
                 <sc-pill-option
                   isSelected={isSelected}
+                  isUnavailable={isUnavailable}
                   onClick={() => this.setOption(component, index, value)}
                 >
                   <span aria-hidden="true">{value}</span>
                   <sc-visually-hidden>
                     {/* translators: %1$s option name, %2$s value, %3$s component product name */}
                     {sprintf(__('Select %1$s: %2$s for %3$s', 'surecart'), name, value, componentName)}
+                    {isUnavailable && <span> {__('(option unavailable)', 'surecart')}</span>}
                   </sc-visually-hidden>
                 </sc-pill-option>
               );
