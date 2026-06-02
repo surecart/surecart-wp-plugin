@@ -5,7 +5,7 @@ exports[`sc-customer-email Logged In Url Params Checkout email provided 1`] = `
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>
@@ -32,7 +32,7 @@ exports[`sc-customer-email Logged In Url Params Customer and Checkout email prov
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>
@@ -59,7 +59,7 @@ exports[`sc-customer-email Logged In Url Params Customer email provided 1`] = `
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>
@@ -86,7 +86,7 @@ exports[`sc-customer-email Logged In Without Url Params Checkout email provided 
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>
@@ -113,7 +113,7 @@ exports[`sc-customer-email Logged In Without Url Params Customer and Checkout em
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>
@@ -140,7 +140,7 @@ exports[`sc-customer-email Logged In Without Url Params Customer email provided 
   <mock:shadow-root>
     <div class="email-preview">
       <div class="email-preview__info">
-        <sc-avatar image="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?size=48&amp;default=404" initials=""></sc-avatar>
+        <sc-avatar image="" initials=""></sc-avatar>
         <div class="email-preview__text">
           <div class="email-preview__name"></div>
           <div class="email-preview__email"></div>

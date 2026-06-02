@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                                                                                                                                  | Type                   | Default  |
-| ------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | -------- |
-| `codeError`   | `code-error`   | Code Error coming from the parent                                                                                                                            | `string`               | `''`     |
-| `initialMode` | `initial-mode` | Mode the login UI should start in. Lets the parent (sc-customer-email) drop the customer straight into password mode when the code endpoint is rate-limited. | `"code" \| "password"` | `'code'` |
+| Property      | Attribute      | Description                                                   | Type                   | Default  |
+| ------------- | -------------- | ------------------------------------------------------------- | ---------------------- | -------- |
+| `codeError`   | `code-error`   | Code Error coming from the parent                             | `string`               | `''`     |
+| `initialMode` | `initial-mode` | Lets the parent open in password mode (used on 429 fallback). | `"code" \| "password"` | `'code'` |
 
 
 ## Dependencies

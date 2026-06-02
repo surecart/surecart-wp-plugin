@@ -101,26 +101,6 @@ class VerificationCodeController extends RestController {
 			return $logged_in;
 		}
 
-		// Modify the verify object to include the customer data based on the user and checkout mode.
-		$mode     = $request->get_param( 'checkout_mode' ) ?? 'live';
-		$customer = $user->customer( $mode, [ 'shipping_address' ] );
-
-		if ( $customer && ! is_wp_error( $customer ) ) {
-			$verify->customer = [
-				'first_name'       => $customer->first_name ?? $user->display_name ?? $user->user_login,
-				'last_name'        => $customer->last_name ?? '',
-				'phone'            => $customer->phone ?? '',
-				'shipping_address' => $customer->shipping_address ?? [],
-			];
-		} else {
-			$verify->customer = [
-				'first_name'       => $user->display_name ?? $user->user_login,
-				'last_name'        => '',
-				'phone'            => '',
-				'shipping_address' => [],
-			];
-		}
-
 		$verify->name         = $user->display_name ?? $user->user_login;
 		$verify->avatar_url   = get_avatar_url( $user->user_email, [ 'size' => 48 ] );
 		$verify->nonce        = ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' );

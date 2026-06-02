@@ -80,6 +80,7 @@ Type: `Promise<boolean>`
 - [sc-form-components-validator](../../../providers/form-components-validator)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
+- [sc-checkout-autofill-provider](../../../providers/checkout-autofill-provider)
 - [sc-block-ui](../../../ui/block-ui)
 - [sc-checkout-test-complete](../checkout-test-complete)
 
@@ -95,6 +96,7 @@ graph TD;
   sc-checkout --> sc-form-components-validator
   sc-checkout --> sc-order-confirm-provider
   sc-checkout --> sc-session-provider
+  sc-checkout --> sc-checkout-autofill-provider
   sc-checkout --> sc-block-ui
   sc-checkout --> sc-checkout-test-complete
   sc-alert --> sc-icon

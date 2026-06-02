@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property      | Attribute      | Description                                                                     | Type     | Default     |
+| ------------- | -------------- | ------------------------------------------------------------------------------- | -------- | ----------- |
+| `processorId` | `processor-id` | Razorpay processor id. Required for the recurring `payment_method_types` fetch. | `string` | `undefined` |
+
+
 ## Dependencies
 
 ### Used by

@@ -5,12 +5,13 @@
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                   | Type     | Default     |
-| --------- | --------- | ------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `label`   | `label`   | An alternative description to use for accessibility. If omitted, the name or src will be used to generate it. | `string` | `undefined` |
-| `library` | `library` | The name of a registered custom icon library.                                                                 | `string` | `'default'` |
-| `name`    | `name`    | The name of the icon to draw.                                                                                 | `string` | `undefined` |
-| `src`     | `src`     | An external URL of an SVG file.                                                                               | `string` | `undefined` |
+| Property  | Attribute | Description                                                                                                   | Type      | Default     |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `label`   | `label`   | An alternative description to use for accessibility. If omitted, the name or src will be used to generate it. | `string`  | `undefined` |
+| `library` | `library` | The name of a registered custom icon library.                                                                 | `string`  | `'default'` |
+| `mutate`  | `mutate`  | Mutate the icon                                                                                               | `boolean` | `true`      |
+| `name`    | `name`    | The name of the icon to draw.                                                                                 | `string`  | `undefined` |
+| `src`     | `src`     | An external URL of an SVG file.                                                                               | `string`  | `undefined` |
 
 
 ## Events

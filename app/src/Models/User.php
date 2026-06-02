@@ -360,7 +360,17 @@ class User implements ArrayAccess, JsonSerializable {
 			\WP_Session_Tokens::get_instance( $this->user->ID )->destroy_all();
 		}
 		wp_set_current_user( $this->user->ID );
+
+		// Inject the fresh cookie into $_COOKIE so wp_create_nonce() in this same
+		// request uses the real session token — otherwise the returned nonce fails
+		// on the next REST call (rest_cookie_invalid_nonce 403).
+		$populate_cookie = function ( $logged_in_cookie ) {
+			$_COOKIE[ LOGGED_IN_COOKIE ] = $logged_in_cookie;
+		};
+		add_action( 'set_logged_in_cookie', $populate_cookie );
 		wp_set_auth_cookie( $this->user->ID );
+		remove_action( 'set_logged_in_cookie', $populate_cookie );
+
 		update_user_caches( $this->user );
 
 		return true;

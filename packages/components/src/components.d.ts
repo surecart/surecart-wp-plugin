@@ -538,6 +538,8 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
+    interface ScCheckoutAutofillProvider {
+    }
     /**
      * This component listens for a confirmed event and redirects to the success url.
      */
@@ -4294,6 +4296,10 @@ export namespace Components {
           * Total number of inputs
          */
         "total": number;
+        /**
+          * Focus the first code input.
+         */
+        "triggerFocus": () => Promise<void>;
     }
     interface ScVisuallyHidden {
     }
@@ -4891,6 +4897,12 @@ declare global {
     var HTMLScCheckoutElement: {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
+    };
+    interface HTMLScCheckoutAutofillProviderElement extends Components.ScCheckoutAutofillProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutAutofillProviderElement: {
+        prototype: HTMLScCheckoutAutofillProviderElement;
+        new (): HTMLScCheckoutAutofillProviderElement;
     };
     /**
      * This component listens for a confirmed event and redirects to the success url.
@@ -6962,6 +6974,7 @@ declare global {
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
         "sc-checkout": HTMLScCheckoutElement;
+        "sc-checkout-autofill-provider": HTMLScCheckoutAutofillProviderElement;
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
@@ -7736,6 +7749,8 @@ declare namespace LocalJSX {
           * The account tax protocol
          */
         "taxProtocol"?: TaxProtocol;
+    }
+    interface ScCheckoutAutofillProvider {
     }
     /**
      * This component listens for a confirmed event and redirects to the success url.
@@ -11890,6 +11905,7 @@ declare namespace LocalJSX {
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
         "sc-checkout": ScCheckout;
+        "sc-checkout-autofill-provider": ScCheckoutAutofillProvider;
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
@@ -12134,6 +12150,7 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-checkout-autofill-provider": LocalJSX.ScCheckoutAutofillProvider & JSXBase.HTMLAttributes<HTMLScCheckoutAutofillProviderElement>;
             /**
              * This component listens for a confirmed event and redirects to the success url.
              */

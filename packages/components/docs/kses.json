@@ -288,6 +288,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-autofill-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-form-errors": {
     "style": true,
     "id": true,

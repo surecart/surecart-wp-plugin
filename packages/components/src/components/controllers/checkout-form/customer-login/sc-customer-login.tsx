@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop, State, Host } from '@stencil/core';
+import { Component, h, Prop, State, Host, Watch } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
@@ -10,10 +10,8 @@ import { speak } from '@wordpress/a11y';
  * Internal dependencies.
  */
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
-import { createOrUpdateCheckout } from '@services/session';
 import { state as checkoutState } from '@store/checkout';
 import { isRateLimited } from '../../../../functions/util';
-import { Checkout } from 'src/types';
 
 @Component({
   tag: 'sc-customer-login',
@@ -35,6 +33,15 @@ export class ScCustomerLogin {
 
   /** Interval timer reference for cleanup */
   private cooldownInterval: any = null;
+
+  /** Password input ref (password view). */
+  private passwordInput?: HTMLScInputElement;
+
+  /** Verification code ref (code view). */
+  private verificationCode?: HTMLScVerificationCodeElement;
+
+  /** Focus the active view's field after the next render (set when the mode switches). */
+  private focusAfterRender = false;
 
   /** Error */
   @State() error: string = '';
@@ -75,7 +82,6 @@ export class ScCustomerLogin {
         data: {
           login: userState.email,
           code: code,
-          checkout_mode: checkoutState.mode,
         },
       })) as any;
       userState.verificationStatus = VERIFIED;
@@ -93,18 +99,10 @@ export class ScCustomerLogin {
 
       // Update userState and make the user as logged in user.
       userState.loggedIn = true;
-      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || 'N/A';
+      userState.name = user?.name || [user?.customer?.first_name, user?.customer?.last_name].filter(Boolean).join(' ') || '';
       userState.avatarUrl = user?.avatar_url || '';
 
       speak(__('Verification is successful. Please continue your purchase.', 'surecart'), 'assertive');
-
-      // Update checkout with the shipping address.
-      await this.updateCheckout({
-        shipping_address: user?.customer?.shipping_address,
-        first_name: user?.customer?.first_name,
-        last_name: user?.customer?.last_name,
-        phone: user?.customer?.phone,
-      });
     } catch (e: any) {
       // If cooldown has elapsed, treat as expired code.
       if (this.resendCooldown <= 0) {
@@ -124,19 +122,6 @@ export class ScCustomerLogin {
         userState.verificationStatus = UNVERIFIED;
         speak(this.error, 'assertive');
       }
-    } finally {
-      this.busy = false;
-    }
-  }
-
-  async updateCheckout(data: any) {
-    try {
-      checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
-        data,
-      })) as Checkout;
-    } catch (error) {
-      this.error = (error as any)?.message || __('Failed to update checkout. Please try again.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -205,6 +190,24 @@ export class ScCustomerLogin {
     // initialMode='password' means the parent already 429'd on code-send.
     this.codeUnavailable = this.initialMode === 'password';
     this.startCooldown();
+  }
+
+  /** When the user switches views, focus that view's first field after it renders. */
+  @Watch('mode')
+  handleModeChange() {
+    this.focusAfterRender = true;
+  }
+
+  componentDidRender() {
+    if (!this.focusAfterRender) return;
+    this.focusAfterRender = false;
+
+    // Wait for the freshly rendered child to be ready, then focus it.
+    if (this.mode === 'password') {
+      this.passwordInput?.componentOnReady?.().then(() => this.passwordInput?.triggerFocus());
+    } else {
+      this.verificationCode?.componentOnReady?.().then(() => this.verificationCode?.triggerFocus());
+    }
   }
 
   disconnectedCallback() {
@@ -318,6 +321,7 @@ export class ScCustomerLogin {
         {this.renderSentInfo()}
         <sc-flex alignItems="center">
           <sc-input
+            ref={el => (this.passwordInput = el)}
             type="password"
             style={{ flex: '1' }}
             placeholder={__('Password', 'surecart')}
@@ -369,7 +373,7 @@ export class ScCustomerLogin {
         {this.renderSentInfo()}
 
         <div>
-          <sc-verification-code total={6} loading={this.busy} onChange={((value: string) => this.verifyCode(value)) as any} />
+          <sc-verification-code ref={el => (this.verificationCode = el)} total={6} loading={this.busy} onChange={((value: string) => this.verifyCode(value)) as any} />
         </div>
 
         {isVerifying && (
