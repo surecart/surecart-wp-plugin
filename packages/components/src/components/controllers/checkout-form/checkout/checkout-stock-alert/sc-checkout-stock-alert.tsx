@@ -79,6 +79,9 @@ export class ScCheckoutStockAlert {
    * regenerated component reappears OOS on the next state read).
    */
   async onSubmit() {
+    // Tracks whether we re-posted a bundle component swap, so the catch can
+    // show an actionable message if the platform rejects the substitute.
+    let attemptedBundleSwap = false;
     try {
       this.busy = true;
       this.error = null;
@@ -93,7 +96,7 @@ export class ScCheckoutStockAlert {
         if (!oos.component_line_item || !oos.bundle_line_item) return;
         const parent = items.find(li => li.id === oos.bundle_line_item);
         const product = oos.price?.product as Product;
-        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
+        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0 && !v?.archived);
         if (!parent?.id || !product?.id) return;
         if (!swap?.id) {
           unrecoverableBundleParents.add(parent.id);
@@ -103,6 +106,8 @@ export class ScCheckoutStockAlert {
         map[product.id] = swap.id;
         parentOverrides.set(parent.id, map);
       });
+
+      attemptedBundleSwap = parentOverrides.size > 0;
 
       // If any bundle has an OOS component with no swap, don't pretend the
       // update will succeed — bail with a clear message so the dialog
@@ -126,13 +131,19 @@ export class ScCheckoutStockAlert {
         data: { line_items: lineItems },
       })) as Checkout;
     } catch (error) {
-      // Build the message defensively — `additionalErrors?.length && ...` used
-      // to evaluate to the literal `0` when there were no additional errors,
-      // which then got stringified into the displayed error.
-      const additionalErrors = (error?.additional_errors || []).map(e => e?.message).filter(Boolean);
-      const parts = [error?.message || __('Something went wrong.', 'surecart')];
-      if (additionalErrors.length) parts.push(additionalErrors.join('. '));
-      this.error = parts.join(' ');
+      // A rejected bundle swap surfaces as a generic 500 — show an actionable
+      // message so the shopper can remove the item or pick another bundle.
+      if (attemptedBundleSwap) {
+        this.error = __('We could not automatically update an out-of-stock bundle item. Please remove it or choose a different bundle.', 'surecart');
+      } else {
+        // Build the message defensively — `additionalErrors?.length && ...`
+        // used to evaluate to the literal `0` when there were no additional
+        // errors, which then got stringified into the displayed error.
+        const additionalErrors = (error?.additional_errors || []).map(e => e?.message).filter(Boolean);
+        const parts = [error?.message || __('Something went wrong.', 'surecart')];
+        if (additionalErrors.length) parts.push(additionalErrors.join('. '));
+        this.error = parts.join(' ');
+      }
     } finally {
       this.busy = false;
     }
