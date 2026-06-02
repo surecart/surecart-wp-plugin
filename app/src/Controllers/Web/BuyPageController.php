@@ -92,6 +92,7 @@ class BuyPageController extends BasePageController {
 
 		// Bundles render their structure from the PDP-synced post meta so the buy
 		// page matches the PDP. The live API still owns price/availability.
+		// This reads the same synced product cache as sc_get_product()/the PDP — intentional parity, not a WP-as-source-of-truth read.
 		$cached = $this->loadProductFromMeta( $id );
 		if ( ! empty( $cached ) && ! empty( $cached->bundle ) ) {
 			$this->model->bundle       = $cached->bundle;
