@@ -81,8 +81,6 @@ class BuyPageController extends BasePageController {
 				'product_media.media',
 				'variants',
 				'variant_options',
-				// API auto-includes nested resources on component_product, so the
-				// flat expand matches what the PDP relies on (sync_expands).
 				'bundle_items',
 				'bundle_items.component_product',
 			]
@@ -92,13 +90,10 @@ class BuyPageController extends BasePageController {
 			return $this->handleError( $this->model );
 		}
 
-		// For bundles, prefer the post-meta synced product as the source of
-		// truth for the bundle structure (flag + items + their component
-		// variants) — that's what the PDP renders from, so the buy page
-		// stays in lockstep. The live API still owns prices/availability;
-		// only the bundle fields are merged in.
+		// Bundles render their structure from the PDP-synced post meta so the buy
+		// page matches the PDP. The live API still owns price/availability.
 		$cached = $this->loadProductFromMeta( $id );
-		if ( ! empty( $cached->bundle ) ) {
+		if ( ! empty( $cached ) && ! empty( $cached->bundle ) ) {
 			$this->model->bundle       = $cached->bundle;
 			$this->model->bundle_items = $cached->bundle_items;
 		}

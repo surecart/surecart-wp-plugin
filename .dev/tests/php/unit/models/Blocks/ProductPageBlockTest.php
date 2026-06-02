@@ -385,4 +385,77 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 
 		$this->assertNull( $result );
 	}
+
+	/**
+	 * Build a bundle component object with the given variants.
+	 *
+	 * @param array $variants  List of variant arrays (id/available_stock/option_1).
+	 * @param bool  $unlimited Whether the component has unlimited stock.
+	 */
+	private function bundleComponent( array $variants, bool $unlimited = false ): object {
+		return (object) array(
+			'id'                  => 'comp',
+			'has_unlimited_stock' => $unlimited,
+			'variant_options'     => (object) array( 'data' => array() ),
+			'variants'            => (object) array(
+				'data' => array_map( fn( $v ) => (object) $v, $variants ),
+			),
+		);
+	}
+
+	/**
+	 * Seeds the first in-stock variant.
+	 */
+	public function test_initial_variant_picks_first_in_stock() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 4, 'option_1' => 'B' ),
+			)
+		);
+
+		$this->assertSame( 'v2', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * Unlimited-stock component seeds the first variant.
+	 */
+	public function test_initial_variant_unlimited_stock_uses_first_variant() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 0, 'option_1' => 'B' ),
+			),
+			true
+		);
+
+		$this->assertSame( 'v1', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * All variants sold out → falls back to the first variant.
+	 */
+	public function test_initial_variant_all_out_of_stock_falls_back_to_first() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 0, 'option_1' => 'B' ),
+			)
+		);
+
+		$this->assertSame( 'v1', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * No variants → null (nothing to seed).
+	 */
+	public function test_initial_variant_returns_null_when_no_variants() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent( array() );
+
+		$this->assertNull( $block->findInitialBundleComponentVariant( $component ) );
+	}
 }

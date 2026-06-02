@@ -281,7 +281,7 @@ class ProductPageBlock {
 		$map = array();
 		foreach ( $product->bundle_items->data ?? array() as $item ) {
 			$component = $item->component_product ?? null;
-			if ( empty( $component->id ) ) {
+			if ( empty( $component ) || empty( $component->id ) ) {
 				continue;
 			}
 
@@ -312,26 +312,18 @@ class ProductPageBlock {
 			return $from_url;
 		}
 
-		// Never seed an archived variant when a selectable one exists.
-		$selectable = array_values(
-			array_filter(
-				$variants,
-				fn( $variant ) => empty( $variant->archived )
-			)
-		);
-
 		if ( ! empty( $component->has_unlimited_stock ) ) {
-			return $selectable[0] ?? $variants[0];
+			return $variants[0];
 		}
 
-		foreach ( $selectable as $variant ) {
+		foreach ( $variants as $variant ) {
 			if ( ( $variant->available_stock ?? 0 ) > 0 ) {
 				return $variant;
 			}
 		}
 
-		// Nothing in stock — prefer a non-archived variant, else the first.
-		return $selectable[0] ?? $variants[0];
+		// Nothing in stock — fall back to the first variant.
+		return $variants[0];
 	}
 
 	/**
@@ -399,7 +391,7 @@ class ProductPageBlock {
 		$components = array();
 		foreach ( $product->bundle_items->data ?? array() as $item ) {
 			$component = $item->component_product ?? null;
-			if ( empty( $component->id ) ) {
+			if ( empty( $component ) || empty( $component->id ) ) {
 				continue;
 			}
 
