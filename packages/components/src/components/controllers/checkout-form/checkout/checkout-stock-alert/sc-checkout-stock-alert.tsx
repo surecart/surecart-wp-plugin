@@ -96,7 +96,7 @@ export class ScCheckoutStockAlert {
         if (!oos.component_line_item || !oos.bundle_line_item) return;
         const parent = items.find(li => li.id === oos.bundle_line_item);
         const product = oos.price?.product as Product;
-        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0 && !v?.archived);
+        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
         if (!parent?.id || !product?.id) return;
         if (!swap?.id) {
           unrecoverableBundleParents.add(parent.id);

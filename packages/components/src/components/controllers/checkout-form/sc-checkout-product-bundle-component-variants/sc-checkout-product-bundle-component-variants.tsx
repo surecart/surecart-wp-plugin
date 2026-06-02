@@ -111,9 +111,7 @@ export class ScCheckoutProductBundleComponentVariants {
    */
   private variableItems(): Array<{ item: BundleItem; component: Product }> {
     const items = (this.product?.bundle_items?.data || []) as BundleItem[];
-    return items
-      .map(item => ({ item, component: item.component_product as Product }))
-      .filter(({ component }) => !!component?.id && !!component?.variant_options?.data?.length);
+    return items.map(item => ({ item, component: item.component_product as Product })).filter(({ component }) => !!component?.id && !!component?.variant_options?.data?.length);
   }
 
   private variableComponents(): Product[] {
@@ -151,10 +149,7 @@ export class ScCheckoutProductBundleComponentVariants {
   private isOptionUnavailable(component: Product, optionIndex: number, value: string): boolean {
     const componentValues = this.selectedValues[component.id] || {};
     const optionNumber = optionIndex + 1;
-    return (
-      isProductVariantOptionSoldOut(optionNumber, value, componentValues, component) ||
-      isProductVariantOptionMissing(optionNumber, value, componentValues, component)
-    );
+    return isProductVariantOptionSoldOut(optionNumber, value, componentValues, component) || isProductVariantOptionMissing(optionNumber, value, componentValues, component);
   }
 
   /** Update one option for a single component, then resolve the variant. */
@@ -174,7 +169,14 @@ export class ScCheckoutProductBundleComponentVariants {
       variants: component?.variants?.data || [],
       values: next,
     });
-    if (!variant?.id) return; // mid-selection — wait until all options are picked
+    if (!variant?.id) {
+      if (this.selectedVariants[component.id]) {
+        const next = { ...this.selectedVariants };
+        delete next[component.id];
+        this.selectedVariants = next;
+      }
+      return;
+    }
     if (this.selectedVariants[component.id] === variant.id) return;
 
     this.selectedVariants = { ...this.selectedVariants, [component.id]: variant.id };
@@ -197,9 +199,7 @@ export class ScCheckoutProductBundleComponentVariants {
     // Nothing to send if the selection is identical to what's stored.
     const current = lineItem.bundle_component_variants || {};
     const next = this.selectedVariants;
-    const same =
-      Object.keys(next).length === Object.keys(current).length &&
-      Object.entries(next).every(([k, v]) => current[k] === v);
+    const same = Object.keys(next).length === Object.keys(current).length && Object.entries(next).every(([k, v]) => current[k] === v);
     if (same) return;
 
     try {
@@ -242,11 +242,7 @@ export class ScCheckoutProductBundleComponentVariants {
               const isSelected = selected[optionKey] === value;
               const isUnavailable = this.isOptionUnavailable(component, index, value);
               return (
-                <sc-pill-option
-                  isSelected={isSelected}
-                  isUnavailable={isUnavailable}
-                  onClick={() => this.setOption(component, index, value)}
-                >
+                <sc-pill-option isSelected={isSelected} isUnavailable={isUnavailable} onClick={() => this.setOption(component, index, value)}>
                   <span aria-hidden="true">{value}</span>
                   <sc-visually-hidden>
                     {/* translators: %1$s option name, %2$s value, %3$s component product name */}
@@ -267,10 +263,6 @@ export class ScCheckoutProductBundleComponentVariants {
     const items = this.variableItems();
     if (!items.length) return null;
 
-    return (
-      <div class="sc-bundle-items">
-        {items.map(entry => this.renderItemRows(entry))}
-      </div>
-    );
+    return <div class="sc-bundle-items">{items.map(entry => this.renderItemRows(entry))}</div>;
   }
 }

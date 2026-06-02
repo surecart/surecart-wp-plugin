@@ -193,11 +193,15 @@ const { state, actions } = store('surecart/checkout', {
 			const { line_item } = getContext();
 			if (!line_item?.price?.product?.bundle) return [];
 			const components = line_item?.component_line_items?.data || [];
-			return components.filter(
-				(component) =>
-					(component?.variant_options || []).filter(Boolean).length >
-					0
-			);
+			return components.filter((component) => {
+				const display = (
+					component?.variant_display_options || ''
+				).trim();
+				const options = (component?.variant_options || []).filter(
+					Boolean
+				);
+				return !!display || options.length > 0;
+			});
 		},
 
 		/**
@@ -231,9 +235,13 @@ const { state, actions } = store('surecart/checkout', {
 			if (!bundle_component) return '';
 
 			const name = bundle_component?.price?.product?.name || '';
-			const variants = (bundle_component?.variant_options || [])
-				.filter(Boolean)
-				.join(' / ');
+			// Prefer the display string (parity with Stencil); fall back to
+			// joining the raw options array.
+			const variants =
+				(bundle_component?.variant_display_options || '').trim() ||
+				(bundle_component?.variant_options || [])
+					.filter(Boolean)
+					.join(' / ');
 
 			return variants ? `${name} - ${variants}` : name;
 		},
