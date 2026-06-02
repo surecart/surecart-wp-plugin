@@ -24,7 +24,8 @@ import { Fee, ImageAttributes, LineItem } from '../../../types';
  * @part quantity__plus-icon - The product quantity plus icon
  * @part quantity__input - The product quantity input
  * @part line-item__price-description - The line item price description
- * @part components - The bundle components list (when bundleComponents is set)
+ * @part details - The collapsible details region (bundle components + note)
+ * @part details__toggle - The details expand/collapse toggle button
  * @part component - A single bundle component row
  */
 @Component({
@@ -106,8 +107,113 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
-  /** Collapse the bundle components list to the first row by default. */
-  @State() bundleComponentsExpanded = false;
+  /** Collapse the details region (bundle items + note) to the first line by default. */
+  @State() detailsExpanded = false;
+
+  /** Whether the collapsed details region overflows its first line. */
+  @State() detailsOverflowing = false;
+
+  private detailsEl?: HTMLDivElement;
+  private detailsResizeObserver?: ResizeObserver;
+  private detailsMutationObserver?: MutationObserver;
+
+  componentDidLoad() {
+    this.setupDetailsObservers();
+    this.checkDetailsOverflow();
+  }
+
+  disconnectedCallback() {
+    this.cleanupDetailsObservers();
+  }
+
+  setupDetailsObservers() {
+    if (!this.detailsEl) return;
+
+    if (typeof ResizeObserver !== 'undefined') {
+      this.detailsResizeObserver = new ResizeObserver(() => this.checkDetailsOverflow());
+      this.detailsResizeObserver.observe(this.detailsEl);
+    }
+
+    // Content changes (note text / bundle rows) re-evaluate the overflow.
+    if (typeof MutationObserver !== 'undefined') {
+      this.detailsMutationObserver = new MutationObserver(() => this.checkDetailsOverflow());
+      this.detailsMutationObserver.observe(this.detailsEl, { characterData: true, subtree: true, childList: true });
+    }
+  }
+
+  cleanupDetailsObservers() {
+    this.detailsResizeObserver?.disconnect();
+    this.detailsResizeObserver = undefined;
+    this.detailsMutationObserver?.disconnect();
+    this.detailsMutationObserver = undefined;
+  }
+
+  checkDetailsOverflow() {
+    if (!this.detailsEl) return;
+    this.detailsOverflowing = this.detailsEl.scrollHeight > this.detailsEl.clientHeight;
+  }
+
+  toggleDetails() {
+    this.detailsExpanded = !this.detailsExpanded;
+  }
+
+  /**
+   * Bundle items + note share a single collapsible region with one chevron.
+   * Collapsed, only the first line shows; the chevron reveals the rest.
+   */
+  renderDetails() {
+    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents);
+    const hasNote = !!this.note;
+    if (!rows.length && !hasNote) return null;
+
+    const collapsible = this.detailsOverflowing || this.detailsExpanded;
+
+    return (
+      <div
+        class={{
+          'line-item-details': true,
+          'line-item-details--clickable': collapsible,
+          'line-item-details--is-expanded': this.detailsExpanded,
+        }}
+        part="details"
+        tabIndex={collapsible ? 0 : undefined}
+        onClick={() => collapsible && this.toggleDetails()}
+        onKeyDown={e => {
+          if (collapsible && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            this.toggleDetails();
+          }
+        }}
+      >
+        <div class="line-item-details__content" ref={el => (this.detailsEl = el as HTMLDivElement)}>
+          {rows.map(row => (
+            <div class="line-item-details__row" part="component" key={row.id}>
+              <span class="line-item-details__label">{row.label}</span>
+              {row.qty > 1 && <span class="line-item-details__qty">× {row.qty}</span>}
+            </div>
+          ))}
+          {hasNote && <div class="line-item-details__note">{this.note}</div>}
+        </div>
+
+        {collapsible && (
+          <button
+            class="line-item-details__toggle"
+            type="button"
+            part="details__toggle"
+            aria-expanded={this.detailsExpanded ? 'true' : 'false'}
+            aria-label={this.detailsExpanded ? __('Hide details', 'surecart') : __('Show all details', 'surecart')}
+            title={this.detailsExpanded ? __('Hide details', 'surecart') : __('Show all details', 'surecart')}
+            onClick={e => {
+              e.stopPropagation();
+              this.toggleDetails();
+            }}
+          >
+            <sc-icon class="line-item-details__toggle-icon" name="chevron-down" style={{ width: '16px', height: '16px' }}></sc-icon>
+          </button>
+        )}
+      </div>
+    );
+  }
 
   render() {
     const isImageFallback = this.image?.type === 'fallback';
@@ -154,7 +260,6 @@ export class ScProductLineItem {
                   </div>
                 )}
                 {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                {!!this.note && <sc-product-line-item-note note={this.note} />}
               </div>
 
               <div class="item__description" part="trial-fees">
@@ -169,66 +274,7 @@ export class ScProductLineItem {
               </div>
             </div>
 
-            {!!this.bundleComponents?.length && (() => {
-              const rows = getBundleComponentRowsFromLineItems(this.bundleComponents);
-              if (!rows.length) return null;
-              // Mirrors sc-product-line-item-note: chevron sits inline next
-              // to the first row, expanding reveals the rest. No separate
-              // "Show N more" link row.
-              const collapsible = rows.length > 1;
-              const expanded = this.bundleComponentsExpanded;
-              const visibleRows = collapsible && !expanded ? rows.slice(0, 1) : rows;
-              const toggle = () => (this.bundleComponentsExpanded = !this.bundleComponentsExpanded);
-              return (
-                <div
-                  class={{
-                    'bundle-components': true,
-                    'bundle-components--collapsible': collapsible,
-                    'bundle-components--clickable': collapsible,
-                    'bundle-components--is-expanded': expanded,
-                  }}
-                  part="components"
-                  tabIndex={collapsible ? 0 : undefined}
-                  onClick={() => collapsible && toggle()}
-                  onKeyDown={e => {
-                    if (collapsible && (e.key === 'Enter' || e.key === ' ')) {
-                      e.preventDefault();
-                      toggle();
-                    }
-                  }}
-                >
-                  <div class="bundle-components__list">
-                    {visibleRows.map(row => (
-                      <div class="bundle-component" part="component" key={row.id}>
-                        <span class="bundle-component__label">{row.label}</span>
-                        {row.qty > 1 && <span class="bundle-component__qty">× {row.qty}</span>}
-                      </div>
-                    ))}
-                  </div>
-
-                  {collapsible && (
-                    <button
-                      class="bundle-components__toggle"
-                      type="button"
-                      part="components__toggle"
-                      aria-expanded={expanded ? 'true' : 'false'}
-                      aria-label={expanded ? __('Hide bundle items', 'surecart') : __('Show all bundle items', 'surecart')}
-                      title={expanded ? __('Hide bundle items', 'surecart') : __('Show all bundle items', 'surecart')}
-                      onClick={e => {
-                        e.stopPropagation();
-                        toggle();
-                      }}
-                    >
-                      <sc-icon
-                        class="bundle-components__toggle-icon"
-                        name="chevron-down"
-                        style={{ width: '16px', height: '16px' }}
-                      ></sc-icon>
-                    </button>
-                  )}
-                </div>
-              );
-            })()}
+            {this.renderDetails()}
 
             <div class="item__row stick-bottom">
               {this.editable ? (

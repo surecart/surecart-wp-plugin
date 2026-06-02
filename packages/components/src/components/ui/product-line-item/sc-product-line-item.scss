@@ -247,15 +247,17 @@ sc-quantity-select::part(minus) {
   background-color: transparent;
 }
 
-// Nested bundle components — rendered under the main row when this line
-// item is a bundle parent.
-.bundle-components {
+// Line item details — bundle components and the note share one collapsible
+// region under the main row. Collapsed it clamps to the first line; the
+// single chevron reveals the rest. Mirrors the cart's
+// `sc-cart-line-item-details` container.
+.line-item-details {
   display: flex;
   align-items: flex-start;
   // Don't stretch across .item__text-container's full width — without
   // this the chevron lands on the far right edge (next to the price
   // column) in wider layouts like the order details. Content-width keeps
-  // the chevron right next to the bundle row text.
+  // the chevron right next to the details text.
   align-self: flex-start;
   gap: 0.25em;
   margin-top: var(--sc-spacing-xx-small);
@@ -270,86 +272,104 @@ sc-quantity-select::part(minus) {
   &:focus-visible {
     background: transparent;
   }
-}
 
-.bundle-components--clickable {
-  cursor: pointer;
-}
-
-// Content-sized so the chevron sits right after the text instead of
-// pushed to the far edge of the row (which the wider order-details
-// layout otherwise produces). The wrapper still spans the full row,
-// so clicks anywhere on the row continue to toggle.
-.bundle-components__list {
-  flex: 0 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.bundle-component {
-  display: flex;
-  align-items: baseline;
-  gap: var(--sc-spacing-x-small);
-
-  &:empty {
-    display: none;
+  &--clickable {
+    cursor: pointer;
   }
-}
 
-.bundle-component__label {
-  min-width: 0;
-}
+  // Content-sized so the chevron sits right after the text instead of
+  // pushed to the far edge of the row. The wrapper still spans the row,
+  // so clicks anywhere continue to toggle.
+  &__content {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-.bundle-component__qty {
-  flex: 0 0 auto;
-}
+  // Collapsed: clamp the whole region to its first line. `1.4em` ≈ one line
+  // (matches the 1.4 line-height) as a fallback; `1lh` is exact where supported.
+  &:not(.line-item-details--is-expanded) &__content {
+    max-height: 1.4em;
+    max-height: 1lh;
+    overflow: hidden;
+  }
 
-.bundle-components__toggle {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
-  cursor: pointer;
-  border-radius: var(--sc-border-radius-small);
-  transition: color 0.2s ease;
-  // Defensive: nothing paints the button in any state.
-  appearance: none;
-  -webkit-appearance: none;
-  box-shadow: none;
+  &--is-expanded &__content {
+    max-height: none;
+    overflow: visible;
+  }
 
-  &:hover,
-  &:focus,
-  &:active {
+  &__row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sc-spacing-x-small);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__label {
+    min-width: 0;
+  }
+
+  &__qty {
+    flex: 0 0 auto;
+  }
+
+  &__note {
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  &__toggle {
     background: transparent;
+    border: 0;
+    padding: 0;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+    cursor: pointer;
+    border-radius: var(--sc-border-radius-small);
+    transition: color 0.2s ease;
+    // Defensive: nothing paints the button in any state.
+    appearance: none;
+    -webkit-appearance: none;
     box-shadow: none;
-    // Darken instead of fading — opacity:0.8 on an already light gray
-    // dropped the icon under the visibility threshold.
-    color: var(--sc-color-gray-700, var(--sc-input-label-color));
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
+      box-shadow: none;
+      // Darken instead of fading — opacity:0.8 on an already light gray
+      // dropped the icon under the visibility threshold.
+      color: var(--sc-color-gray-700, var(--sc-input-label-color));
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sc-color-primary-500);
+      outline-offset: 2px;
+    }
   }
 
-  &:focus {
-    outline: none;
+  // Single chevron icon, rotated on expand. Don't override sc-icon's host
+  // `display: inline-block` — doing so breaks its --width/--height sizing.
+  &__toggle-icon {
+    transition: transform 0.2s ease;
+    will-change: transform;
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--sc-color-primary-500);
-    outline-offset: 2px;
+  &--is-expanded &__toggle-icon {
+    transform: rotate(180deg);
   }
-}
-
-// Single chevron icon, rotated on expand. The transition gives the same
-// motion language as opening the row. Don't override sc-icon's host
-// `display: inline-block` — doing so breaks its --width/--height sizing.
-.bundle-components__toggle-icon {
-  transition: transform 0.2s ease;
-  will-change: transform;
-}
-
-.bundle-components--is-expanded .bundle-components__toggle-icon {
-  transform: rotate(180deg);
 }
