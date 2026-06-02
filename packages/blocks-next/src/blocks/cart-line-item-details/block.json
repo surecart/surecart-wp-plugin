@@ -1,12 +1,21 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/cart-line-item-bundle-components",
-	"title": "Line item bundle components",
-	"description": "Displays the included component products under a bundle line item in the cart.",
+	"name": "surecart/cart-line-item-details",
+	"title": "Line item details",
+	"description": "Collapsible container for extra line item details (bundle items, note) shown under a cart line item. The first line is always visible; the rest expand on click.",
 	"version": "1.0.0",
 	"category": "surecart-cart",
-	"ancestor": ["surecart/cart-line-item-details"],
+	"ancestor": [
+		"surecart/slide-out-cart-items",
+		"surecart/slide-out-cart-line-items"
+	],
+	"attributes": {
+		"expanded": {
+			"type": "boolean",
+			"default": false
+		}
+	},
 	"example": {},
 	"supports": {
 		"interactivity": true,
@@ -19,6 +28,11 @@
 				"text": true,
 				"background": true
 			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
 		},
 		"typography": {
 			"fontSize": true,
@@ -40,5 +54,6 @@
 	"render": "file:./view.php",
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"viewScriptModule": ["@surecart/line-item-details"]
 }

@@ -215,46 +215,12 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * First-row slice — always rendered. Keeps the cart/checkout/order
-		 * line item readable even when a bundle has many components.
+		 * Whether the line item has any extra details (bundle components or a
+		 * note) for the `cart-line-item-details` container to show. The parent
+		 * container hides itself when there's nothing to render.
 		 */
-		get bundleComponentsHead() {
-			return state.bundleComponents.slice(0, 1);
-		},
-
-		/**
-		 * Remaining rows — hidden behind the expand toggle.
-		 */
-		get bundleComponentsTail() {
-			return state.bundleComponents.slice(1);
-		},
-
-		/**
-		 * Show the toggle only when there's something to hide.
-		 */
-		get hasBundleComponentsOverflow() {
-			return state.bundleComponentsCount > 1;
-		},
-
-		/**
-		 * aria-label / title for the chevron toggle. The label isn't shown
-		 * as visible text — only used by assistive tech and tooltips —
-		 * since the chevron itself mirrors the line-item-note pattern.
-		 */
-		get bundleComponentsToggleLabel() {
-			const { bundleComponentsExpanded } = getContext();
-			return bundleComponentsExpanded
-				? __('Hide bundle items', 'surecart')
-				: __('Show all bundle items', 'surecart');
-		},
-
-		/**
-		 * Tabindex for the bundle-components row wrapper — focusable only
-		 * when there's something to expand, so the whole line is clickable
-		 * with both mouse and keyboard (matches sc-product-line-item-note).
-		 */
-		get bundleComponentsRowTabindex() {
-			return state.hasBundleComponentsOverflow ? '0' : '-1';
+		get hasLineItemDetails() {
+			return state.hasBundleComponents || !!state.lineItemNote;
 		},
 
 		/**
@@ -273,14 +239,13 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * "× N" multiplier for a bundle component row.
+		 * "× N" multiplier for a bundle component row. A single unit (× 1) is
+		 * never shown — only quantities above one get the multiplier.
 		 */
 		get lineItemBundleComponentQty() {
-			const { bundle_component, showSingleQuantity = true } =
-				getContext();
+			const { bundle_component } = getContext();
 			const qty = Math.max(Number(bundle_component?.quantity) || 1, 1);
-			if (qty <= 1 && !showSingleQuantity) return '';
-			return `× ${qty}`;
+			return qty > 1 ? `× ${qty}` : '';
 		},
 
 		/**
@@ -617,35 +582,6 @@ const { state, actions } = store('surecart/checkout', {
 					actions.clearCheckouts();
 				}
 			}
-		},
-
-		/**
-		 * Flip the per-line-item collapse on the bundle components list.
-		 */
-		toggleBundleComponentsExpanded() {
-			const context = getContext();
-			context.bundleComponentsExpanded =
-				!context.bundleComponentsExpanded;
-		},
-
-		/**
-		 * Row-level handler — fires when the whole bundle-components row is
-		 * clicked or activated by keyboard (Enter/Space). Mirrors the note's
-		 * "click anywhere on the line" behavior. Skips when the event came
-		 * from inside the chevron button (which has its own handler) so we
-		 * don't toggle twice.
-		 */
-		toggleBundleComponentsExpandedFromRow(event) {
-			if (!state.hasBundleComponentsOverflow) return;
-			if (event?.type === 'keydown' && isNotKeySubmit(event)) return;
-			const fromToggle = event?.target?.closest?.(
-				'.sc-cart-line-item-bundle-components__toggle'
-			);
-			if (fromToggle) return;
-			if (event?.preventDefault) event.preventDefault();
-			const context = getContext();
-			context.bundleComponentsExpanded =
-				!context.bundleComponentsExpanded;
 		},
 
 		/**

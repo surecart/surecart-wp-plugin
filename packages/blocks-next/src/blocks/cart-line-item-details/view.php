@@ -1,0 +1,56 @@
+<div
+	data-wp-interactive='{ "namespace": "surecart/line-item-details" }'
+	<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => 'sc-cart-line-item-details',
+			)
+		)
+	);
+	?>
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			array(
+				'detailsExpanded' => (bool) ( $attributes['expanded'] ?? false ),
+				'showToggle'      => false,
+			)
+		)
+	);
+	?>
+	data-wp-run="callbacks.init"
+	data-wp-bind--hidden="surecart/checkout::!state.hasLineItemDetails"
+	data-wp-class--sc-cart-line-item-details--is-expanded="context.detailsExpanded"
+	data-wp-class--sc-cart-line-item-details--is-collapsible="context.showToggle"
+	data-wp-on--click="actions.toggleDetailsExpanded"
+	data-wp-on--keydown="actions.toggleDetailsExpanded"
+	data-wp-bind--role="state.role"
+	data-wp-bind--tabindex="state.tabindex"
+	data-wp-bind--aria-expanded="context.detailsExpanded"
+	aria-label="<?php esc_attr_e( 'Toggle line item details', 'surecart' ); ?>"
+>
+	<div class="sc-cart-line-item-details__content">
+		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	</div>
+
+	<span
+		class="sc-cart-line-item-details__toggle"
+		data-wp-bind--hidden="!context.showToggle"
+		data-wp-class--sc-cart-line-item-details__toggle--rotated="context.detailsExpanded"
+	>
+		<?php
+		echo wp_kses(
+			SureCart::svg()->get(
+				'chevron-down',
+				array(
+					'class'  => '',
+					'width'  => 16,
+					'height' => 16,
+				)
+			),
+			sc_allowed_svg_html()
+		);
+		?>
+	</span>
+</div>

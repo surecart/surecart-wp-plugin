@@ -1,0 +1,70 @@
+.sc-cart-line-item-details {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.25em;
+	background: transparent;
+	outline: none;
+	// Pin the line box to the child rows' size so the collapsed `1lh` clamp
+	// equals exactly one row — otherwise the inherited (larger) cart font makes
+	// `1lh` taller than the 14px rows and a sliver of the next line peeks
+	// through. A merchant font-size override (inline, from typography supports)
+	// still wins over this default.
+	font-size: var(--sc-font-size-small, 14px);
+	line-height: 1.4;
+
+	&[hidden] {
+		display: none !important;
+	}
+
+	// Cursor affordance only when there's something to expand — mirrors the
+	// note/bundle pattern (no hover/focus background on the row itself).
+	&--is-collapsible,
+	&--is-expanded {
+		cursor: pointer;
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		background: transparent;
+	}
+
+	&__content {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	// Collapsed: clamp the whole details region to its first line. `1lh`
+	// resolves to one line height of the container, so only the first row
+	// (first bundle item, or the note's first line) shows.
+	&:not(.sc-cart-line-item-details--is-expanded) &__content {
+		// `1.4em` ≈ one line (matches the 1.4 line-height); `1lh` is the
+		// precise value where supported and overrides the fallback.
+		max-height: 1.4em;
+		max-height: 1lh;
+		overflow: hidden;
+	}
+
+	&--is-expanded &__content {
+		max-height: none;
+		overflow: visible;
+	}
+
+	&__toggle {
+		flex: 0 0 auto;
+		align-self: flex-start;
+		display: inline-flex;
+		align-items: center;
+		color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+		transition: transform 0.2s ease, color 0.2s ease;
+		will-change: transform;
+
+		&[hidden] {
+			display: none !important;
+		}
+
+		&--rotated {
+			transform: rotate(180deg);
+		}
+	}
+}
