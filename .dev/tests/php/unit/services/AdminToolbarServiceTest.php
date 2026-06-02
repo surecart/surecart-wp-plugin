@@ -107,6 +107,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		// Mock URL service to handle the invoice URL creation.
 		$url_mock = \Mockery::mock();
 		$url_mock->shouldReceive('create')->with('invoices')->andReturn('http://example.com/invoices/create');
+		$url_mock->shouldReceive('edit')->with('bundle')->andReturn('http://example.com/bundle/edit');
 		\SureCart::alias('getUrl', function () use ($url_mock) {
 			return $url_mock;
 		});
