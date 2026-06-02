@@ -312,17 +312,26 @@ class ProductPageBlock {
 			return $from_url;
 		}
 
+		// Never seed an archived variant when a selectable one exists.
+		$selectable = array_values(
+			array_filter(
+				$variants,
+				fn( $variant ) => empty( $variant->archived )
+			)
+		);
+
 		if ( ! empty( $component->has_unlimited_stock ) ) {
-			return $variants[0];
+			return $selectable[0] ?? $variants[0];
 		}
 
-		foreach ( $variants as $variant ) {
-			if ( ( $variant->available_stock ?? 0 ) > 0 && empty( $variant->archived ) ) {
+		foreach ( $selectable as $variant ) {
+			if ( ( $variant->available_stock ?? 0 ) > 0 ) {
 				return $variant;
 			}
 		}
 
-		return $variants[0];
+		// Nothing in stock — prefer a non-archived variant, else the first.
+		return $selectable[0] ?? $variants[0];
 	}
 
 	/**
