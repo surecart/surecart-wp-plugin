@@ -35,20 +35,12 @@ class ProductBundleMigrationService extends VersionMigration {
 <!-- /wp:surecart/product-bundle-items -->';
 
 	/**
-	 * Cart line-item bundle components markup.
-	 *
-	 * @var string
-	 */
-	protected $cart_bundle_markup = '<!-- wp:surecart/cart-line-item-bundle-components {"style":{"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->';
-
-	/**
 	 * Run the migration.
 	 *
 	 * @return void
 	 */
 	public function run(): void {
 		$this->migrateProductTemplates();
-		$this->migrateCartTemplates();
 	}
 
 	/**
@@ -111,74 +103,6 @@ class ProductBundleMigrationService extends VersionMigration {
 			wp_update_post(
 				array(
 					'ID'           => $template->ID,
-					'post_content' => $new_content,
-				)
-			);
-		}
-	}
-
-	/**
-	 * Inject the cart line-item bundle components block into customized cart templates.
-	 *
-	 * Covers two storage locations:
-	 *   - wp_template_part with post_name 'cart' (newer installs).
-	 *   - sc_cart post type (legacy installs whose cart hasn't been moved yet).
-	 *
-	 * @return void
-	 */
-	protected function migrateCartTemplates(): void {
-		$cart_part_query = new \WP_Query(
-			array(
-				'post_type'           => 'wp_template_part',
-				'post_status'         => array( 'auto-draft', 'draft', 'publish' ),
-				'posts_per_page'      => -1,
-				'name'                => 'cart',
-				'lazy_load_term_meta' => false,
-			)
-		);
-
-		$sc_cart_query = new \WP_Query(
-			array(
-				'post_type'           => 'sc_cart',
-				'post_status'         => array( 'auto-draft', 'draft', 'publish' ),
-				'posts_per_page'      => -1,
-				'lazy_load_term_meta' => false,
-			)
-		);
-
-		$cart_posts = array_merge( $cart_part_query->posts ?? array(), $sc_cart_query->posts ?? array() );
-		if ( empty( $cart_posts ) ) {
-			return;
-		}
-
-		foreach ( $cart_posts as $cart_post ) {
-			if ( has_block( 'surecart/cart-line-item-bundle-components', $cart_post->post_content ) ) {
-				continue;
-			}
-
-			$anchor = $this->firstExistingAnchor(
-				$cart_post->post_content,
-				array(
-					'surecart/cart-line-item-note',
-					'surecart/cart-line-item-status',
-					'surecart/cart-line-item-quantity',
-					'surecart/cart-line-item-remove',
-				)
-			);
-
-			if ( ! $anchor ) {
-				continue;
-			}
-
-			$new_content = str_replace(
-				'<!-- wp:' . $anchor,
-				$this->cart_bundle_markup . PHP_EOL . '<!-- wp:' . $anchor,
-				$cart_post->post_content
-			);
-
-			wp_update_post(
-				array(
-					'ID'           => $cart_post->ID,
 					'post_content' => $new_content,
 				)
 			);
