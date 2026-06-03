@@ -63,6 +63,9 @@ jobs:
       - name: Build packages
         run: yarn bootstrap && yarn workspace @surecart/blocks-next build
 
+      - name: Build root webpack assets
+        run: yarn wp-scripts build
+
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
