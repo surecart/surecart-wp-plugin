@@ -11,21 +11,7 @@ import {
 	getActiveVariantCount,
 	getVariantOriginalId,
 } from './injectVariantRows';
-import VariantImageCell from './VariantImageCell';
-import VariantNameCell from './VariantNameCell';
-import VariantPriceCell from './VariantPriceCell';
-import VariantSkuCell from './VariantSkuCell';
-import VariantQuantityCell from './VariantQuantityCell';
-
-// field id → variant cell. Missing ids render an em dash on variants.
-const VARIANT_CELLS = {
-	media: VariantImageCell,
-	name: VariantNameCell,
-	display_name: VariantNameCell,
-	price: VariantPriceCell,
-	sku: VariantSkuCell,
-	quantity: VariantQuantityCell,
-};
+import VARIANT_CELLS from './cells';
 
 const ChevronToggle = ({ isExpanded, onToggle, label }) => (
 	<Button
@@ -187,7 +173,10 @@ const decorateForVariants = (field, { savingVariantIds }) => {
 	};
 };
 
-const compose = (...fns) => (input) => fns.reduce((acc, fn) => fn(acc), input);
+const compose =
+	(...fns) =>
+	(input) =>
+		fns.reduce((acc, fn) => fn(acc), input);
 
 const getDecorators = (field, ctx) => {
 	const { expandedIds, onToggle, savingVariantIds } = ctx;

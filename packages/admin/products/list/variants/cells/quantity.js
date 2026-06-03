@@ -1,4 +1,4 @@
-import StockCell from '../StockCell';
+import StockCell from '../../StockCell';
 
 export default ({ item }) => {
 	const tracked =

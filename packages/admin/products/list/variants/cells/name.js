@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { sprintf } from '@wordpress/i18n';
-import VariantThumbnail from './VariantThumbnail';
+import { __, sprintf } from '@wordpress/i18n';
+import VariantThumbnail from '../VariantThumbnail';
 
 // "Red / L" from option_1..option_3, fallback "Variant #N" for drafts.
 const formatLabel = (variant) => {
