@@ -57,4 +57,35 @@ describe('sc-product-line-item', () => {
 
     expect(page.root.shadowRoot.querySelector('.line-item-details')).toBeNull();
   });
+
+  it('omits the meta row when there is no description or trial/fees content', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item></sc-product-line-item>`,
+    });
+    await page.waitForChanges();
+
+    expect(page.root.shadowRoot.querySelector('[part="description"]')).toBeNull();
+    expect(page.root.shadowRoot.querySelector('[part="trial-fees"]')).toBeNull();
+  });
+
+  it('renders the meta row when variant or trial content is present', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item></sc-product-line-item>`,
+    });
+
+    page.root.variant = 'Large / Blue';
+    await page.waitForChanges();
+
+    expect(page.root.shadowRoot.querySelector('[part="description"]')?.textContent).toContain('Large / Blue');
+    expect(page.root.shadowRoot.querySelector('[part="trial-fees"]')).toBeTruthy();
+
+    page.root.variant = '';
+    page.root.trial = '7-day free trial';
+    await page.waitForChanges();
+
+    expect(page.root.shadowRoot.querySelector('[part="description"]')).toBeTruthy();
+    expect(page.root.shadowRoot.querySelector('[part="trial-fees"]')?.textContent).toContain('7-day free trial');
+  });
 });

@@ -217,6 +217,9 @@ export class ScProductLineItem {
 
   render() {
     const isImageFallback = this.image?.type === 'fallback';
+    const hasDescriptionDetails = !!this.variant || !!this.price || !!this.sku || !!this.purchasableStatus;
+    const hasTrialFeesDetails = !!this.trial || (this.fees || []).some(fee => fee?.display_amount || fee?.description);
+    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails;
 
     return (
       <div class="base" part="base">
@@ -250,29 +253,31 @@ export class ScProductLineItem {
               </div>
             </div>
 
-            <div class="item__row">
-              <div class="item__description" part="description">
-                {this.variant && <div>{this.variant}</div>}
-                {this.price && <div>{this.price}</div>}
-                {this.sku && (
-                  <div>
-                    {__('SKU:', 'surecart')} {this.sku}
-                  </div>
-                )}
-                {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-              </div>
-
-              <div class="item__description" part="trial-fees">
-                {!!this.trial && <div>{this.trial}</div>}
-                {(this.fees || []).map(fee => {
-                  return (
+            {hasMetaRow && (
+              <div class="item__row">
+                <div class="item__description" part="description">
+                  {this.variant && <div>{this.variant}</div>}
+                  {this.price && <div>{this.price}</div>}
+                  {this.sku && (
                     <div>
-                      {fee?.display_amount} {fee?.description}
+                      {__('SKU:', 'surecart')} {this.sku}
                     </div>
-                  );
-                })}
+                  )}
+                  {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                </div>
+
+                <div class="item__description" part="trial-fees">
+                  {!!this.trial && <div>{this.trial}</div>}
+                  {(this.fees || []).map(fee => {
+                    return (
+                      <div>
+                        {fee?.display_amount} {fee?.description}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {this.renderDetails()}
 
