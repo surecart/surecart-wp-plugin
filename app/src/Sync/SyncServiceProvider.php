@@ -2,7 +2,12 @@
 
 namespace SureCart\Sync;
 
+use SureCart\Controllers\Admin\Products\ProductsController;
 use SureCart\Sync\CustomerSyncService;
+use SureCart\Sync\WooCommerce\WooCommerceImportJob;
+use SureCart\Sync\WooCommerce\WooCommerceImportCleanupService;
+use SureCart\Sync\WooCommerce\WooCommerceImportService;
+use SureCart\Sync\WooCommerce\WooCommerceImportTask;
 use SureCart\Sync\PostSyncService;
 use SureCart\Sync\ProductSyncService;
 use SureCart\Sync\Jobs\Cleanup\CollectionsCleanupJob;
@@ -34,12 +39,16 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		 */
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
+		// Import state tracker — reusable for future import types (Shopify, EDD, etc.).
+		$container['surecart.sync.import_state.woo'] = fn () => new ImportState( 'woo' );
+
 		/**
 		 * Async tasks. These handle scheduled tasks.
 		 */
 		$container['surecart.tasks.product.sync']       = fn () => new ProductSyncTask();
 		$container['surecart.tasks.product.cleanup']    = fn () => new ProductCleanupTask();
 		$container['surecart.tasks.collection.cleanup'] = fn () => new CollectionCleanupTask();
+		$container['surecart.tasks.woo_import']         = fn ( $c ) => new WooCommerceImportTask( $c['surecart.sync.import_state.woo'] );
 
 		/**
 		 * Jobs. These schedule the async tasks.
@@ -50,6 +59,7 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.jobs.cleanup.collections'] = fn() => new CollectionsCleanupJob( $container['surecart.tasks.collection.cleanup'] );
 		$container['surecart.jobs.cleanup.products']    = fn() => ( new ProductsCleanupJob( $container['surecart.tasks.product.cleanup'] ) )->setNext( $container['surecart.jobs.cleanup.collections'] );
 		$container['surecart.jobs.sync.products']       = fn() => ( new ProductsSyncJob( $container['surecart.tasks.product.sync'] ) )->setNext( $container['surecart.jobs.cleanup.products'] );
+		$container['surecart.jobs.woo_import']          = fn() => new WooCommerceImportJob( $container['surecart.tasks.woo_import'] );
 
 		/**
 		 * Services
@@ -60,8 +70,17 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.sync.store']                = fn () => new StoreSyncService();
 		$container['surecart.process.product_post.sync'] = fn () => new PostSyncService();
 		$container['surecart.sync.customers']            = fn () => new CustomerSyncService();
+		$container['surecart.sync.woocommerce_products'] = fn ( $c ) => new WooCommerceImportService( $app, $c['surecart.sync.import_state.woo'] );
+		$container['surecart.sync.woo_import_cleanup']  = fn () => new WooCommerceImportCleanupService();
 		$container['surecart.sync.batch']                = fn () => new BatchCheckService();
-		$container['surecart.sync.content']              = fn () => new ContentSyncService( $app );
+
+		$container['surecart.sync.content'] = fn () => new ContentSyncService( $app );
+
+		// Admin ProductsController needs ImportState; GenericFactory uses new Class() unless FQCN is bound.
+		// Handler passes namespace+class with a leading "\" (see admin routes setNamespace); ::class has none — register both keys.
+		$products_controller_factory = fn ( $c ) => new ProductsController( $c['surecart.sync.import_state.woo'] );
+		$container[ ProductsController::class ] = $products_controller_factory;
+		$container[ '\\' . ProductsController::class ] = $products_controller_factory;
 
 		// Alias the sync service.
 		$app->alias( 'sync', 'surecart.sync' );
@@ -78,10 +97,13 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.jobs.cleanup.collections']->bootstrap();
 		$container['surecart.jobs.cleanup.products']->bootstrap();
 		$container['surecart.jobs.sync.products']->bootstrap();
+		$container['surecart.jobs.woo_import']->bootstrap();
 
 		// bootstrap services.
 		$container['surecart.sync.products']->bootstrap();
 		$container['surecart.sync.customers']->bootstrap();
+		$container['surecart.sync.woocommerce_products']->bootstrap();
+		$container['surecart.sync.woo_import_cleanup']->bootstrap();
 		$container['surecart.sync.store']->bootstrap();
 		$container['surecart.sync.content']->bootstrap();
 
@@ -89,5 +111,6 @@ class SyncServiceProvider implements ServiceProviderInterface {
 		$container['surecart.tasks.product.sync']->bootstrap();
 		$container['surecart.tasks.product.cleanup']->bootstrap();
 		$container['surecart.tasks.collection.cleanup']->bootstrap();
+		$container['surecart.tasks.woo_import']->bootstrap();
 	}
 }

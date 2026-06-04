@@ -53,6 +53,15 @@ class SyncService {
 	}
 
 	/**
+	 * Get the woocommerce products import service.
+	 *
+	 * @return \SureCart\Sync\WooCommerce\WooCommerceImportService
+	 */
+	public function woocommerce_products() {
+		return $this->app->resolve( 'surecart.sync.woocommerce_products' );
+	}
+
+	/**
 	 * Get the store sync service.
 	 *
 	 * @return StoreSyncService

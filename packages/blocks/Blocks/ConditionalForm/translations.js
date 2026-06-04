@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 export const translations = {
 	products: __('Product(s)', 'surecart'),
+	prices: __('Price(s)', 'surecart'),
 	total: __('Total', 'surecart'),
 	coupons: __('Coupon(s)', 'surecart'),
 	processors: __('Processor', 'surecart'),

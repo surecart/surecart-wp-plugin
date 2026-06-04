@@ -27,10 +27,16 @@ export default ({ metadata, title, loading }) => {
 				css={css`
 					display: grid;
 					gap: 0.5em;
+					min-width: 0;
 				`}
 			>
 				{Object.keys(metadata).map((key) => (
-					<div key={key}>
+					<div
+						key={key}
+						css={css`
+							min-width: 0;
+						`}
+					>
 						<ScText
 							tag="h3"
 							style={{
@@ -41,7 +47,13 @@ export default ({ metadata, title, loading }) => {
 							{key.replaceAll('_', ' ')}
 						</ScText>
 
-						<div>{metadata[key]}</div>
+						<div
+							css={css`
+								overflow-wrap: break-word;
+							`}
+						>
+							{metadata[key]}
+						</div>
 					</div>
 				))}
 			</div>

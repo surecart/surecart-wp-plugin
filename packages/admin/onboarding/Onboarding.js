@@ -17,6 +17,7 @@ import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
 import ConfirmStoreEmail from './components/ConfirmStoreEmail';
+import { IMPORT_WOO_PRODUCTS_TEMPLATE } from './constants';
 import { ScIcon, ScButton } from '@surecart/components-react';
 import Connect from './components/Connect';
 import ConnectDone from './components/ConnectDone';
@@ -87,7 +88,9 @@ export default () => {
 				{
 					account_currency: accountCurrency,
 					email,
-					seed: !!selectedTemplate,
+					seed: !!selectedTemplate && selectedTemplate !== IMPORT_WOO_PRODUCTS_TEMPLATE,
+					import_woocommerce_products:
+						selectedTemplate === IMPORT_WOO_PRODUCTS_TEMPLATE,
 				},
 				{
 					throwOnError: true,
@@ -109,10 +112,16 @@ export default () => {
 				return;
 			}
 
-			// check seed status for up to 1 minute.
+			// Skip polling for WooCommerce import — it's a background job.
+			if (selectedTemplate === IMPORT_WOO_PRODUCTS_TEMPLATE) {
+				handleStepChange('forward');
+				return;
+			}
+
+			// check seed status for up to 1 minute (only for demo seed templates).
 			let hasSeeded = false;
 			let attempts = 0;
-			const maxAttempts = 12; // Example: max 1 minute wait if seeded_at is not set.
+			const maxAttempts = 12;
 			while (!hasSeeded && attempts < maxAttempts) {
 				try {
 					const { seeded_at } = await apiFetch({
@@ -128,9 +137,8 @@ export default () => {
 						);
 						attempts++;
 					}
-				} catch (error) {
-					console.error('Error fetching API:', error);
-					// Optionally, wait before retrying or break out of the loop
+				} catch (pollError) {
+					console.error('Error fetching API:', pollError);
 					await new Promise((resolve) => setTimeout(resolve, 3000));
 					attempts++;
 				}
@@ -138,11 +146,10 @@ export default () => {
 
 			if (!hasSeeded) {
 				createErrorNotice(
-					error?.message ||
-						__(
-							'Store was created, but seeding of new products failed.',
-							'surecart'
-						),
+					__(
+						'Store was created, but seeding of new products failed.',
+						'surecart'
+					),
 					{ type: 'snackbar' }
 				);
 			}
@@ -281,7 +288,7 @@ export default () => {
 			CONFETTI_DURATION
 		);
 
-		() => {
+		return () => {
 			clearInterval(confettiIntervalId);
 			clearTimeout(confettiTimerId);
 		};

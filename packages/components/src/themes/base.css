@@ -468,6 +468,9 @@ sc-checkout [hidden] {
 
   /** Selected Price **/
   --sc-selected-price-color: var(--sc-color-gray-50);
+
+  /** Link buttons **/
+  --sc-button-link-color: var(--sc-color-gray-300);
 }
 
 /* Avatar */
@@ -744,7 +747,19 @@ sc-checkout [hidden] {
 .surecart-theme-dark entry-title,
 .surecart-theme-dark sc-toggle,
 .surecart-theme-dark sc-tab-group,
-.surecart-theme-dark sc-login-form {
+.surecart-theme-dark sc-login-form,
+.surecart-theme-dark sc-dialog,
+.surecart-theme-dark sc-cancel-dialog,
+.surecart-theme-dark sc-cancel-survey,
+.surecart-theme-dark sc-cancel-discount,
+.surecart-theme-dark sc-subscription-cancel,
+.surecart-theme-dark sc-subscription,
+.surecart-theme-dark sc-subscriptions-list,
+.surecart-theme-dark sc-subscription-switch,
+.surecart-theme-dark sc-subscription-reactivate,
+.surecart-theme-dark sc-subscription-details,
+.surecart-theme-dark sc-subscription-next-payment,
+.surecart-theme-dark sc-subscription-payment-method {
   color: var(--sc-color-gray-300);
 }
 

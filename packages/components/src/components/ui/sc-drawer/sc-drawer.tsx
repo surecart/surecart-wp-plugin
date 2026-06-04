@@ -90,12 +90,16 @@ export class ScDrawer {
     this.open = false;
   }
 
+  private getDirection(): 'ltr' | 'rtl' {
+    return getComputedStyle(this.el).direction === 'rtl' ? 'rtl' : 'ltr';
+  }
+
   @Method()
   async requestClose(source: 'close-button' | 'keyboard' | 'overlay' | 'method' = 'method') {
     const slRequestClose = this.scRequestClose.emit(source);
 
     if (slRequestClose.defaultPrevented) {
-      const animation = getAnimation(this.el, 'drawer.denyClose');
+      const animation = getAnimation(this.el, 'drawer.denyClose', { dir: this.getDirection() });
       animateTo(this.panel, animation.keyframes, animation.options);
       return;
     }
@@ -154,8 +158,9 @@ export class ScDrawer {
         }
       });
 
-      const panelAnimation = getAnimation(this.el, `drawer.show${this.placement.charAt(0).toUpperCase() + this.placement.slice(1)}`);
-      const overlayAnimation = getAnimation(this.el, 'drawer.overlay.show');
+      const dir = this.getDirection();
+      const panelAnimation = getAnimation(this.el, `drawer.show${this.placement.charAt(0).toUpperCase() + this.placement.slice(1)}`, { dir });
+      const overlayAnimation = getAnimation(this.el, 'drawer.overlay.show', { dir });
       await Promise.all([animateTo(this.panel, panelAnimation.keyframes, panelAnimation.options), animateTo(this.overlay, overlayAnimation.keyframes, overlayAnimation.options)]);
 
       this.scAfterShow.emit();
@@ -165,8 +170,9 @@ export class ScDrawer {
       this.unLockBodyScrolling();
 
       await Promise.all([stopAnimations(this.drawer), stopAnimations(this.overlay)]);
-      const panelAnimation = getAnimation(this.el, `drawer.hide${this.placement.charAt(0).toUpperCase() + this.placement.slice(1)}`);
-      const overlayAnimation = getAnimation(this.el, 'drawer.overlay.hide');
+      const dir = this.getDirection();
+      const panelAnimation = getAnimation(this.el, `drawer.hide${this.placement.charAt(0).toUpperCase() + this.placement.slice(1)}`, { dir });
+      const overlayAnimation = getAnimation(this.el, 'drawer.overlay.hide', { dir });
       await Promise.all([animateTo(this.panel, panelAnimation.keyframes, panelAnimation.options), animateTo(this.overlay, overlayAnimation.keyframes, overlayAnimation.options)]);
 
       this.drawer.hidden = true;
@@ -266,10 +272,15 @@ setDefaultAnimation('drawer.hideTop', {
   options: { duration: 250, easing: 'ease' },
 });
 
-// End
+// End — in LTR the panel rests on the right and slides in from the right (translateX 100%). In RTL the panel rests on
+// the left (because `inset-inline-end` flips), so it must slide in from the left (translateX -100%).
 setDefaultAnimation('drawer.showEnd', {
   keyframes: [
     { opacity: 0, transform: 'translateX(100%)' },
+    { opacity: 1, transform: 'translateX(0)' },
+  ],
+  rtlKeyframes: [
+    { opacity: 0, transform: 'translateX(-100%)' },
     { opacity: 1, transform: 'translateX(0)' },
   ],
   options: { duration: 250, easing: 'ease' },
@@ -279,6 +290,10 @@ setDefaultAnimation('drawer.hideEnd', {
   keyframes: [
     { opacity: 1, transform: 'translateX(0)' },
     { opacity: 0, transform: 'translateX(100%)' },
+  ],
+  rtlKeyframes: [
+    { opacity: 1, transform: 'translateX(0)' },
+    { opacity: 0, transform: 'translateX(-100%)' },
   ],
   options: { duration: 250, easing: 'ease' },
 });
@@ -300,10 +315,15 @@ setDefaultAnimation('drawer.hideBottom', {
   options: { duration: 250, easing: 'ease' },
 });
 
-// Start
+// Start — mirrors End. In LTR slides in from the left; in RTL the panel rests on the right (because `inset-inline-start`
+// flips), so it must slide in from the right.
 setDefaultAnimation('drawer.showStart', {
   keyframes: [
     { opacity: 0, transform: 'translateX(-100%)' },
+    { opacity: 1, transform: 'translateX(0)' },
+  ],
+  rtlKeyframes: [
+    { opacity: 0, transform: 'translateX(100%)' },
     { opacity: 1, transform: 'translateX(0)' },
   ],
   options: { duration: 250, easing: 'ease' },
@@ -313,6 +333,10 @@ setDefaultAnimation('drawer.hideStart', {
   keyframes: [
     { opacity: 1, transform: 'translateX(0)' },
     { opacity: 0, transform: 'translateX(-100%)' },
+  ],
+  rtlKeyframes: [
+    { opacity: 1, transform: 'translateX(0)' },
+    { opacity: 0, transform: 'translateX(100%)' },
   ],
   options: { duration: 250, easing: 'ease' },
 });

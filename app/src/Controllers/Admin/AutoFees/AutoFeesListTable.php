@@ -174,11 +174,12 @@ class AutoFeesListTable extends ListTable {
 				'nonce'  => wp_create_nonce( 'archive_dynamic_price' ),
 				'id'     => $auto_fees->id,
 				'status' => 'all',
-			]
+			],
+			\SureCart::getUrl()->index( 'auto-fees' )
 		);
 		?>
 		<sc-switch checked="<?php echo esc_attr( $auto_fees->enabled ) ? 'true' : 'false'; ?>"
-			onClick="window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $auto_fees->id ); ?>').style.display = '';"></sc-switch>
+			onClick="window.location.assign('<?php echo esc_url( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $auto_fees->id ); ?>').style.display = '';"></sc-switch>
 		<sc-block-ui id="loading-<?php echo esc_attr( $auto_fees->id ); ?>" spinner style="display: none;"></sc-block-ui>
 		<?php
 	}
@@ -191,7 +192,7 @@ class AutoFeesListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $auto_fees ) {
-		return $auto_fees->name;
+		return esc_html( $auto_fees->name );
 	}
 
 	/**

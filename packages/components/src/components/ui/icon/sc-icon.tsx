@@ -1,5 +1,5 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import { getIconLibrary } from './library';
+import { getIconLibrary, watchIcon, unwatchIcon } from './library';
 import { requestIcon } from './request';
 import { __ } from '@wordpress/i18n';
 
@@ -41,6 +41,9 @@ export class ScIcon {
   /** The name of a registered custom icon library. */
   @Prop() library = 'default';
 
+  /** Mutate the icon */
+  @Prop() mutate = true;
+
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
@@ -50,7 +53,13 @@ export class ScIcon {
   }
 
   componentWillLoad() {
+    // Get redrawn if our library is registered after we mount.
+    watchIcon(this);
     this.setIcon();
+  }
+
+  disconnectedCallback() {
+    unwatchIcon(this);
   }
 
   getLabel() {
@@ -83,7 +92,7 @@ export class ScIcon {
           const svgEl = doc.body.querySelector('svg');
 
           if (svgEl) {
-            if (library && library.mutator) {
+            if (library && library.mutator && this.mutate) {
               library.mutator(svgEl);
             }
 

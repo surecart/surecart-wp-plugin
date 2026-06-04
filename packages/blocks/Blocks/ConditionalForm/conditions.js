@@ -8,6 +8,7 @@ import {
 
 // selectors.
 import SelectProducts from './selectors/SelectProducts';
+import SelectPrices from './selectors/SelectPrices';
 import SelectCoupons from './selectors/SelectCoupons';
 import SelectProcessors from './selectors/SelectProcessors';
 import SelectConditions from './selectors/SelectConditions';
@@ -30,6 +31,16 @@ const RULE_SETTINGS_FIELDS = {
 			{
 				type: 'products',
 				placeholder: __('Search for products...', 'surecart'),
+				isMulti: true,
+			},
+		],
+	},
+	prices: {
+		operatorType: 'string',
+		fields: [
+			{
+				type: 'prices',
+				placeholder: __('Search for prices...', 'surecart'),
 				isMulti: true,
 			},
 		],
@@ -111,6 +122,21 @@ function Conditions(props) {
 					case 'products':
 						return (
 							<SelectProducts
+								value={value}
+								placeholder={field.placeholder}
+								onChange={(selection) => {
+									updateConditionOptionInRuleGroup(
+										ruleIndex,
+										selection,
+										'value'
+									);
+								}}
+							/>
+						);
+
+					case 'prices':
+						return (
+							<SelectPrices
 								value={value}
 								placeholder={field.placeholder}
 								onChange={(selection) => {

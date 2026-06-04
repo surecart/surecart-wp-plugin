@@ -1574,6 +1574,10 @@ export namespace Components {
          */
         "library": string;
         /**
+          * Mutate the icon
+         */
+        "mutate": boolean;
+        /**
           * The name of the icon to draw.
          */
         "name": string;
@@ -8883,6 +8887,10 @@ declare namespace LocalJSX {
           * The name of a registered custom icon library.
          */
         "library"?: string;
+        /**
+          * Mutate the icon
+         */
+        "mutate"?: boolean;
         /**
           * The name of the icon to draw.
          */

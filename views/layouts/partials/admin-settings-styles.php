@@ -44,13 +44,11 @@
 		content: " ";
 		height: 100%;
 		position: fixed;
-		left: 0;
-		top: 0;
-		-webkit-transform-origin: right;
-		-ms-transform-origin: right;
-		transform-origin: right;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		transform-origin: inline-start;
 		width: 450px;
-		border-right: 1px solid var(--sc-color-gray-200);
+		border-inline-end: 1px solid var(--sc-color-gray-200);
 		z-index: -1;
 	}
 

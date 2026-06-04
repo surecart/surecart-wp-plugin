@@ -214,6 +214,7 @@ class ProductPageBlock {
 							'display_amount',
 							'available_stock',
 							'line_item_image',
+							'has_unlimited_stock',
 						]
 					),
 					$product->variants->data ?? array()
@@ -296,6 +297,7 @@ class ProductPageBlock {
 						'amount',
 						'display_amount',
 						'available_stock',
+						'has_unlimited_stock',
 					]
 				) : [],
 				'isOptionUnavailable'   => function () {
@@ -306,65 +308,24 @@ class ProductPageBlock {
 					$variant_values = $context['variantValues'];
 					$option_number  = $context['optionNumber'];
 
-					// stock is not enabled.
-					if ( $product['has_unlimited_stock'] ) {
-						return false;
-					}
-
 					if ( 1 === $option_number ) {
-						$items         = array_filter(
-							$variants ?? [],
-							function ( $variant ) use ( $option ) {
-								return $variant['option_1'] === $option;
-							}
-						);
-						$highest_stock = max(
-							array_map(
-								function ( $item ) {
-										return $item['available_stock'];
-								},
-								$items ?? []
-							)
-						);
-
-						return $highest_stock <= 0;
+						$items = array_filter( $variants ?? [], fn( $v ) => $v['option_1'] === $option );
+						return self::isVariantGroupSoldOut( $items, $product );
 					}
 
 					if ( 2 === $option_number ) {
-						$items         = array_filter(
+						$items = array_filter(
 							$variants ?? [],
-							function ( $variant ) use ( $variant_values, $option ) {
-								return $variant['option_1'] === $variant_values['option_1'] && $variant['option_2'] === $option;
-							}
+							fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $option
 						);
-						$highest_stock = max(
-							array_map(
-								function ( $item ) {
-									return $item['available_stock'];
-								},
-								$items
-							)
-						);
-						return $highest_stock <= 0;
+						return self::isVariantGroupSoldOut( $items, $product );
 					}
 
 					$items = array_filter(
 						$variants ?? [],
-						function ( $variant ) use ( $variant_values, $option ) {
-							return $variant['option_1'] === $variant_values['option_1'] && $variant['option_2'] === $variant_values['option_2'] && $variant['option_3'] === $option;
-						}
+						fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $variant_values['option_2'] && $v['option_3'] === $option
 					);
-
-					$highest_stock = max(
-						array_map(
-							function ( $item ) {
-								return $item['available_stock'];
-							},
-							$items
-						)
-					);
-
-					return $highest_stock <= 0;
+					return self::isVariantGroupSoldOut( $items, $product );
 				},
 				'isOptionValueSelected' => function () {
 					$context = wp_interactivity_get_context();
@@ -393,13 +354,17 @@ class ProductPageBlock {
 					if ( empty( $product ) ) {
 						return false;
 					}
+					$variant = $state['selectedVariant'] ?? [];
+					if ( ! empty( $variant['id'] ) ) {
+						return self::effectiveVariantStock( $variant, $product ) <= 0;
+					}
 					if ( $product['has_unlimited_stock'] ) {
 						return false;
 					}
-					if ( ! empty( $context['variants'] ) && empty( $state['selectedVariant'] ) ) {
+					if ( ! empty( $context['variants'] ) && empty( $variant ) ) {
 						return false;
 					}
-					return ! empty( $state['selectedVariant']['id'] ) ? $state['selectedVariant']['available_stock'] <= 0 : $product['available_stock'] <= 0;
+					return $product['available_stock'] <= 0;
 				},
 				'isUnavailable'         => function () {
 					$context = wp_interactivity_get_context();
@@ -440,5 +405,37 @@ class ProductPageBlock {
 				},
 			]
 		);
+	}
+
+	/**
+	 * Check if a filtered group of variants is sold out.
+	 * Returns false (not sold out) when the group is empty — no matching variants means nothing to sell out.
+	 *
+	 * @param array $items   Filtered variant data arrays.
+	 * @param array $product Parent product data for fallback.
+	 * @return bool
+	 */
+	private static function isVariantGroupSoldOut( array $items, array $product ): bool {
+		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) );
+		if ( empty( $stocks ) ) {
+			return false;
+		}
+		return max( $stocks ) <= 0;
+	}
+
+	/**
+	 * Get the effective available stock for a variant, respecting variant-level stock overrides.
+	 * Returns PHP_INT_MAX when stock is not tracked, it would be then unlimited stock.
+	 *
+	 * @param array $item    Variant data.
+	 * @param array $product Parent product data for fallback.
+	 * @return int
+	 */
+	private static function effectiveVariantStock( array $item, array $product ): int {
+		$has_unlimited_stock = $item['has_unlimited_stock'] ?? $product['has_unlimited_stock'] ?? false;
+		if ( $has_unlimited_stock ) {
+			return PHP_INT_MAX;
+		}
+		return (int) $item['available_stock'];
 	}
 }

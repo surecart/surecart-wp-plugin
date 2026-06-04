@@ -166,10 +166,14 @@ class RegisteredWebhook extends Webhook {
 	/**
 	 * Get the signing secret.
 	 *
+	 * Returns an empty string when no webhook is registered — avoids null
+	 * dereference on PHP 8+ and ensures verification fails closed (CVE-2026-7655).
+	 *
 	 * @return string
 	 */
 	protected function getSigningSecret() {
-		return $this->registration()->get()->signing_secret;
+		$webhook = $this->registration()->get();
+		return ! empty( $webhook->signing_secret ) ? (string) $webhook->signing_secret : '';
 	}
 
 	/**

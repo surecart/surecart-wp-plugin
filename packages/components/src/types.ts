@@ -1,10 +1,16 @@
 import { ObservableMap } from '@stencil/store';
-import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
+
+export type IconLibraryResolver = (name: string) => string;
+export type IconLibraryMutator = (svg: SVGElement) => void;
+
+export interface IconLibraryOptions {
+  resolver: IconLibraryResolver;
+  mutator?: IconLibraryMutator;
+}
 
 declare global {
   interface Window {
-    registry: IconLibrary[];
     grecaptcha: any;
     surecart?: {
       product?: {
@@ -38,7 +44,7 @@ declare global {
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
-    registerSureCartIconLibrary: (name: string, options: { resolver: IconLibraryResolver; mutator?: IconLibraryMutator }) => void;
+    registerSureCartIconLibrary: (name: string, options: IconLibraryOptions) => void;
     scIcons: { path: string };
     scData: {
       cdn_root: string;
@@ -80,6 +86,7 @@ declare global {
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
+    scIconLibraries: IconLibrary[];
   }
 }
 
@@ -92,10 +99,8 @@ interface Model {
   updated_at: number;
 }
 
-export interface IconLibrary {
+export interface IconLibrary extends IconLibraryOptions {
   name: string;
-  resolver: IconLibraryResolver;
-  mutator?: IconLibraryMutator;
 }
 export interface ChoiceItem extends Object {
   value: string;
@@ -367,6 +372,7 @@ export interface Variant {
   product: string | Product;
   sku?: string | null;
   display_amount?: string;
+  has_unlimited_stock?: boolean | null;
   downloads_enabled?: boolean | null;
   current_release_download?: string | Download | null;
   downloads?: {
@@ -435,6 +441,7 @@ export interface Product extends Object {
   };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
+  has_unlimited_stock: boolean;
   stock: number;
   available_stock: number;
   held_stock: number;
@@ -1350,7 +1357,7 @@ export type TaxZones = {
   [key in 'ca_gst' | 'au_abn' | 'gb_vat' | 'eu_vat' | 'other']: TaxZone;
 };
 
-export type RuleName = 'total' | 'coupons' | 'products' | 'shipping_country' | 'billing_country' | 'processors';
+export type RuleName = 'total' | 'coupons' | 'products' | 'prices' | 'shipping_country' | 'billing_country' | 'processors';
 export type ArrayOperators = 'all' | 'any' | 'none' | 'exist' | 'not_exist';
 export type NumberOperators = '==' | '!=' | '<' | '>' | '<=' | '>=';
 export interface RuleGroup {

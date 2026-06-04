@@ -6,6 +6,7 @@ export default ({ onChange, ...props }) => {
 		<ScSelect
 			choices={createOptions([
 				'products',
+				'prices',
 				'total',
 				'coupons',
 				'processors',
