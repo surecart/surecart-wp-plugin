@@ -458,14 +458,6 @@ class VariantPills extends \Elementor\Widget_Base {
 						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Green', 'surecart' ); ?></div>
 					</div>
 				</div>
-				<div class="wp-block-surecart-product-variant-pills">
-					<label class="sc-form-label"><?php echo esc_html__( 'Size', 'surecart' ); ?></label>
-					<div class="sc-pill-option__wrapper">
-						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Small', 'surecart' ); ?></div>
-						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Medium', 'surecart' ); ?></div>
-						<div class="sc-pill-option__button wp-block-surecart-product-variant-pill"><?php echo esc_html__( 'Large', 'surecart' ); ?></div>
-					</div>
-				</div>
 			</div>
 		<?php
 	}
