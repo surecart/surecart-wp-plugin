@@ -1,5 +1,8 @@
 .sc-bundle-item {
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--sc-spacing-medium, 1rem);
 
 	// Tight stack: label margin matches .sc-form-label so the row reads
 	// like the storefront Variants Selector.
