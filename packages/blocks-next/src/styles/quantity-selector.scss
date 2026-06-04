@@ -2,6 +2,7 @@
 	width: var(--sc-quantity-select-width, 100px);
 	height: var(--sc-quantity-control-height, var(--sc-input-height-small));
 	border-radius: var(--sc-input-border-radius-small);
+	background-color: inherit;
 
 	&.sc-input-group-sm {
 		width: var(--sc-quantity-select-width-small, 85px);

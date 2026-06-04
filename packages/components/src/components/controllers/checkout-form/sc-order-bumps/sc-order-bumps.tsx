@@ -10,8 +10,10 @@ import { Price, Product } from '../../../../types';
 })
 export class ScOrderBumps {
   @Prop() label: string;
-  @Prop() showControl: boolean;
   @Prop() help: string;
+
+  /** Should we show the controls (classic design) */
+  @Prop() showControl: boolean;
 
   render() {
     const bumps = (checkoutState?.checkout?.recommended_bumps?.data || []).filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0); // exclude variants for now.;
@@ -24,7 +26,7 @@ export class ScOrderBumps {
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
           {bumps.map(bump => (
-            <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
+            <sc-order-bump key={bump?.id} bump={bump} showControl={this.showControl} exportparts="choice__base, choice__content, base-content, image, text, title, cta, amount, price, tag, description, button, base, control, checked-icon" />
           ))}
         </div>
       </sc-form-control>

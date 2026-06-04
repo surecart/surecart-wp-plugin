@@ -1968,13 +1968,16 @@ export namespace Components {
          */
         "bump": Bump;
         /**
-          * Should we show the controls
+          * Should we show the controls (classic design)
          */
         "showControl": boolean;
     }
     interface ScOrderBumps {
         "help": string;
         "label": string;
+        /**
+          * Should we show the controls (classic design)
+         */
         "showControl": boolean;
     }
     interface ScOrderConfirmComponentsValidator {
@@ -9338,13 +9341,16 @@ declare namespace LocalJSX {
          */
         "bump"?: Bump;
         /**
-          * Should we show the controls
+          * Should we show the controls (classic design)
          */
         "showControl"?: boolean;
     }
     interface ScOrderBumps {
         "help"?: string;
         "label"?: string;
+        /**
+          * Should we show the controls (classic design)
+         */
         "showControl"?: boolean;
     }
     interface ScOrderConfirmComponentsValidator {

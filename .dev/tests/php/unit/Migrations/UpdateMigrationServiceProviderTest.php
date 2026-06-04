@@ -17,6 +17,10 @@ class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
 				\SureCart\Account\AccountServiceProvider::class,
 			]
 		], false);
+
+		// Clean up order bump design options.
+		delete_option( 'surecart_order_bump_design' );
+		delete_option( 'surecart_migration_version' );
 	}
 
 	public function test_has_default_template_cart(){
@@ -61,5 +65,42 @@ class UpdateMigrationServiceProviderTest extends \WP_UnitTestCase {
 				'fields'      => 'ids',
 			)
 		));
+	}
+
+	/**
+	 * @group order-bump-design
+	 */
+	public function test_order_bump_design_set_to_classic_for_existing_install() {
+		update_option( 'surecart_migration_version', '2.0.0' );
+
+		$provider = new UpdateMigrationServiceProvider();
+		$provider->handleOrderBumpDesignMigration();
+
+		$this->assertSame( 'classic', get_option( 'surecart_order_bump_design' ) );
+	}
+
+	/**
+	 * @group order-bump-design
+	 */
+	public function test_order_bump_design_not_set_for_fresh_install() {
+		// migration_version defaults to '0.0.0' when not set.
+		$provider = new UpdateMigrationServiceProvider();
+		$provider->handleOrderBumpDesignMigration();
+
+		$this->assertFalse( get_option( 'surecart_order_bump_design' ) );
+	}
+
+	/**
+	 * @group order-bump-design
+	 */
+	public function test_order_bump_design_not_overwritten_when_already_set() {
+		update_option( 'surecart_migration_version', '2.0.0' );
+		add_option( 'surecart_order_bump_design', 'modern' );
+
+		$provider = new UpdateMigrationServiceProvider();
+		$provider->handleOrderBumpDesignMigration();
+
+		// add_option() is a no-op when the option already exists.
+		$this->assertSame( 'modern', get_option( 'surecart_order_bump_design' ) );
 	}
 }
