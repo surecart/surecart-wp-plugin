@@ -63,6 +63,7 @@
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -134,6 +135,7 @@ graph TD;
   sc-line-item-total --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
+  sc-order-bump --> sc-icon
   sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon

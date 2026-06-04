@@ -42,6 +42,24 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		\SureCart::page_seeder()->createShopPage();
 		// make sure to check for and create cart post on every update.
 		$this->handleCartMigration();
+		// handle order bump design migration.
+		$this->handleOrderBumpDesignMigration();
+	}
+
+	/**
+	 * Set classic order bump design for existing installs.
+	 *
+	 * Fresh installs have migration_version = '0.0.0' at this point because
+	 * updateMigrationVersion() runs at priority 9999999, after this.
+	 * add_option() is a no-op if the option already exists (idempotent).
+	 *
+	 * @return void
+	 */
+	public function handleOrderBumpDesignMigration() {
+		$previous_version = get_option( 'surecart_migration_version', '0.0.0' );
+		if ( '0.0.0' !== $previous_version ) {
+			add_option( 'surecart_order_bump_design', 'classic' );
+		}
 	}
 
 	/**

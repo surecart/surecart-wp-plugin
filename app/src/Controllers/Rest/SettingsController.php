@@ -26,6 +26,7 @@ class SettingsController {
 				'use_esm_loader'              => (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'     => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
 				'load_block_assets_on_demand' => (bool) get_option( 'surecart_load_block_assets_on_demand', false ),
+				'modern_order_bump'           => get_option( 'surecart_order_bump_design', 'modern' ) === 'modern',
 			]
 		);
 	}
@@ -81,6 +82,11 @@ class SettingsController {
 		// update load block styles on demand option.
 		if ( isset( $request['load_block_assets_on_demand'] ) ) {
 			update_option( 'surecart_load_block_assets_on_demand', $request->get_param( 'load_block_assets_on_demand' ) );
+		}
+
+		// update order bump design option.
+		if ( isset( $request['modern_order_bump'] ) ) {
+			update_option( 'surecart_order_bump_design', (bool) $request->get_param( 'modern_order_bump' ) ? 'modern' : 'classic' );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );
