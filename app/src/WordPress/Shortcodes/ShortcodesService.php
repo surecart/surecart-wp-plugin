@@ -68,13 +68,14 @@ class ShortcodesService {
 	 * @param string $name Name of the shortcode.
 	 * @param string $block_name The registered block name.
 	 * @param array  $defaults Default attributes.
+	 * @param array  $options Opaque options bag forwarded to the `surecart/shortcodes/render_callback` filter.
 	 *
 	 * @return void
 	 */
-	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array() ) {
+	public function registerBlockShortcodeByName( $name, $block_name, $defaults = array(), array $options = array() ) {
 		add_shortcode(
 			$name,
-			function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
+			apply_filters( 'surecart/shortcodes/render_callback', function ( $attributes, $content ) use ( $name, $block_name, $defaults ) {
 				if ( empty( $block_name ) ) {
 					return '';
 				}
@@ -128,7 +129,7 @@ class ShortcodesService {
 				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
 
 				return $content;
-			}
+			}, $name, $options )
 		);
 	}
 
@@ -137,13 +138,14 @@ class ShortcodesService {
 	 *
 	 * @param string $name         Shortcode name (e.g. 'sc_product_review_list').
 	 * @param string $pattern_file Pattern filename without path or extension (e.g. 'product-review-standard').
+	 * @param array  $options      Opaque options bag forwarded to the `surecart/shortcodes/render_callback` filter.
 	 *
 	 * @return void
 	 */
-	public function registerPatternShortcodeByName( $name, $pattern_file ) {
+	public function registerPatternShortcodeByName( $name, $pattern_file, array $options = array() ) {
 		add_shortcode(
 			$name,
-			function () use ( $pattern_file ) {
+			apply_filters( 'surecart/shortcodes/render_callback', function () use ( $pattern_file ) {
 				$pattern    = include SURECART_PLUGIN_DIR . '/templates/patterns/' . $pattern_file . '.php';
 				$block_html = $pattern['content'] ?? '';
 
@@ -156,7 +158,7 @@ class ShortcodesService {
 				remove_filter( 'doing_it_wrong_trigger_error', [ $this, 'removeInteractivityDoingItWrong' ], 10 );
 
 				return $output;
-			}
+			}, $name, $options )
 		);
 	}
 

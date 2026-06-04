@@ -26,6 +26,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.shortcodes'] = function () {
 			return new ShortcodesService();
 		};
+
+		$container['surecart.shortcodes.product_context_wrapper'] = function () {
+			return new ProductContextShortcodeWrapper();
+		};
 	}
 
 	/**
@@ -36,6 +40,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$this->container = $container;
+
+		$container['surecart.shortcodes.product_context_wrapper']->bootstrap();
+
 		add_action( 'init', [ $this, 'registerShortcodes' ] );
 	}
 
@@ -300,7 +307,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			);
 		}
 
-		// Register product review shortcode aliases with friendly names.
+		/*
+		 * Review shortcodes.
+		 */
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_rating_stars',
 			'surecart/product-review-average-rating-stars',
@@ -308,7 +317,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'size'            => '20px',
 				'fill_color'      => '',
 				'link_to_reviews' => false,
-			]
+			],
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_rating_value',
@@ -316,7 +326,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'link_to_reviews' => false,
 				'format'          => 'none',
-			]
+			],
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_total_count',
@@ -325,7 +336,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'show_label'            => true,
 				'show_for_zero_reviews' => true,
 				'link_to_reviews'       => true,
-			]
+			],
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_breakdown',
@@ -335,7 +347,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'fill_color'           => '',
 				'bar_fill_color'       => '',
 				'bar_background_color' => '',
-			]
+			],
+			[ 'supports_product_id' => true ]
 		);
 		$this->container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_review_add_button',
@@ -345,7 +358,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'button_type' => 'both',
 				'icon'        => 'edit-2',
 				'className'   => 'is-style-fill',
-			]
+			],
+			[ 'supports_product_id' => true ]
 		);
 
 		/*
@@ -354,7 +368,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		 */
 		$this->container['surecart.shortcodes']->registerPatternShortcodeByName(
 			'sc_product_review_list',
-			'product-review-standard' // Pattern file name without path or extension.
+			'product-review-standard', // Pattern file name without path or extension.
+			[ 'supports_product_id' => true ]
 		);
 	}
 
