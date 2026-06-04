@@ -24,8 +24,7 @@ const ALLOWED_BLOCKS = [
 ];
 
 /**
- * Seed the two default child blocks (variant + note), mirroring the
- * parent/child seeding used by surecart/product-bundle-items.
+ * Seed the two default child blocks (variant + note).
  */
 const buildDefaultChildren = () => [
 	createBlock('surecart/cart-line-item-variant', CHILD_STYLE),

@@ -198,46 +198,6 @@ export default [
 						],
 					],
 					[
-						'surecart/product-bundle-items',
-						[
-							[
-								'surecart/bundle-item-template',
-								{
-									layout: {
-										type: 'flex',
-										orientation: 'vertical',
-									},
-								},
-								[
-									[
-										'core/group',
-										{
-											style: {
-												spacing: { blockGap: '4px' },
-											},
-											layout: {
-												type: 'flex',
-												orientation: 'horizontal',
-												justifyContent: 'left',
-												flexWrap: 'nowrap',
-											},
-										},
-										[
-											['surecart/bundle-product-name'],
-											['surecart/bundle-variant-name'],
-											['surecart/bundle-item-quantity'],
-										],
-									],
-									[
-										'surecart/bundle-item-variant',
-										{},
-										[['surecart/bundle-item-variant-pill']],
-									],
-								],
-							],
-						],
-					],
-					[
 						'surecart/product-price-chooser',
 						[
 							[

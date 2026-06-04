@@ -303,7 +303,6 @@ return array(
 		'surecart/product-variant-choices'   => array( 'sc-product-variation-choices' ),
 		'surecart/product-quantity'          => array( 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ),
 		'surecart/product-collection-badges' => array(),
-		'surecart/product-bundle-items'      => array(),
 	),
 
 	/**
