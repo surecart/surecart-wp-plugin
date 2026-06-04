@@ -66,6 +66,9 @@ export const getVariantFromValues = ({ variants, values }) => {
   return null;
 };
 
+/** WP_Error from apiFetch puts the upstream HTTP status under `data.status`. */
+export const isRateLimited = (error: any): boolean => error?.data?.status === 429;
+
 export const isInRange = (value, price) => {
   const valueInt = parseInt(value);
   if (!price) return true;

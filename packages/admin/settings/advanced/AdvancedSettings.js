@@ -108,7 +108,6 @@ export default () => {
 		'site',
 		'surecart_admin_toolbar_disabled'
 	);
-
 	/**
 	 * Form is submitted.
 	 */

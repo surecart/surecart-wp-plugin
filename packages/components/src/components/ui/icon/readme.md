@@ -1,18 +1,17 @@
 # ce-register-icon-library
 
-
-
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                                   | Type     | Default     |
-| --------- | --------- | ------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| `label`   | `label`   | An alternative description to use for accessibility. If omitted, the name or src will be used to generate it. | `string` | `undefined` |
-| `library` | `library` | The name of a registered custom icon library.                                                                 | `string` | `'default'` |
-| `name`    | `name`    | The name of the icon to draw.                                                                                 | `string` | `undefined` |
-| `src`     | `src`     | An external URL of an SVG file.                                                                               | `string` | `undefined` |
+| Property  | Attribute | Description                                                                                                   | Type      | Default     |
+| --------- | --------- | ------------------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `label`   | `label`   | An alternative description to use for accessibility. If omitted, the name or src will be used to generate it. | `string`  | `undefined` |
+| `library` | `library` | The name of a registered custom icon library.                                                                 | `string`  | `'default'` |
+| `mutate`  | `mutate`  | Mutate the icon                                                                                               | `boolean` | `true`      |
+| `name`    | `name`    | The name of the icon to draw.                                                                                 | `string`  | `undefined` |
+| `src`     | `src`     | An external URL of an SVG file.                                                                               | `string`  | `undefined` |
 
 
 ## Events
@@ -49,6 +48,8 @@
  - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
@@ -121,6 +122,8 @@ graph TD;
   sc-checkout-test-complete --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon
+  sc-customer-email --> sc-icon
+  sc-customer-login --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon

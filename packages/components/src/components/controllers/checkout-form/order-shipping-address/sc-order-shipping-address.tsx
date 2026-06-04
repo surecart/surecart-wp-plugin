@@ -7,6 +7,7 @@ import { createOrUpdateCheckout } from '../../../../services/session';
 import { Address, Checkout } from '../../../../types';
 import { fullShippingAddressRequired, shippingAddressRequired } from '@store/checkout/getters';
 import { formLoading } from '@store/form/getters';
+import { isAddressEmpty } from '../../../../services/customer-address';
 
 @Component({
   tag: 'sc-order-shipping-address',
@@ -83,10 +84,8 @@ export class ScOrderShippingAddress {
   }
 
   prefillAddress() {
-    // check if address keys are empty, if so, update them.
-    const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
-    const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
-    if (emptyAddressKeys.length === addressKeys.length) {
+    // Autofill is handled by sc-checkout-autofill-provider which patches checkoutState.checkout with any logged-in customer profile data.
+    if (isAddressEmpty(this.address)) {
       this.address = { ...this.address, ...(checkoutState.checkout?.shipping_address as Address) };
     }
   }

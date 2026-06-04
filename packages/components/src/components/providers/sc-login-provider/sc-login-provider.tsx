@@ -85,13 +85,6 @@ export class ScLoginProvider {
   render() {
     return (
       <Host>
-        {!!this.notice && (
-          <sc-alert type="success" open style={{ marginBottom: 'var(--sc-form-row-spacing)' }} closable>
-            <span slot="title">{__('Welcome back!', 'surecart')}</span>
-            {__('You have logged in successfully.', 'surecart')}
-          </sc-alert>
-        )}
-
         <slot />
 
         {!this.loggedIn && (

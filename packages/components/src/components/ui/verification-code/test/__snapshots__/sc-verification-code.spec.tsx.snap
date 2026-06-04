@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-verification-code renders 1`] = `
+<sc-verification-code>
+  <div class="sc-verification-code">
+    <input aria-label="Verification code 1 of 6" autocomplete="one-time-code" autofocus="" id="code-input-0" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 2 of 6" autocomplete="one-time-code" id="code-input-1" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 3 of 6" autocomplete="one-time-code" id="code-input-2" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <span aria-hidden="true" class="sc-verification-code__separator">
+      —
+    </span>
+    <input aria-label="Verification code 4 of 6" autocomplete="one-time-code" id="code-input-3" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 5 of 6" autocomplete="one-time-code" id="code-input-4" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 6 of 6" autocomplete="one-time-code" id="code-input-5" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <button class="visually-hidden" type="submit">
+      Submit
+    </button>
+  </div>
+</sc-verification-code>
+`;
+
+exports[`sc-verification-code renders with total 1`] = `
+<sc-verification-code total="4">
+  <div class="sc-verification-code">
+    <input aria-label="Verification code 1 of 4" autocomplete="one-time-code" autofocus="" id="code-input-0" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 2 of 4" autocomplete="one-time-code" id="code-input-1" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <span aria-hidden="true" class="sc-verification-code__separator">
+      —
+    </span>
+    <input aria-label="Verification code 3 of 4" autocomplete="one-time-code" id="code-input-2" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <input aria-label="Verification code 4 of 4" autocomplete="one-time-code" id="code-input-3" inputmode="numeric" pattern="[0-9]*" required="" value="">
+    <button class="visually-hidden" type="submit">
+      Submit
+    </button>
+  </div>
+</sc-verification-code>
+`;
