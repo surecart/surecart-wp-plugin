@@ -8,7 +8,7 @@ import {
 	__experimentalUseInnerBlocksProps,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, ToggleControl } from '@wordpress/components';
+import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
@@ -19,21 +19,21 @@ const CHILD_STYLE = {
 };
 
 const ALLOWED_BLOCKS = [
-	'surecart/cart-line-item-bundle-components',
+	'surecart/cart-line-item-variant',
 	'surecart/cart-line-item-note',
 ];
 
 /**
- * Seed the two default child blocks (bundle components + note), mirroring the
+ * Seed the two default child blocks (variant + note), mirroring the
  * parent/child seeding used by surecart/product-bundle-items.
  */
 const buildDefaultChildren = () => [
-	createBlock('surecart/cart-line-item-bundle-components', CHILD_STYLE),
+	createBlock('surecart/cart-line-item-variant', CHILD_STYLE),
 	createBlock('surecart/cart-line-item-note', CHILD_STYLE),
 ];
 
 export default ({ clientId, attributes, setAttributes }) => {
-	const { expanded = false } = attributes;
+	const { expanded = false, collapseAfter = 2 } = attributes;
 
 	const blockProps = useBlockProps({
 		className: `sc-cart-line-item-details${
@@ -74,11 +74,24 @@ export default ({ clientId, attributes, setAttributes }) => {
 					<ToggleControl
 						label={__('Expanded by default', 'surecart')}
 						help={__(
-							'When on, the details (bundle items, note) show expanded on load. When off, only the first line shows until the shopper expands it.',
+							'When on, the details (variant, bundle items, note) show expanded on load. When off, they stay collapsed until the shopper expands them.',
 							'surecart'
 						)}
 						checked={expanded}
 						onChange={(value) => setAttributes({ expanded: value })}
+					/>
+					<RangeControl
+						label={__('Collapse after (lines)', 'surecart')}
+						help={__(
+							'The expand toggle only shows when the details exceed this many lines.',
+							'surecart'
+						)}
+						value={collapseAfter}
+						onChange={(value) =>
+							setAttributes({ collapseAfter: value || 2 })
+						}
+						min={1}
+						max={6}
 					/>
 				</PanelBody>
 			</InspectorControls>

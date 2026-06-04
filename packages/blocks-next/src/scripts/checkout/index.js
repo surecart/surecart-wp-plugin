@@ -219,12 +219,16 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Whether the line item has any extra details (bundle components or a
-		 * note) for the `cart-line-item-details` container to show. The parent
-		 * container hides itself when there's nothing to render.
+		 * Whether the line item has any extra details (variant, bundle
+		 * components or a note) for the `cart-line-item-details` block to
+		 * show. The block hides itself when there's nothing to render.
 		 */
 		get hasLineItemDetails() {
-			return state.hasBundleComponents || !!state.lineItemNote;
+			return (
+				!!state.lineItemVariant ||
+				state.hasBundleComponents ||
+				!!state.lineItemNote
+			);
 		},
 
 		/**
@@ -247,12 +251,13 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * "× N" multiplier for a bundle component row. A single unit (× 1) is
-		 * never shown — only quantities above one get the multiplier.
+		 * "× N" multiplier for a bundle component row (per-bundle quantity).
 		 */
 		get lineItemBundleComponentQty() {
-			const { bundle_component } = getContext();
-			const qty = Math.max(Number(bundle_component?.quantity) || 1, 1);
+			const { line_item, bundle_component } = getContext();
+			const total = Math.max(Number(bundle_component?.quantity) || 1, 1);
+			const parentQty = Math.max(Number(line_item?.quantity) || 1, 1);
+			const qty = Math.max(Math.round(total / parentQty), 1);
 			return qty > 1 ? `× ${qty}` : '';
 		},
 
@@ -457,6 +462,14 @@ const { state, actions } = store('surecart/checkout', {
 					.filter(Boolean)
 					.join(' / ') || null
 			);
+		},
+
+		/**
+		 * Whether the variant block has anything to render — the variant
+		 * options for regular products, or the included items for bundles.
+		 */
+		get hasLineItemVariantContent() {
+			return !!state.lineItemVariant || state.hasBundleComponents;
 		},
 
 		/**
