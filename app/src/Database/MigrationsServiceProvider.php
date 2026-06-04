@@ -45,10 +45,6 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 			return new ProductPageMigrationService();
 		};
 
-		$container['surecart.migrations.product_bundle'] = function () {
-			return new ProductBundleMigrationService();
-		};
-
 		$container['surecart.migrations.cart_line_item_details'] = function () {
 			return new CartLineItemDetailsMigrationService();
 		};
@@ -71,7 +67,6 @@ class MigrationsServiceProvider implements ServiceProviderInterface {
 		$container['surecart.migrations.webhook']->bootstrap();
 		$container['surecart.migrations.rewrites']->bootstrap();
 		$container['surecart.migrations.product_page']->bootstrap();
-		$container['surecart.migrations.product_bundle']->bootstrap();
 		$container['surecart.migrations.cart_line_item_details']->bootstrap();
 		$container['surecart.migrations.theme']->bootstrap();
 	}
