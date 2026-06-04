@@ -2,7 +2,7 @@
 $product      = sc_get_product();
 $bundle_items = $product->bundle_items->data ?? array();
 
-if ( empty( $bundle_items ) ) {
+if ( empty( $bundle_items ) || empty( $block->parsed_block['innerBlocks'] ) ) {
 	return;
 }
 ?>
