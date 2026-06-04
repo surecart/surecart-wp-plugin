@@ -31,6 +31,77 @@ const isNotKeySubmit = (e) => {
 	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
 };
 
+/**
+ * Get the variant scope (page product or bundle component) for the current
+ * picker. Each scope owns its own state slice, variant data, selection
+ * commit, and URL key, so callers never branch on scope.
+ *
+ * @param {Object} ctx Interactivity context for the current picker.
+ * @return {{values:Object, variants:Array, product:Object, missingMeansUnavailable:boolean, commit:Function, urlKey:Function}} Scope.
+ */
+const getVariantScope = (ctx) => {
+	const prefix = ctx?.urlPrefix ? `${ctx.urlPrefix}-` : '';
+
+	// Bundle component scope.
+	if (ctx?.componentProductId) {
+		const unlimited = !!ctx.componentHasUnlimitedStock;
+		return {
+			values: ctx.componentOptionValues || {},
+			variants: ctx.componentVariants || [],
+			product: { has_unlimited_stock: unlimited },
+			// An unmatched combination can't be built unless stock is unlimited.
+			missingMeansUnavailable: !unlimited,
+			commit(optionNumber, value) {
+				if (!ctx.componentOptionValues) ctx.componentOptionValues = {};
+				ctx.componentOptionValues[`option_${optionNumber}`] = value;
+
+				if (!ctx.bundleComponentVariants) ctx.bundleComponentVariants = {};
+				const variant = getVariantFromValues({
+					variants: ctx.componentVariants || [],
+					values: ctx.componentOptionValues,
+				});
+				if (variant?.id) {
+					ctx.bundleComponentVariants[ctx.componentProductId] = variant.id;
+				} else {
+					delete ctx.bundleComponentVariants[ctx.componentProductId];
+				}
+			},
+			urlKey(optionNameSlug) {
+				return `${prefix}bundle-${
+					ctx.componentProductSlug || ctx.componentProductId
+				}-${optionNameSlug}`;
+			},
+		};
+	}
+
+	// Page product scope.
+	return {
+		values: ctx?.variantValues || {},
+		variants: ctx?.variants || [],
+		product: ctx?.product || null,
+		missingMeansUnavailable: false,
+		commit(optionNumber, value) {
+			if (!ctx.variantValues) ctx.variantValues = {};
+			ctx.variantValues[`option_${optionNumber}`] = value;
+
+			// Sync variant selection to the Stencil product store (upsell flow).
+			if (ctx.product?.id) {
+				document.dispatchEvent(
+					new CustomEvent('scVariantValuesUpdated', {
+						detail: {
+							productId: ctx.product.id,
+							variantValues: { ...ctx.variantValues },
+						},
+					})
+				);
+			}
+		},
+		urlKey(optionNameSlug) {
+			return `${prefix}${optionNameSlug}`;
+		},
+	};
+};
+
 // controls the product page.
 const { state, actions } = store('surecart/product-page', {
 	state: {
@@ -123,38 +194,37 @@ const { state, actions } = store('surecart/product-page', {
 
 		/**
 		 * Is the option unavailable due to missing variants or stock.
+		 * Scope-aware: page product or bundle component.
 		 */
 		get isOptionUnavailable() {
 			const context = getContext();
 			if (!context) {
 				return true;
 			}
-			const {
-				optionNumber,
-				option_value,
-				product,
-				variants,
-				variantValues,
-			} = context;
+			const { optionNumber, option_value } = context;
+			const scope = getVariantScope(context);
+
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
 				option_value,
-				variantValues,
-				variants,
-				product
+				scope.values,
+				scope.variants,
+				scope.product,
+				scope.missingMeansUnavailable
 			);
 		},
 
 		/**
-		 * Is the option selected?
+		 * Is the option selected? Scope-aware: page product or bundle component.
 		 */
 		get isOptionSelected() {
 			const context = getContext();
 			if (!context) {
 				return true;
 			}
-			const { optionNumber, option_value, variantValues } = context;
-			return variantValues?.[`option_${optionNumber}`] === option_value;
+			const { optionNumber, option_value } = context;
+			const { values } = getVariantScope(context);
+			return values?.[`option_${optionNumber}`] === option_value;
 		},
 
 		/**
@@ -307,57 +377,6 @@ const { state, actions } = store('surecart/product-page', {
 
 				return (info.available_stock || 0) <= 0;
 			});
-		},
-
-		/**
-		 * Bundle pill: is this option_value currently selected in its
-		 * component? Scoped to bundle-item-variant block's nested context.
-		 */
-		get isBundleComponentOptionSelected() {
-			const context = getContext();
-			if (!context) return false;
-			const { optionNumber, option_value, componentOptionValues } =
-				context;
-			if (!optionNumber || option_value == null) return false;
-			return (
-				componentOptionValues?.[`option_${optionNumber}`] ===
-				option_value
-			);
-		},
-
-		/**
-		 * Sold-out marker for a bundle pill: stays visible so the shopper
-		 * sees the full variant matrix, but the pill is marked unavailable.
-		 */
-		get isBundleComponentOptionUnavailable() {
-			const context = getContext();
-			if (!context) return false;
-			if (context.componentHasUnlimitedStock) return false;
-
-			const {
-				optionNumber,
-				option_value,
-				componentOptionValues,
-				componentVariants,
-			} = context;
-			if (!optionNumber || option_value == null) return false;
-			const optionKey = `option_${optionNumber}`;
-
-			// Constrain by earlier options the shopper has already picked.
-			const matching = (componentVariants || []).filter((v) => {
-				for (let i = 1; i < optionNumber; i++) {
-					const prevKey = `option_${i}`;
-					const prevVal = componentOptionValues?.[prevKey];
-					if (!prevVal) continue;
-					if (v[prevKey] !== prevVal) return false;
-				}
-				return v[optionKey] === option_value;
-			});
-
-			if (!matching.length) return true;
-			return (
-				Math.max(...matching.map((v) => v.available_stock || 0)) <= 0
-			);
 		},
 
 		/**
@@ -549,7 +568,9 @@ const { state, actions } = store('surecart/product-page', {
 		}),
 
 		/**
-		 * Set the option.
+		 * Set the option. The active scope (page product or bundle component)
+		 * owns how the selection is committed and how its URL key is built, so
+		 * this stays free of scope-specific branching.
 		 */
 		setOption: withSyncEvent((e) => {
 			if (isNotKeySubmit(e)) {
@@ -558,15 +579,13 @@ const { state, actions } = store('surecart/product-page', {
 
 			e.preventDefault();
 
-			// Get context values and option data
-			const { variantValues, optionNumber, urlPrefix, product } = getContext();
+			const context = getContext();
 
-			// get data from select element or context.
-			let optionData = e?.target?.selectedOptions?.[0]?.dataset?.wpContext
-				? JSON.parse(
-						e?.target?.selectedOptions?.[0]?.dataset?.wpContext
-				  )
-				: getContext();
+			// get data from select element (dropdown) or context (pill).
+			const optionData = e?.target?.selectedOptions?.[0]?.dataset
+				?.wpContext
+				? JSON.parse(e.target.selectedOptions[0].dataset.wpContext)
+				: context;
 
 			const {
 				option_value,
@@ -578,19 +597,12 @@ const { state, actions } = store('surecart/product-page', {
 			// get the value.
 			const value = option_value || e?.target?.value;
 
-			// first we set the option to optimistically update all the ui.
-			variantValues[`option_${optionNumber}`] = value;
+			// Commit the selection into the active scope (writes the right state
+			// slice and runs any scope side-effects).
+			const scope = getVariantScope(context);
+			scope.commit(context.optionNumber, value);
 
-			// Sync variant selection to Stencil product store (needed for upsell flow).
-			if (product?.id) {
-				document.dispatchEvent(
-					new CustomEvent('scVariantValuesUpdated', {
-						detail: { productId: product.id, variantValues: { ...variantValues } },
-					})
-				);
-			}
-
-			// if we have the name and value, update the url.
+			// if we don't have the name and value, skip the url update.
 			if (!option_value || !option_name) {
 				return;
 			}
@@ -599,63 +611,9 @@ const { state, actions } = store('surecart/product-page', {
 				{},
 				'',
 				addQueryArgs(window.location.href, {
-					[`${urlPrefix ? urlPrefix + '-' : ''}${option_name_slug}`]:
-						option_value_slug,
+					[scope.urlKey(option_name_slug)]: option_value_slug,
 				})
 			);
-		}),
-
-		setBundleComponentOption: withSyncEvent((e) => {
-			if (isNotKeySubmit(e)) return true;
-			e.preventDefault();
-
-			const ctx = getContext();
-			const {
-				optionNumber,
-				option_value,
-				option_name_slug,
-				option_value_slug,
-				componentOptionValues,
-				componentVariants,
-				componentProductId,
-				componentProductSlug,
-				bundleComponentVariants,
-				product,
-				urlPrefix,
-			} = ctx;
-
-			if (!optionNumber || option_value == null) return;
-
-			componentOptionValues[`option_${optionNumber}`] = option_value;
-
-			const variant = getVariantFromValues({
-				variants: componentVariants || [],
-				values: componentOptionValues || {},
-			});
-
-			if (componentProductId) {
-				if (variant?.id) {
-					bundleComponentVariants[componentProductId] = variant.id;
-				} else {
-					delete bundleComponentVariants[componentProductId];
-				}
-			}
-
-			// The URL key uses the human-readable slug (falling back to the id),
-			// while bundleComponentVariants above stays keyed by the stable id.
-			const urlIdentifier = componentProductSlug || componentProductId;
-			if (urlIdentifier && option_name_slug && option_value_slug) {
-				const key = `${
-					urlPrefix ? urlPrefix + '-' : ''
-				}bundle-${urlIdentifier}-${option_name_slug}`;
-				window.history.replaceState(
-					{},
-					'',
-					addQueryArgs(window.location.href, {
-						[key]: option_value_slug,
-					})
-				);
-			}
 		}),
 
 		/**
@@ -804,7 +762,8 @@ export const isProductVariantOptionSoldOut = (
 	option,
 	variantValues,
 	variants = [],
-	product = null
+	product = null,
+	missingMeansUnavailable = false
 ) => {
 	const getEffectiveStock = (variant) => {
 		if (hasEffectiveUnlimitedStock(variant, product)) return Infinity;
@@ -812,7 +771,10 @@ export const isProductVariantOptionSoldOut = (
 	};
 
 	const isGroupSoldOut = (items) => {
-		if (!items.length) return false;
+		// No variant matches this option combination. On the page product this
+		// stays selectable; in a bundle component it means the combo can't be
+		// built, so the pill is unavailable.
+		if (!items.length) return missingMeansUnavailable;
 		return Math.max(...items.map(getEffectiveStock)) <= 0;
 	};
 

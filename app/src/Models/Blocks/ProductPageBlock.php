@@ -327,7 +327,7 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Resolve a component's variant from URL slugs (written by setBundleComponentOption).
+	 * Resolve a component's variant from URL slugs (written by the scope-aware setOption callback).
 	 *
 	 * @param object $component Component product.
 	 *
@@ -480,32 +480,26 @@ class ProductPageBlock {
 						'has_unlimited_stock',
 					]
 				) : [],
+				// Scope-aware: the same picker renders for the page product and for
+				// each bundle component. resolveVariantScope() resolves which slice
+				// of state to read, so this stays free of scope-specific branching.
 				'isOptionUnavailable'                => function () {
-					$context        = wp_interactivity_get_context();
-					$variants       = $context['variants'];
-					$option         = $context['option_value'];
-					$product        = $context['product'];
-					$variant_values = $context['variantValues'];
-					$option_number  = $context['optionNumber'];
-
-					if ( 1 === $option_number ) {
-						$items = array_filter( $variants ?? [], fn( $v ) => $v['option_1'] === $option );
-						return self::isVariantGroupSoldOut( $items, $product );
+					$context       = wp_interactivity_get_context();
+					$option_number = (int) ( $context['optionNumber'] ?? 0 );
+					$option_value  = $context['option_value'] ?? null;
+					if ( ! $option_number || null === $option_value ) {
+						return false;
 					}
 
-					if ( 2 === $option_number ) {
-						$items = array_filter(
-							$variants ?? [],
-							fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $option
-						);
-						return self::isVariantGroupSoldOut( $items, $product );
-					}
-
-					$items = array_filter(
-						$variants ?? [],
-						fn( $v ) => $v['option_1'] === $variant_values['option_1'] && $v['option_2'] === $variant_values['option_2'] && $v['option_3'] === $option
+					$scope = self::resolveVariantScope( $context );
+					return self::isVariantOptionSoldOut(
+						$option_number,
+						$option_value,
+						$scope['values'],
+						$scope['variants'],
+						$scope['product'],
+						$scope['missing_means_unavailable']
 					);
-					return self::isVariantGroupSoldOut( $items, $product );
 				},
 				'isOptionValueSelected'              => function () {
 					$context = wp_interactivity_get_context();
@@ -578,70 +572,17 @@ class ProductPageBlock {
 					return false;
 				},
 
-				'isBundleComponentOptionSelected'    => function () {
-					$context       = wp_interactivity_get_context();
-					$option_number = $context['optionNumber'] ?? null;
-					$option_value  = $context['option_value'] ?? null;
-					$option_values = $context['componentOptionValues'] ?? array();
-					$option_values = is_object( $option_values ) ? (array) $option_values : (array) $option_values;
-					if ( ! $option_number || null === $option_value ) {
-						return false;
-					}
-					return ( $option_values[ 'option_' . $option_number ] ?? null ) === $option_value;
-				},
-
-				// Sold-out pill stays visible (so the full variant matrix is shown) but selecting it disables Add to cart.
-				'isBundleComponentOptionUnavailable' => function () {
-					$context = wp_interactivity_get_context();
-					if ( ! empty( $context['componentHasUnlimitedStock'] ) ) {
-						return false;
-					}
-					$variants      = $context['componentVariants'] ?? array();
-					$option_number = (int) ( $context['optionNumber'] ?? 0 );
-					$option_value  = $context['option_value'] ?? null;
-					$option_values = $context['componentOptionValues'] ?? array();
-					$option_values = is_object( $option_values ) ? (array) $option_values : (array) $option_values;
-
-					if ( ! $option_number || null === $option_value ) {
-						return false;
-					}
-
-					$option_key = 'option_' . $option_number;
-					$matching   = array_filter(
-						$variants,
-						function ( $variant ) use ( $option_key, $option_value, $option_values, $option_number ) {
-							// Earlier options must match the current selection.
-							for ( $i = 1; $i < $option_number; $i++ ) {
-								$prev_key = 'option_' . $i;
-								if ( empty( $option_values[ $prev_key ] ) ) {
-									continue;
-								}
-								if ( ( $variant[ $prev_key ] ?? null ) !== $option_values[ $prev_key ] ) {
-									return false;
-								}
-							}
-							return ( $variant[ $option_key ] ?? null ) === $option_value;
-						}
-					);
-
-					if ( empty( $matching ) ) {
-						return true;
-					}
-					$stocks = array_map(
-						function ( $v ) {
-							return $v['available_stock'] ?? 0;
-						},
-						$matching
-					);
-					return max( $stocks ) <= 0;
-				},
+				// Scope-aware via resolveVariantScope(): bundle component selections
+				// live in componentOptionValues, page product selections in variantValues.
 				'isOptionSelected'                   => function () {
 					$context       = wp_interactivity_get_context();
 					$option_number = $context['optionNumber'] ?? '';
-					if ( ! isset( $context['variantValues'][ "option_$option_number" ] ) || ! isset( $context['option_value'] ) ) {
+					$option_value  = $context['option_value'] ?? null;
+					if ( '' === $option_number || null === $option_value ) {
 						return false;
 					}
-					return $context['variantValues'][ "option_$option_number" ] === $context['option_value'];
+					$scope = self::resolveVariantScope( $context );
+					return ( $scope['values'][ "option_$option_number" ] ?? null ) === $option_value;
 				},
 				'isPriceSelected'                    => function () {
 					$context = wp_interactivity_get_context();
@@ -669,18 +610,77 @@ class ProductPageBlock {
 	}
 
 	/**
-	 * Check if a filtered group of variants is sold out.
-	 * Returns false (not sold out) when the group is empty — no matching variants means nothing to sell out.
+	 * Resolve the variant scope for the current pill's SSR state.
 	 *
-	 * @param array $items   Filtered variant data arrays.
-	 * @param array $product Parent product data for fallback.
+	 * Mirrors the JS `getVariantScope` (read half) so the option getters never
+	 * branch on "is this a bundle?". A bundle component reads/writes its own
+	 * slice; the page product reads the page-level slice. Add a scope here and
+	 * the getters keep working unchanged.
+	 *
+	 * @param array $context Interactivity context for the current pill.
+	 * @return array{values:array,variants:array,product:array,missing_means_unavailable:bool}
+	 */
+	private static function resolveVariantScope( array $context ): array {
+		// Bundle component scope.
+		if ( ! empty( $context['componentProductId'] ) ) {
+			$unlimited = ! empty( $context['componentHasUnlimitedStock'] );
+			return array(
+				'values'                    => (array) ( $context['componentOptionValues'] ?? array() ),
+				'variants'                  => $context['componentVariants'] ?? array(),
+				'product'                   => array( 'has_unlimited_stock' => $unlimited ),
+				// A component combination with no matching variant can't be built —
+				// unless the component is unlimited stock, where every option stays open.
+				'missing_means_unavailable' => ! $unlimited,
+			);
+		}
+
+		// Page product scope — an unmatched combination stays selectable.
+		return array(
+			'values'                    => (array) ( $context['variantValues'] ?? array() ),
+			'variants'                  => $context['variants'] ?? array(),
+			'product'                   => (array) ( $context['product'] ?? array() ),
+			'missing_means_unavailable' => false,
+		);
+	}
+
+	/**
+	 * Is a variant option value sold out, constrained by earlier selected options.
+	 *
+	 * Shared by the page product and bundle component pickers. Mirrors the JS
+	 * `isProductVariantOptionSoldOut` in product-page/index.js.
+	 *
+	 * @param int    $option_number            Which option (1, 2 or 3) the pill represents.
+	 * @param mixed  $option_value             The pill's option value.
+	 * @param array  $values                   Currently selected option values for this scope.
+	 * @param array  $variants                 Variant data (arrays or objects) for this scope.
+	 * @param array  $product                  Parent product data for unlimited-stock fallback.
+	 * @param bool   $missing_means_unavailable When true, a combination with no matching
+	 *                                          variant counts as unavailable (bundle scope).
 	 * @return bool
 	 */
-	private static function isVariantGroupSoldOut( array $items, array $product ): bool {
-		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) );
-		if ( empty( $stocks ) ) {
-			return false;
+	private static function isVariantOptionSoldOut( int $option_number, $option_value, array $values, array $variants, array $product, bool $missing_means_unavailable = false ): bool {
+		$variants = array_map( fn( $v ) => (array) $v, array_values( (array) $variants ) );
+
+		$items = array_filter(
+			$variants,
+			function ( $variant ) use ( $option_number, $option_value, $values ) {
+				// Earlier options must match the current selection.
+				for ( $i = 1; $i < $option_number; $i++ ) {
+					$prev_key = "option_$i";
+					if ( ( $variant[ $prev_key ] ?? null ) !== ( $values[ $prev_key ] ?? null ) ) {
+						return false;
+					}
+				}
+				return ( $variant[ "option_$option_number" ] ?? null ) === $option_value;
+			}
+		);
+
+		// No variant matches this combination.
+		if ( empty( $items ) ) {
+			return $missing_means_unavailable;
 		}
+
+		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) );
 		return max( $stocks ) <= 0;
 	}
 
