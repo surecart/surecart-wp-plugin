@@ -474,24 +474,6 @@
 					"elType": "widget"
 				},
 				{
-					"id": "9fb24e7a",
-					"settings": {
-						"product_name_color": "#000000",
-						"variant_name_color": "#000000",
-						"pill_background_color": "#FFFFFF",
-						"__globals__": {
-							"pill_highlight_background_color": "",
-							"pill_highlight_border_color": ""
-						},
-						"pill_highlight_background_color": "#6EC1E4",
-						"pill_highlight_border_color": "#6EC1E4"
-					},
-					"elements": [],
-					"isInner": false,
-					"widgetType": "surecart-product-bundle-items",
-					"elType": "widget"
-				},
-				{
 					"id": "62c70def",
 					"settings": {
 						"label": "Quantity",

@@ -267,41 +267,6 @@ class Product extends \Bricks\Element {
 					),
 				),
 			),
-			array(
-				'name'     => 'surecart-product-bundle-items',
-				'children' => array(
-					array(
-						'name'     => 'surecart-bundle-item-template',
-						'children' => array(
-							array(
-								'name'     => 'block',
-								'label'    => esc_html__( 'Bundle Item Label', 'surecart' ),
-								'settings' => array(
-									'_direction'  => 'row',
-									'_alignItems' => 'baseline',
-									'_columnGap'  => '4px',
-								),
-								'children' => array(
-									array( 'name' => 'surecart-bundle-product-name' ),
-									array( 'name' => 'surecart-bundle-variant-name' ),
-									array( 'name' => 'surecart-bundle-item-quantity' ),
-								),
-							),
-							array(
-								'name'     => 'surecart-bundle-item-variant',
-								'settings' => array(
-									'highlight_background' => array(
-										'hex' => '#FFD64F',
-									),
-									'highlight_border'     => array(
-										'hex' => '#FFD64F',
-									),
-								),
-							),
-						),
-					),
-				),
-			),
 			array( 'name' => 'surecart-product-quantity' ),
 			array(
 				'name'     => 'surecart-product-buy-button',
