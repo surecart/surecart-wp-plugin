@@ -72,15 +72,10 @@ export class ScCheckoutStockAlert {
   /**
    * Update the checkout line items stock to the max available.
    *
-   * Bundle component OOS items can't be removed directly — they're
-   * synthesized server-side from the parent's bundle_component_variants.
-   * For each OOS component, find an in-stock variant of the same component
-   * product and swap via the parent, otherwise the dialog loops (the
-   * regenerated component reappears OOS on the next state read).
+   * OOS bundle components can't be removed directly — swap to an in-stock
+   * variant via the parent, otherwise the dialog loops.
    */
   async onSubmit() {
-    // Tracks whether we re-posted a bundle component swap, so the catch can
-    // show an actionable message if the platform rejects the substitute.
     let attemptedBundleSwap = false;
     try {
       this.busy = true;

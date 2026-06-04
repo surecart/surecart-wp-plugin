@@ -266,6 +266,73 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 		$this->assertSame( 'v-m', $result->id );
 	}
 
+	public function test_find_bundle_variant_from_url_matches_by_slug() {
+		$component = (object) array(
+			'id'              => 'comp-slug-1',
+			'slug'            => 'cool-shirt',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium', 'Large' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+					(object) array(
+						'id'       => 'v-m',
+						'option_1' => 'Medium',
+					),
+				),
+			),
+		);
+
+		// The key is built from the slug, not the id.
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-cool-shirt-size' => 'medium' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-m', $result->id );
+	}
+
+	public function test_find_bundle_variant_from_url_ignores_id_key_when_slug_present() {
+		$component = (object) array(
+			'id'              => 'comp-slug-2',
+			'slug'            => 'cool-shirt',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		// Clean swap: when a slug is present the old UUID-based key no longer resolves.
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-slug-2-size' => 'small' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
 	public function test_find_bundle_variant_from_url_matches_two_options() {
 		$component = (object) array(
 			'id'              => 'comp-2',

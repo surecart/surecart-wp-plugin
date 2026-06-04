@@ -4,16 +4,14 @@
 	flex-direction: column;
 	gap: var(--sc-spacing-medium, 1rem);
 
-	// Tight stack: label margin matches .sc-form-label so the row reads
-	// like the storefront Variants Selector.
+	// Label margin matches .sc-form-label so the row reads like the Variants Selector.
 	&__row {
 		display: flex;
 		flex-direction: column;
 		gap: var(--sc-input-label-margin, var(--sc-spacing-xx-small, 0.25rem));
 	}
 
-	// Beat themes that add a default paragraph margin to the separator
-	// between bundle-product-name and bundle-variant-name.
+	// Beat themes that add a default paragraph margin to the separator.
 	&__row .wp-block-paragraph {
 		margin: 0;
 	}
@@ -32,8 +30,7 @@
 	color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
 }
 
-// Non-variable bundle items have no option name — hide the empty variant-
-// name span and the preceding "-" separator paragraph in the same group.
+// Non-variable items: hide the empty variant name and its "-" separator.
 .sc-bundle-item__variant-name:empty {
 	display: none;
 }
@@ -52,8 +49,7 @@
 	white-space: nowrap;
 }
 
-// Variant label is a single word ("Size", "Color") — don't let a narrow
-// flex column break it mid-character when the product name is long.
+// Don't let a narrow flex column break the variant label mid-word.
 .sc-bundle-item__variant-name {
 	white-space: nowrap;
 }

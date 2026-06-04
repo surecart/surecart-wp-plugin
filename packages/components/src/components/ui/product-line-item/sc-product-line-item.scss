@@ -247,17 +247,11 @@ sc-quantity-select::part(minus) {
   background-color: transparent;
 }
 
-// Line item details — bundle components and the note share one collapsible
-// region under the main row. Collapsed it clamps to the first line; the
-// single chevron reveals the rest. Mirrors the cart's
-// `sc-cart-line-item-details` container.
+// Line item details — collapsible region shared by bundle components and the note.
 .line-item-details {
   display: flex;
   align-items: flex-start;
-  // Don't stretch across .item__text-container's full width — without
-  // this the chevron lands on the far right edge (next to the price
-  // column) in wider layouts like the order details. Content-width keeps
-  // the chevron right next to the details text.
+  // Content-width so the chevron sits next to the text, not the row's far edge.
   align-self: flex-start;
   gap: 0.25em;
   margin-top: var(--sc-spacing-xx-small);
@@ -277,9 +271,6 @@ sc-quantity-select::part(minus) {
     cursor: pointer;
   }
 
-  // Content-sized so the chevron sits right after the text instead of
-  // pushed to the far edge of the row. The wrapper still spans the row,
-  // so clicks anywhere continue to toggle.
   &__content {
     flex: 0 1 auto;
     min-width: 0;
@@ -288,8 +279,7 @@ sc-quantity-select::part(minus) {
     gap: 2px;
   }
 
-  // Collapsed: clamp the whole region to its first line. `1.4em` ≈ one line
-  // (matches the 1.4 line-height) as a fallback; `1lh` is exact where supported.
+  // Collapsed: clamp to the first line (`1lh` where supported, `1.4em` fallback).
   &:not(.line-item-details--is-expanded) &__content {
     max-height: 1.4em;
     max-height: 1lh;
@@ -337,7 +327,6 @@ sc-quantity-select::part(minus) {
     cursor: pointer;
     border-radius: var(--sc-border-radius-small);
     transition: color 0.2s ease;
-    // Defensive: nothing paints the button in any state.
     appearance: none;
     -webkit-appearance: none;
     box-shadow: none;
@@ -347,8 +336,6 @@ sc-quantity-select::part(minus) {
     &:active {
       background: transparent;
       box-shadow: none;
-      // Darken instead of fading — opacity:0.8 on an already light gray
-      // dropped the icon under the visibility threshold.
       color: var(--sc-color-gray-700, var(--sc-input-label-color));
     }
 
@@ -362,8 +349,7 @@ sc-quantity-select::part(minus) {
     }
   }
 
-  // Single chevron icon, rotated on expand. Don't override sc-icon's host
-  // `display: inline-block` — doing so breaks its --width/--height sizing.
+  // Don't override sc-icon's host display — it breaks its --width/--height sizing.
   &__toggle-icon {
     transition: transform 0.2s ease;
     will-change: transform;

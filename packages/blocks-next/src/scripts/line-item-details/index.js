@@ -16,12 +16,7 @@ const isNotKeySubmit = ( e ) => {
 };
 
 /**
- * Line item details store.
- *
- * Owns the single collapse for the line item details container. Children
- * (bundle components, note) just render their content — this store decides
- * when the toggle is needed (content overflows the first line) and flips the
- * expanded state for the whole region.
+ * Line item details store — owns the collapse/expand state for the details region.
  */
 store( 'surecart/line-item-details', {
 	state: {
@@ -33,8 +28,7 @@ store( 'surecart/line-item-details', {
 		},
 
 		/**
-		 * Focusable only when collapsible — keeps parity with the note's
-		 * "click anywhere on the line" behavior for mouse and keyboard.
+		 * Focusable only when collapsible.
 		 */
 		get tabindex() {
 			return getContext()?.showToggle ? '0' : '-1';
@@ -77,17 +71,22 @@ store( 'surecart/line-item-details', {
 				}
 
 				const checkOverflow = () => {
-					// Compare full content height to one line. scrollHeight is the
-					// unclamped height even while collapsed, so this works the same
-					// whether the region starts expanded or collapsed — and avoids
-					// a pointless chevron on single-line content when "expanded by
-					// default" is on.
+					// Show the toggle only when the content exceeds the collapse threshold.
 					const styles = window.getComputedStyle( content );
 					let lineHeight = parseFloat( styles.lineHeight );
 					if ( ! lineHeight || Number.isNaN( lineHeight ) ) {
 						lineHeight = ( parseFloat( styles.fontSize ) || 14 ) * 1.4;
 					}
-					context.showToggle = content.scrollHeight > lineHeight + 1;
+					const rowGap = parseFloat( styles.rowGap ) || 0;
+					const lines = Math.round(
+						( content.scrollHeight + rowGap ) /
+							( lineHeight + rowGap )
+					);
+					const collapseAfter = Math.max(
+						Number( context.collapseAfter ) || 2,
+						1
+					);
+					context.showToggle = lines > collapseAfter;
 				};
 
 				checkOverflow();

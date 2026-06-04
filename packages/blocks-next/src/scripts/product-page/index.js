@@ -618,6 +618,7 @@ const { state, actions } = store('surecart/product-page', {
 				componentOptionValues,
 				componentVariants,
 				componentProductId,
+				componentProductSlug,
 				bundleComponentVariants,
 				product,
 				urlPrefix,
@@ -640,10 +641,13 @@ const { state, actions } = store('surecart/product-page', {
 				}
 			}
 
-			if (componentProductId && option_name_slug && option_value_slug) {
+			// The URL key uses the human-readable slug (falling back to the id),
+			// while bundleComponentVariants above stays keyed by the stable id.
+			const urlIdentifier = componentProductSlug || componentProductId;
+			if (urlIdentifier && option_name_slug && option_value_slug) {
 				const key = `${
 					urlPrefix ? urlPrefix + '-' : ''
-				}bundle-${componentProductId}-${option_name_slug}`;
+				}bundle-${urlIdentifier}-${option_name_slug}`;
 				window.history.replaceState(
 					{},
 					'',

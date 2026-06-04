@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "surecart/cart-line-item-details",
 	"title": "Line item details",
-	"description": "Collapsible container for extra line item details (bundle items, note) shown under a cart line item. The first line is always visible; the rest expand on click.",
+	"description": "Collapsible container for the line item's extra details (variant, bundle items, note) shown under a cart line item.",
 	"version": "1.0.0",
 	"category": "surecart-cart",
 	"ancestor": [
@@ -14,6 +14,10 @@
 		"expanded": {
 			"type": "boolean",
 			"default": false
+		},
+		"collapseAfter": {
+			"type": "number",
+			"default": 2
 		}
 	},
 	"example": {},

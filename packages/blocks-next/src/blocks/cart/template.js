@@ -274,25 +274,11 @@ export const TEMPLATE = [
 																		},
 																	],
 																	[
-																		'surecart/cart-line-item-variant',
-																		{
-																			style: {
-																				typography:
-																					{
-																						fontSize:
-																							'14px',
-																						lineHeight:
-																							'1.4',
-																					},
-																			},
-																		},
-																	],
-																	[
 																		'surecart/cart-line-item-details',
 																		{},
 																		[
 																			[
-																				'surecart/cart-line-item-bundle-components',
+																				'surecart/cart-line-item-variant',
 																				{
 																					style: {
 																						color: {

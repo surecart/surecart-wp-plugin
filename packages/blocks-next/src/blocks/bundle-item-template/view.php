@@ -8,9 +8,7 @@ $component       = $bundle_item->component_product ?? null;
 $variant_options = $component->variant_options->data ?? array();
 $variants        = $component->variants->data ?? array();
 
-// Skip components with no selectable variants — there's nothing for the
-// customer to interact with, so the row (name, qty, anything else) would
-// just be dead weight on the bundle page.
+// Skip components with no selectable variants — nothing to interact with.
 if ( empty( $variant_options ) ) {
 	return '';
 }
@@ -63,6 +61,7 @@ $render_inner_blocks = static function ( $current_option = null ) use ( $block )
 $component_context = wp_interactivity_data_wp_context(
 	array(
 		'componentProductId'         => $component->id ?? null,
+		'componentProductSlug'       => ! empty( $component->slug ) ? $component->slug : ( $component->id ?? null ),
 		'componentVariants'          => $variants_payload,
 		'componentHasUnlimitedStock' => ! empty( $component->has_unlimited_stock ),
 		'componentOptionValues'      => $initial_option_values,

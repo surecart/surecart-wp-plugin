@@ -340,9 +340,16 @@ class ProductPageBlock {
 			return null;
 		}
 
+		// The URL key embeds the component product's slug — matching the writer in
+		// packages/blocks-next/src/scripts/product-page/index.js — so a bundle
+		// selection reads as ?bundle-{slug}-{option}={value} instead of the UUID.
+		// The writer and this reader both look at the same $component, so applying an
+		// identical slug→id fallback on each side keeps the two keys in lockstep.
+		$identifier = ! empty( $component->slug ) ? $component->slug : $component->id;
+
 		$selected_values = array();
 		foreach ( $variant_options as $key => $option ) {
-			$arg_key  = 'bundle-' . $component->id . '-' . sanitize_title( $option->name );
+			$arg_key  = 'bundle-' . $identifier . '-' . sanitize_title( $option->name );
 			$arg_slug = $this->url->getArg( $arg_key );
 			if ( empty( $arg_slug ) ) {
 				continue;

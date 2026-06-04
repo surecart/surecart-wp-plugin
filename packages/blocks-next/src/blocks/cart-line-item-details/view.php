@@ -5,6 +5,7 @@
 		get_block_wrapper_attributes(
 			array(
 				'class' => 'sc-cart-line-item-details',
+				'style' => '--sc-line-item-details-collapse-lines:' . $collapse_after . ';',
 			)
 		)
 	);
@@ -13,7 +14,8 @@
 	echo wp_kses_data(
 		wp_interactivity_data_wp_context(
 			array(
-				'detailsExpanded' => (bool) ( $attributes['expanded'] ?? false ),
+				'detailsExpanded' => $expanded,
+				'collapseAfter'   => $collapse_after,
 				'showToggle'      => false,
 			)
 		)

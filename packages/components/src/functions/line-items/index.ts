@@ -3,13 +3,8 @@ import { getQueryArg } from '@wordpress/url';
 import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
 
 /**
- * Build a list of display rows from bundle component line items. Use this
- * when you have actual LineItems (cart, checkout, order, customer dashboard).
- *
- * Components without a variant selection are skipped — the customer made no
- * choice for them, so listing them in the order summary is just noise. The
- * full bundle definition still shows in the subscription details view via
- * getBundleComponentRowsFromBundleItems.
+ * Build display rows from bundle component line items (cart, checkout, order,
+ * customer dashboard). Components without a variant selection are skipped.
  */
 export const getBundleComponentRowsFromLineItems = (components: LineItem[] = []): BundleComponentRow[] => {
   return (components || [])
