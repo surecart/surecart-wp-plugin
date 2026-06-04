@@ -88,16 +88,6 @@ class BundleItems extends \Elementor\Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'show_single_quantity',
-			[
-				'label'       => esc_html__( 'Show Single Quantity', 'surecart' ),
-				'type'        => \Elementor\Controls_Manager::SWITCHER,
-				'default'     => '',
-				'description' => esc_html__( 'Show the quantity even when it is 1.', 'surecart' ),
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -407,10 +397,7 @@ class BundleItems extends \Elementor\Widget_Base {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			$settings = $this->get_settings_for_display();
 
-			$this->render_preview(
-				$settings['variant_name_separator'] ?? ' – ',
-				'yes' === ( $settings['show_single_quantity'] ?? '' )
-			);
+			$this->render_preview( $settings['variant_name_separator'] ?? ' – ' );
 			return;
 		}
 
@@ -431,10 +418,6 @@ class BundleItems extends \Elementor\Widget_Base {
 			'separator' => $settings['variant_name_separator'] ?? ' – ',
 		);
 
-		$quantity_attributes = array(
-			'showSingleQuantity' => 'yes' === ( $settings['show_single_quantity'] ?? '' ),
-		);
-
 		$this->add_render_attribute( 'wrapper', 'class', 'wp-block-surecart-product-bundle-items__wrapper' );
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
@@ -443,7 +426,7 @@ class BundleItems extends \Elementor\Widget_Base {
 		<!-- wp:group {"style":{"spacing":{"blockGap":"4px"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left"}} -->
 		<div class="wp-block-group"><!-- wp:surecart/bundle-product-name /-->
 		<!-- wp:surecart/bundle-variant-name <?php echo $this->encode_block_attributes( $variant_name_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> /-->
-		<!-- wp:surecart/bundle-item-quantity <?php echo $this->encode_block_attributes( $quantity_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> /--></div>
+		<!-- wp:surecart/bundle-item-quantity /--></div>
 		<!-- /wp:group -->
 		<!-- wp:surecart/bundle-item-variant -->
 		<!-- wp:surecart/bundle-item-variant-pill <?php echo $this->encode_block_attributes( $pill_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> /-->
@@ -472,12 +455,11 @@ class BundleItems extends \Elementor\Widget_Base {
 	 * Used for server-side editor renders. Live preview updates use the
 	 * JS bindings in content_template() instead.
 	 *
-	 * @param string $separator            The variant name separator.
-	 * @param bool   $show_single_quantity Whether to show the quantity when it is 1.
+	 * @param string $separator The variant name separator.
 	 *
 	 * @return void
 	 */
-	private function render_preview( $separator, $show_single_quantity ) {
+	private function render_preview( $separator ) {
 		?>
 			<div class="wp-block-surecart-product-bundle-items__wrapper">
 				<div class="wp-block-surecart-product-bundle-items sc-bundle-items">
@@ -488,11 +470,7 @@ class BundleItems extends \Elementor\Widget_Base {
 									<div style="display: flex; gap: 4px; align-items: baseline;">
 										<span class="sc-bundle-item__product-name"><?php echo esc_html__( 'T-Shirt', 'surecart' ); ?></span>
 										<span class="sc-bundle-item__variant-name"><?php echo esc_html( $separator ) . esc_html__( 'Size', 'surecart' ); ?></span>
-										<?php if ( $show_single_quantity ) : ?>
-											<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 1', 'surecart' ); ?></span>
-										<?php else : ?>
-											<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 2', 'surecart' ); ?></span>
-										<?php endif; ?>
+										<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 2', 'surecart' ); ?></span>
 									</div>
 									<div class="sc-pill-option__wrapper">
 										<div class="sc-pill-option__button wp-block-surecart-bundle-item-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Small', 'surecart' ); ?></div>
@@ -527,11 +505,7 @@ class BundleItems extends \Elementor\Widget_Base {
 									<div style="display: flex; gap: 4px; align-items: baseline;">
 										<span class="sc-bundle-item__product-name"><?php echo esc_html__( 'T-Shirt', 'surecart' ); ?></span>
 										<span class="sc-bundle-item__variant-name">{{ settings.variant_name_separator }}<?php echo esc_html__( 'Size', 'surecart' ); ?></span>
-										<# if ( 'yes' === settings.show_single_quantity ) { #>
-											<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 1', 'surecart' ); ?></span>
-										<# } else { #>
-											<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 2', 'surecart' ); ?></span>
-										<# } #>
+										<span class="sc-bundle-item__qty"><?php echo esc_html__( '× 2', 'surecart' ); ?></span>
 									</div>
 									<div class="sc-pill-option__wrapper">
 										<div class="sc-pill-option__button wp-block-surecart-bundle-item-variant-pill sc-pill-option__button--selected"><?php echo esc_html__( 'Small', 'surecart' ); ?></div>

@@ -52,19 +52,6 @@ class BundleItemQuantity extends \Bricks\Element {
 	}
 
 	/**
-	 * Set controls.
-	 *
-	 * @return void
-	 */
-	public function set_controls() {
-		$this->controls['show_single_quantity'] = array(
-			'label'       => esc_html__( 'Show Single Quantity', 'surecart' ),
-			'type'        => 'checkbox',
-			'description' => esc_html__( 'Show the quantity even when it is 1.', 'surecart' ),
-		);
-	}
-
-	/**
 	 * Render element.
 	 *
 	 * @return void
@@ -79,10 +66,6 @@ class BundleItemQuantity extends \Bricks\Element {
 			return;
 		}
 
-		echo $this->raw( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			array(
-				'showSingleQuantity' => ! empty( $this->settings['show_single_quantity'] ),
-			)
-		);
+		echo $this->raw(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
