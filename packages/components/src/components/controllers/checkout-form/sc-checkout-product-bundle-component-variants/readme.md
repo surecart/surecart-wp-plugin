@@ -7,12 +7,9 @@
 
 ## Overview
 
-Instant-checkout-side picker for bundle component variants.
-
-Mirrors the PDP's `surecart/product-bundle-items` block but writes its
-selection straight into the existing bundle line item's
-`bundle_component_variants`, so the buy page can keep its Stencil-only
-checkout flow.
+Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+selection straight into the bundle line item's `bundle_component_variants`.
 
 ## Properties
 

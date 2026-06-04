@@ -550,11 +550,9 @@ export namespace Components {
     interface ScCheckoutPaystackPaymentProvider {
     }
     /**
-     * Instant-checkout-side picker for bundle component variants.
-     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
-     * selection straight into the existing bundle line item's
-     * `bundle_component_variants`, so the buy page can keep its Stencil-only
-     * checkout flow.
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
      */
     interface ScCheckoutProductBundleComponentVariants {
         /**
@@ -3156,7 +3154,7 @@ export namespace Components {
          */
         "amount": string;
         /**
-          * Bundle components — when this line item is a bundle parent, pass the component line items to render them as a read-only nested list under the main row. Each row shows the component product name (with variant options) on the left and the per-bundle quantity on the right.
+          * Bundle component line items, rendered as a read-only nested list under the main row when this line item is a bundle parent.
          */
         "bundleComponents": LineItem[];
         /**
@@ -4907,11 +4905,9 @@ declare global {
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
     };
     /**
-     * Instant-checkout-side picker for bundle component variants.
-     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
-     * selection straight into the existing bundle line item's
-     * `bundle_component_variants`, so the buy page can keep its Stencil-only
-     * checkout flow.
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
      */
     interface HTMLScCheckoutProductBundleComponentVariantsElement extends Components.ScCheckoutProductBundleComponentVariants, HTMLStencilElement {
     }
@@ -7742,11 +7738,9 @@ declare namespace LocalJSX {
     interface ScCheckoutPaystackPaymentProvider {
     }
     /**
-     * Instant-checkout-side picker for bundle component variants.
-     * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
-     * selection straight into the existing bundle line item's
-     * `bundle_component_variants`, so the buy page can keep its Stencil-only
-     * checkout flow.
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
      */
     interface ScCheckoutProductBundleComponentVariants {
         /**
@@ -10565,7 +10559,7 @@ declare namespace LocalJSX {
          */
         "amount"?: string;
         /**
-          * Bundle components — when this line item is a bundle parent, pass the component line items to render them as a read-only nested list under the main row. Each row shows the component product name (with variant options) on the left and the per-bundle quantity on the right.
+          * Bundle component line items, rendered as a read-only nested list under the main row when this line item is a bundle parent.
          */
         "bundleComponents"?: LineItem[];
         /**
@@ -12126,11 +12120,9 @@ declare module "@stencil/core" {
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             /**
-             * Instant-checkout-side picker for bundle component variants.
-             * Mirrors the PDP's `surecart/product-bundle-items` block but writes its
-             * selection straight into the existing bundle line item's
-             * `bundle_component_variants`, so the buy page can keep its Stencil-only
-             * checkout flow.
+             * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+             * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+             * selection straight into the bundle line item's `bundle_component_variants`.
              */
             "sc-checkout-product-bundle-component-variants": LocalJSX.ScCheckoutProductBundleComponentVariants & JSXBase.HTMLAttributes<HTMLScCheckoutProductBundleComponentVariantsElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;

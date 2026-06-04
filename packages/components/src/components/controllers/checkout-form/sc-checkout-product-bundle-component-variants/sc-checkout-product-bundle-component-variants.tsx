@@ -10,9 +10,9 @@ import { createErrorNotice } from '@store/notices/mutations';
 import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
 
 /**
- * Checkout-side picker for bundle component variants. Mirrors the PDP's
- * `surecart/product-bundle-items` block but writes the selection straight
- * into the bundle line item's `bundle_component_variants`.
+ * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+ * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+ * selection straight into the bundle line item's `bundle_component_variants`.
  */
 @Component({
   tag: 'sc-checkout-product-bundle-component-variants',
@@ -213,8 +213,8 @@ export class ScCheckoutProductBundleComponentVariants {
 
   /**
    * Render one row per variant option per variable bundle item — matches
-   * the PDP's `surecart/bundle-item-template` structure so the buy page
-   * reads identically.
+   * the PDP bundle picker (`surecart/product-variant-pills` in bundle mode) so
+   * the buy page reads identically.
    */
   private renderItemRows({ item, component }: { item: BundleItem; component: Product }) {
     const options = component?.variant_options?.data || [];
