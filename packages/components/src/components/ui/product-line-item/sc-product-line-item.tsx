@@ -94,10 +94,8 @@ export class ScProductLineItem {
   @Prop() reviewButtonLink: string = '';
 
   /**
-   * Bundle components — when this line item is a bundle parent, pass the
-   * component line items to render them as a read-only nested list under
-   * the main row. Each row shows the component product name (with variant
-   * options) on the left and the per-bundle quantity on the right.
+   * Bundle component line items, rendered as a read-only nested list under
+   * the main row when this line item is a bundle parent.
    */
   @Prop() bundleComponents: LineItem[] = [];
 

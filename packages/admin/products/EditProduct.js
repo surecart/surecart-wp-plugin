@@ -218,11 +218,8 @@ export default ({ id, setBrowserURL }) => {
 	const onDeleteProduct = async () => {
 		const { deletedNotice, indexHref } = labels;
 
-		// Best-effort: invalidate the in-flight post lookup BEFORE the delete
-		// so core-data's REMOVE_ITEMS reducer has a clean queryItems entry to
-		// operate on. The reducer reads its own slice synchronously and an
-		// unrelated query can still leave itemIds undefined, so we also
-		// tolerate the known TypeError below.
+		// Invalidate the in-flight post lookup before the delete so core-data's
+		// REMOVE_ITEMS reducer has a clean queryItems entry to operate on.
 		invalidateResolution('getEntityRecords', [
 			'postType',
 			'sc_product',
@@ -233,12 +230,8 @@ export default ({ id, setBrowserURL }) => {
 			setError(null);
 			await deleteProduct({ throwOnError: true });
 		} catch (e) {
-			// Known WP core-data REMOVE_ITEMS reducer bug: it does
-			// `queryItems.itemIds.filter(...)` without guarding against an
-			// undefined itemIds left behind by an in-flight getEntityRecords.
-			// The API DELETE itself succeeded by the time this throws — we
-			// surface anything else, but let this specific TypeError through
-			// so the success path still runs (notice + redirect).
+			// Known WP core-data REMOVE_ITEMS reducer bug — the API DELETE has
+			// already succeeded by the time it throws, so let it through.
 			const isReducerBug =
 				e?.name === 'TypeError' &&
 				/undefined.*filter/i.test(e?.message || '');
@@ -246,8 +239,7 @@ export default ({ id, setBrowserURL }) => {
 				setError(e);
 				return;
 			}
-			// Log the swallowed error so a future WP patch / message change
-			// stays visible in monitoring instead of silently breaking deletes.
+			// Log the swallowed error so it stays visible in monitoring.
 			console.warn(
 				'[surecart] tolerated WP core-data REMOVE_ITEMS TypeError after product delete:',
 				e

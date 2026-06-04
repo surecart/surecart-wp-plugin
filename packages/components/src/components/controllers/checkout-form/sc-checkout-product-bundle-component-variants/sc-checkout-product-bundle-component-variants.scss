@@ -1,11 +1,5 @@
 // Mirrors packages/blocks-next/src/blocks/bundle-item-template/style.scss so
-// the buy page's bundle pickers read identically to the PDP. Class names
-// are intentionally aligned (.sc-bundle-item__*) — when the PDP block
-// styles are loaded on the same page they layer cleanly.
-
-// shadow:false means the host element has no default display; without this
-// the flex children inside collapse to content-width and margin-left:auto
-// on the qty has no slack to push right.
+// the buy page's bundle pickers read identically to the PDP.
 sc-checkout-product-bundle-component-variants {
   display: block;
 }
