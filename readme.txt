@@ -421,6 +421,13 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+= 4.4.0 - June 9th, 2026 =
+- New: Auto prompt login at checkout.
+- New: Login with access code at checkout.
+- New: Improve order bump design at checkout.
+- New: Allow creating invoices with custom amounts (name your own price).
+- New: Product review shortcodes can now be placed on any page, using the product id parameter.
+- Fix: Quantity input background color missing on product page.
 
 = 4.3.3 - May 27th, 2026 = 
 - Fix: Issue with "Redeem By" date in admin being interpreted by browser timezone instead of server.
