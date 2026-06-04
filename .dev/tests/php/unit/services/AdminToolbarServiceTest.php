@@ -95,6 +95,10 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 
 		// Create an admin user with proper capabilities.
 		$user_id = $this->factory()->user->create(['role' => 'administrator']);
+		$user    = get_user_by('id', $user_id);
+		$user->add_cap('edit_sc_products');
+		$user->add_cap('edit_sc_coupons');
+		$user->add_cap('edit_sc_invoices');
 		wp_set_current_user($user_id);
 
 		// Mock account service as connected.
