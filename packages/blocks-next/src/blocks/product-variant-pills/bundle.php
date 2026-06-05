@@ -66,7 +66,13 @@ foreach ( ( $product->bundle_items->data ?? array() ) as $bundle_item ) :
 				<?php echo wp_kses_data( wp_interactivity_data_wp_context( array( 'optionNumber' => (int) $key + 1 ) ) ); ?>
 				data-wp-interactive='{ "namespace": "surecart/product-page" }'
 			>
-				<?php include 'radio.php'; ?>
+				<?php
+				if ( 'dropdown' === $option->display_type ) :
+					include 'select.php';
+				else :
+					include 'radio.php';
+				endif;
+				?>
 			</div>
 			<?php
 		endforeach;
