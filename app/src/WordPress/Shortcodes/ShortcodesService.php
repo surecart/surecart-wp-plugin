@@ -86,6 +86,14 @@ class ShortcodesService {
 				add_filter( 'should_load_separate_core_block_assets', '__return_false', 11 ); // Disable loading separate core block assets.
 				wp_enqueue_global_styles(); // Enqueue global styles.
 
+				// Accept both `id` and `product_id`; `id` (these shortcodes' native param) wins.
+				if ( is_array( $attributes ) && 0 === strpos( $block_name, 'surecart/product' ) ) {
+					if ( empty( $attributes['id'] ) && ! empty( $attributes['product_id'] ) ) {
+						$attributes['id'] = $attributes['product_id'];
+					}
+					unset( $attributes['product_id'] );
+				}
+
 				// convert comma separated attributes to array.
 				if ( is_array( $attributes ) ) {
 					foreach ( $attributes as $key => $value ) {
