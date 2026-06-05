@@ -279,10 +279,10 @@ sc-quantity-select::part(minus) {
     gap: 2px;
   }
 
-  // Collapsed: clamp to the first line (`1lh` where supported, `1.4em` fallback).
+  // Collapsed: clamp to N lines (default 2) plus the 2px row gaps — `1lh` where supported, `1.4em` fallback.
   &:not(.line-item-details--is-expanded) &__content {
-    max-height: 1.4em;
-    max-height: 1lh;
+    max-height: calc(var(--sc-line-item-details-collapse-lines, 2) * 1.4em + (var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px);
+    max-height: calc(var(--sc-line-item-details-collapse-lines, 2) * 1lh + (var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px);
     overflow: hidden;
   }
 

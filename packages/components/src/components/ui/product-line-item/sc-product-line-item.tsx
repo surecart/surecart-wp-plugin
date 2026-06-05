@@ -105,10 +105,10 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
-  /** Collapse the details region (bundle items + note) to the first line by default. */
+  /** Collapse the details region (bundle items + note) to the first two lines by default (matches the cart block). */
   @State() detailsExpanded = false;
 
-  /** Whether the collapsed details region overflows its first line. */
+  /** Whether the collapsed details region overflows its clamped height. */
   @State() detailsOverflowing = false;
 
   private detailsEl?: HTMLDivElement;
@@ -157,7 +157,7 @@ export class ScProductLineItem {
 
   /**
    * Bundle items + note share a single collapsible region with one chevron.
-   * Collapsed, only the first line shows; the chevron reveals the rest.
+   * Collapsed, only the first two lines show; the chevron reveals the rest.
    */
   renderDetails() {
     const rows = getBundleComponentRowsFromLineItems(this.bundleComponents);
