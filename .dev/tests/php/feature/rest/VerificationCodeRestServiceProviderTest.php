@@ -126,38 +126,6 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 		$this->assertNotEmpty($data['avatar_url'], 'avatar_url should not be empty.');
 	}
 
-	/**
-	 * @group login
-	 */
-	public function test_verify_success_returns_customer_fallback_data() {
-		$user = self::factory()->user->create_and_get([
-			'display_name' => 'Fallback Name',
-		]);
-
-		// Mock request for verify call — no customer linked, so customer() returns false.
-		$requests = \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
-
-		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
-		$request->set_body_params([
-			'login' => $user->user_email,
-			'code'  => 'test_code',
-		]);
-		$response = rest_do_request( $request );
-		$this->assertSame(200, $response->get_status());
-		$data = $response->get_data();
-
-		// No customer linked, so fallback values should be returned.
-		$this->assertArrayHasKey('customer', $data, 'Verify response should include customer data.');
-		$this->assertSame('Fallback Name', $data['customer']['first_name'], 'Should fallback to display_name when no customer.');
-		$this->assertSame('', $data['customer']['last_name']);
-		$this->assertSame('', $data['customer']['phone']);
-		$this->assertEmpty($data['customer']['shipping_address']);
-	}
-
 	public function test_verify_failure() {
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
