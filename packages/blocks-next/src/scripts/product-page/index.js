@@ -11,6 +11,13 @@ import {
 /**
  * Internal dependencies.
  */
+import {
+	getVariantScope,
+	getVariantFromValues,
+	isProductVariantOptionSoldOut,
+	hasEffectiveUnlimitedStock,
+} from './variant-scope';
+
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 
@@ -19,87 +26,10 @@ const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
 
 /**
- * Check if stock is effectively unlimited for a variant, falling back to product.
- */
-const hasEffectiveUnlimitedStock = (variant, product) =>
-	variant?.has_unlimited_stock ?? product?.has_unlimited_stock ?? false;
-
-/**
  * Check if the key is not submit key.
  */
 const isNotKeySubmit = (e) => {
 	return e.type === 'keydown' && e.key !== 'Enter' && e.code !== 'Space';
-};
-
-/**
- * Get the variant scope (page product or bundle component) for the current
- * picker. Each scope owns its own state slice, variant data, selection
- * commit, and URL key, so callers never branch on scope.
- *
- * @param {Object} ctx Interactivity context for the current picker.
- * @return {{values:Object, variants:Array, product:Object, missingMeansUnavailable:boolean, commit:Function, urlKey:Function}} Scope.
- */
-const getVariantScope = (ctx) => {
-	const prefix = ctx?.urlPrefix ? `${ctx.urlPrefix}-` : '';
-
-	// Bundle component scope.
-	if (ctx?.componentProductId) {
-		const unlimited = !!ctx.componentHasUnlimitedStock;
-		return {
-			values: ctx.componentOptionValues || {},
-			variants: ctx.componentVariants || [],
-			product: { has_unlimited_stock: unlimited },
-			// An unmatched combination can't be built unless stock is unlimited.
-			missingMeansUnavailable: !unlimited,
-			commit(optionNumber, value) {
-				if (!ctx.componentOptionValues) ctx.componentOptionValues = {};
-				ctx.componentOptionValues[`option_${optionNumber}`] = value;
-
-				if (!ctx.bundleComponentVariants) ctx.bundleComponentVariants = {};
-				const variant = getVariantFromValues({
-					variants: ctx.componentVariants || [],
-					values: ctx.componentOptionValues,
-				});
-				if (variant?.id) {
-					ctx.bundleComponentVariants[ctx.componentProductId] = variant.id;
-				} else {
-					delete ctx.bundleComponentVariants[ctx.componentProductId];
-				}
-			},
-			urlKey(optionNameSlug) {
-				return `${prefix}bundle-${
-					ctx.componentProductSlug || ctx.componentProductId
-				}-${optionNameSlug}`;
-			},
-		};
-	}
-
-	// Page product scope.
-	return {
-		values: ctx?.variantValues || {},
-		variants: ctx?.variants || [],
-		product: ctx?.product || null,
-		missingMeansUnavailable: false,
-		commit(optionNumber, value) {
-			if (!ctx.variantValues) ctx.variantValues = {};
-			ctx.variantValues[`option_${optionNumber}`] = value;
-
-			// Sync variant selection to the Stencil product store (upsell flow).
-			if (ctx.product?.id) {
-				document.dispatchEvent(
-					new CustomEvent('scVariantValuesUpdated', {
-						detail: {
-							productId: ctx.product.id,
-							variantValues: { ...ctx.variantValues },
-						},
-					})
-				);
-			}
-		},
-		urlKey(optionNameSlug) {
-			return `${prefix}${optionNameSlug}`;
-		},
-	};
 };
 
 // controls the product page.
@@ -733,75 +663,5 @@ const { state, actions } = store('surecart/product-page', {
 	},
 });
 
-/**
- * Get the variant from provided values.
- */
-export const getVariantFromValues = ({ variants, values }) => {
-	const variantValueKeys = Object.keys(values || {});
-
-	for (const variant of variants) {
-		const variantValues = ['option_1', 'option_2', 'option_3']
-			.map((option) => variant[option])
-			.filter((value) => value !== null && value !== undefined);
-
-		if (
-			variantValues?.length === variantValueKeys?.length &&
-			variantValueKeys.every((key) => variantValues.includes(values[key]))
-		) {
-			return variant;
-		}
-	}
-	return null;
-};
-
-/**
- * Is this variant option sold out.
- */
-export const isProductVariantOptionSoldOut = (
-	optionNumber,
-	option,
-	variantValues,
-	variants = [],
-	product = null,
-	missingMeansUnavailable = false
-) => {
-	const getEffectiveStock = (variant) => {
-		if (hasEffectiveUnlimitedStock(variant, product)) return Infinity;
-		return variant.available_stock;
-	};
-
-	const isGroupSoldOut = (items) => {
-		// No variant matches this option combination. On the page product this
-		// stays selectable; in a bundle component it means the combo can't be
-		// built, so the pill is unavailable.
-		if (!items.length) return missingMeansUnavailable;
-		return Math.max(...items.map(getEffectiveStock)) <= 0;
-	};
-
-	// if this is option 1, check to see if there are any variants with this option.
-	if (optionNumber === 1) {
-		const items = (variants || []).filter?.(
-			(variant) => variant.option_1 === option
-		);
-		return isGroupSoldOut(items);
-	}
-
-	// if this is option 2, check to see if there are any variants with this option and option 1
-	if (optionNumber === 2) {
-		const items = (variants || []).filter(
-			(variant) =>
-				variant?.option_1 === variantValues.option_1 &&
-				variant.option_2 === option
-		);
-		return isGroupSoldOut(items);
-	}
-
-	// if this is option 3, check to see if there are any variants with all the options.
-	const items = (variants || []).filter(
-		(variant) =>
-			variant?.option_1 === variantValues.option_1 &&
-			variant?.option_2 === variantValues.option_2 &&
-			variant.option_3 === option
-	);
-	return isGroupSoldOut(items);
-};
+// Re-exported for backwards compatibility; defined in ./variant-scope.
+export { getVariantFromValues, isProductVariantOptionSoldOut } from './variant-scope';
