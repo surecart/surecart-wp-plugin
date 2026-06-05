@@ -680,7 +680,22 @@ class ProductPageBlock {
 			return $missing_means_unavailable;
 		}
 
-		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( $v, $product ), array_values( $items ) );
+		return self::isVariantGroupSoldOut( $items, $product );
+	}
+
+	/**
+	 * Whether every variant in a group is out of stock.
+	 *
+	 * @param array $items   Variant data (arrays or objects) for the group.
+	 * @param array $product Parent product data for unlimited-stock fallback.
+	 * @return bool True only when the group has variants and all are sold out.
+	 */
+	private static function isVariantGroupSoldOut( array $items, array $product ): bool {
+		if ( empty( $items ) ) {
+			return false;
+		}
+
+		$stocks = array_map( fn( $v ) => self::effectiveVariantStock( (array) $v, $product ), array_values( $items ) );
 		return max( $stocks ) <= 0;
 	}
 

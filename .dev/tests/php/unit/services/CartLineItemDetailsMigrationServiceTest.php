@@ -26,6 +26,7 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 
 	public function setUp(): void {
 		\SureCart::make()->bootstrap( array( 'providers' => array() ), false );
+		\SureCart::alias( 'account', fn() => (object) array( 'id' => 'test' ) );
 		$this->service = new CartLineItemDetailsMigrationService();
 		parent::setUp();
 	}
