@@ -374,4 +374,30 @@ class ProductReviewShortcodesTest extends SureCartUnitTestCase {
 
 		remove_shortcode( 'sc_test_product_alias' );
 	}
+
+	/**
+	 * The add button points at the product's own post, not the page it sits on.
+	 */
+	public function test_add_button_resolves_product_post_id_not_current_page() {
+		$sc_id   = 'prod_add_button_post';
+		$post_id = $this->seedProductPost( $sc_id );
+
+		// Pretend we are rendering on an unrelated page (its id must NOT leak in).
+		$host_page = $this->factory()->post->create( [ 'post_type' => 'page' ] );
+		$this->go_to( get_permalink( $host_page ) );
+
+		$product = sc_get_product( $sc_id );
+
+		$this->assertNotEmpty( $product, 'Product should resolve from its sc_id.' );
+		$this->assertSame(
+			$post_id,
+			$product->post->ID ?? null,
+			'Modal target must come from the product post, not the current page.'
+		);
+		$this->assertNotSame(
+			$host_page,
+			$product->post->ID ?? null,
+			'Modal target must not be the host page id.'
+		);
+	}
 }

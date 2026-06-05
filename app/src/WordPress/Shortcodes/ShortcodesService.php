@@ -92,11 +92,12 @@ class ShortcodesService {
 					// they mean the same thing, and `id` is kept if both are given.
 					// Review shortcodes get this elsewhere, so skip `surecart/product-review-*`.
 					if ( is_array( $attributes )
-					&& 0 === strpos( $block_name, 'surecart/product' )
-					&& 0 !== strpos( $block_name, 'surecart/product-review' ) ) {
+						&& 0 === strpos( $block_name, 'surecart/product' )
+						&& 0 !== strpos( $block_name, 'surecart/product-review' ) ) {
 						if ( empty( $attributes['id'] ) && ! empty( $attributes['product_id'] ) ) {
 							$attributes['id'] = $attributes['product_id'];
 						}
+						// Drop the alias once mapped (safe to call when it was never set).
 						unset( $attributes['product_id'] );
 					}
 
