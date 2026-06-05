@@ -420,8 +420,11 @@ class VariantPills extends \Elementor\Widget_Base {
 			return;
 		}
 
-		// If product has no variants, return.
-		if ( empty( sc_get_product()->variant_options->data ?? [] ) ) {
+		$product              = sc_get_product();
+		$has_variant_options  = ! empty( $product->variant_options->data ?? [] );
+		$is_bundle_with_items = ! empty( $product->bundle ) && ! empty( $product->bundle_items->data ?? [] );
+
+		if ( ! $has_variant_options && ! $is_bundle_with_items ) {
 			return;
 		}
 
