@@ -83,4 +83,65 @@ export default function useHorizontalScrollState(rootRef) {
 			detach();
 		};
 	}, [rootRef]);
+
+	// Off-mode: scrolling the page sideways drags the header bars (admin header,
+	// page header, toolbar, footer) along with the table. Shift them back by
+	// scrollLeft so they stay put. (Plain CSS sticky can't pin them here — the
+	// wrapper isn't wide enough.)
+	useEffect(() => {
+		const root = rootRef?.current;
+		if (!root) {
+			return undefined;
+		}
+
+		// All inside the React root except the admin header, which WP renders
+		// separately above the app.
+		const PINNED = [
+			'.sc-list-header',
+			'.dataviews__view-actions',
+			'.dataviews-footer',
+		];
+		const scrollEl = document.getElementById('wpcontent');
+		if (!scrollEl) {
+			return undefined;
+		}
+
+		const isOffDesktop = () =>
+			root.getAttribute('data-enhanced-view') === 'off' &&
+			window.matchMedia('(min-width: 783px)').matches;
+
+		const bars = () => [
+			...PINNED.flatMap((sel) => [...root.querySelectorAll(sel)]),
+			...[document.getElementById('sc-admin-header')].filter(Boolean),
+		];
+
+		const apply = () => {
+			const x = isOffDesktop() ? scrollEl.scrollLeft : 0;
+			bars().forEach((el) => {
+				el.style.transform = x ? `translateX(${x}px)` : '';
+			});
+		};
+
+		scrollEl.addEventListener('scroll', apply, { passive: true });
+		window.addEventListener('resize', apply);
+		// Re-pin when rows reload or the view toggle flips.
+		const observer = new MutationObserver(apply);
+		observer.observe(root, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ['data-enhanced-view'],
+		});
+
+		apply();
+
+		return () => {
+			scrollEl.removeEventListener('scroll', apply);
+			window.removeEventListener('resize', apply);
+			observer.disconnect();
+			bars().forEach((el) => {
+				el.style.transform = '';
+			});
+		};
+	}, [rootRef]);
 }

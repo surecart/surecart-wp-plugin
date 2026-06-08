@@ -141,17 +141,22 @@ $padding-size: 20px;
 		min-width: 64px;
 	}
 
-	// Body-scroll by default; switch to inner-scroll on horizontal overflow.
+	// The table stays in normal flow; the WP content column (`#wpcontent`) is
+	// the scroll surface in off-mode (see below). That gives the natural
+	// travel-and-catch on vertical scroll and keeps horizontal scroll beside
+	// the admin menu instead of dragging the whole page.
 	.dataviews-wrapper {
 		overflow: visible;
 		height: auto;
 		min-height: calc(100vh - 130px);
 	}
 
-	// Inner-scroll: wrapper becomes the scroll container. Height comes from
-	// `useHorizontalScrollState` since CSS can't measure the wrapper's
+	// Inner-scroll only inside the enhanced fullscreen canvas, where a
+	// self-contained scroll surface fits the fixed-frame UX. Height comes
+	// from `useHorizontalScrollState` since CSS can't measure the wrapper's
 	// natural top (varies with admin bar, notices, etc.).
-	.dataviews-wrapper[data-horizontal-scroll="true"] {
+	&[data-enhanced-view="on"]
+		.dataviews-wrapper[data-horizontal-scroll="true"] {
 		overflow: auto;
 		height: var(
 			--sc-dvw-inner-scroll-height,
@@ -179,13 +184,12 @@ $padding-size: 20px;
 		}
 	}
 
-	// Hide upstream's `--stuck` border in body-scroll mode — it can render
-	// without real overflow due to ref timing / subpixel column widths.
-	.dataviews-wrapper[data-horizontal-scroll="false"] {
-		th.dataviews-view-table__actions-column--stuck::after,
-		td.dataviews-view-table__actions-column--stuck::after {
-			display: none;
-		}
+	// Hide upstream's `--stuck` actions-column divider — it can render without
+	// real overflow due to subpixel column widths, and the column carries its
+	// own background so content never shows through.
+	th.dataviews-view-table__actions-column--stuck::after,
+	td.dataviews-view-table__actions-column--stuck::after {
+		display: none;
 	}
 
 	// Override the global `.sc-list-header { margin: 20px ... }` so the sticky
@@ -233,31 +237,39 @@ $padding-size: 20px;
 	}
 }
 
-// Body-scroll offsets for the WP admin bar.
 .sc-dataview-list-wrapper[data-enhanced-view="off"] {
 	background: #fff;
 	margin: -10px -20px;
 	box-sizing: border-box;
-	border-top: 1px solid #f0f0f0;
-
-	.sc-list-header {
-		top: 32px;
-	}
-
-	.dataviews-view-table thead th {
-		top: calc(32px + var(--sc-list-header-height));
-	}
+	// No top border here — this wrapper scrolls with the table, so the line
+	// would slide off. It lives on `#sc-admin-header` instead (below).
 }
 
-// Inner-scroll mode: lock body to one scroll surface (chaining between body
-// and wrapper feels jerky). Lock `body` only — locking `html` breaks WP's
-// `padding-top: 32px` and clips the SureCart header under the admin bar.
-body:has(
-		.sc-dataview-list-wrapper[data-enhanced-view="off"]
-			.dataviews-wrapper[data-horizontal-scroll="true"]
-	) {
-	overflow: hidden;
-	height: calc(100vh - 32px);
+// Off-mode (desktop): make the WP content column the scroll surface. Vertical
+// scroll then gives the natural travel-and-catch and the footer is reached at
+// the end, while horizontal scroll stays contained beside the fixed admin menu
+// rather than dragging the whole page under it. `#wpcontent`'s top is always
+// the admin-bar bottom, so the height is a fixed calc — no JS measurement.
+// Sticky offsets stay at their base values (`.sc-list-header` top:0, thead
+// top:--sc-list-header-height) because they are now relative to `#wpcontent`,
+// which already sits below the admin bar. Mobile keeps page-scroll (below).
+@media screen and (min-width: 783px) {
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpcontent {
+		overflow: auto;
+		height: calc(100vh - 32px);
+	}
+
+	// Divider below the breadcrumb. It's here (not the list wrapper) because the
+	// admin header stays pinned on scroll, so the line keeps its full width.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#sc-admin-header {
+		border-bottom: 1px solid #f0f0f0;
+	}
 }
 
 // Action label rendering — pseudo lives outside the wrapper so it reaches
