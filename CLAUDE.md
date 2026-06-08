@@ -4,7 +4,14 @@ Headless e-commerce WordPress plugin. All transactional data (products, checkout
 
 See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
-**Coding guidelines:** Follow the `karpathy-guidelines` skill (`.claude/skills/karpathy-guidelines/`) when writing, reviewing, or refactoring code — think before coding, simplicity first, surgical changes, goal-driven execution.
+## Coding Guidelines
+
+Apply these when writing, reviewing, or refactoring code. Derived from [Andrej Karpathy's notes](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls (source: [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) @ `2c606141936f1eeef17fa3043a72095b4765b9c2`). They bias toward caution over speed — use judgment on trivial tasks.
+
+1. **Think before coding.** State assumptions explicitly; if uncertain, ask. Surface multiple interpretations instead of silently picking one. Name what's confusing rather than guessing.
+2. **Simplicity first.** Write the minimum code that solves the problem — no speculative features, no abstractions for single-use code, no error handling for impossible cases. If 200 lines could be 50, rewrite it.
+3. **Surgical changes.** Touch only what the request requires. Don't refactor, reformat, or "improve" adjacent code that isn't broken; match existing style. Remove only the orphans your own change created — mention pre-existing dead code, don't delete it.
+4. **Goal-driven execution.** Turn tasks into verifiable success criteria (e.g. "fix the bug" → "write a test that reproduces it, then make it pass") and loop until they're met.
 
 ## Architecture
 
