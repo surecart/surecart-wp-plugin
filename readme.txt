@@ -427,7 +427,12 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 - New: Improve order bump design at checkout.
 - New: Allow creating invoices with custom amounts (name your own price).
 - New: Product review shortcodes can now be placed on any page, using the product id parameter.
+- Improvement: Product shortcodes now accept both id and product_id to reference a product.
 - Fix: Quantity input background color missing on product page.
+- Fix: Fatal error on product pages on PHP 8+ with themes that pass image attributes as a string (e.g. Enfold).
+- Fix: Checkout error with the Japan postal code field due to an invalid validation pattern.
+- Fix: "Write a Review" button throwing an error when used on non-product pages.
+- Fix: "Write a Review" button appearing invisible on the frontend with some classic themes.
 
 = 4.3.3 - May 27th, 2026 = 
 - Fix: Issue with "Redeem By" date in admin being interpreted by browser timezone instead of server.
