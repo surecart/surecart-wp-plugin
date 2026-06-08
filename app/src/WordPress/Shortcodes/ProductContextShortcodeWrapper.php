@@ -26,12 +26,17 @@ class ProductContextShortcodeWrapper {
 		}
 
 		return function ( $attributes = '', $content = null ) use ( $callback ) {
-			if ( ! is_array( $attributes ) || empty( $attributes['product_id'] ) ) {
+			// Accept both `id` and `product_id`; `product_id` (these shortcodes' native param) wins.
+			$product_id = is_array( $attributes )
+				? ( $attributes['product_id'] ?? $attributes['id'] ?? '' )
+				: '';
+
+			if ( empty( $product_id ) ) {
 				return $callback( $attributes, $content );
 			}
 
-			$product_id = (string) $attributes['product_id'];
-			unset( $attributes['product_id'] );
+			$product_id = (string) $product_id;
+			unset( $attributes['product_id'], $attributes['id'] );
 
 			// Clear so sc_get_product() doesn't short-circuit to the page's product.
 			$product = $this->withQueryVar( null, fn() => sc_get_product( $product_id ) );
