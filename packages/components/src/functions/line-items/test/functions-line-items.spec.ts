@@ -1,4 +1,4 @@
-import { calculateInitialLineItems, getSessionId } from '../index';
+import { calculateInitialLineItems, getSessionId, getPerBundleQuantity, getBundleComponentRowsFromLineItems } from '../index';
 
 const prices = [
   {
@@ -37,6 +37,36 @@ describe('Line items functions', () => {
     ]);
     expect(calculateInitialLineItems(prices, 'multiple')).toEqual([{ price_id: 'price1', quantity: 1 }]);
     expect(calculateInitialLineItems(prices, 'single')).toEqual([{ price_id: 'price1', quantity: 1 }]);
+  });
+
+  describe('getPerBundleQuantity', () => {
+    it('divides the component total by the parent quantity', () => {
+      // 2 bundles, component total 2 -> 1 per bundle.
+      expect(getPerBundleQuantity({ quantity: 2 } as any, 2)).toBe(1);
+      // 2 bundles, component total 4 -> 2 per bundle.
+      expect(getPerBundleQuantity({ quantity: 4 } as any, 2)).toBe(2);
+    });
+
+    it('defaults the parent quantity to 1 and never returns below 1', () => {
+      expect(getPerBundleQuantity({ quantity: 3 } as any)).toBe(3);
+      expect(getPerBundleQuantity({ quantity: 0 } as any, 5)).toBe(1);
+    });
+  });
+
+  describe('getBundleComponentRowsFromLineItems', () => {
+    const components = [
+      { id: 'c1', quantity: 4, variant_display_options: 'Red / XL', price: { product: { name: 'Air Beats' } } },
+      { id: 'c2', quantity: 2, variant_display_options: '10°C', price: { product: { name: 'Sleeping Bag' } } },
+      { id: 'c3', quantity: 2, variant_display_options: '', price: { product: { name: 'No Variant' } } },
+    ];
+
+    it('builds per-bundle rows and skips components without a variant', () => {
+      const rows = getBundleComponentRowsFromLineItems(components as any, 2);
+      expect(rows).toEqual([
+        { id: 'c1', label: 'Air Beats - Red / XL', qty: 2 },
+        { id: 'c2', label: 'Sleeping Bag - 10°C', qty: 1 },
+      ]);
+    });
   });
 
   describe('getSessionId', () => {

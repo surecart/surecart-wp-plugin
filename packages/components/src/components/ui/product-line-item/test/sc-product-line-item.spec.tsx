@@ -24,10 +24,7 @@ describe('sc-product-line-item', () => {
     });
 
     page.root.note = 'Please gift wrap this order.';
-    page.root.bundleComponents = [
-      bundleComponent('c1', 'Sleeping Bag', '10°C / Forest', 1),
-      bundleComponent('c2', 'Trail Tent', '2-Person', 2),
-    ];
+    page.root.bundleComponents = [bundleComponent('c1', 'Sleeping Bag', '10°C / Forest', 1), bundleComponent('c2', 'Trail Tent', '2-Person', 2)];
     await page.waitForChanges();
 
     const details = page.root.shadowRoot.querySelector('.line-item-details');

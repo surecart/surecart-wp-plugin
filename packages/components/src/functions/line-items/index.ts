@@ -3,17 +3,28 @@ import { getQueryArg } from '@wordpress/url';
 import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
 
 /**
- * Build display rows from bundle component line items (cart, checkout, order,
- * customer dashboard). Components without a variant selection are skipped.
+ * A bundle component's line item `quantity` is the total across the whole
+ * purchase (per-bundle count × bundle quantity). Divide it back out by the
+ * parent quantity to get the per-bundle count the bundle actually defines.
  */
-export const getBundleComponentRowsFromLineItems = (components: LineItem[] = []): BundleComponentRow[] => {
+export const getPerBundleQuantity = (component: LineItem, parentQuantity = 1): number => {
+  const parentQty = Math.max(Number(parentQuantity) || 1, 1);
+  const total = Math.max(Number(component?.quantity) || 1, 1);
+  return Math.max(Math.round(total / parentQty), 1);
+};
+
+/**
+ * Build display rows from bundle component line items. Components without a
+ * variant selection are skipped.
+ */
+export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1): BundleComponentRow[] => {
   return (components || [])
     .map(component => {
       const variants = component?.variant_display_options || '';
       if (!variants) return null;
       const componentProduct = (component?.price as Price)?.product as Product;
       const name = componentProduct?.name || '';
-      const qty = Math.max(Number(component?.quantity) || 1, 1);
+      const qty = getPerBundleQuantity(component, parentQuantity);
       const label = `${name} - ${variants}`;
       if (!name) return null;
       return { id: component?.id, label, qty };

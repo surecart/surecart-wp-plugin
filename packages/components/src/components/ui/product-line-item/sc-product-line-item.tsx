@@ -160,7 +160,7 @@ export class ScProductLineItem {
    * Collapsed, only the first two lines show; the chevron reveals the rest.
    */
   renderDetails() {
-    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents);
+    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity);
     const hasNote = !!this.note;
     if (!rows.length && !hasNote) return null;
 
