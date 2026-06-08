@@ -6,12 +6,7 @@ See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patter
 
 ## Coding Guidelines
 
-Apply these when writing, reviewing, or refactoring code. They bias toward caution over speed — use judgment on trivial tasks.
-
-1. **Think before coding.** State assumptions explicitly; if uncertain, ask. Surface multiple interpretations instead of silently picking one. Name what's confusing rather than guessing.
-2. **Simplicity first.** Write the minimum code that solves the problem — no speculative features, no abstractions for single-use code, no error handling for impossible cases. If 200 lines could be 50, rewrite it.
-3. **Surgical changes.** Touch only what the request requires. Don't refactor, reformat, or "improve" adjacent code that isn't broken; match existing style. Remove only the orphans your own change created — mention pre-existing dead code, don't delete it.
-4. **Goal-driven execution.** Turn tasks into verifiable success criteria (e.g. "fix the bug" → "write a test that reproduces it, then make it pass") and loop until they're met.
+When writing, reviewing, or refactoring code, follow the **`karpathy-guidelines`** skill (`.claude/skills/karpathy-guidelines/SKILL.md`) — think before coding, simplicity first, surgical changes, goal-driven execution. Invoke it via the Skill tool at the start of a coding task.
 
 ## Architecture
 
