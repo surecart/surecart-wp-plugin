@@ -4,6 +4,8 @@ Headless e-commerce WordPress plugin. All transactional data (products, checkout
 
 See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
+**Coding guidelines:** Follow the `karpathy-guidelines` skill (`.claude/skills/karpathy-guidelines/`) when writing, reviewing, or refactoring code — think before coding, simplicity first, surgical changes, goal-driven execution.
+
 ## Architecture
 
 Bootstrap: `surecart.php` -> composer autoload -> `SureCart` facade -> `app/config.php` (168 service providers) -> `app/hooks.php`
