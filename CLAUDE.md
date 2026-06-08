@@ -4,6 +4,10 @@ Headless e-commerce WordPress plugin. All transactional data (products, checkout
 
 See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
+## Coding Guidelines
+
+When writing, reviewing, or refactoring code, follow the **`karpathy-guidelines`** skill (`.claude/skills/karpathy-guidelines/SKILL.md`) — think before coding, simplicity first, surgical changes, goal-driven execution. Invoke it via the Skill tool at the start of a coding task.
+
 ## Architecture
 
 Bootstrap: `surecart.php` -> composer autoload -> `SureCart` facade -> `app/config.php` (168 service providers) -> `app/hooks.php`
