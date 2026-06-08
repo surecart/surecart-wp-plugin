@@ -174,14 +174,7 @@ export class ScProductLineItem {
           'line-item-details--is-expanded': this.detailsExpanded,
         }}
         part="details"
-        tabIndex={collapsible ? 0 : undefined}
         onClick={() => collapsible && this.toggleDetails()}
-        onKeyDown={e => {
-          if (collapsible && (e.key === 'Enter' || e.key === ' ')) {
-            e.preventDefault();
-            this.toggleDetails();
-          }
-        }}
       >
         <div class="line-item-details__content" ref={el => (this.detailsEl = el as HTMLDivElement)}>
           {rows.map(row => (

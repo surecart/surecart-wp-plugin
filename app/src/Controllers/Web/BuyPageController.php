@@ -70,6 +70,7 @@ class BuyPageController extends BasePageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		// The route always passes a product slug here.
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
@@ -90,13 +91,16 @@ class BuyPageController extends BasePageController {
 			return $this->handleError( $this->model );
 		}
 
-		// Bundles render their structure from the PDP-synced post meta so the buy
-		// page matches the PDP. The live API still owns price/availability.
-		// This reads the same synced product cache as sc_get_product()/the PDP — intentional parity, not a WP-as-source-of-truth read.
-		$cached = $this->loadProductFromMeta( $id );
-		if ( ! empty( $cached ) && ! empty( $cached->bundle ) ) {
-			$this->model->bundle       = $cached->bundle;
-			$this->model->bundle_items = $cached->bundle_items;
+		// For bundles, overlay the bundle structure from the PDP-synced post meta so
+		// the buy page renders the same components as the PDP. Price and availability
+		// still come from the live API response above; we only swap in the cached
+		// bundle data. The API's `bundle` flag lets us skip this lookup for non-bundles.
+		if ( ! empty( $this->model->bundle ) ) {
+			$cached = $this->loadProductFromMeta( $id );
+			if ( ! empty( $cached ) && ! empty( $cached->bundle ) ) {
+				$this->model->bundle       = $cached->bundle;
+				$this->model->bundle_items = $cached->bundle_items;
+			}
 		}
 
 		// if this buy page is not enabled, check read permissions.
