@@ -54,6 +54,19 @@ describe('stock', () => {
       ] as any;
       expect(buildStockAdjustedLineItems(items)).toEqual([{ id: 'a', price_id: 'price_a', quantity: 2 }]);
     });
+
+    it('still caps the bundle by another short component when one component is swapped', () => {
+      // 5 bundles. Component A (gone variant) is swapped; component B only has 3
+      // in stock (1 per bundle) -> bundle must drop to 3, not stay at 5.
+      const items = [
+        { id: 'parent', quantity: 5, component_line_item: false, price: { id: 'price_parent', product: { name: 'Kit', bundle: true } } },
+        { id: 'a', quantity: 5, purchasable_status: 'out_of_stock', component_line_item: true, bundle_line_item: 'parent', price: { product: { id: 'pA', available_stock: 0 } } },
+        { id: 'b', quantity: 5, purchasable_status: 'out_of_stock', component_line_item: true, bundle_line_item: 'parent', price: { product: { id: 'pB', available_stock: 3 } } },
+      ] as any;
+      const overrides = new Map([['parent', { pA: 'variant-blue' }]]);
+
+      expect(buildStockAdjustedLineItems(items, overrides)).toEqual([{ id: 'parent', price_id: 'price_parent', quantity: 3, bundle_component_variants: { pA: 'variant-blue' } }]);
+    });
   });
 
   describe('buildStockAlertRows', () => {

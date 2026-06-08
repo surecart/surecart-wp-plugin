@@ -1,10 +1,10 @@
-import { LineItem, LineItemData, Price, Product } from '../types';
+import { ImageAttributes, LineItem, LineItemData, Price, Product } from '../types';
 import { getPerBundleQuantity } from './line-items';
 
 export interface StockAlertRow {
   name?: string;
   variant?: string;
-  image?: any;
+  image?: ImageAttributes;
   from: number;
   to: number;
 }
@@ -24,14 +24,21 @@ export const getOutOfStockLineItems = (lineItems: LineItem[] = []): LineItem[] =
  * A bundle is atomic, so a short component caps the bundle, not the component:
  * floor(stock / perBundleQty), smallest cap across components. Returns a map of
  * bundle parent id -> reduced quantity.
+ *
+ * `swappedProductsByParent` lists component products being swapped to an in-stock
+ * variant — those are skipped so they don't cap a bundle they no longer limit.
  */
-export const getBundleQuantityReductions = (lineItems: LineItem[] = []): Map<string, number> => {
+export const getBundleQuantityReductions = (lineItems: LineItem[] = [], swappedProductsByParent: Map<string, Set<string>> = new Map()): Map<string, number> => {
   const reductions = new Map<string, number>();
 
   getOutOfStockLineItems(lineItems).forEach(component => {
     if (!component.component_line_item || !component.bundle_line_item) return;
     const parent = (lineItems || []).find(li => li.id === component.bundle_line_item);
     if (!parent?.id) return;
+
+    // Skip a component that's being swapped — its old stock no longer caps the bundle.
+    const productId = ((component.price as Price)?.product as Product)?.id;
+    if (productId && swappedProductsByParent.get(parent.id)?.has(productId)) return;
 
     const perBundle = getPerBundleQuantity(component, parent.quantity);
     const maxBundles = Math.floor(getAvailableStock(component) / perBundle);
@@ -46,10 +53,13 @@ export const getBundleQuantityReductions = (lineItems: LineItem[] = []): Map<str
 /**
  * Payload to fix a stock alert. Posts parents only (components derive from the
  * parent): bundles drop to their reduced quantity, standalone items to available
- * stock. A `bundleVariantOverrides` entry swaps a gone variant and keeps full qty.
+ * stock. A swapped component is excluded from its bundle's cap, so any *other*
+ * short component still reduces the bundle correctly.
  */
 export const buildStockAdjustedLineItems = (lineItems: LineItem[] = [], bundleVariantOverrides: Map<string, Record<string, string>> = new Map()): LineItemData[] => {
-  const reductions = getBundleQuantityReductions(lineItems);
+  // Component products being swapped, keyed by bundle parent.
+  const swappedProductsByParent = new Map<string, Set<string>>(Array.from(bundleVariantOverrides, ([parentId, map]) => [parentId, new Set(Object.keys(map))]));
+  const reductions = getBundleQuantityReductions(lineItems, swappedProductsByParent);
 
   const standalone = new Map<string, number>();
   getOutOfStockLineItems(lineItems).forEach(lineItem => {
@@ -63,7 +73,7 @@ export const buildStockAdjustedLineItems = (lineItems: LineItem[] = [], bundleVa
       const id = lineItem.id;
       const hasSwap = !!id && bundleVariantOverrides.has(id);
       let quantity = lineItem.quantity;
-      if (id && !hasSwap && reductions.has(id)) quantity = reductions.get(id) ?? quantity;
+      if (id && reductions.has(id)) quantity = reductions.get(id) ?? quantity;
       else if (id && standalone.has(id)) quantity = standalone.get(id) ?? quantity;
 
       return {
