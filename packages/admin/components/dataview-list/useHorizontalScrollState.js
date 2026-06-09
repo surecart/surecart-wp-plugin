@@ -111,22 +111,39 @@ export default function useHorizontalScrollState(rootRef) {
 			root.getAttribute('data-enhanced-view') === 'off' &&
 			window.matchMedia('(min-width: 783px)').matches;
 
-		const bars = () => [
-			...PINNED.flatMap((sel) => [...root.querySelectorAll(sel)]),
-			...[document.getElementById('sc-admin-header')].filter(Boolean),
-		];
-
-		const apply = () => {
-			const x = isOffDesktop() ? scrollEl.scrollLeft : 0;
-			bars().forEach((el) => {
-				el.style.transform = x ? `translateX(${x}px)` : '';
+		// Cache the bars so the scroll handler never walks the DOM — re-querying
+		// every frame was the main source of the stutter. `will-change` promotes
+		// each to its own compositor layer so the per-frame translate is a cheap
+		// GPU update that keeps lockstep with the composited scroll instead of
+		// trailing it on the main thread.
+		let bars = [];
+		const collect = () => {
+			bars = [
+				...PINNED.flatMap((sel) => [...root.querySelectorAll(sel)]),
+				...[document.getElementById('sc-admin-header')].filter(Boolean),
+			];
+			bars.forEach((el) => {
+				el.style.willChange = 'transform';
 			});
 		};
 
+		const apply = () => {
+			const x = isOffDesktop() ? scrollEl.scrollLeft : 0;
+			for (const el of bars) {
+				el.style.transform = x ? `translateX(${x}px)` : '';
+			}
+		};
+
+		collect();
+		apply();
+
 		scrollEl.addEventListener('scroll', apply, { passive: true });
 		window.addEventListener('resize', apply);
-		// Re-pin when rows reload or the view toggle flips.
-		const observer = new MutationObserver(apply);
+		// Re-cache and re-pin when rows reload or the view toggle flips.
+		const observer = new MutationObserver(() => {
+			collect();
+			apply();
+		});
 		observer.observe(root, {
 			childList: true,
 			subtree: true,
@@ -134,14 +151,13 @@ export default function useHorizontalScrollState(rootRef) {
 			attributeFilter: ['data-enhanced-view'],
 		});
 
-		apply();
-
 		return () => {
 			scrollEl.removeEventListener('scroll', apply);
 			window.removeEventListener('resize', apply);
 			observer.disconnect();
-			bars().forEach((el) => {
+			bars.forEach((el) => {
 				el.style.transform = '';
+				el.style.willChange = '';
 			});
 		};
 	}, [rootRef]);
