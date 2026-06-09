@@ -97,9 +97,7 @@ class DownloadController extends BaseController {
 			return null;
 		}
 
-		// A variant can enable downloads without attaching any of its own. In that
-		// case the purchase grants the product-level downloads, so only scope the
-		// list to the variant when it actually has its own files.
+		// Only scope to the variant when it has its own files; otherwise fall back to product-level downloads.
 		$variant               = $purchase->variant ?? null;
 		$has_variant_downloads = ! empty( $variant->downloads_enabled ) && ! empty( $variant->downloads->data );
 
