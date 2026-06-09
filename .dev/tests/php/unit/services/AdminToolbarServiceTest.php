@@ -94,8 +94,11 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
 		// Create an admin user with proper capabilities.
-		$user_id = $this->factory()->user->create(['role' => 'administrator']);
-		wp_set_current_user($user_id);
+		$user = $this->factory()->user->create_and_get(['role' => 'administrator']);
+		$user->add_cap('edit_sc_products');
+		$user->add_cap('edit_sc_coupons');
+		$user->add_cap('edit_sc_invoices');
+		wp_set_current_user($user->ID);
 
 		// Mock account service as connected.
 		$account_mock = \Mockery::mock();

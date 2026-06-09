@@ -215,6 +215,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'checkout_show_login_prompt',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
 			'shop_admin_menu',
 			[
 				'type'              => 'boolean',

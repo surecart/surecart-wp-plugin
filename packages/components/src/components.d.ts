@@ -538,6 +538,8 @@ export namespace Components {
          */
         "validate": () => Promise<boolean>;
     }
+    interface ScCheckoutAutofillProvider {
+    }
     /**
      * This component listens for a confirmed event and redirects to the success url.
      */
@@ -1091,6 +1093,16 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": any;
+    }
+    interface ScCustomerLogin {
+        /**
+          * Code Error coming from the parent
+         */
+        "codeError": string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode": 'code' | 'password';
     }
     interface ScCustomerName {
         /**
@@ -1956,13 +1968,16 @@ export namespace Components {
          */
         "bump": Bump;
         /**
-          * Should we show the controls
+          * Should we show the controls (classic design)
          */
         "showControl": boolean;
     }
     interface ScOrderBumps {
         "help": string;
         "label": string;
+        /**
+          * Should we show the controls (classic design)
+         */
         "showControl": boolean;
     }
     interface ScOrderConfirmComponentsValidator {
@@ -4271,6 +4286,24 @@ export namespace Components {
     }
     interface ScUpsellTotals {
     }
+    interface ScVerificationCode {
+        /**
+          * Whether the component is in a loading/verifying state
+         */
+        "loading": boolean;
+        /**
+          * On change verification code
+         */
+        "onChange": (value: string) => void;
+        /**
+          * Total number of inputs
+         */
+        "total": number;
+        /**
+          * Focus the first code input.
+         */
+        "triggerFocus": () => Promise<void>;
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -4868,6 +4901,12 @@ declare global {
         prototype: HTMLScCheckoutElement;
         new (): HTMLScCheckoutElement;
     };
+    interface HTMLScCheckoutAutofillProviderElement extends Components.ScCheckoutAutofillProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutAutofillProviderElement: {
+        prototype: HTMLScCheckoutAutofillProviderElement;
+        new (): HTMLScCheckoutAutofillProviderElement;
+    };
     /**
      * This component listens for a confirmed event and redirects to the success url.
      */
@@ -5157,6 +5196,12 @@ declare global {
     var HTMLScCustomerLastnameElement: {
         prototype: HTMLScCustomerLastnameElement;
         new (): HTMLScCustomerLastnameElement;
+    };
+    interface HTMLScCustomerLoginElement extends Components.ScCustomerLogin, HTMLStencilElement {
+    }
+    var HTMLScCustomerLoginElement: {
+        prototype: HTMLScCustomerLoginElement;
+        new (): HTMLScCustomerLoginElement;
     };
     interface HTMLScCustomerNameElementEventMap {
         "scInput": void;
@@ -6874,6 +6919,12 @@ declare global {
         prototype: HTMLScUpsellTotalsElement;
         new (): HTMLScUpsellTotalsElement;
     };
+    interface HTMLScVerificationCodeElement extends Components.ScVerificationCode, HTMLStencilElement {
+    }
+    var HTMLScVerificationCodeElement: {
+        prototype: HTMLScVerificationCodeElement;
+        new (): HTMLScVerificationCodeElement;
+    };
     interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
     }
     var HTMLScVisuallyHiddenElement: {
@@ -6926,6 +6977,7 @@ declare global {
         "sc-charges-list": HTMLScChargesListElement;
         "sc-checkbox": HTMLScCheckboxElement;
         "sc-checkout": HTMLScCheckoutElement;
+        "sc-checkout-autofill-provider": HTMLScCheckoutAutofillProviderElement;
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
@@ -6949,6 +7001,7 @@ declare global {
         "sc-customer-email": HTMLScCustomerEmailElement;
         "sc-customer-firstname": HTMLScCustomerFirstnameElement;
         "sc-customer-lastname": HTMLScCustomerLastnameElement;
+        "sc-customer-login": HTMLScCustomerLoginElement;
         "sc-customer-name": HTMLScCustomerNameElement;
         "sc-customer-phone": HTMLScCustomerPhoneElement;
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
@@ -7131,6 +7184,7 @@ declare global {
         "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
         "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
         "sc-upsell-totals": HTMLScUpsellTotalsElement;
+        "sc-verification-code": HTMLScVerificationCodeElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
@@ -7698,6 +7752,8 @@ declare namespace LocalJSX {
           * The account tax protocol
          */
         "taxProtocol"?: TaxProtocol;
+    }
+    interface ScCheckoutAutofillProvider {
     }
     /**
      * This component listens for a confirmed event and redirects to the success url.
@@ -8329,6 +8385,16 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: any;
+    }
+    interface ScCustomerLogin {
+        /**
+          * Code Error coming from the parent
+         */
+        "codeError"?: string;
+        /**
+          * Lets the parent open in password mode (used on 429 fallback).
+         */
+        "initialMode"?: 'code' | 'password';
     }
     interface ScCustomerName {
         /**
@@ -9275,13 +9341,16 @@ declare namespace LocalJSX {
          */
         "bump"?: Bump;
         /**
-          * Should we show the controls
+          * Should we show the controls (classic design)
          */
         "showControl"?: boolean;
     }
     interface ScOrderBumps {
         "help"?: string;
         "label"?: string;
+        /**
+          * Should we show the controls (classic design)
+         */
         "showControl"?: boolean;
     }
     interface ScOrderConfirmComponentsValidator {
@@ -11780,6 +11849,20 @@ declare namespace LocalJSX {
     }
     interface ScUpsellTotals {
     }
+    interface ScVerificationCode {
+        /**
+          * Whether the component is in a loading/verifying state
+         */
+        "loading"?: boolean;
+        /**
+          * On change verification code
+         */
+        "onChange"?: (value: string) => void;
+        /**
+          * Total number of inputs
+         */
+        "total"?: number;
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -11828,6 +11911,7 @@ declare namespace LocalJSX {
         "sc-charges-list": ScChargesList;
         "sc-checkbox": ScCheckbox;
         "sc-checkout": ScCheckout;
+        "sc-checkout-autofill-provider": ScCheckoutAutofillProvider;
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
@@ -11851,6 +11935,7 @@ declare namespace LocalJSX {
         "sc-customer-email": ScCustomerEmail;
         "sc-customer-firstname": ScCustomerFirstname;
         "sc-customer-lastname": ScCustomerLastname;
+        "sc-customer-login": ScCustomerLogin;
         "sc-customer-name": ScCustomerName;
         "sc-customer-phone": ScCustomerPhone;
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
@@ -12033,6 +12118,7 @@ declare namespace LocalJSX {
         "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
         "sc-upsell-submit-button": ScUpsellSubmitButton;
         "sc-upsell-totals": ScUpsellTotals;
+        "sc-verification-code": ScVerificationCode;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
@@ -12070,6 +12156,7 @@ declare module "@stencil/core" {
             "sc-charges-list": LocalJSX.ScChargesList & JSXBase.HTMLAttributes<HTMLScChargesListElement>;
             "sc-checkbox": LocalJSX.ScCheckbox & JSXBase.HTMLAttributes<HTMLScCheckboxElement>;
             "sc-checkout": LocalJSX.ScCheckout & JSXBase.HTMLAttributes<HTMLScCheckoutElement>;
+            "sc-checkout-autofill-provider": LocalJSX.ScCheckoutAutofillProvider & JSXBase.HTMLAttributes<HTMLScCheckoutAutofillProviderElement>;
             /**
              * This component listens for a confirmed event and redirects to the success url.
              */
@@ -12103,6 +12190,7 @@ declare module "@stencil/core" {
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
             "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
             "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
+            "sc-customer-login": LocalJSX.ScCustomerLogin & JSXBase.HTMLAttributes<HTMLScCustomerLoginElement>;
             "sc-customer-name": LocalJSX.ScCustomerName & JSXBase.HTMLAttributes<HTMLScCustomerNameElement>;
             "sc-customer-phone": LocalJSX.ScCustomerPhone & JSXBase.HTMLAttributes<HTMLScCustomerPhoneElement>;
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;
@@ -12299,6 +12387,7 @@ declare module "@stencil/core" {
             "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
             "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;
             "sc-upsell-totals": LocalJSX.ScUpsellTotals & JSXBase.HTMLAttributes<HTMLScUpsellTotalsElement>;
+            "sc-verification-code": LocalJSX.ScVerificationCode & JSXBase.HTMLAttributes<HTMLScVerificationCodeElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;

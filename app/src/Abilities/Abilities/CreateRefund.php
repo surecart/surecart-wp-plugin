@@ -27,7 +27,7 @@ class CreateRefund extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_description(): string {
-		return __( 'Issue a monetary refund against a SureCart charge. Requires the charge ID, refund amount in the smallest currency unit (e.g., cents for USD), and a reason code(duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). This initiates an irreversible financial transaction that returns money to the customer\'s payment method.', 'surecart' );
+		return __( 'Issue a refund against a SureCart charge. Requires the charge ID, refund amount in the smallest currency unit (e.g., cents for USD), and a reason code (duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). Refunds are only supported for charges processed through a real payment processor (Stripe, PayPal, etc.) — the action initiates an irreversible financial transaction that returns money to the customer\'s payment method. Charges paid via a manual payment method (e.g., bank transfer, e-Transfer, cash) cannot be refunded through SureCart; any reimbursement for those must be handled offline and tracked outside the system.', 'surecart' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class CreateRefund extends AbstractAbility {
 	 * {@inheritDoc}
 	 */
 	public function get_instructions(): string {
-		return 'This is a destructive financial action that cannot be reversed. All three parameters are required: charge (the charge UUID, not charge_id), amount (in smallest currency unit, e.g. 49000 for $490), and reason (one of: duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). The amount must not exceed the original charge amount minus any previous refunds. A charge that has already been fully refunded cannot be refunded again. Always confirm the refund amount and reason with the user before executing.';
+		return 'This is a destructive financial action that cannot be reversed — money is returned to the customer\'s payment method. Only works for charges processed through a real payment processor (Stripe, PayPal, etc.). Refunds against manual-payment charges (e-Transfer, bank transfer, cash, etc.) are not supported by SureCart and the API will reject the request; any reimbursement for manual payments must be handled offline and tracked outside SureCart. Before issuing a refund, confirm the underlying charge has a processor_type set — if it routed through a manual_payment_method, do not call this ability. All three parameters are required: charge (the charge UUID, not charge_id), amount (in smallest currency unit, e.g. 49000 for $490), and reason (one of: duplicate, fraudulent, requested_by_customer, expired_uncaptured_charge). The amount must not exceed the original charge amount minus any previous refunds. A charge that has already been fully refunded cannot be refunded again. Always confirm the refund amount and reason with the user before executing.';
 	}
 
 	/**

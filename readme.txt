@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 4.3.3
+Stable tag: 4.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -421,6 +421,18 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.4.0 - June 9th, 2026 =
+- New: Auto prompt login at checkout.
+- New: Login with access code at checkout.
+- New: Improve order bump design at checkout.
+- New: Allow creating invoices with custom amounts (name your own price).
+- Improvement: Product shortcodes now accept product_id to reference a product.
+- Fix: Quantity input background color missing on product page.
+- Fix: Fatal error on product pages on PHP 8+ with themes that pass image attributes as a string (e.g. Enfold).
+- Fix: Checkout error with the Japan postal code field due to an invalid validation pattern.
+- Fix: "Write a Review" button throwing an error when used on non-product pages.
+- Fix: "Write a Review" button appearing invisible on the frontend with some classic themes.
 
 = 4.3.3 - May 27th, 2026 = 
 - Fix: Issue with "Redeem By" date in admin being interpreted by browser timezone instead of server.

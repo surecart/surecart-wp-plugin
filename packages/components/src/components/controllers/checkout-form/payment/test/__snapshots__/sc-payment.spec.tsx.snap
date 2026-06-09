@@ -6,9 +6,7 @@ exports[`sc-payment does not render non-recurring if recurring is required 1`] =
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
-        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
-          Test Mode
-        </sc-tag>
+        <slot name="label-end"></slot>
       </div>
       <div theme="container">
         <sc-payment-method-choice processor-id="stripe">
@@ -34,6 +32,7 @@ exports[`sc-payment only renders only mollie component if mollie is active 1`] =
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
+        <slot name="label-end"></slot>
       </div>
       <sc-checkout-mollie-payment processor-id="mollieid"></sc-checkout-mollie-payment>
     </sc-form-control>
@@ -47,9 +46,7 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
-        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
-          Test Mode
-        </sc-tag>
+        <slot name="label-end"></slot>
       </div>
       <sc-toggles theme="container">
         <sc-payment-method-choice processor-id="paypal">
@@ -92,9 +89,7 @@ exports[`sc-payment renders mock processor with stripe 1`] = `
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
-        <sc-tag exportparts="base:test-badge__base, content:test-badge__content" size="small" type="warning">
-          Test Mode
-        </sc-tag>
+        <slot name="label-end"></slot>
       </div>
       <sc-toggles theme="container">
         <sc-payment-method-choice processor-id="stripe">
@@ -134,6 +129,7 @@ exports[`sc-payment renders no processors & user does not have \`manage_sc_shop_
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
+        <slot name="label-end"></slot>
       </div>
       <div theme="container">
         <sc-alert open="" type="info">
@@ -151,6 +147,7 @@ exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\`
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
+        <slot name="label-end"></slot>
       </div>
       <div theme="container">
         <sc-alert open="" type="info">
@@ -276,6 +273,7 @@ exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
     <sc-form-control exportparts="label, help-text, form-control">
       <div class="sc-payment-label" slot="label">
         <div></div>
+        <slot name="label-end"></slot>
       </div>
       <sc-toggles theme="container">
         <sc-payment-method-choice processor-id="stripe">
