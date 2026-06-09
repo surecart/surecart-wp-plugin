@@ -99,6 +99,7 @@ export default function useHorizontalScrollState(rootRef) {
 		const PINNED = [
 			'.sc-list-header',
 			'.dataviews__view-actions',
+			'.dataviews-filters__container',
 			'.dataviews-footer',
 		];
 		const scrollEl = document.getElementById('wpcontent');
