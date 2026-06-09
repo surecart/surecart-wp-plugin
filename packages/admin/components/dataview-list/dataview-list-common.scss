@@ -165,19 +165,16 @@ $padding-size: 20px;
 		min-height: 0;
 
 		.dataviews__view-actions {
-			position: sticky;
-			top: 0;
-			z-index: 10;
 			background: #fff;
 		}
 
 		.dataviews-view-table thead th {
-			top: 64px;
+			top: 0;
 		}
 
 		.dataviews-footer {
 			position: sticky;
-			bottom: 0;
+			bottom: 16px;
 			left: 0;
 			z-index: 10;
 			background: #fff;
@@ -204,7 +201,7 @@ $padding-size: 20px;
 	// Override the global `.sc-list-header { margin: 20px ... }` so the sticky
 	// background spans the full card width.
 	.sc-list-header {
-		margin: 0;
+		margin: 0 0 -1px 0;
 		padding: 16px 20px;
 		border-bottom: 1px solid #f0f0f0;
 		position: sticky;
