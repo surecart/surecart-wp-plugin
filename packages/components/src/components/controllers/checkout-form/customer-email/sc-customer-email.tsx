@@ -1,10 +1,12 @@
-import { Component, Event, EventEmitter, h, Host, Method, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
+import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
-import { getValueFromUrl } from '../../../../functions/util';
-import { state as userState } from '@store/user';
+import { getValueFromUrl, isRateLimited } from '../../../../functions/util';
+import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
 @Component({
@@ -16,6 +18,7 @@ export class ScCustomerEmail {
   private input: HTMLScInputElement;
 
   private removeCheckoutListener: () => void;
+  private removeUserListener: () => void;
 
   /** A message for tracking confirmation. */
   @Prop() trackingConfirmationMessage: string;
@@ -62,6 +65,18 @@ export class ScCustomerEmail {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** Is busy or not eg: email checking */
+  @State() busy: boolean;
+
+  /** Is logout in progress */
+  @State() logoutBusy: boolean = false;
+
+  /** Error */
+  @State() error: string = '';
+
+  /** Initial mode for sc-customer-login. Flips to 'password' on 429. */
+  @State() loginMode: 'code' | 'password' = 'code';
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -94,11 +109,64 @@ export class ScCustomerEmail {
       checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: this.input.value } })) as Checkout;
     } catch (error) {
       console.log(error);
+    } finally {
+      this.busy = false;
+    }
+  }
+
+  private loginCodeDebounce: number;
+
+  @Watch('value')
+  handleValueChange() {
+    if (this.loginCodeDebounce) {
+      clearTimeout(this.loginCodeDebounce);
+    }
+    this.loginCodeDebounce = window.setTimeout(() => {
+      this.createLoginCode();
+      this.loginCodeDebounce = null;
+    }, 800);
+  }
+
+  async createLoginCode() {
+    if (!this.value) return;
+    if (userState.loggedIn) return;
+
+    // Opt-out merchant setting: skip proactive code-send when disabled.
+    if (!checkoutState.showLoginPrompt) return;
+
+    // Check if a valid email using regex, if not return.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+      return;
+    }
+
+    try {
+      this.busy = true;
+      this.error = '';
+      this.loginMode = 'code';
+      await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/verification_codes',
+        data: {
+          login: this.value,
+          checkout_mode: checkoutState.mode,
+        },
+      });
+      userState.email = this.value;
+      userState.verificationStatus = CODE_SENT;
+
+      speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
+    } catch (e) {
+      this.handleCodeSendError(e);
+    } finally {
+      this.busy = false;
     }
   }
 
   @Method()
   async reportValidity() {
+    // if user is logged in, no need to validate.
+    if (userState.loggedIn) return true;
+
     return this.input?.reportValidity?.();
   }
 
@@ -121,17 +189,97 @@ export class ScCustomerEmail {
     }
 
     this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
+
+    if (!!this.value && !userState.loggedIn) {
+      userState.email = this.value;
+    }
   }
 
   /** Listen to checkout. */
   componentWillLoad() {
     this.handleSessionChange();
     this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+    this.removeUserListener = onChangeUser('email', val => {
+      this.value = val;
+    });
+  }
+
+  handleCodeSendError(error: any) {
+    // 429: silently switch to password mode. Header + input is enough context — no red error.
+    if (isRateLimited(error)) {
+      userState.email = this.input?.value || '';
+      userState.verificationStatus = UNVERIFIED;
+      this.loginMode = 'password';
+      return;
+    }
+
+    (error?.additional_errors || []).forEach((e: any) => {
+      if (e?.code === 'verification_code.email.blocked_duplicate') {
+        userState.email = this.input?.value || '';
+        userState.verificationStatus = CODE_SENT;
+      } else {
+        this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
+      }
+    });
   }
 
   /** Remove listener. */
   disconnectedCallback() {
     this.removeCheckoutListener();
+    this.removeUserListener();
+  }
+
+  async logout() {
+    try {
+      this.logoutBusy = true;
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: '' } })) as Checkout;
+
+      const response = (await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/logout',
+      })) as any;
+
+      // @ts-ignore - nonceMiddleware is set in fetch.ts but not in @wordpress/api-fetch types.
+      if (response?.nonce && apiFetch.nonceMiddleware) {
+        // @ts-ignore
+        apiFetch.nonceMiddleware.nonce = response.nonce;
+      }
+
+      resetUser();
+      speak(__('Logged out successfully.', 'surecart'), 'assertive');
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.logoutBusy = false;
+    }
+  }
+
+  renderLoggedIn() {
+    return (
+      <div class="email-preview">
+        <div class="email-preview__info">
+          <sc-avatar
+            image={userState.avatarUrl}
+            initials={(userState?.name || userState?.email).charAt(0)}
+          />
+          <div class="email-preview__text">
+            <div class="email-preview__name">{userState.name}</div>
+            <div class="email-preview__email">{userState.email}</div>
+          </div>
+        </div>
+        <sc-dropdown placement="bottom-end">
+          <sc-button type="text" slot="trigger" loading={this.logoutBusy}>
+            <sc-icon name="chevron-down" aria-label={__('Account options', 'surecart')}></sc-icon>
+          </sc-button>
+          <sc-menu>
+            <sc-menu-item onClick={() => this.logout()}>
+              <sc-icon slot="prefix" name="log-out"></sc-icon>
+              {__('Logout', 'surecart')}
+            </sc-menu-item>
+          </sc-menu>
+        </sc-dropdown>
+      </div>
+    );
   }
 
   renderOptIn() {
@@ -162,8 +310,21 @@ export class ScCustomerEmail {
   }
 
   render() {
+    if (userState.loggedIn) {
+      return this.renderLoggedIn();
+    }
+
+    if (
+      userState.verificationStatus === CODE_SENT ||
+      userState.verificationStatus === VERIFYING ||
+      userState.verificationStatus === UNVERIFIED ||
+      userState.verificationStatus === CODE_EXPIRED
+    ) {
+      return <sc-customer-login initialMode={this.loginMode} codeError={this.error}></sc-customer-login>;
+    }
+
     return (
-      <Host>
+      <Fragment>
         <sc-input
           exportparts="base, input, form-control, label, help-text, prefix, suffix"
           type="email"
@@ -181,13 +342,17 @@ export class ScCustomerEmail {
           autofocus={this.autofocus}
           hasFocus={this.hasFocus}
           onScChange={() => this.handleChange()}
-          onScInput={() => this.scInput.emit()}
+          onScInput={() => {
+            this.scInput.emit();
+          }}
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
-        ></sc-input>
+        >
+          {this.busy && <sc-spinner slot="suffix" class="account-loader" />}
+        </sc-input>
 
         {this.renderOptIn()}
-      </Host>
+      </Fragment>
     );
   }
 }

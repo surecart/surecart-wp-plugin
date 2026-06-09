@@ -7,6 +7,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
 	...defaultConfig,
 	resolve: {
+		...defaultConfig.resolve,
+		fallback: {
+			...( defaultConfig.resolve?.fallback || {} ),
+			crypto: false,
+		},
 		alias: {
 			'@scripts': path.resolve(__dirname, 'packages'),
 			'@blocks': path.resolve(__dirname, 'packages/blocks/Blocks'),

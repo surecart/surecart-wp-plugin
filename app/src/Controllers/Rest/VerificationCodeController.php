@@ -33,7 +33,7 @@ class VerificationCodeController extends RestController {
 
 		// bail if no user.
 		if ( ! $user ) {
-			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ) );
+			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ), [ 'status' => 404 ] );
 		}
 
 		return $model->where( $request->get_query_params() )->create(
@@ -48,7 +48,7 @@ class VerificationCodeController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request  Rest Request.
 	 *
-	 * @return \SureCart\Models\VerificationCode|\WP_Error
+	 * @return mixed|\WP_Error
 	 */
 	public function verify( \WP_REST_Request $request ) {
 		// run middleware.
@@ -63,7 +63,8 @@ class VerificationCodeController extends RestController {
 		if ( ! $user ) {
 			return new \WP_Error(
 				'invalid_email',
-				__( 'There is no account with that username or email address.', 'surecart' )
+				__( 'There is no account with that username or email address.', 'surecart' ),
+				[ 'status' => 404 ]
 			);
 		}
 
@@ -82,7 +83,7 @@ class VerificationCodeController extends RestController {
 
 		// code is invalid or not verified.
 		if ( empty( $verify->verified ) ) {
-			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ) );
+			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ), [ 'status' => 400 ] );
 		}
 
 		// get the user based on the login value.
@@ -90,7 +91,7 @@ class VerificationCodeController extends RestController {
 
 		// bail if no user.
 		if ( ! $user ) {
-			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ) );
+			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ), [ 'status' => 404 ] );
 		}
 
 		// login the user.
@@ -100,6 +101,9 @@ class VerificationCodeController extends RestController {
 			return $logged_in;
 		}
 
+		$verify->name         = $user->display_name ?? $user->user_login;
+		$verify->avatar_url   = get_avatar_url( $user->user_email, [ 'size' => 48 ] );
+		$verify->nonce        = ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' );
 		$redirect_to          = $request->get_param( 'redirect_to' );
 		$redirect_url         = ! empty( $redirect_to ) ? wp_validate_redirect( $redirect_to, false ) : null;
 		$verify->redirect_url = apply_filters( 'sc_login_redirect_url', $redirect_url ); // this is the URL to redirect to after login.

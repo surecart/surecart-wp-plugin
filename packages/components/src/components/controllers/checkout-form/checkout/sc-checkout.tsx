@@ -273,7 +273,10 @@ export class ScCheckout {
                   <sc-order-confirm-provider checkout-status={formState.formState.value} success-url={this.successUrl}>
                     {/* Handles the current session. */}
                     <sc-session-provider ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)} prices={this.prices} persist={this.persistSession}>
-                      <slot />
+                      {/* Autofill the checkout from the logged-in customer's saved profile. */}
+                      <sc-checkout-autofill-provider>
+                        <slot />
+                      </sc-checkout-autofill-provider>
                     </sc-session-provider>
                   </sc-order-confirm-provider>
                 </sc-form-components-validator>

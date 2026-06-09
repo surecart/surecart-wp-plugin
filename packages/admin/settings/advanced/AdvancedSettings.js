@@ -459,6 +459,35 @@ export default () => {
 				</ScSwitch>
 			</SettingsBox>
 
+			{scData?.show_order_bump_design_toggle && (
+				<SettingsBox
+					title={__('Checkout', 'surecart')}
+					description={__(
+						'Change your checkout appearance settings.',
+						'surecart'
+					)}
+					loading={!hasLoadedItem}
+				>
+					<ScSwitch
+						checked={item?.modern_order_bump}
+						onClick={(e) => {
+							e.preventDefault();
+							editItem({
+								modern_order_bump: !item?.modern_order_bump,
+							});
+						}}
+					>
+						{__('Modern Order Bump Design', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Use the modern rounded button design for order bumps on checkout forms. The classic checkbox design will be used when disabled. Please clear your page cache after changing this setting.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</SettingsBox>
+			)}
+
 			<SettingsBox
 				title={__('Legacy Features', 'surecart')}
 				description={__(

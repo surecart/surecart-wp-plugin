@@ -1,7 +1,5 @@
 # ce-register-icon-library
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -50,6 +48,8 @@
  - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
@@ -64,6 +64,7 @@
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -121,6 +122,8 @@ graph TD;
   sc-checkout-test-complete --> sc-icon
   sc-coupon-form --> sc-icon
   sc-customer-details --> sc-icon
+  sc-customer-email --> sc-icon
+  sc-customer-login --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon
@@ -135,6 +138,7 @@ graph TD;
   sc-line-item-total --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
+  sc-order-bump --> sc-icon
   sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon

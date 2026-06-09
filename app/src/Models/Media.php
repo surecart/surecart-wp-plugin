@@ -56,8 +56,8 @@ class Media extends Model {
 	 * Get the image markup.
 	 * We are assuming all media here is an image.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return string
 	 */
@@ -79,12 +79,15 @@ class Media extends Model {
 	/**
 	 * Get the image attributes.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return array
 	 */
 	protected function attributes( $size = 'full', $attr = [] ) {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		// get sizes.
 		$sizes      = wp_get_registered_image_subsizes();
 		$image_size = $sizes[ $size ] ?? null;
