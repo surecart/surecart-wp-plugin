@@ -7,6 +7,7 @@ const {
 	buildProductsQuery,
 	applyArchiveStatusFilter,
 	applyCollectionsFilter,
+	applyFeaturedFilter,
 } = require('../buildQuery');
 
 const baseView = {
@@ -106,6 +107,28 @@ describe('applyCollectionsFilter', () => {
 	});
 });
 
+describe('applyFeaturedFilter', () => {
+	test.each([
+		['true', true],
+		['false', false],
+	])('value = %s → featured = %s', (value, expected) => {
+		const args = {};
+		applyFeaturedFilter({
+			view: {
+				filters: [{ field: 'featured', operator: 'is', value }],
+			},
+			args,
+		});
+		expect(args.featured).toBe(expected);
+	});
+
+	test('unset filter leaves featured unset', () => {
+		const args = {};
+		applyFeaturedFilter({ view: { filters: [] }, args });
+		expect(args.featured).toBeUndefined();
+	});
+});
+
 describe('multiple filters compose correctly', () => {
 	test('archive + collections coexist', () => {
 		const args = buildProductsQuery({
@@ -123,6 +146,22 @@ describe('multiple filters compose correctly', () => {
 		expect(args).toMatchObject({
 			archived: true,
 			product_collection_ids: ['col_a'],
+			expand: ['product_collections', 'commission_structure'],
+		});
+	});
+
+	test('archive + featured coexist', () => {
+		const args = buildProductsQuery({
+			fields: ['name'],
+			filters: [
+				{ field: 'archive_status', operator: 'is', value: 'active' },
+				{ field: 'featured', operator: 'is', value: 'true' },
+			],
+		});
+
+		expect(args).toMatchObject({
+			archived: false,
+			featured: true,
 			expand: ['product_collections', 'commission_structure'],
 		});
 	});

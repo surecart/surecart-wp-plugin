@@ -32,7 +32,21 @@ export const applyCollectionsFilter = ({ view, args }) => {
 	args.product_collection_ids = values;
 };
 
-const DEFAULT_HANDLERS = [applyArchiveStatusFilter, applyCollectionsFilter];
+export const applyFeaturedFilter = ({ view, args }) => {
+	const filter = findFilter(view, 'featured');
+	const value = filter?.value;
+	if (value === 'true') {
+		args.featured = true;
+	} else if (value === 'false') {
+		args.featured = false;
+	}
+};
+
+const DEFAULT_HANDLERS = [
+	applyArchiveStatusFilter,
+	applyCollectionsFilter,
+	applyFeaturedFilter,
+];
 
 const extraArgs = () => ({
 	expand: ['product_collections', 'commission_structure'],
