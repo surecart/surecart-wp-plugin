@@ -14,7 +14,6 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
-	useTabRefreshKey,
 } from '../components/dataview-list';
 import useSiteContext from '../hooks/useSiteContext';
 import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
@@ -80,10 +79,13 @@ export default ({ navigation }) => {
 	const saving = useSavingVariantIds();
 	const [editingVariant, setEditingVariant] = useState(null);
 
+	// Filter dropdown only needs id+name — `expand: []` overrides the
+	// entity default (`expand: ['media']`) so up to 100 media objects
+	// aren't fetched and thrown away. Empty arrays serialize to no param.
 	const { records: collectionRecords } = useEntityRecords(
 		'surecart',
 		'product-collection',
-		{ per_page: 100 }
+		{ per_page: 100, expand: [] }
 	);
 	const collectionElements = useMemo(
 		() =>
@@ -119,12 +121,9 @@ export default ({ navigation }) => {
 		buildQueryArgs: productsQueryArgs,
 	});
 
-	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
-
 	const { tabs, activeValue, setTab } = useStatusTabs({
 		view,
 		setView,
-		refreshKey,
 	});
 
 	// Async-fetched integrations enrichment for the integrations column.
@@ -207,7 +206,6 @@ export default ({ navigation }) => {
 						});
 					}
 					invalidateList();
-					bumpTabRefresh();
 					createSuccessNotice(
 						products.length === 1
 							? products[0].archived
@@ -234,7 +232,6 @@ export default ({ navigation }) => {
 			saveEntityRecord,
 			createSuccessNotice,
 			invalidateList,
-			bumpTabRefresh,
 		]
 	);
 
@@ -256,7 +253,6 @@ export default ({ navigation }) => {
 				).length;
 				const failed = results.length - succeeded;
 				invalidateList();
-				bumpTabRefresh();
 				if (succeeded > 0 && failed === 0) {
 					createSuccessNotice(
 						sprintf(
@@ -298,7 +294,6 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
-			bumpTabRefresh,
 		]
 	);
 
@@ -384,7 +379,6 @@ export default ({ navigation }) => {
 				).length;
 				const failed = results.length - succeeded;
 				invalidateList();
-				bumpTabRefresh();
 				if (succeeded > 0 && failed === 0) {
 					createSuccessNotice(
 						sprintf(
@@ -425,7 +419,6 @@ export default ({ navigation }) => {
 			createSuccessNotice,
 			createErrorNotice,
 			invalidateList,
-			bumpTabRefresh,
 		]
 	);
 

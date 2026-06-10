@@ -14,7 +14,6 @@ import {
 	useEnhancedView,
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
-	useTabRefreshKey,
 	DismissibleInfo,
 } from '../components/dataview-list';
 import useSiteContext from '../hooks/useSiteContext';
@@ -77,12 +76,9 @@ export default ({ navigation }) => {
 		buildQueryArgs: groupsQueryArgs,
 	});
 
-	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
-
 	const { tabs, activeValue, setTab } = useStatusTabs({
 		view,
 		setView,
-		refreshKey,
 	});
 
 	const fields = useMemo(
@@ -121,7 +117,6 @@ export default ({ navigation }) => {
 						});
 					}
 					invalidateList();
-					bumpTabRefresh();
 					createSuccessNotice(
 						items.length === 1
 							? items[0].archived
@@ -151,7 +146,6 @@ export default ({ navigation }) => {
 			runMutation,
 			saveEntityRecord,
 			invalidateList,
-			bumpTabRefresh,
 			createSuccessNotice,
 		]
 	);
@@ -168,7 +162,6 @@ export default ({ navigation }) => {
 							{ throwOnError: true }
 						);
 						invalidateList();
-						bumpTabRefresh();
 						createSuccessNotice(
 							__('Upgrade group deleted.', 'surecart'),
 							{ type: 'snackbar' }
@@ -187,7 +180,6 @@ export default ({ navigation }) => {
 						},
 					});
 					invalidateList();
-					bumpTabRefresh();
 					createSuccessNotice(
 						sprintf(
 							/* translators: %d is the number of upgrade groups queued for deletion. */
@@ -214,7 +206,6 @@ export default ({ navigation }) => {
 			deleteEntityRecord,
 			createSuccessNotice,
 			invalidateList,
-			bumpTabRefresh,
 		]
 	);
 

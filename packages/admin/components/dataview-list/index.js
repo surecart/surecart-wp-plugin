@@ -9,7 +9,6 @@ export { default as DismissibleInfo } from './DismissibleInfo';
 export { default as iconLabel } from './iconLabel';
 export { default as useAsyncEntityElements } from './useAsyncEntityElements';
 export { default as useProductElements } from './useProductElements';
-export { default as useTabRefreshKey } from './useTabRefreshKey';
 export { default as useHorizontalScrollState } from './useHorizontalScrollState';
 export {
 	buildBaseQuery,

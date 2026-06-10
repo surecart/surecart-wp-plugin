@@ -15,7 +15,6 @@ import {
 	applyDefaultFieldsExtensions,
 	ModernViewIntroModal,
 	useProductElements,
-	useTabRefreshKey,
 } from '../components/dataview-list';
 import useSiteContext from '../hooks/useSiteContext';
 import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
@@ -81,12 +80,9 @@ export default ({ navigation }) => {
 		buildQueryArgs: reviewsQueryArgs,
 	});
 
-	const { refreshKey, bump: bumpTabRefresh } = useTabRefreshKey();
-
 	const { tabs, activeValue, setTab } = useStatusTabs({
 		view,
 		setView,
-		refreshKey,
 	});
 
 	const fields = useMemo(
@@ -121,7 +117,6 @@ export default ({ navigation }) => {
 							false
 						);
 						invalidateList();
-						bumpTabRefresh();
 						createSuccessNotice(instantMessage, {
 							type: 'snackbar',
 						});
@@ -138,7 +133,6 @@ export default ({ navigation }) => {
 						},
 					});
 					invalidateList();
-					bumpTabRefresh();
 					createSuccessNotice(queuedMessage, { type: 'snackbar' });
 				},
 				{ errorMessage: errorLabel }
@@ -147,7 +141,6 @@ export default ({ navigation }) => {
 			runMutation,
 			receiveEntityRecords,
 			invalidateList,
-			bumpTabRefresh,
 			createSuccessNotice,
 		]
 	);
@@ -230,7 +223,6 @@ export default ({ navigation }) => {
 							}
 						);
 						invalidateList();
-						bumpTabRefresh();
 						createSuccessNotice(__('Review deleted.', 'surecart'), {
 							type: 'snackbar',
 						});
@@ -251,7 +243,6 @@ export default ({ navigation }) => {
 						},
 					});
 					invalidateList();
-					bumpTabRefresh();
 					createSuccessNotice(
 						sprintf(
 							/* translators: %d is the number of reviews queued for deletion. */
@@ -273,7 +264,6 @@ export default ({ navigation }) => {
 			deleteEntityRecord,
 			createSuccessNotice,
 			invalidateList,
-			bumpTabRefresh,
 		]
 	);
 

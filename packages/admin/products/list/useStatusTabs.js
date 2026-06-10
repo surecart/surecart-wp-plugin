@@ -1,29 +1,21 @@
 /**
- * Build the status-tab strip for the products list.
- *
- * Tabs map to the `archive_status` filter (values: `active`, `archived`,
- * `all`). Counts are fetched in parallel with `head=true` so the tab strip
- * doesn't add a meaningful delay to the initial render — the table renders
- * first, the counts arrive seconds later.
+ * Status-tab strip for the products list — Active / Archived / All.
+ * Tabs map to the `archive_status` filter. They're static: no count
+ * fetching, so the list mounts without extra requests.
  */
-import { useMemo, useEffect, useState, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { Icon, published, archive, post } from '@wordpress/icons';
 
-// JSX outside the hook so the elements are stable references.
-const TAB_DEFS = [
+// JSX at module scope so the tab objects are stable references.
+const TABS = [
 	{
 		value: 'active',
 		label: __('Active', 'surecart'),
-		archived: false,
 		icon: <Icon icon={published} size={18} />,
 	},
 	{
 		value: 'archived',
 		label: __('Archived', 'surecart'),
-		archived: true,
 		icon: <Icon icon={archive} size={18} />,
 	},
 	{
@@ -33,8 +25,7 @@ const TAB_DEFS = [
 	},
 ];
 
-// `refreshKey` — bump after archive / delete / duplicate so tab counts re-fetch.
-export const useStatusTabs = ({ view, setView, refreshKey = 0 }) => {
+export const useStatusTabs = ({ view, setView }) => {
 	const activeValue =
 		view?.filters?.find((f) => f.field === 'archive_status')?.value ||
 		'active';
@@ -55,48 +46,5 @@ export const useStatusTabs = ({ view, setView, refreshKey = 0 }) => {
 		});
 	};
 
-	const [counts, setCounts] = useState({});
-	const reqIdRef = useRef(0);
-
-	useEffect(() => {
-		const id = ++reqIdRef.current;
-
-		const queries = TAB_DEFS.map((tab) => {
-			const params = { per_page: 1, page: 1 };
-			if (tab.archived !== undefined) params.archived = tab.archived;
-			return apiFetch({
-				path: addQueryArgs('/surecart/v1/products', params),
-				parse: false,
-			})
-				.then((res) => ({
-					value: tab.value,
-					count: parseInt(res.headers.get('X-WP-Total') || '0', 10),
-				}))
-				.catch(() => ({ value: tab.value, count: undefined }));
-		});
-
-		Promise.all(queries).then((entries) => {
-			if (id !== reqIdRef.current) return;
-			const next = {};
-			for (const entry of entries) {
-				if (typeof entry.count === 'number') {
-					next[entry.value] = entry.count;
-				}
-			}
-			setCounts(next);
-		});
-	}, [refreshKey]);
-
-	const tabs = useMemo(
-		() =>
-			TAB_DEFS.map((t) => ({
-				value: t.value,
-				label: t.label,
-				icon: t.icon,
-				count: counts[t.value],
-			})),
-		[counts]
-	);
-
-	return { tabs, activeValue, setTab };
+	return { tabs: TABS, activeValue, setTab };
 };

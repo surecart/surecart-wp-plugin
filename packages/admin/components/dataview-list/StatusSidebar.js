@@ -297,17 +297,6 @@ export default ({
 								>
 									{tab.label}
 								</span>
-								{typeof tab.count === 'number' && (
-									<span
-										css={css`
-											font-size: 13px;
-											color: #949494;
-											font-weight: 400;
-										`}
-									>
-										{tab.count}
-									</span>
-								)}
 							</HStack>
 						</Item>
 					);
