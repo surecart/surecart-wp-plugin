@@ -48,16 +48,40 @@ const DEFAULT_HANDLERS = [
 	applyFeaturedFilter,
 ];
 
+// Lean list expands — the middleware honors an explicit expand verbatim, so
+// this must always be non-empty (no param would re-trigger the forced full
+// set). Price renders from base-object `metrics`; variants load lazily on
+// row expand; `variant_options` is only fetched to know the expander exists.
+export const BASE_EXPANDS = [
+	'product_collections',
+	'product_medias',
+	'product_media.media',
+	'variant_options',
+];
+
+const buildProductsExpand = (view) => {
+	const expand = [...BASE_EXPANDS];
+	if (view?.fields?.includes('commission_amount')) {
+		expand.push('commission_structure');
+	}
+	return expand;
+};
+
 export const buildProductsQuery = (view) => {
 	const filterHandlers = applyFilterHandlerExtensions(
 		'products',
 		DEFAULT_HANDLERS,
 		{ view }
 	);
-	return buildFilterArgsFromView({
-		view,
-		filterHandlers,
-	});
+	// Expand first so filter-handler extensions can override it for custom
+	// columns that need extra relations.
+	return {
+		expand: buildProductsExpand(view),
+		...buildFilterArgsFromView({
+			view,
+			filterHandlers,
+		}),
+	};
 };
 
 export const PRODUCTS_DEFAULT_SORT = DEFAULT_SORT;

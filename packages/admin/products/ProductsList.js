@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
-import { useDispatch, select, dispatch, resolveSelect } from '@wordpress/data';
+import { useDispatch, dispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback, useState } from 'react';
@@ -30,11 +30,12 @@ import {
 import { PRODUCTS_URL_FILTERS } from './list/urlFilters';
 import { useStatusTabs } from './list/useStatusTabs';
 import {
-	useExpandedVariants,
+	useLazyVariants,
 	useSavingVariantIds,
 	injectVariantRows,
 	applyVariantRenderers,
 	productOnlyItems,
+	fetchProductVariants,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
 import { toVariantsArray } from './modules/Variations/utils';
@@ -75,7 +76,7 @@ export default ({ navigation }) => {
 
 	const { isMutating, run: runMutation } = useListMutation();
 
-	const expanded = useExpandedVariants();
+	const expanded = useLazyVariants();
 	const saving = useSavingVariantIds();
 	const [editingVariant, setEditingVariant] = useState(null);
 
@@ -161,13 +162,25 @@ export default ({ navigation }) => {
 				expandedIds: expanded.ids,
 				onToggle: expanded.toggle,
 				savingVariantIds: saving.ids,
+				onRetry: expanded.retry,
 			}),
-		[baseFields, expanded.ids, expanded.toggle, saving.ids]
+		[baseFields, expanded.ids, expanded.toggle, expanded.retry, saving.ids]
 	);
 
 	const dataWithVariants = useMemo(
-		() => injectVariantRows(records, expanded.ids),
-		[records, expanded.ids]
+		() =>
+			injectVariantRows(records, expanded.ids, {
+				variantsByProduct: expanded.variantsByProduct,
+				loadingIds: expanded.loadingIds,
+				failedIds: expanded.failedIds,
+			}),
+		[
+			records,
+			expanded.ids,
+			expanded.variantsByProduct,
+			expanded.loadingIds,
+			expanded.failedIds,
+		]
 	);
 
 	const handleArchiveToggle = useCallback(
@@ -303,20 +316,11 @@ export default ({ navigation }) => {
 
 			return runMutation(
 				async () => {
-					// resolveSelect (not just select) — the list's fetcher
-					// doesn't always prime the per-record cache. Without
-					// this we'd read `{}` and PATCH `variants: []`, wiping siblings.
-					await resolveSelect(coreStore).getEntityRecord(
-						'surecart',
-						'product',
-						productId
-					);
-
-					const current = select(coreStore).getEditedEntityRecord(
-						'surecart',
-						'product',
-						productId
-					);
+					// Fetch the full product directly — the lean list
+					// pre-resolves this record variant-less in core-data, so
+					// reading variants from there would PATCH `variants: []`
+					// and wipe the siblings.
+					const current = await fetchProductVariants(productId);
 					const sourceVariants = toVariantsArray(current?.variants);
 
 					// Belt-and-suspenders for the same data-loss scenario.
@@ -348,6 +352,10 @@ export default ({ navigation }) => {
 					);
 
 					invalidateList();
+					// Refetch the expanded row's variants so the deleted one
+					// drops out (inline rows come from the lazy fetch, not
+					// the list response).
+					expanded.retry(productId);
 					createSuccessNotice(__('Variant deleted.', 'surecart'), {
 						type: 'snackbar',
 					});
@@ -355,7 +363,7 @@ export default ({ navigation }) => {
 				{ errorMessage: __('Failed to delete variant.', 'surecart') }
 			);
 		},
-		[runMutation, invalidateList, createSuccessNotice]
+		[runMutation, invalidateList, expanded.retry, createSuccessNotice]
 	);
 
 	// Partial-success path is handled below — only the all-failed branch
@@ -486,7 +494,12 @@ export default ({ navigation }) => {
 					onClose={() => setEditingVariant(null)}
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
-					onSaved={() => invalidateList()}
+					onSaved={() => {
+						invalidateList();
+						// Inline rows come from the lazy fetch — refetch so the
+						// edit shows without collapsing the row.
+						expanded.retry(editingVariant.productId);
+					}}
 				/>
 			)}
 

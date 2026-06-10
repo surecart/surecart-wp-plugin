@@ -515,6 +515,12 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 	 * @return string|false
 	 */
 	public function getMutator( $key, $type ) {
+		// An empty key would resolve to a real method name like `getAttribute`,
+		// sending getAttribute( '' ) into infinite recursion.
+		if ( empty( $key ) || ! is_string( $key ) ) {
+			return false;
+		}
+
 		$key = ucwords( str_replace( [ '-', '_' ], ' ', $key ) );
 
 		$method = $type . str_replace( ' ', '', $key ) . 'Attribute';
@@ -680,6 +686,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 		}
 
 		if ( ! empty( $items->data ) ) {
+			$this->primeCollectionCaches( $items->data );
+
 			$models = [];
 			foreach ( $items->data as $data ) {
 				$models[] = new static( $data );
@@ -689,6 +697,18 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, Object
 
 		return new Collection( $items );
 	}
+
+	/**
+	 * Prime per-model caches before hydrating a collection.
+	 *
+	 * No-op by default. Subclasses override to batch lookups that hydration
+	 * would otherwise run once (or more) per model.
+	 *
+	 * @param array $items Raw item objects from the API response, pre-hydration.
+	 *
+	 * @return void
+	 */
+	protected function primeCollectionCaches( $items ) {}
 
 	/**
 	 * Set the pagination args.

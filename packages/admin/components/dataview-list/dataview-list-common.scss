@@ -1,5 +1,9 @@
 $padding-size: 20px;
 
+body:has(.sc-dataview-list-wrapper) {
+	overflow: hidden;
+}
+
 // Workspace shell — desktop only; JS suppresses it on mobile.
 @media screen and (min-width: 783px) {
 	body.is-fullscreen-mode.sc-enhanced-view {
@@ -278,6 +282,7 @@ $padding-size: 20px;
 		)
 		#wpbody-content {
 		padding-inline-start: 20px;
+		padding-bottom: 0;
 		// WP core gives it `width: 100%` in content-box sizing — without
 		// this the padding widens the box by 20px instead of insetting it.
 		box-sizing: border-box;

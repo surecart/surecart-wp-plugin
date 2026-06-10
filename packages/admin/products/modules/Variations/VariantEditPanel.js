@@ -4,13 +4,14 @@
 // onSavingStart / onSavingEnd callbacks.
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { store as coreStore, useEntityRecord } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 import EditVariant from './EditVariant';
 import { toVariantsArray } from './utils';
+import { fetchProductVariants } from '../../list/variants';
 
 // Alias — same envelope-or-flat normalization for variants and variant_options.
 const asArray = toVariantsArray;
@@ -27,19 +28,23 @@ export default ({
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
-	// Triggers the resolver — the list's fetcher may not have primed
-	// core-data, so without this the drawer opens empty on first click.
-	const { hasResolved } = useEntityRecord('surecart', 'product', productId);
+	// Fetch the full product directly. The lean list pre-resolves this
+	// product's core-data record variant-less, so reading it via core-data
+	// would open the drawer empty — see fetchProductVariants.
+	const [product, setProduct] = useState(null);
+	const [loadFailed, setLoadFailed] = useState(false);
 
-	const product = useSelect(
-		(select) =>
-			select(coreStore).getEditedEntityRecord(
-				'surecart',
-				'product',
-				productId
-			),
-		[productId]
-	);
+	useEffect(() => {
+		let active = true;
+		setProduct(null);
+		setLoadFailed(false);
+		fetchProductVariants(productId)
+			.then((p) => active && setProduct(p))
+			.catch(() => active && setLoadFailed(true));
+		return () => {
+			active = false;
+		};
+	}, [productId]);
 
 	const variants = useMemo(() => asArray(product?.variants), [product]);
 	const variantOptions = useMemo(
@@ -116,8 +121,18 @@ export default ({
 		onSavingEnd,
 	]);
 
+	// Surface a fetch failure instead of a silently empty drawer.
+	useEffect(() => {
+		if (!loadFailed) return;
+		createErrorNotice(
+			__('Could not load the variant. Please try again.', 'surecart'),
+			{ type: 'snackbar' }
+		);
+		onClose?.();
+	}, [loadFailed, createErrorNotice, onClose]);
+
 	// Wait for variant data — drawer flickers empty otherwise.
-	if (!hasResolved || !sourceVariant || !draft) {
+	if (!product || !sourceVariant || !draft) {
 		return null;
 	}
 

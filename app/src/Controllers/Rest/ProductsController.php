@@ -24,7 +24,25 @@ class ProductsController extends RestController {
 	protected $resource = 'products';
 
 	/**
+	 * Relations expanded by default for edit-context and write requests.
+	 *
+	 * The product edit screen and the WP post sync depend on the full set.
+	 *
+	 * @var array
+	 */
+	const EDIT_EXPANDS = [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ];
+
+	/**
 	 * Run some middleware to run before request.
+	 *
+	 * Expand contract for edit-context/write requests:
+	 * - Collection GET with a non-empty client `expand`: the client's list is
+	 *   used verbatim — clients that pass `expand` own their relation set
+	 *   (lets the products dataview request a lean list).
+	 * - Collection GET without `expand`: EDIT_EXPANDS applies (back-compat).
+	 * - Single GET (`id` param) and all write methods: EDIT_EXPANDS merged
+	 *   with any client `expand`.
+	 * - `view` context GETs are untouched; `expand` passes through query args.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
 	 * @param \WP_REST_Request       $request Request object.
@@ -32,10 +50,19 @@ class ProductsController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if we are in edit context, we want to fetch the variants, variant options and prices.
-		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
-			$class->with( array_unique( array_filter( array_merge( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ], $request['expand'] ?? [] ) ) ) );
+		$is_write      = in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ], true );
+		$client_expand = array_values( array_unique( array_filter( (array) ( $request['expand'] ?? [] ) ) ) );
+
+		if ( 'edit' === $request->get_param( 'context' ) || $is_write ) {
+			$is_collection_get = ! $is_write && empty( $request->get_param( 'id' ) );
+
+			if ( $is_collection_get && ! empty( $client_expand ) ) {
+				$class->with( $client_expand );
+			} else {
+				$class->with( array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) );
+			}
 		}
+
 		return parent::middleware( $class, $request );
 	}
 
