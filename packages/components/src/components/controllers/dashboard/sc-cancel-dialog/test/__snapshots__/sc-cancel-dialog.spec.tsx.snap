@@ -8,7 +8,9 @@ exports[`sc-cancel-dialog renders 1`] = `
         <sc-button circle="" class="close__button" type="text">
           <sc-icon name="x"></sc-icon>
         </sc-button>
-        <sc-subscription-cancel></sc-subscription-cancel>
+        <sc-subscription-cancel>
+          <slot name="cancel-popup-content" slot="cancel-popup-content"></slot>
+        </sc-subscription-cancel>
       </div>
     </sc-dialog>
   </mock:shadow-root>

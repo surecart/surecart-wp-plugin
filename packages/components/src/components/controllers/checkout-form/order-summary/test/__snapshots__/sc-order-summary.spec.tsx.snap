@@ -3,7 +3,7 @@
 exports[`sc-order-summary does not render scratch price amount_due is different than total_amount 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -47,7 +47,7 @@ exports[`sc-order-summary renders 1`] = `
 exports[`sc-order-summary renders scratch price if no trial has total savings amount 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -77,7 +77,7 @@ exports[`sc-order-summary renders scratch price if no trial has total savings am
 exports[`sc-order-summary should render when collapsible, collapsed on desktop and collapsed in mobile 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -106,7 +106,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
 exports[`sc-order-summary should render when collapsible, collapsed on desktop and collapsed in mobile 2`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -135,7 +135,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
 exports[`sc-order-summary should render when collapsible, collapsed on desktop and not collapsed in mobile 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -164,7 +164,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
 exports[`sc-order-summary should render when collapsible, collapsed on desktop and not collapsed in mobile 2`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary">
+    <div class="summary summary--collapsible">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary collapsed" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -193,7 +193,7 @@ exports[`sc-order-summary should render when collapsible, collapsed on desktop a
 exports[`sc-order-summary should render when collapsible, not collapsed on desktop and collapsed in mobile 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary summary--open">
+    <div class="summary summary--collapsible summary--open">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary expanded" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -222,7 +222,7 @@ exports[`sc-order-summary should render when collapsible, not collapsed on deskt
 exports[`sc-order-summary should render when collapsible, not collapsed on desktop and collapsed in mobile 2`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary summary--open">
+    <div class="summary summary--collapsible summary--open">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary expanded" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -251,7 +251,7 @@ exports[`sc-order-summary should render when collapsible, not collapsed on deskt
 exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary summary--open">
+    <div class="summary summary--collapsible summary--open">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary expanded" class="collapse-link" slot="title" tabindex="0">
           Summary
@@ -280,7 +280,7 @@ exports[`sc-order-summary should render when collapsible, not collapsed on deskt
 exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 2`] = `
 <sc-order-summary>
   <mock:shadow-root>
-    <div class="summary summary--open">
+    <div class="summary summary--collapsible summary--open">
       <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
         <span aria-label="Order Summary expanded" class="collapse-link" slot="title" tabindex="0">
           Summary

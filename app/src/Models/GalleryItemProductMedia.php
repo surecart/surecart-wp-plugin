@@ -36,13 +36,16 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Get the media attribute markup.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
-	 * @param array  $metadata Additional metadata.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
+	 * @param array        $metadata Additional metadata.
 	 *
 	 * @return string
 	 */
 	public function html( $size = 'full', $attr = array(), $metadata = array() ): string {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		$image = '';
 
 		// Handle media.
@@ -137,12 +140,15 @@ class GalleryItemProductMedia extends ModelsGalleryItem implements GalleryItem {
 	/**
 	 * Get the image data.
 	 *
-	 * @param string $size The size of the image.
-	 * @param array  $attr The attributes for the tag.
+	 * @param string       $size The size of the image.
+	 * @param string|array $attr The attributes for the tag. WordPress allows either array or query-string form.
 	 *
 	 * @return object
 	 */
 	public function attributes( $size = 'full', $attr = array() ): object {
+		// Normalise $attr — WordPress allows the attr arg of get_the_post_thumbnail() to be a query string (e.g. Enfold theme passes 'class=foo&id=bar').
+		$attr = wp_parse_args( $attr );
+
 		if ( isset( $this->item->media ) ) {
 			return $this->item->media->attributes( $size, $attr );
 		}

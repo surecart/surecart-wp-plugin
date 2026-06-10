@@ -23,9 +23,11 @@ class SettingsController {
 				'uninstall'                   => (bool) get_option( 'sc_uninstall', false ),
 				'stripe_payment_element'      => (bool) get_option( 'sc_stripe_payment_element', true ),
 				'auto_sync_user_to_customer'  => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
+				'checkout_show_login_prompt'  => (bool) get_option( 'surecart_checkout_show_login_prompt', true ),
 				'use_esm_loader'              => (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'     => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
 				'load_block_assets_on_demand' => (bool) get_option( 'surecart_load_block_assets_on_demand', false ),
+				'modern_order_bump'           => get_option( 'surecart_order_bump_design', 'modern' ) === 'modern',
 			]
 		);
 	}
@@ -78,9 +80,18 @@ class SettingsController {
 			update_option( 'surecart_auto_sync_user_to_customer', (bool) $request->get_param( 'auto_sync_user_to_customer' ) );
 		}
 
+		if ( isset( $request['checkout_show_login_prompt'] ) ) {
+			update_option( 'surecart_checkout_show_login_prompt', (bool) $request->get_param( 'checkout_show_login_prompt' ) );
+		}
+
 		// update load block styles on demand option.
 		if ( isset( $request['load_block_assets_on_demand'] ) ) {
 			update_option( 'surecart_load_block_assets_on_demand', $request->get_param( 'load_block_assets_on_demand' ) );
+		}
+
+		// update order bump design option.
+		if ( isset( $request['modern_order_bump'] ) ) {
+			update_option( 'surecart_order_bump_design', (bool) $request->get_param( 'modern_order_bump' ) ? 'modern' : 'classic' );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );

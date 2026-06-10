@@ -2,13 +2,17 @@
 
 use SureCart\Models\User;
 
-$icon       = $attributes['icon'] ?? 'edit-2';
-$icon_size  = $attributes['icon_size'] ?? 15;
-$product_id = $block->context['postId'] ?? get_the_ID();
-$product    = sc_get_product();
+$icon      = $attributes['icon'] ?? 'edit-2';
+$icon_size = $attributes['icon_size'] ?? 15;
+$product   = sc_get_product();
 if ( empty( $product ) ) {
 	return '';
 }
+
+// Modal opens by WP post ID; resolve from the product so it is correct off the product page.
+$product_id = ! empty( $product->post->ID )
+	? $product->post->ID
+	: ( $block->context['postId'] ?? get_the_ID() );
 
 $show_icon              = in_array( $attributes['button_type'], [ 'icon', 'both' ], true );
 $show_text              = in_array( $attributes['button_type'], [ 'text', 'both' ], true );

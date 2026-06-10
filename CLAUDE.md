@@ -4,6 +4,10 @@ Headless e-commerce WordPress plugin. All transactional data (products, checkout
 
 See also: `app/CLAUDE.md` (PHP patterns), `packages/CLAUDE.md` (JS/blocks patterns), `Workflow.md` (task workflow rules).
 
+## Coding Guidelines
+
+When writing, reviewing, or refactoring code, follow the **`karpathy-guidelines`** skill (`.claude/skills/karpathy-guidelines/SKILL.md`) — think before coding, simplicity first, surgical changes, goal-driven execution. Invoke it via the Skill tool at the start of a coding task.
+
 ## Architecture
 
 Bootstrap: `surecart.php` -> composer autoload -> `SureCart` facade -> `app/config.php` (168 service providers) -> `app/hooks.php`
@@ -93,6 +97,7 @@ add_filter('surecart/checkout/finduser', '__return_false');
 -   Text domain: `surecart` for all i18n calls
 -   Stencil tags: `sc-{name}`, classes: `Sc{Name}`
 -   Block names: `surecart/{block-name}`
+-   Comments: explain the *why* or a non-obvious edge, not what the code already says, and keep them short — long comments go unread. Keep the docblocks WordPress coding standards / PHPCS require (PHP functions, classes, hooks, `@param`/`@return`); just make their summary line meaningful instead of restating the function name.
 
 ## Entity Relationships
 

@@ -106,6 +106,27 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
+			$this->endpoint . '/me',
+			[
+				[
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => $this->callback( $this->controller, 'me' ),
+					'permission_callback' => [ $this, 'me_permissions_check' ],
+					'args'                => [
+						'mode' => [
+							'type'              => 'string',
+							'enum'              => [ 'live', 'test' ],
+							'default'           => 'live',
+							'sanitize_callback' => 'sanitize_text_field',
+						],
+					],
+				],
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
 			$this->endpoint . '/(?P<id>\S+)/connect/(?P<user_id>\S+)',
 			[
 				[
@@ -146,6 +167,23 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+	}
+
+	/**
+	 * Only logged-in users can fetch their own customer record.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error
+	 */
+	public function me_permissions_check( $request ) {
+		if ( ! is_user_logged_in() ) {
+			return new \WP_Error(
+				'rest_not_logged_in',
+				__( 'You must be logged in to access your customer record.', 'surecart' ),
+				[ 'status' => 401 ]
+			);
+		}
+		return true;
 	}
 
 	/**

@@ -10,7 +10,9 @@ exports[`sc-checkout renders 1`] = `
         <sc-form-error-provider>
           <sc-form-components-validator>
             <sc-order-confirm-provider checkout-status="draft" success-url="">
-              <sc-session-provider persist=""></sc-session-provider>
+              <sc-session-provider persist="">
+                <sc-checkout-autofill-provider></sc-checkout-autofill-provider>
+              </sc-session-provider>
             </sc-order-confirm-provider>
           </sc-form-components-validator>
         </sc-form-error-provider>

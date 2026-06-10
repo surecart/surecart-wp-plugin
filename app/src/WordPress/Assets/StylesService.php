@@ -46,6 +46,7 @@ class StylesService {
 		$style .= '--sc-input-border-color-focus: #' . $color . ';';
 		$style .= '--sc-color-gray-900: #' . $heading . ';';
 		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $color ) . ';';
+		$style .= '--wp--preset--color--surecart: #' . $color . ';';
 		$style .= '}';
 
 		wp_add_inline_style(

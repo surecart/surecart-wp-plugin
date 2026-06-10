@@ -132,6 +132,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'modern_order_bump'    => get_option( 'surecart_order_bump_design', 'modern' ) === 'modern',
 					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
@@ -366,6 +367,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'modern_order_bump'    => get_option( 'surecart_order_bump_design', 'modern' ) === 'modern',
 					'google_map_api_key'   => \SureCart::googleMaps()->getApiKey(),
 				]
 			)
