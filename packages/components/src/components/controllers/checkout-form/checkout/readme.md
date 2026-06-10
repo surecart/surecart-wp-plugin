@@ -80,6 +80,7 @@ Type: `Promise<boolean>`
 - [sc-form-components-validator](../../../providers/form-components-validator)
 - [sc-order-confirm-provider](../../../providers/order-confirm-provider)
 - [sc-session-provider](../../../providers/session-provider)
+- [sc-checkout-autofill-provider](../../../providers/checkout-autofill-provider)
 - [sc-block-ui](../../../ui/block-ui)
 - [sc-checkout-test-complete](../checkout-test-complete)
 
@@ -95,6 +96,7 @@ graph TD;
   sc-checkout --> sc-form-components-validator
   sc-checkout --> sc-order-confirm-provider
   sc-checkout --> sc-session-provider
+  sc-checkout --> sc-checkout-autofill-provider
   sc-checkout --> sc-block-ui
   sc-checkout --> sc-checkout-test-complete
   sc-alert --> sc-icon
@@ -113,9 +115,9 @@ graph TD;
   sc-button --> sc-spinner
   sc-dashboard-module --> sc-alert
   sc-block-ui --> sc-spinner
-  sc-login-provider --> sc-alert
   sc-login-provider --> sc-dialog
   sc-login-provider --> sc-form
+  sc-login-provider --> sc-alert
   sc-login-provider --> sc-input
   sc-login-provider --> sc-button
   sc-input --> sc-form-control
@@ -175,6 +177,8 @@ graph TD;
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
   sc-order-bump --> sc-choice
+  sc-order-bump --> sc-spinner
+  sc-order-bump --> sc-icon
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-shipping-choices --> sc-form-control

@@ -288,6 +288,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-autofill-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-form-errors": {
     "style": true,
     "id": true,
@@ -547,6 +553,14 @@
     "show-label": true,
     "size": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-customer-login": {
+    "code-error": true,
+    "initial-mode": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2487,6 +2501,15 @@
     "slot": true
   },
   "sc-upsell-totals": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-verification-code": {
+    "loading": true,
+    "on-change": true,
+    "total": true,
     "style": true,
     "id": true,
     "class": true,

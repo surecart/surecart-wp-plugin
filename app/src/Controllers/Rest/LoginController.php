@@ -19,9 +19,6 @@ class LoginController extends RestController {
 		// Authenticate the user.
 		$user = wp_authenticate( $request->get_param( 'login' ), $request->get_param( 'password' ) );
 
-		// Flush all caches.
-		wp_cache_flush();
-
 		if ( is_wp_error( $user ) ) {
 			return $user;
 		}
@@ -34,7 +31,24 @@ class LoginController extends RestController {
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,
+			'avatar_url'   => get_avatar_url( $user->user_email, [ 'size' => 48 ] ),
 			'redirect_url' => apply_filters( 'sc_login_redirect_url', $redirect_url ),
+			'nonce'        => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+		];
+	}
+
+	/**
+	 * Logout user
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 *
+	 * @return array Returns an array with a new nonce for future requests.
+	 */
+	public function logout( \WP_REST_Request $request ) {
+		wp_logout();
+
+		return [
+			'nonce' => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 		];
 	}
 }

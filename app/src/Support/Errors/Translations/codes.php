@@ -62,7 +62,7 @@ return array(
 	'media.restrict_dependent_destroy.has_one'             => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
 	'media.content_type.unsupported'                       => __( 'This file type is not supported.', 'surecart' ),
 	'product_media.product.limit_reached'                  => __( 'Your storage limit has been reached. Please remove some media items before adding more.', 'surecart' ),
-	'verification_code.email.blocked_duplicate'            => __( 'You have already requested a code in the last 60 seconds. Please wait before requesting again.', 'surecart' ),
+	'verification_code.email.blocked_duplicate'            => __( 'A code was just sent to you, please wait a minute before resending.', 'surecart' ),
 	'variant_option.name.taken'                            => __( 'This option name is already taken. Please use a different name.', 'surecart' ),
 	'product.variant_options.product.limit_reached'        => __( 'You have reached the maximum number of options for this product.', 'surecart' ),
 	'product_collection.name.taken'                        => __( 'This name is already taken. Please choose another name.', 'surecart' ),

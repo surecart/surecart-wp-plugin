@@ -3,6 +3,7 @@
 namespace SureCart\Tests\WordPress\Shortcodes;
 
 use Mockery;
+use SureCart\Models\Product;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\WordPress\Shortcodes\ShortcodesServiceProvider;
 
@@ -28,7 +29,6 @@ class ProductReviewShortcodesTest extends SureCartUnitTestCase {
 					\SureCart\WordPress\Pages\PageServiceProvider::class,
 					\SureCart\Sync\SyncServiceProvider::class,
 					\SureCart\WordPress\Posts\PostServiceProvider::class,
-					ShortcodesServiceProvider::class,
 				],
 			],
 			false
@@ -165,5 +165,239 @@ class ProductReviewShortcodesTest extends SureCartUnitTestCase {
 		$this->assertStringContainsString( 'No reviews yet.', $block_html );
 		$this->assertStringContainsString( 'Filters', $block_html );
 		$this->assertStringContainsString( 'Verified Buyer', $block_html );
+	}
+
+	/**
+	 * Seed an `sc_product` post that `sc_get_product()` can resolve by sc_id.
+	 */
+	protected function seedProductPost( string $sc_id ): int {
+		$post_id = $this->factory()->post->create( [ 'post_type' => 'sc_product' ] );
+		update_post_meta( $post_id, 'sc_id', $sc_id );
+		update_post_meta(
+			$post_id,
+			'product',
+			wp_json_encode( [ 'id' => $sc_id, 'name' => 'Test ' . $sc_id ] )
+		);
+		return $post_id;
+	}
+
+	/**
+	 * With `product_id`, the review shortcode renders within that product's context
+	 * and the query var is restored to its previous value afterward.
+	 */
+	public function test_product_id_sets_and_restores_product_context() {
+		$sc_id = 'prod_review_context';
+		$this->seedProductPost( $sc_id );
+		$this->registerShortcodes();
+
+		$captured = null;
+		add_filter(
+			'shortcode_atts_sc_product_review_rating_stars',
+			function ( $attrs ) use ( &$captured ) {
+				$captured = [
+					'attrs'   => $attrs,
+					'product' => get_query_var( 'surecart_current_product' ),
+				];
+				return $attrs;
+			}
+		);
+
+		do_shortcode( '[sc_product_review_rating_stars product_id="' . $sc_id . '" size="24px"]' );
+
+		$this->assertIsArray( $captured, 'The shortcode body should have run.' );
+		$this->assertArrayNotHasKey( 'product_id', $captured['attrs'], 'product_id must be stripped before the block sees attrs.' );
+		$this->assertSame( '24px', $captured['attrs']['size'] ?? null, 'Other attrs pass through unchanged.' );
+		$this->assertSame( $sc_id, $captured['product']->id ?? null, 'Product context is set during render.' );
+		$this->assertEmpty( get_query_var( 'surecart_current_product' ), 'Query var is restored after render.' );
+	}
+
+	/**
+	 * An unresolved `product_id` renders empty rather than silently showing the
+	 * surrounding page's product.
+	 */
+	public function test_unresolved_product_id_renders_empty() {
+		$this->registerShortcodes();
+
+		$ran = false;
+		add_filter(
+			'shortcode_atts_sc_product_review_rating_stars',
+			function ( $attrs ) use ( &$ran ) {
+				$ran = true;
+				return $attrs;
+			}
+		);
+
+		$output = do_shortcode( '[sc_product_review_rating_stars product_id="prod_does_not_exist"]' );
+
+		$this->assertFalse( $ran, 'The shortcode body must not run when product_id is unresolved.' );
+		$this->assertSame( '', $output );
+	}
+
+	/**
+	 * Without `supports_product_id` the wrapper returns the original callback
+	 * unchanged — scope guard for the deliberate decision to keep this an
+	 * embed-anywhere escape hatch limited to review shortcodes for now.
+	 */
+	public function test_wrapper_passes_through_when_not_opted_in() {
+		$wrapper  = new \SureCart\WordPress\Shortcodes\ProductContextShortcodeWrapper();
+		$original = function ( $attrs, $content ) {
+			return 'rendered';
+		};
+
+		$wrapped = $wrapper->maybeWrap( $original, 'sc_anything', [] );
+
+		$this->assertSame( $original, $wrapped, 'maybeWrap must pass through when supports_product_id is not set.' );
+	}
+
+	/**
+	 * The previous query var value is restored after the renderer runs, so an
+	 * outer product context (e.g. when the shortcode is used inside a product
+	 * wrapper) is not clobbered.
+	 */
+	public function test_outer_product_context_is_restored_after_render() {
+		$inner_sc_id = 'prod_inner_context';
+		$this->seedProductPost( $inner_sc_id );
+
+		$outer_product = new Product( (object) [ 'id' => 'prod_outer_context' ] );
+		set_query_var( 'surecart_current_product', $outer_product );
+
+		$this->registerShortcodes();
+
+		do_shortcode( '[sc_product_review_rating_stars product_id="' . $inner_sc_id . '"]' );
+
+		$restored = get_query_var( 'surecart_current_product' );
+		$this->assertSame( 'prod_outer_context', $restored->id ?? null, 'Outer product context must be restored.' );
+
+		set_query_var( 'surecart_current_product', '' );
+	}
+
+	/**
+	 * `id` is accepted as an alias for `product_id` on review shortcodes, so the
+	 * same identifier name works across every product shortcode.
+	 */
+	public function test_id_alias_sets_product_context_on_review_shortcode() {
+		$sc_id = 'prod_review_id_alias';
+		$this->seedProductPost( $sc_id );
+		$this->registerShortcodes();
+
+		$captured = null;
+		add_filter(
+			'shortcode_atts_sc_product_review_rating_stars',
+			function ( $attrs ) use ( &$captured ) {
+				$captured = [
+					'attrs'   => $attrs,
+					'product' => get_query_var( 'surecart_current_product' ),
+				];
+				return $attrs;
+			}
+		);
+
+		do_shortcode( '[sc_product_review_rating_stars id="' . $sc_id . '" size="24px"]' );
+
+		$this->assertIsArray( $captured, 'The shortcode body should have run.' );
+		$this->assertArrayNotHasKey( 'id', $captured['attrs'], 'id must be stripped before the block sees attrs.' );
+		$this->assertArrayNotHasKey( 'product_id', $captured['attrs'], 'product_id must be stripped before the block sees attrs.' );
+		$this->assertSame( '24px', $captured['attrs']['size'] ?? null, 'Other attrs pass through unchanged.' );
+		$this->assertSame( $sc_id, $captured['product']->id ?? null, 'Product context is set from the id alias.' );
+		$this->assertEmpty( get_query_var( 'surecart_current_product' ), 'Query var is restored after render.' );
+	}
+
+	/**
+	 * When both `product_id` and `id` are supplied to a review shortcode, `product_id` wins.
+	 */
+	public function test_product_id_wins_over_id_alias() {
+		$this->seedProductPost( 'prod_canonical' );
+		$this->seedProductPost( 'prod_alias' );
+		$this->registerShortcodes();
+
+		$captured = null;
+		add_filter(
+			'shortcode_atts_sc_product_review_rating_stars',
+			function ( $attrs ) use ( &$captured ) {
+				$captured = get_query_var( 'surecart_current_product' );
+				return $attrs;
+			}
+		);
+
+		do_shortcode( '[sc_product_review_rating_stars product_id="prod_canonical" id="prod_alias"]' );
+
+		$this->assertSame( 'prod_canonical', $captured->id ?? null, 'product_id takes precedence over the id alias.' );
+	}
+
+	/**
+	 * Product (non-review) shortcodes accept `product_id` as an alias for `id`,
+	 * normalized to the canonical `id` before the block renders.
+	 */
+	public function test_product_shortcode_accepts_product_id_alias_for_id() {
+		$service = new \SureCart\WordPress\Shortcodes\ShortcodesService();
+		$service->registerBlockShortcodeByName( 'sc_test_product_alias', 'surecart/product-fake-test', [ 'id' => null ] );
+
+		$captured = null;
+		add_filter(
+			'shortcode_atts_sc_test_product_alias',
+			function ( $attrs ) use ( &$captured ) {
+				$captured = $attrs;
+				return $attrs;
+			}
+		);
+
+		do_shortcode( '[sc_test_product_alias product_id="prod_alias_value"]' );
+
+		$this->assertIsArray( $captured, 'The shortcode body should have run.' );
+		$this->assertSame( 'prod_alias_value', $captured['id'] ?? null, 'product_id is mapped to the canonical id.' );
+		$this->assertArrayNotHasKey( 'product_id', $captured, 'product_id is removed after aliasing.' );
+
+		remove_shortcode( 'sc_test_product_alias' );
+	}
+
+	/**
+	 * When both `id` and `product_id` are supplied to a product (non-review) shortcode, the native `id` wins.
+	 */
+	public function test_product_shortcode_id_wins_over_product_id_alias() {
+		$service = new \SureCart\WordPress\Shortcodes\ShortcodesService();
+		$service->registerBlockShortcodeByName( 'sc_test_product_alias', 'surecart/product-fake-test', [ 'id' => null ] );
+
+		$captured = null;
+		add_filter(
+			'shortcode_atts_sc_test_product_alias',
+			function ( $attrs ) use ( &$captured ) {
+				$captured = $attrs;
+				return $attrs;
+			}
+		);
+
+		do_shortcode( '[sc_test_product_alias id="prod_native" product_id="prod_alias"]' );
+
+		$this->assertIsArray( $captured, 'The shortcode body should have run.' );
+		$this->assertSame( 'prod_native', $captured['id'] ?? null, 'id takes precedence over the product_id alias.' );
+		$this->assertArrayNotHasKey( 'product_id', $captured, 'product_id is removed after aliasing.' );
+
+		remove_shortcode( 'sc_test_product_alias' );
+	}
+
+	/**
+	 * The add button points at the product's own post, not the page it sits on.
+	 */
+	public function test_add_button_resolves_product_post_id_not_current_page() {
+		$sc_id   = 'prod_add_button_post';
+		$post_id = $this->seedProductPost( $sc_id );
+
+		// Pretend we are rendering on an unrelated page (its id must NOT leak in).
+		$host_page = $this->factory()->post->create( [ 'post_type' => 'page' ] );
+		$this->go_to( get_permalink( $host_page ) );
+
+		$product = sc_get_product( $sc_id );
+
+		$this->assertNotEmpty( $product, 'Product should resolve from its sc_id.' );
+		$this->assertSame(
+			$post_id,
+			$product->post->ID ?? null,
+			'Modal target must come from the product post, not the current page.'
+		);
+		$this->assertNotSame(
+			$host_page,
+			$product->post->ID ?? null,
+			'Modal target must not be the host page id.'
+		);
 	}
 }

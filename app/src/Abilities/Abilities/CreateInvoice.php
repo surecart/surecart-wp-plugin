@@ -215,8 +215,12 @@ class CreateInvoice extends AbstractAbility {
 			$line_item_data['variant'] = sanitize_text_field( $input['variant_id'] );
 		}
 
-		if ( ! empty( $input['ad_hoc_amount'] ) ) {
-			$line_item_data['ad_hoc_amount'] = absint( $input['ad_hoc_amount'] );
+		if ( isset( $input['ad_hoc_amount'] ) ) {
+			$ad_hoc_amount = intval( $input['ad_hoc_amount'] );
+			if ( $ad_hoc_amount < 0 ) {
+				return $this->error( 'invalid_ad_hoc_amount', __( 'ad_hoc_amount must be zero or greater. Negative invoice amounts are not supported.', 'surecart' ) );
+			}
+			$line_item_data['ad_hoc_amount'] = $ad_hoc_amount;
 		}
 
 		$line_item = LineItem::create( $line_item_data );

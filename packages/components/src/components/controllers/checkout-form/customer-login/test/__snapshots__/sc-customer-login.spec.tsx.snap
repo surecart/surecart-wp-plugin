@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-customer-login renders 1`] = `
+<sc-customer-login>
+  <mock:shadow-root>
+    <div class="customer-login">
+      <div class="customer-code">
+        <div class="customer-code__sent-info">
+          <sc-icon aria-hidden="true" class="customer-code__mail-icon" name="mail"></sc-icon>
+          <span>
+            Code sent to
+            <strong class="customer-code__sent-email"></strong>
+          </span>
+          <a class="customer-code__change-link" href="#">
+            Change
+          </a>
+        </div>
+        <div>
+          <sc-verification-code total="6"></sc-verification-code>
+        </div>
+        <div class="customer-code__footer">
+          <div class="customer-code__footer-left">
+            <span class="customer-code__resend-timer">
+              Resend code in 01:00
+            </span>
+          </div>
+          <div class="customer-code__footer-right">
+            <a class="customer-code__mode-link" href="#">
+              <sc-icon aria-hidden="true" name="lock"></sc-icon>
+              Use Password
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-customer-login>
+`;
+
+exports[`sc-customer-login renders with user logged in and matched 1`] = `
+<sc-customer-login>
+  <mock:shadow-root>
+    <div class="customer-login">
+      <div class="customer-code">
+        <div class="customer-code__sent-info">
+          <sc-icon aria-hidden="true" class="customer-code__mail-icon" name="mail"></sc-icon>
+          <span>
+            Code sent to
+            <strong class="customer-code__sent-email">
+              test@example.com
+            </strong>
+          </span>
+          <a class="customer-code__change-link" href="#">
+            Change
+          </a>
+        </div>
+        <div>
+          <sc-verification-code total="6"></sc-verification-code>
+        </div>
+        <div class="customer-code__footer">
+          <div class="customer-code__footer-left">
+            <span class="customer-code__resend-timer">
+              Resend code in 01:00
+            </span>
+          </div>
+          <div class="customer-code__footer-right">
+            <a class="customer-code__mode-link" href="#">
+              <sc-icon aria-hidden="true" name="lock"></sc-icon>
+              Use Password
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-customer-login>
+`;
+
+exports[`sc-customer-login renders with user logged in and not matched 1`] = `
+<sc-customer-login>
+  <mock:shadow-root>
+    <div class="customer-login">
+      <div class="customer-code">
+        <div class="customer-code__sent-info">
+          <sc-icon aria-hidden="true" class="customer-code__mail-icon" name="mail"></sc-icon>
+          <span>
+            Code sent to
+            <strong class="customer-code__sent-email">
+              test@example.com
+            </strong>
+          </span>
+          <a class="customer-code__change-link" href="#">
+            Change
+          </a>
+        </div>
+        <div>
+          <sc-verification-code total="6"></sc-verification-code>
+        </div>
+        <div class="customer-code__footer">
+          <div class="customer-code__footer-left">
+            <span class="customer-code__resend-timer">
+              Resend code in 01:00
+            </span>
+          </div>
+          <div class="customer-code__footer-right">
+            <a class="customer-code__mode-link" href="#">
+              <sc-icon aria-hidden="true" name="lock"></sc-icon>
+              Use Password
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-customer-login>
+`;
+
+exports[`sc-customer-login renders with user not logged in and matched 1`] = `
+<sc-customer-login>
+  <mock:shadow-root>
+    <div class="customer-login">
+      <div class="customer-code">
+        <div class="customer-code__sent-info">
+          <sc-icon aria-hidden="true" class="customer-code__mail-icon" name="mail"></sc-icon>
+          <span>
+            Code sent to
+            <strong class="customer-code__sent-email">
+              test@example.com
+            </strong>
+          </span>
+          <a class="customer-code__change-link" href="#">
+            Change
+          </a>
+        </div>
+        <div>
+          <sc-verification-code total="6"></sc-verification-code>
+        </div>
+        <div class="customer-code__footer">
+          <div class="customer-code__footer-left">
+            <span class="customer-code__resend-timer">
+              Resend code in 01:00
+            </span>
+          </div>
+          <div class="customer-code__footer-right">
+            <a class="customer-code__mode-link" href="#">
+              <sc-icon aria-hidden="true" name="lock"></sc-icon>
+              Use Password
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-customer-login>
+`;

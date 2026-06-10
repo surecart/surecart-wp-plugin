@@ -56,6 +56,7 @@ class Block extends BaseBlock {
 						'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
 						'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 						'abandonedCheckoutEnabled' => ! is_admin(),
+						'showLoginPrompt'          => (bool) get_option( 'surecart_checkout_show_login_prompt', true ),
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
 						'validateStock'            => ! is_admin(),
@@ -78,9 +79,10 @@ class Block extends BaseBlock {
 						],
 					],
 					'user'       => [
-						'loggedIn' => is_user_logged_in(),
-						'email'    => $user->user_email,
-						'name'     => $user->display_name,
+						'loggedIn'  => is_user_logged_in(),
+						'email'     => $user->user_email,
+						'name'      => $user->display_name,
+						'avatarUrl' => is_user_logged_in() ? get_avatar_url( $user->user_email, [ 'size' => 48 ] ) : '',
 					],
 					'form'       => array_filter(
 						[

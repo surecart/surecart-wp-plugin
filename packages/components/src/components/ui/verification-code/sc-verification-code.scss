@@ -1,0 +1,74 @@
+sc-verification-code {
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  display: block;
+
+  .sc-verification-code {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-spacing-small);
+    margin-top: var(--sc-spacing-medium);
+    margin-bottom: var(--sc-spacing-medium);
+
+    input {
+      flex: 1;
+      min-width: 0;
+      height: var(--sc-input-height, 48px);
+      max-width: 64px;
+      box-sizing: border-box;
+      font-family: var(--sc-input-font-family);
+      font-weight: var(--sc-input-font-weight);
+      letter-spacing: var(--sc-input-letter-spacing);
+      background-color: var(--sc-input-background-color);
+      border: 1px solid var(--sc-input-border-color, var(--sc-input-border));
+      border-radius: var(--sc-input-border-radius-medium);
+      box-shadow: var(--sc-input-box-shadow);
+      font-size: var(--sc-input-font-size-large);
+      transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+        var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+      cursor: text;
+      text-align: center;
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        box-shadow: 0 0 0 var(--sc-input-height-large) var(--sc-input-background-color-hover) inset !important;
+        -webkit-text-fill-color: var(--sc-input-color);
+      }
+
+      &::placeholder {
+        color: var(--sc-input-placeholder-color);
+        user-select: none;
+      }
+
+      &:focus {
+        outline: none;
+        background-color: var(--sc-input-background-color-focus);
+        border-color: var(--sc-input-border-color-focus);
+        box-shadow: var(--focus-ring);
+        color: var(--sc-input-color-focus);
+        z-index: 8;
+      }
+    }
+
+    .sc-verification-code__separator {
+      color: var(--sc-input-help-text-color);
+      font-size: var(--sc-font-size-large);
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+}

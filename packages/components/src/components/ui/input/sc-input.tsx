@@ -148,6 +148,23 @@ export class ScInput {
     return this.input.reportValidity();
   }
 
+  // An invalid pattern breaks validation for the whole field, so only use it if it compiles.
+  validPattern(): string | undefined {
+    if (!this.pattern) {
+      return undefined;
+    }
+
+    // Use the same regex flag the browser uses for the `pattern` attribute.
+    const flag = 'unicodeSets' in RegExp.prototype ? 'v' : 'u';
+
+    try {
+      // `.source` is read so the build doesn't strip this check as unused.
+      return new RegExp(`^(?:${this.pattern})$`, flag).source ? this.pattern : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
   /** Sets focus on the input. */
   @Method()
   async triggerFocus(options?: FocusOptions) {
@@ -314,7 +331,7 @@ export class ScInput {
                 autocorrect={this.autocorrect}
                 autofocus={this.autofocus}
                 spellcheck={this.spellcheck}
-                pattern={this.pattern}
+                pattern={this.validPattern()}
                 inputmode={this.inputmode}
                 aria-label={this.label}
                 aria-labelledby={this.labelId}

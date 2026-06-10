@@ -6,7 +6,7 @@ use SureCart\Models\Customer;
 use SureCart\Models\User;
 
 /**
- * Handle Price requests through the REST API
+ * Handle Customer related REST API requests.
  */
 class CustomerController extends RestController {
 	/**
@@ -15,6 +15,28 @@ class CustomerController extends RestController {
 	 * @var string
 	 */
 	protected $class = Customer::class;
+
+	/**
+	 * Get the current logged-in user's customer record.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \SureCart\Models\Customer|null|\WP_Error
+	 */
+	public function me( \WP_REST_Request $request ) {
+		$mode = $request->get_param( 'mode' ) ?? 'live';
+		$user = User::current();
+
+		$customer_id = $user->customerId( $mode );
+		if ( empty( $customer_id ) ) {
+			return null;
+		}
+
+		// Set the ID in the request to fetch the customer record.
+		$request->set_param( 'id', $customer_id );
+
+		return $this->find( $request );
+	}
 
 	/**
 	 * Connect a user.

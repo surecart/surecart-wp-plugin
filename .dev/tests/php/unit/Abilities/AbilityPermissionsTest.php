@@ -47,7 +47,6 @@ class AbilityPermissionsTest extends SureCartUnitTestCase {
 	 */
 	public function test_read_abilities_allow_admin_access() {
 		$admin = self::factory()->user->create( array( 'role' => 'administrator' ) );
-		wp_set_current_user( $admin );
 
 		// Grant SureCart capabilities to admin.
 		$user = get_user_by( 'id', $admin );
@@ -81,6 +80,10 @@ class AbilityPermissionsTest extends SureCartUnitTestCase {
 		$user->add_cap( 'edit_sc_prices' );
 		$user->add_cap( 'edit_sc_subscriptions' );
 		$user->add_cap( 'delete_sc_products' );
+		$user->add_cap( 'publish_sc_invoices' );
+		$user->add_cap( 'edit_sc_invoices' );
+
+		wp_set_current_user( $admin );
 
 		$abilities = $this->registrar->get_abilities();
 		foreach ( $abilities as $ability ) {
