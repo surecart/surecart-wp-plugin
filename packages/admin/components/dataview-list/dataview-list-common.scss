@@ -138,7 +138,8 @@ $padding-size: 20px;
 
 	// Room for 3 digits in the page-number select.
 	.dataviews-pagination__page-select .components-select-control__input {
-		min-width: 64px;
+		width: auto;
+		line-height: 1;
 	}
 
 	// The table stays in normal flow; the WP content column (`#wpcontent`) is
@@ -190,7 +191,7 @@ $padding-size: 20px;
 	}
 
 	// Full-width white so the gray body can't show through on horizontal
-	// scroll (see `useHorizontalScrollState`, which also pins this row).
+	// scroll (off-mode desktop caps it to the scrollport — see below).
 	// `!important` beats upstream's inline `width: fit-content`.
 	.dataviews-filters__container {
 		width: 100% !important;
@@ -266,15 +267,87 @@ $padding-size: 20px;
 		#wpcontent {
 		overflow: auto;
 		height: calc(100vh - 32px);
+		// Sticky insets resolve against the scroller's CONTENT edge, so any
+		// scroller padding would displace every pinned bar by that much.
+		// Keep the 20px gutter on #wpbody-content (not a scroller) instead.
+		padding-inline-start: 0;
+	}
+
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpbody-content {
+		padding-inline-start: 20px;
+		// WP core gives it `width: 100%` in content-box sizing — without
+		// this the padding widens the box by 20px instead of insetting it.
+		box-sizing: border-box;
+	}
+
+	// WP core's `.wrap` margin-inline (2px/20px) would offset the card from
+	// the scrollport edge — the bars would twitch 2px when sticky engages
+	// and the page would gain 2px of phantom horizontal overflow.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		.wrap:has(> .sc-dataview-list-wrapper[data-enhanced-view="off"]) {
+		margin-inline: 0;
 	}
 
 	// Divider below the breadcrumb. It's here (not the list wrapper) because the
 	// admin header stays pinned on scroll, so the line keeps its full width.
+	// The pin itself is plain sticky: as a direct child of the `#wpcontent`
+	// scroller, its sticky travel spans the full scrollable overflow.
 	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
 			.is-fullscreen-mode
 		)
 		#sc-admin-header {
 		border-bottom: 1px solid #f0f0f0;
+		position: sticky;
+		inset-inline-start: 0;
+		// The partial's width/margin compensate for #wpcontent's padding,
+		// which is removed here.
+		width: 100%;
+		margin-inline-start: 0;
+	}
+
+	// Horizontal pinning for the in-app bars, compositor-native. Sticky can
+	// only travel within its containing block, so grow the wrappers to the
+	// full scroll width, then cap each bar back to the visible scrollport
+	// (--sc-dvw-viewport-w, set by `useHorizontalScrollState` on resize only).
+	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+		width: max-content;
+		// 100% = scrollport minus #wpbody-content's one-sided 20px gutter
+		// (see above); +20px plus the -20px side margins land the card edges
+		// exactly on the scrollport edges (both directions).
+		min-width: calc(100% + 20px);
+
+		.dataviews-wrapper {
+			width: max-content;
+			min-width: 100%;
+			// Upstream's `container: inline-size` containment would compute
+			// max-content as if the wrapper were empty. Its @container queries
+			// are all ≤560px — never matched at desktop widths — so safe.
+			container: none;
+		}
+
+		// view-actions/filters/footer already carry upstream's
+		// `position: sticky; left: 0` (flipped by the RTL vendor stylesheet);
+		// the page header has sticky top only, so add the inline pin.
+		.sc-list-header {
+			inset-inline-start: 0;
+		}
+
+		.sc-list-header,
+		.dataviews__view-actions,
+		.dataviews-footer {
+			// Upstream footer lacks border-box, and width is explicit now.
+			box-sizing: border-box;
+			width: var(--sc-dvw-viewport-w, 100%);
+		}
+
+		.dataviews-filters__container {
+			width: var(--sc-dvw-viewport-w, 100%) !important;
+		}
 	}
 }
 

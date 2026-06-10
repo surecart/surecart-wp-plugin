@@ -2,6 +2,7 @@ import { useEffect } from '@wordpress/element';
 
 const ATTR = 'data-horizontal-scroll';
 const HEIGHT_VAR = '--sc-dvw-inner-scroll-height';
+const VIEWPORT_W_VAR = '--sc-dvw-viewport-w';
 
 export default function useHorizontalScrollState(rootRef) {
 	useEffect(() => {
@@ -10,8 +11,10 @@ export default function useHorizontalScrollState(rootRef) {
 			return undefined;
 		}
 
+		const wpContent = document.getElementById('wpcontent');
 		let scrollEl = null;
 		let resizeObserver = null;
+		let lastViewportW = null;
 
 		const updateInnerScrollHeight = () => {
 			if (!scrollEl) {
@@ -28,7 +31,26 @@ export default function useHorizontalScrollState(rootRef) {
 			scrollEl.style.setProperty(HEIGHT_VAR, `${available}px`);
 		};
 
+		// Off-mode the wrappers are max-content wide so the bars' sticky pin
+		// has travel room; this var caps each bar back to the visible
+		// scrollport width (see dataview-list-common.scss). Resize-only —
+		// sticky does all the per-scroll work on the compositor.
+		const updateViewportWidth = () => {
+			if (!wpContent) {
+				return; // CSS var(…, 100%) fallback covers this.
+			}
+			// clientWidth = padding box minus the vertical scrollbar — the
+			// exact sticky scrollport, integer-rounded, RTL-safe.
+			const width = wpContent.clientWidth;
+			if (width === lastViewportW) {
+				return; // Observers fire in bursts; skip no-op style writes.
+			}
+			lastViewportW = width;
+			root.style.setProperty(VIEWPORT_W_VAR, `${width}px`);
+		};
+
 		const update = () => {
+			updateViewportWidth();
 			if (!scrollEl) {
 				return;
 			}
@@ -39,7 +61,6 @@ export default function useHorizontalScrollState(rootRef) {
 
 		const detach = () => {
 			if (scrollEl) {
-				scrollEl.removeEventListener('scroll', update);
 				scrollEl.style.removeProperty(HEIGHT_VAR);
 			}
 			resizeObserver?.disconnect();
@@ -60,7 +81,6 @@ export default function useHorizontalScrollState(rootRef) {
 
 			detach();
 			scrollEl = next;
-			scrollEl.addEventListener('scroll', update, { passive: true });
 			resizeObserver = new ResizeObserver(update);
 			resizeObserver.observe(scrollEl);
 			update();
@@ -73,92 +93,20 @@ export default function useHorizontalScrollState(rootRef) {
 		window.addEventListener('resize', update);
 
 		// Body resize affects wrapper.top (notice banners, admin-bar collapse).
+		// #wpcontent resize covers admin-menu fold, which fires neither a
+		// window resize nor a body-size change.
 		const bodyResizeObserver = new ResizeObserver(update);
 		bodyResizeObserver.observe(document.body);
+		if (wpContent) {
+			bodyResizeObserver.observe(wpContent);
+		}
 
 		return () => {
 			mutationObserver.disconnect();
 			window.removeEventListener('resize', update);
 			bodyResizeObserver.disconnect();
+			root.style.removeProperty(VIEWPORT_W_VAR);
 			detach();
-		};
-	}, [rootRef]);
-
-	// Off-mode: scrolling the page sideways drags the header bars (admin header,
-	// page header, toolbar, footer) along with the table. Shift them back by
-	// scrollLeft so they stay put. (Plain CSS sticky can't pin them here — the
-	// wrapper isn't wide enough.)
-	useEffect(() => {
-		const root = rootRef?.current;
-		if (!root) {
-			return undefined;
-		}
-
-		// All inside the React root except the admin header, which WP renders
-		// separately above the app.
-		const PINNED = [
-			'.sc-list-header',
-			'.dataviews__view-actions',
-			'.dataviews-filters__container',
-			'.dataviews-footer',
-		];
-		const scrollEl = document.getElementById('wpcontent');
-		if (!scrollEl) {
-			return undefined;
-		}
-
-		const isOffDesktop = () =>
-			root.getAttribute('data-enhanced-view') === 'off' &&
-			window.matchMedia('(min-width: 783px)').matches;
-
-		// Cache the bars so the scroll handler never walks the DOM — re-querying
-		// every frame was the main source of the stutter. `will-change` promotes
-		// each to its own compositor layer so the per-frame translate is a cheap
-		// GPU update that keeps lockstep with the composited scroll instead of
-		// trailing it on the main thread.
-		let bars = [];
-		const collect = () => {
-			bars = [
-				...PINNED.flatMap((sel) => [...root.querySelectorAll(sel)]),
-				...[document.getElementById('sc-admin-header')].filter(Boolean),
-			];
-			bars.forEach((el) => {
-				el.style.willChange = 'transform';
-			});
-		};
-
-		const apply = () => {
-			const x = isOffDesktop() ? scrollEl.scrollLeft : 0;
-			for (const el of bars) {
-				el.style.transform = x ? `translateX(${x}px)` : '';
-			}
-		};
-
-		collect();
-		apply();
-
-		scrollEl.addEventListener('scroll', apply, { passive: true });
-		window.addEventListener('resize', apply);
-		// Re-cache and re-pin when rows reload or the view toggle flips.
-		const observer = new MutationObserver(() => {
-			collect();
-			apply();
-		});
-		observer.observe(root, {
-			childList: true,
-			subtree: true,
-			attributes: true,
-			attributeFilter: ['data-enhanced-view'],
-		});
-
-		return () => {
-			scrollEl.removeEventListener('scroll', apply);
-			window.removeEventListener('resize', apply);
-			observer.disconnect();
-			bars.forEach((el) => {
-				el.style.transform = '';
-				el.style.willChange = '';
-			});
 		};
 	}, [rootRef]);
 }

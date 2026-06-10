@@ -83,14 +83,25 @@ export default ({
 					css={css`
 						position: absolute;
 						inset: 0;
-						display: flex;
-						align-items: center;
-						justify-content: center;
 						background: rgba(255, 255, 255, 0.4);
 						z-index: 10;
 					`}
 				>
-					<Spinner style={{ width: '28px', height: '28px' }} />
+					{/* Off-mode the overlay spans the full table scroll width;
+					    a sticky scrollport-wide strip keeps the spinner in view. */}
+					<div
+						css={css`
+							position: sticky;
+							inset-inline-start: 0;
+							width: min(var(--sc-dvw-viewport-w, 100%), 100%);
+							height: 100%;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						`}
+					>
+						<Spinner style={{ width: '28px', height: '28px' }} />
+					</div>
 				</div>
 			)}
 		</div>
@@ -135,8 +146,7 @@ export default ({
 									border-radius: 8px;
 									flex: 1 1 auto;
 									min-height: 0;
-									overflow-y: auto;
-									overflow-x: hidden;
+									overflow: hidden;
 									box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
 									box-sizing: border-box;
 								`}

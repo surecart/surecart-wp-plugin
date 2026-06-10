@@ -2,7 +2,8 @@
 	#sc-admin-header {
 		background-color: #fff;
 		width: calc(100% + 20px);
-		margin-left: -20px;
+		/* Logical: covers #wpcontent's inline-start padding in RTL too. */
+		margin-inline-start: -20px;
 	}
 
 	#sc-admin-container {
