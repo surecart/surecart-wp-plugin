@@ -57,6 +57,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
     page_url: window.location.href,
   },
   ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
+  ...(checkoutState.geoCoordinates || {}),
   ...data,
 });
 

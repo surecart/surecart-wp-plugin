@@ -826,6 +826,9 @@ export interface Checkout extends Object {
   discount_amount?: number;
   discount?: DiscountResponse;
   billing_address?: string | Address;
+  geo_address?: string | Address;
+  latitude?: number;
+  longitude?: number;
   shipping_amount?: number;
   shipping_display_amount?: string;
   shipping_address?: string | Address;
@@ -1287,6 +1290,11 @@ export interface Address extends Object {
   state?: string | null;
   postal_code?: string | null;
   country?: string | null;
+}
+
+export interface GeoCoordinates {
+  latitude: number;
+  longitude: number;
 }
 
 export interface GoogleMapAddressComponents extends Object {
