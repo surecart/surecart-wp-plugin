@@ -4,6 +4,7 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import {
+	ScAlert,
 	ScFlex,
 	ScInput,
 	ScSelect,
@@ -156,6 +157,36 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.capture_geo_address_enabled}
+					onScChange={(e) =>
+						editItem({
+							capture_geo_address_enabled: e.target.checked,
+						})
+					}
+				>
+					{__('Capture Location at Checkout', 'surecart')}
+					<span slot="description">
+						{__(
+							"Capture the customer's location during checkout and resolve it to an address on the order.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{!!item?.capture_geo_address_enabled && (
+					<ScAlert type="info" open icon="info-circle">
+						<span slot="title">
+							{__(
+								'Customers will be asked for permission',
+								'surecart'
+							)}
+						</span>
+						{__(
+							"The customer's browser will request location access when the checkout page loads. If they decline, checkout continues normally and no location is captured. Browsers only allow location access on sites served over HTTPS. Make sure this complies with the privacy regulations that apply to your store.",
+							'surecart'
+						)}
+					</ScAlert>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
