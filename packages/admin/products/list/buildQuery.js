@@ -48,10 +48,6 @@ const DEFAULT_HANDLERS = [
 	applyFeaturedFilter,
 ];
 
-const extraArgs = () => ({
-	expand: ['product_collections', 'commission_structure'],
-});
-
 export const buildProductsQuery = (view) => {
 	const filterHandlers = applyFilterHandlerExtensions(
 		'products',
@@ -61,7 +57,6 @@ export const buildProductsQuery = (view) => {
 	return buildFilterArgsFromView({
 		view,
 		filterHandlers,
-		extraArgs,
 	});
 };
 
