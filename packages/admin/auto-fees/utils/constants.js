@@ -99,6 +99,14 @@ export const ATTRIBUTE_REGISTRY = {
 		),
 	},
 
+	country: {
+		'geo_address.country': __('Geo Address Country', 'surecart'),
+		'checkout.geo_address.country': __(
+			'Checkout Geo Address Country',
+			'surecart'
+		),
+	},
+
 	user_role: {
 		wp_user_role: __('WordPress User Role', 'surecart'),
 	},
