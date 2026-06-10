@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useEntityRecords, store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect, select } from '@wordpress/data';
@@ -213,7 +214,10 @@ export default function useDataViewState(config) {
 		hydratedRef.current = true;
 	}, [persistedFromStore, layoutStyles]);
 
-	// Write the persisted layout subset back whenever view changes.
+	// Write the persisted layout subset back when it actually changes. Every
+	// preference dispatch makes the persistence layer PUT /wp/v2/users/me, so
+	// skipping no-op writes keeps pagination/search/filter changes (and the
+	// hydration re-render) off the network.
 	const isFirstRenderRef = useRef(true);
 	useEffect(() => {
 		if (!preferenceKey) return;
@@ -225,6 +229,7 @@ export default function useDataViewState(config) {
 		for (const key of PERSISTED_VIEW_KEYS) {
 			if (view[key] !== undefined) subset[key] = view[key];
 		}
+		if (isEqual(readPersistedView(preferenceKey), subset)) return;
 		setPreference(PREFERENCES_SCOPE, preferenceKey, subset);
 	}, [view, preferenceKey, setPreference]);
 
