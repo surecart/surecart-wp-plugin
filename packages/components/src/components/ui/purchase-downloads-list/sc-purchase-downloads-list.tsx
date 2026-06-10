@@ -48,11 +48,10 @@ export class ScPurchaseDownloadsList {
   renderList() {
     return this.purchases.map(purchase => {
       const variant = purchase?.variant as Variant;
-      const hasVariantDownloads = variant?.downloads_enabled && variant?.downloads?.data?.length > 0;
-      const downloads = hasVariantDownloads
-        ? variant.downloads.data.filter((d: Download) => !d.archived)
-        : (purchase?.product as Product)?.downloads?.data?.filter((d: Download) => !d.archived) || [];
-      const totalDownloads = hasVariantDownloads ? variant.downloads.pagination?.count : (purchase?.product as Product)?.downloads?.pagination?.count;
+      const activeVariantDownloads = (variant?.downloads?.data || []).filter((d: Download) => !d.archived);
+      const hasVariantDownloads = variant?.downloads_enabled && activeVariantDownloads.length > 0;
+      const downloads = hasVariantDownloads ? activeVariantDownloads : (purchase?.product as Product)?.downloads?.data?.filter((d: Download) => !d.archived) || [];
+      const totalDownloads = downloads.length;
       const mediaBytesList = (downloads || []).map(item => (item?.media ? (item?.media as Media)?.byte_size : 0));
       const mediaByteTotalSize = mediaBytesList.reduce((prev, curr) => prev + curr, 0);
 

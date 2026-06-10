@@ -98,8 +98,12 @@ class DownloadController extends BaseController {
 		}
 
 		// Only scope to the variant when it has its own files; otherwise fall back to product-level downloads.
-		$variant               = $purchase->variant ?? null;
-		$has_variant_downloads = ! empty( $variant->downloads_enabled ) && ! empty( $variant->downloads->data );
+		$variant                  = $purchase->variant ?? null;
+		$active_variant_downloads = array_filter(
+			(array) ( $variant->downloads->data ?? [] ),
+			fn( $download ) => empty( $download->archived )
+		);
+		$has_variant_downloads    = ! empty( $variant->downloads_enabled ) && ! empty( $active_variant_downloads );
 
 		ob_start();
 		?>
