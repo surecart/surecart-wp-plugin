@@ -50,9 +50,10 @@ export default ({
 		// candidate instead of detecting the active one.
 		const root = listRootRef.current;
 		root?.querySelector('.dataviews-wrapper')?.scrollTo(0, 0);
-		root?.querySelector(
-			'.interface-interface-skeleton__content'
-		)?.scrollTo(0, 0);
+		root?.querySelector('.interface-interface-skeleton__content')?.scrollTo(
+			0,
+			0
+		);
 		document.getElementById('wpcontent')?.scrollTo(0, 0);
 		window.scrollTo(0, 0);
 	}, [view?.page]);
@@ -117,8 +118,11 @@ export default ({
 						z-index: 10;
 					`}
 				>
-					{/* Off-mode the overlay spans the full table scroll width;
-					    a sticky scrollport-wide strip keeps the spinner in view. */}
+					{/* The overlay spans the full table scroll size; sticky
+					    keeps the spinner inside the visible scrollport. The
+					    strip pins horizontally; the inner box pins vertically
+					    (top wins over bottom when the constraints overlap on
+					    short scrollers, landing near the scrollport centre). */}
 					<div
 						css={css`
 							position: sticky;
@@ -130,7 +134,15 @@ export default ({
 							justify-content: center;
 						`}
 					>
-						<Spinner style={{ width: '28px', height: '28px' }} />
+						<div
+							css={css`
+								position: sticky;
+								top: calc(50vh - 14px);
+								bottom: calc(50vh - 14px);
+							`}
+						>
+							<Spinner style={{ width: '28px', height: '28px' }} />
+						</div>
 					</div>
 				</div>
 			)}
