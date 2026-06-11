@@ -20,12 +20,37 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
 });
 
 /**
+ * Completed checkout ids are persisted so revisiting a checkout url
+ * (e.g. ?checkout_id=xxx for an already-paid checkout) does not re-fire
+ * purchase events and inflate analytics conversions.
+ */
+const COMPLETED_CHECKOUTS_KEY = 'scCompletedCheckouts';
+const hasTrackedCompletion = (id: string): boolean => {
+  try {
+    return JSON.parse(localStorage.getItem(COMPLETED_CHECKOUTS_KEY) || '[]').includes(id);
+  } catch {
+    return false;
+  }
+};
+
+const trackCompletion = (id: string): void => {
+  try {
+    const ids: string[] = JSON.parse(localStorage.getItem(COMPLETED_CHECKOUTS_KEY) || '[]');
+    localStorage.setItem(COMPLETED_CHECKOUTS_KEY, JSON.stringify([...ids, id].slice(-20)));
+  } catch {
+    // localStorage unavailable — fall back to current (unguarded) behavior.
+  }
+};
+
+/**
  * Purchase complete, trial start event.
  */
 on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
   if (!checkout?.status || oldCheckout?.status === checkout?.status) return; // we only care about status changes.
   if (!['paid', 'processing'].includes(checkout.status)) return; // only if it's paid or processing.
+  if (hasTrackedCompletion(checkout.id)) return; // only once per checkout.
+  trackCompletion(checkout.id);
 
   // order paid is deprecated.
   const deprecated = new CustomEvent('scOrderPaid', { detail: checkout, bubbles: true });

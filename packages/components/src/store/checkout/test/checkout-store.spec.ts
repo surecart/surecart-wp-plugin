@@ -8,6 +8,7 @@ describe('checkout store', () => {
   beforeEach(() => {
     dispose();
     disposeCheckout();
+    localStorage.clear(); // reset the once-per-checkout completed guard.
   });
 
   describe('watchers', () => {
@@ -114,10 +115,23 @@ describe('checkout store', () => {
       expect(scCheckoutCompleted).toBeCalledTimes(1);
       expect(orderPaid).toBeCalledTimes(1);
 
-      // expect event to be emitted
+      // a later status change for the same checkout must not re-fire (completed guard).
       checkoutState.checkout = {
         id: 'test',
         status: 'paid',
+        line_items: {
+          data: [{ id: 'test', price: { trial_duration_days: 10 } }],
+        },
+      } as Checkout;
+
+      expect(scTrialStarted).toBeCalledTimes(0);
+      expect(scCheckoutCompleted).toBeCalledTimes(1);
+      expect(orderPaid).toBeCalledTimes(1);
+
+      // a different checkout fires its own completed event.
+      checkoutState.checkout = {
+        id: 'test-2',
+        status: 'processing',
         line_items: {
           data: [{ id: 'test', price: { trial_duration_days: 10 } }],
         },
