@@ -246,6 +246,12 @@ body:has(.sc-dataview-list-wrapper) {
 		justify-content: center;
 		min-height: 200px;
 	}
+
+	// Refetches over stale rows use our dimmed overlay (DataViewListLayout);
+	// upstream's extra under-table spinner would double up.
+	.dataviews-loading-more {
+		display: none;
+	}
 }
 
 .sc-dataview-list-wrapper[data-enhanced-view="off"] {

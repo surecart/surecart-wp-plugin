@@ -364,9 +364,35 @@ export default function useDataViewState(config) {
 		queryArgs
 	);
 
+	// Stale-while-loading: when the query changes (page/sort/search/filter),
+	// `useEntityRecords` drops records to empty until the refetch resolves —
+	// and DataViews unmounts the bulk-select checkbox column whenever `data`
+	// is empty, so the column pops back in on arrival. Keep the last resolved
+	// snapshot on screen instead; the layout overlays a spinner meanwhile.
+	const staleRef = useRef({
+		records: [],
+		totalItems: undefined,
+		totalPages: undefined,
+	});
+	let displayRecords = records || [];
+	let displayTotalItems = totalItems;
+	let displayTotalPages = totalPages;
+	if (hasResolved) {
+		// Resolved results are authoritative — including an empty set, which
+		// must display as empty rather than fall back to stale rows.
+		staleRef.current = { records: displayRecords, totalItems, totalPages };
+	} else {
+		displayRecords = staleRef.current.records;
+		displayTotalItems = staleRef.current.totalItems;
+		displayTotalPages = staleRef.current.totalPages;
+	}
+
 	const paginationInfo = useMemo(
-		() => ({ totalItems, totalPages }),
-		[totalItems, totalPages]
+		() => ({
+			totalItems: displayTotalItems,
+			totalPages: displayTotalPages,
+		}),
+		[displayTotalItems, displayTotalPages]
 	);
 
 	// Keep queryArgs in a ref so invalidateList identity stays stable across
@@ -385,7 +411,7 @@ export default function useDataViewState(config) {
 	return {
 		view,
 		setView,
-		records: records || [],
+		records: displayRecords,
 		hasResolved,
 		paginationInfo,
 		invalidateList,
