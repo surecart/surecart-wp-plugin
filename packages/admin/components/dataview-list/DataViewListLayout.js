@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/react';
 import { useEffect, useRef } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews/wp';
-import { Spinner } from '@wordpress/components';
+import { ProgressBar } from '@wordpress/components';
 import { InterfaceSkeleton, FullscreenMode } from '@wordpress/interface';
 import { useViewportMatch } from '@wordpress/compose';
 import Notifications from '../Notifications';
@@ -141,7 +141,7 @@ export default ({
 								bottom: calc(50vh - 14px);
 							`}
 						>
-							<Spinner style={{ width: '28px', height: '28px' }} />
+							<ProgressBar />
 						</div>
 					</div>
 				</div>
