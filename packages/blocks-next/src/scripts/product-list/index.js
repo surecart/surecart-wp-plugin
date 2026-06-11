@@ -194,7 +194,10 @@ const { state } = store('surecart/product-list', {
 				);
 			}
 
-			if (window?.fbq) {
+			if (
+				window?.fbq &&
+				window?.scData?.facebook_tracking_enabled !== false
+			) {
 				yield import(
 					/* webpackIgnore: true */
 					'@surecart/facebook-events'

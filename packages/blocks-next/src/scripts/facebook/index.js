@@ -1,10 +1,24 @@
 import { maybeConvertAmount } from '../../utilities/currency';
 
 /**
+ * Facebook (Meta) Pixel standard events.
+ *
+ * @see https://developers.facebook.com/docs/meta-pixel/reference Standard event names & expected payloads.
+ * @see https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking#object-properties Payload properties (content_ids, contents, value, currency).
+ */
+
+/**
+ * Whether automatic Facebook Pixel tracking is turned off via the
+ * `surecart/tracking/facebook/enabled` PHP filter.
+ */
+const isTrackingDisabled = () =>
+	!window?.fbq || window?.scData?.facebook_tracking_enabled === false;
+
+/**
  * Handle search event for Facebook.
  */
 window.addEventListener('scSearched', function (e) {
-	if (!window?.fbq) return;
+	if (isTrackingDisabled()) return;
 
 	const { searchString, searchResultIds } = e.detail;
 
@@ -18,7 +32,7 @@ window.addEventListener('scSearched', function (e) {
  * Handle add to cart event.
  */
 window.addEventListener('scAddedToCart', function (e) {
-	if (!window?.fbq) return;
+	if (isTrackingDisabled()) return;
 
 	// get the added item from the event.
 	const item = e.detail;
@@ -58,7 +72,7 @@ window.addEventListener('scAddedToCart', function (e) {
  * Handle view content event.
  */
 window.addEventListener('scProductViewed', function (e) {
-	if (!window?.fbq) return;
+	if (isTrackingDisabled()) return;
 
 	const product = e.detail;
 

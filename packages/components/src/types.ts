@@ -83,6 +83,7 @@ declare global {
       };
       google_map_api_key: string;
       current_user_roles: string[];
+      facebook_tracking_enabled?: boolean;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
