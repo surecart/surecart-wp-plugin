@@ -61,6 +61,11 @@ export default ({
 	const isLargeViewport = useViewportMatch('medium');
 	const showWorkspace = enabled && isLargeViewport;
 
+	// Refetches keep the previous (stale) rows on screen — see
+	// useDataViewState — so give them the same dimmed-overlay treatment as
+	// mutations instead of upstream's bare table swap.
+	const showOverlay = isMutating || (isLoading && !!data?.length);
+
 	const headerWithToggle = (
 		<div
 			css={css`
@@ -103,7 +108,7 @@ export default ({
 				{...rest}
 			/>
 
-			{isMutating && (
+			{showOverlay && (
 				<div
 					css={css`
 						position: absolute;
