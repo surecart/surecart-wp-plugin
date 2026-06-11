@@ -1,59 +1,52 @@
-// Reuses EditVariant outside the Edit Product page. Save is
-// fire-and-forget: drawer closes immediately, PATCH runs in the
-// background, parent drives a row-level saving indicator via the
-// onSavingStart / onSavingEnd callbacks.
+// Reuses EditVariant outside the Edit Product page. Variants come from the
+// same core-data query the inline rows resolved on expand, so opening the
+// drawer is instant — no fetch. Save is fire-and-forget: drawer closes
+// immediately, the single-variant PATCH runs in the background, parent
+// drives a row-level saving indicator via onSavingStart / onSavingEnd.
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 import EditVariant from './EditVariant';
 import { toVariantsArray } from './utils';
-import { fetchProductVariants } from '../../list/variants';
-
-// Alias — same envelope-or-flat normalization for variants and variant_options.
-const asArray = toVariantsArray;
+import { variantsQuery } from '../../list/variants';
 
 export default ({
-	productId,
+	product,
 	variantId,
 	onClose,
 	onSaved,
 	onSavingStart,
 	onSavingEnd,
 }) => {
-	const { editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
-	// Fetch the full product directly. The lean list pre-resolves this
-	// product's core-data record variant-less, so reading it via core-data
-	// would open the drawer empty — see fetchProductVariants.
-	const [product, setProduct] = useState(null);
-	const [loadFailed, setLoadFailed] = useState(false);
+	const productId = product?.id;
 
-	useEffect(() => {
-		let active = true;
-		setProduct(null);
-		setLoadFailed(false);
-		fetchProductVariants(productId)
-			.then((p) => active && setProduct(p))
-			.catch(() => active && setLoadFailed(true));
-		return () => {
-			active = false;
-		};
-	}, [productId]);
+	const variants = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecords(
+				'surecart',
+				'variant',
+				variantsQuery(productId)
+			),
+		[productId]
+	);
 
-	const variants = useMemo(() => asArray(product?.variants), [product]);
+	// Option labels come from the lean list row — it expands
+	// `variant_options` (see list/buildQuery.js BASE_EXPANDS).
 	const variantOptions = useMemo(
-		() => asArray(product?.variant_options),
+		() => toVariantsArray(product?.variant_options),
 		[product]
 	);
 
 	const sourceVariant = useMemo(
-		() => variants.find((v) => v?.id === variantId) || null,
+		() => (variants || []).find((v) => v?.id === variantId) || null,
 		[variants, variantId]
 	);
 
@@ -73,25 +66,20 @@ export default ({
 	// IIFE captures everything by closure and runs to completion
 	// even after the panel unmounts.
 	const handleDone = useCallback(() => {
-		if (!product || !draft) return;
+		if (!draft) return;
 		const id = variantId;
 		const snapshot = draft;
-		const updatedFlat = variants.map((v) =>
-			v?.id !== id ? v : { ...v, ...snapshot }
-		);
 
 		if (typeof onSavingStart === 'function') onSavingStart(id);
 
 		(async () => {
 			try {
-				// Always write a flat variants array — the envelope
-				// shape causes the API to silently drop siblings.
-				await editEntityRecord('surecart', 'product', productId, {
-					variants: updatedFlat,
-				});
-				await saveEditedEntityRecord('surecart', 'product', productId, {
-					throwOnError: true,
-				});
+				await saveEntityRecord(
+					'surecart',
+					'variant',
+					{ ...snapshot, id },
+					{ throwOnError: true }
+				);
 				createSuccessNotice(__('Variant updated.', 'surecart'), {
 					type: 'snackbar',
 				});
@@ -107,13 +95,9 @@ export default ({
 			}
 		})();
 	}, [
-		product,
 		draft,
-		variants,
 		variantId,
-		productId,
-		editEntityRecord,
-		saveEditedEntityRecord,
+		saveEntityRecord,
 		createSuccessNotice,
 		createErrorNotice,
 		onSaved,
@@ -121,18 +105,9 @@ export default ({
 		onSavingEnd,
 	]);
 
-	// Surface a fetch failure instead of a silently empty drawer.
-	useEffect(() => {
-		if (!loadFailed) return;
-		createErrorNotice(
-			__('Could not load the variant. Please try again.', 'surecart'),
-			{ type: 'snackbar' }
-		);
-		onClose?.();
-	}, [loadFailed, createErrorNotice, onClose]);
-
-	// Wait for variant data — drawer flickers empty otherwise.
-	if (!product || !sourceVariant || !draft) {
+	// Wait for variant data — drawer flickers empty otherwise. The query is
+	// normally cache-warm (the row the user clicked came from it).
+	if (!sourceVariant || !draft) {
 		return null;
 	}
 

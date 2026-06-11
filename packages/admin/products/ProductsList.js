@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
-import { useDispatch, dispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback, useState } from 'react';
@@ -35,10 +35,8 @@ import {
 	injectVariantRows,
 	applyVariantRenderers,
 	productOnlyItems,
-	fetchProductVariants,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
-import { toVariantsArray } from './modules/Variations/utils';
 import './product-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -316,45 +314,18 @@ export default ({ navigation }) => {
 
 			return runMutation(
 				async () => {
-					// Fetch the full product directly — the lean list
-					// pre-resolves this record variant-less in core-data, so
-					// reading variants from there would PATCH `variants: []`
-					// and wipe the siblings.
-					const current = await fetchProductVariants(productId);
-					const sourceVariants = toVariantsArray(current?.variants);
-
-					// Belt-and-suspenders for the same data-loss scenario.
-					if (sourceVariants.length === 0) {
-						throw new Error(
-							__(
-								'Could not load the product variants. Refresh the page and try again.',
-								'surecart'
-							)
-						);
-					}
-
-					// Soft delete — flip just the targeted variant.
-					const next = sourceVariants.map((v) =>
-						v?.id !== variantId ? v : { ...v, status: 'draft' }
-					);
-
-					await dispatch(coreStore).editEntityRecord(
+					// Soft delete via a single-variant PATCH — siblings are
+					// untouched, so no full-product read is needed first.
+					await saveEntityRecord(
 						'surecart',
-						'product',
-						productId,
-						{ variants: next }
-					);
-					await dispatch(coreStore).saveEditedEntityRecord(
-						'surecart',
-						'product',
-						productId,
+						'variant',
+						{ id: variantId, status: 'draft' },
 						{ throwOnError: true }
 					);
 
 					invalidateList();
 					// Refetch the expanded row's variants so the deleted one
-					// drops out (inline rows come from the lazy fetch, not
-					// the list response).
+					// drops out (drafts are filtered from the inline rows).
 					expanded.retry(productId);
 					createSuccessNotice(__('Variant deleted.', 'surecart'), {
 						type: 'snackbar',
@@ -363,7 +334,13 @@ export default ({ navigation }) => {
 				{ errorMessage: __('Failed to delete variant.', 'surecart') }
 			);
 		},
-		[runMutation, invalidateList, expanded.retry, createSuccessNotice]
+		[
+			runMutation,
+			saveEntityRecord,
+			invalidateList,
+			expanded.retry,
+			createSuccessNotice,
+		]
 	);
 
 	// Partial-success path is handled below — only the all-failed branch
@@ -489,16 +466,16 @@ export default ({ navigation }) => {
 			/>
 			{editingVariant && (
 				<VariantEditPanel
-					productId={editingVariant.productId}
+					product={editingVariant.product}
 					variantId={editingVariant.variantId}
 					onClose={() => setEditingVariant(null)}
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
 					onSaved={() => {
 						invalidateList();
-						// Inline rows come from the lazy fetch — refetch so the
-						// edit shows without collapsing the row.
-						expanded.retry(editingVariant.productId);
+						// Invalidate the variants query so the inline rows
+						// show the edit without collapsing the row.
+						expanded.retry(editingVariant.product?.id);
 					}}
 				/>
 			)}

@@ -64,7 +64,9 @@ export const buildProductActions = ({
 				const parent = getVariantParent(item);
 				const variantId = getVariantOriginalId(item);
 				if (!parent?.id || !variantId) return;
-				onEditVariant?.({ productId: parent.id, variantId });
+				// The full parent row goes along — the drawer reads option
+				// labels and fallback values from it instead of refetching.
+				onEditVariant?.({ product: parent, variantId });
 			},
 		},
 		{
