@@ -11,6 +11,9 @@ import { Checkout, LineItem, Product } from 'src/types';
 
 const isTrackingDisabled = () => !window?.fbq || window?.scData?.facebook_tracking_enabled === false;
 
+// product can be expanded or a bare id depending on the response shape.
+const getProductId = (item: LineItem): string => (typeof item?.price?.product === 'string' ? item.price.product : (item?.price?.product as Product)?.id);
+
 /**
  * Handle add to cart event.
  */
@@ -28,12 +31,12 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
 
   window.fbq('track', 'AddToCart', {
     ...(productCollections.length ? { content_category: productCollections.join(', ') } : {}),
-    content_ids: [product.id],
+    content_ids: [getProductId(item)],
     content_name: product?.name + (item?.variant_options?.length ? ` - ${item?.variant_options.join(' / ')}` : ''),
     content_type: 'product',
     contents: [
       {
-        id: product.id,
+        id: getProductId(item),
         quantity: item.quantity,
       },
     ],
@@ -54,8 +57,8 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
     'track',
     'InitiateCheckout',
     {
-      content_ids: (checkout?.line_items.data || [])?.map(item => item.id),
-      contents: (checkout?.line_items.data || [])?.map(item => ({ id: item.id, quantity: item.quantity })),
+      content_ids: (checkout?.line_items?.data || []).map(getProductId),
+      contents: (checkout?.line_items?.data || []).map(item => ({ id: getProductId(item), quantity: item.quantity })),
       currency: checkout?.currency,
       num_items: checkout?.line_items?.data?.length || 0,
       value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
@@ -77,10 +80,10 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
     'track',
     'Purchase',
     {
-      content_ids: lineItems.map(item => (item?.price?.product as Product)?.id),
+      content_ids: lineItems.map(getProductId),
       content_name: 'Purchase',
       content_type: 'product',
-      contents: lineItems.map(item => ({ id: (item?.price?.product as Product)?.id, quantity: item.quantity })),
+      contents: lineItems.map(item => ({ id: getProductId(item), quantity: item.quantity })),
       currency: checkout?.currency,
       num_items: lineItems.length,
       value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
