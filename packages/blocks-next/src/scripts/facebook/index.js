@@ -7,10 +7,6 @@ import { maybeConvertAmount } from '../../utilities/currency';
  * @see https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking#object-properties Payload properties (content_ids, contents, value, currency).
  */
 
-/**
- * Whether automatic Facebook Pixel tracking is turned off via the
- * `surecart/tracking/facebook/enabled` PHP filter.
- */
 const isTrackingDisabled = () =>
 	!window?.fbq || window?.scData?.facebook_tracking_enabled === false;
 

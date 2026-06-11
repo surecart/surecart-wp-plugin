@@ -9,10 +9,6 @@ import { Checkout, LineItem, Product } from 'src/types';
  * @see https://developers.facebook.com/docs/marketing-api/conversions-api/deduplicate-pixel-and-server-events eventID-based Pixel ↔ Conversions API deduplication.
  */
 
-/**
- * Whether automatic Facebook Pixel tracking is turned off via the
- * `surecart/tracking/facebook/enabled` PHP filter.
- */
 const isTrackingDisabled = () => !window?.fbq || window?.scData?.facebook_tracking_enabled === false;
 
 /**
