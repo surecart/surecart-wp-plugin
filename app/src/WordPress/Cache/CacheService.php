@@ -181,11 +181,16 @@ abstract class CacheService {
 	/**
 	 * Check if the current page is a buy page.
 	 *
+	 * Pretty buy permalinks (/buy/{product-slug}/) rewrite to the
+	 * sc_checkout_product_id query var; sc-buy covers legacy buy links.
+	 *
 	 * @return bool
 	 */
 	protected function isBuyPage(): bool {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return isset( $_GET['sc-buy'] ) || ! empty( get_query_var( 'sc-buy' ) );
+		return isset( $_GET['sc-buy'] )
+			|| ! empty( get_query_var( 'sc-buy' ) )
+			|| ! empty( get_query_var( 'sc_checkout_product_id' ) );
 	}
 
 	/**
