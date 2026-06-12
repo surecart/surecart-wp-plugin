@@ -13,6 +13,7 @@ import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
+import { useNavigationConfirm } from '../router';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
@@ -49,6 +50,19 @@ export default ({ id, setBrowserURL, navigation }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
+	const { requestNavigation } = useNavigationConfirm();
+
+	// Prompts to save/discard unsaved changes before going back to the list.
+	const backToList = () => {
+		if (navigation) {
+			requestNavigation(
+				{ page: navigation.pageSlug },
+				{ successMessage: __('Product updated.', 'surecart') }
+			);
+		} else {
+			window.location.href = 'admin.php?page=sc-products';
+		}
+	};
 
 	const {
 		product,
@@ -306,14 +320,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 							{...(navigation
 								? {}
 								: { href: 'admin.php?page=sc-products' })}
-							onClick={() => {
-								if (navigation) {
-									navigation.goToList();
-								} else {
-									window.location.href =
-										'admin.php?page=sc-products';
-								}
-							}}
+							onClick={backToList}
 						>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
@@ -327,7 +334,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 									onClick={(e) => {
 										if (navigation) {
 											e.preventDefault();
-											navigation.goToList();
+											backToList();
 										}
 									}}
 									css={css`

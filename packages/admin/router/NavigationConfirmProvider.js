@@ -23,40 +23,37 @@ import useSave from '../settings/UseSave';
 const NavigationConfirmContext = createContext(undefined);
 
 export function NavigationConfirmProvider({ children }) {
-	const [pendingParams, setPendingParams] = useState(null);
+	const [pending, setPending] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
 
 	const { save, discard } = useSave();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const closeDialog = useCallback(() => {
-		setPendingParams(null);
+		setPending(null);
 		setIsSaving(false);
 	}, []);
 
 	const navigateToPending = useCallback(() => {
-		if (pendingParams) {
-			history.push(pendingParams);
+		if (pending) {
+			history.push(pending.params);
 			window.scrollTo(0, 0);
 		}
 		closeDialog();
-	}, [pendingParams, closeDialog]);
+	}, [pending, closeDialog]);
 
-	const requestNavigation = useCallback(
-		(params) => {
-			const dirtyRecords =
-				select(coreStore).__experimentalGetDirtyEntityRecords();
+	const requestNavigation = useCallback((params, { successMessage } = {}) => {
+		const dirtyRecords =
+			select(coreStore).__experimentalGetDirtyEntityRecords();
 
-			if (dirtyRecords.length > 0) {
-				setPendingParams(params);
-				return;
-			}
+		if (dirtyRecords.length > 0) {
+			setPending({ params, successMessage });
+			return;
+		}
 
-			history.push(params);
-			window.scrollTo(0, 0);
-		},
-		[]
-	);
+		history.push(params);
+		window.scrollTo(0, 0);
+	}, []);
 
 	const handleDismiss = useCallback(() => {
 		if (isSaving) {
@@ -74,7 +71,9 @@ export function NavigationConfirmProvider({ children }) {
 		setIsSaving(true);
 		try {
 			await save({
-				successMessage: __('Settings saved.', 'surecart'),
+				successMessage:
+					pending?.successMessage ||
+					__('Settings saved.', 'surecart'),
 			});
 			navigateToPending();
 		} catch (error) {
@@ -90,7 +89,7 @@ export function NavigationConfirmProvider({ children }) {
 		} finally {
 			setIsSaving(false);
 		}
-	}, [save, navigateToPending, createErrorNotice]);
+	}, [save, pending, navigateToPending, createErrorNotice]);
 
 	const contextValue = useMemo(
 		() => ({
@@ -102,7 +101,7 @@ export function NavigationConfirmProvider({ children }) {
 	return (
 		<NavigationConfirmContext.Provider value={contextValue}>
 			{children}
-			{pendingParams && (
+			{pending && (
 				<Modal
 					contentLabel={__('Unsaved changes', 'surecart')}
 					__experimentalHideHeader
