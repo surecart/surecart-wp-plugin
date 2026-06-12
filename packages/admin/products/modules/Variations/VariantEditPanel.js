@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 
 import EditVariant from './EditVariant';
 import { toVariantsArray } from './utils';
-import { variantsQuery } from '../../list/variants';
+import { variantsQuery, patchVariant } from '../../list/variants';
 
 export default ({
 	product,
@@ -22,7 +22,7 @@ export default ({
 	onSavingStart,
 	onSavingEnd,
 }) => {
-	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
@@ -80,12 +80,12 @@ export default ({
 
 		(async () => {
 			try {
-				await saveEntityRecord(
-					'surecart',
-					'variant',
-					{ ...snapshot, id },
-					{ throwOnError: true }
-				);
+				// Direct PATCH (not saveEntityRecord) — saving through
+				// core-data would refetch every expanded product's variants.
+				// The response is authoritative: it carries server-computed
+				// fields (display_amount etc.) the optimistic draft lacks.
+				const saved = await patchVariant(id, snapshot);
+				receiveEntityRecords('surecart', 'variant', saved);
 				createSuccessNotice(__('Variant updated.', 'surecart'), {
 					type: 'snackbar',
 				});
@@ -106,7 +106,6 @@ export default ({
 		draft,
 		sourceVariant,
 		variantId,
-		saveEntityRecord,
 		receiveEntityRecords,
 		createSuccessNotice,
 		createErrorNotice,

@@ -2,6 +2,7 @@ export { default as useExpandedVariants } from './useExpandedVariants';
 export { default as useLazyVariants } from './useLazyVariants';
 export { default as useSavingVariantIds } from './useSavingVariantIds';
 export { variantsQuery, byPosition } from './variantsQuery';
+export { patchVariant } from './patchVariant';
 export {
 	default as injectVariantRows,
 	isVariantRow,

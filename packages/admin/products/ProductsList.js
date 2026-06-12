@@ -35,6 +35,7 @@ import {
 	injectVariantRows,
 	applyVariantRenderers,
 	productOnlyItems,
+	patchVariant,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
 import './product-list-style.scss';
@@ -323,14 +324,13 @@ export default ({ navigation }) => {
 					});
 
 					try {
-						// Soft delete via a single-variant PATCH — siblings
-						// are untouched, no full-product read needed first.
-						await saveEntityRecord(
-							'surecart',
-							'variant',
-							{ id: variantId, status: 'draft' },
-							{ throwOnError: true }
-						);
+						// Soft delete via a direct single-variant PATCH —
+						// siblings are untouched, and unlike saveEntityRecord
+						// this doesn't refetch every expanded row's variants.
+						const saved = await patchVariant(variantId, {
+							status: 'draft',
+						});
+						receiveEntityRecords('surecart', 'variant', saved);
 					} catch (error) {
 						// Restore server truth before surfacing the error.
 						expanded.retry(productId);
@@ -347,7 +347,6 @@ export default ({ navigation }) => {
 		},
 		[
 			runMutation,
-			saveEntityRecord,
 			receiveEntityRecords,
 			invalidateList,
 			expanded.retry,
