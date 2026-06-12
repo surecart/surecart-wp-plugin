@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
@@ -88,6 +88,18 @@ export default function useLazyVariants() {
 		},
 		[invalidateResolution]
 	);
+
+	// The SPA keeps core-data caches across routes and expansion ids
+	// persist in localStorage, so rows can render from variants edited
+	// elsewhere (e.g. option re-ordering on the product editor).
+	// Re-resolve once per mount; cached rows stay on screen while the
+	// fresh records land.
+	const initialIdsRef = useRef(expanded.ids);
+	useEffect(() => {
+		for (const id of initialIdsRef.current) {
+			retry(id);
+		}
+	}, [retry]);
 
 	return useMemo(
 		() => ({
