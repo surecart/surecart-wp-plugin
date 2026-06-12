@@ -28,6 +28,7 @@ import {
 	PRODUCTS_SORT_MAP,
 } from './list/buildQuery';
 import { PRODUCTS_URL_FILTERS } from './list/urlFilters';
+import { refreshProductRow } from './list/refreshProductRow';
 import { useStatusTabs } from './list/useStatusTabs';
 import {
 	useLazyVariants,
@@ -110,6 +111,7 @@ export default ({ navigation }) => {
 		hasResolved,
 		paginationInfo,
 		invalidateList,
+		queryArgs,
 	} = useDataViewState({
 		entity: 'product',
 		defaultSort: PRODUCTS_DEFAULT_SORT,
@@ -337,7 +339,12 @@ export default ({ navigation }) => {
 						throw error;
 					}
 
-					invalidateList();
+					// Refresh just this product's row — its aggregates
+					// (price range, stock) may include the deleted variant.
+					// Best-effort: a miss leaves the row momentarily stale.
+					refreshProductRow(productId, {
+						expand: queryArgs.expand,
+					}).catch(() => {});
 					createSuccessNotice(__('Variant deleted.', 'surecart'), {
 						type: 'snackbar',
 					});
@@ -348,7 +355,7 @@ export default ({ navigation }) => {
 		[
 			runMutation,
 			receiveEntityRecords,
-			invalidateList,
+			queryArgs.expand,
 			expanded.retry,
 			createSuccessNotice,
 		]
@@ -483,10 +490,12 @@ export default ({ navigation }) => {
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
 					onSaved={() => {
-						// Rows already show the optimistic edit, and the save
-						// itself re-resolves variant queries in the background
-						// — only the product row's metrics need refreshing.
-						invalidateList();
+						// Rows already show the edit; only this product's
+						// aggregates (price range, stock) need refreshing —
+						// one lean record, not the whole list. Best-effort.
+						refreshProductRow(editingVariant.product?.id, {
+							expand: queryArgs.expand,
+						}).catch(() => {});
 					}}
 				/>
 			)}
