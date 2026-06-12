@@ -22,7 +22,7 @@ export default ({
 	onSavingStart,
 	onSavingEnd,
 }) => {
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
@@ -69,8 +69,14 @@ export default ({
 		if (!draft) return;
 		const id = variantId;
 		const snapshot = draft;
+		const previous = sourceVariant;
 
 		if (typeof onSavingStart === 'function') onSavingStart(id);
+
+		// Optimistic: push the draft into the store now so the inline row
+		// shows the edit the moment the drawer closes. Receives merge into
+		// the items map every variants query reads from — no invalidation.
+		receiveEntityRecords('surecart', 'variant', { ...previous, ...snapshot });
 
 		(async () => {
 			try {
@@ -85,6 +91,8 @@ export default ({
 				});
 				if (typeof onSaved === 'function') onSaved();
 			} catch (error) {
+				// Roll the optimistic write back to the pre-edit record.
+				receiveEntityRecords('surecart', 'variant', previous);
 				createErrorNotice(
 					error?.message ||
 						__('Failed to update variant.', 'surecart'),
@@ -96,8 +104,10 @@ export default ({
 		})();
 	}, [
 		draft,
+		sourceVariant,
 		variantId,
 		saveEntityRecord,
+		receiveEntityRecords,
 		createSuccessNotice,
 		createErrorNotice,
 		onSaved,

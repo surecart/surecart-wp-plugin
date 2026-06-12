@@ -55,15 +55,17 @@ export default function useLazyVariants() {
 			failedIds: new Set(),
 		};
 		for (const [id, records] of Object.entries(recordsById)) {
-			// Keep rows during re-resolution (retry/post-save): records
-			// persist while `finished` is false, so the row stays put
-			// instead of collapsing back to placeholders.
 			if (records) {
 				result.variantsByProduct[id] = [...records].sort(byPosition);
 			}
-			if (!finishedById[id]) {
+			// Every variant save invalidates ALL variant queries' resolution
+			// (core-data's invalidateCache), so "unfinished" alone can't mean
+			// loading — the placeholder would replace live rows on each save.
+			// Loading is only "nothing to show yet"; rows with records keep
+			// rendering while re-resolution confirms them in the background.
+			if (!finishedById[id] && !records) {
 				result.loadingIds.add(id);
-			} else if (records === null) {
+			} else if (finishedById[id] && records === null) {
 				// Success always yields an array — null after resolution
 				// means the fetch failed.
 				result.failedIds.add(id);

@@ -64,7 +64,8 @@ const PREFERENCE_KEY = 'products-list-view';
 const productsQueryArgs = ({ view }) => buildProductsQuery(view);
 
 export default ({ navigation }) => {
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, deleteEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
@@ -314,19 +315,29 @@ export default ({ navigation }) => {
 
 			return runMutation(
 				async () => {
-					// Soft delete via a single-variant PATCH — siblings are
-					// untouched, so no full-product read is needed first.
-					await saveEntityRecord(
-						'surecart',
-						'variant',
-						{ id: variantId, status: 'draft' },
-						{ throwOnError: true }
-					);
+					// Optimistic: receives merge by field, and the inline rows
+					// filter drafts out — so the row disappears immediately.
+					receiveEntityRecords('surecart', 'variant', {
+						id: variantId,
+						status: 'draft',
+					});
+
+					try {
+						// Soft delete via a single-variant PATCH — siblings
+						// are untouched, no full-product read needed first.
+						await saveEntityRecord(
+							'surecart',
+							'variant',
+							{ id: variantId, status: 'draft' },
+							{ throwOnError: true }
+						);
+					} catch (error) {
+						// Restore server truth before surfacing the error.
+						expanded.retry(productId);
+						throw error;
+					}
 
 					invalidateList();
-					// Refetch the expanded row's variants so the deleted one
-					// drops out (drafts are filtered from the inline rows).
-					expanded.retry(productId);
 					createSuccessNotice(__('Variant deleted.', 'surecart'), {
 						type: 'snackbar',
 					});
@@ -337,6 +348,7 @@ export default ({ navigation }) => {
 		[
 			runMutation,
 			saveEntityRecord,
+			receiveEntityRecords,
 			invalidateList,
 			expanded.retry,
 			createSuccessNotice,
@@ -472,10 +484,10 @@ export default ({ navigation }) => {
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
 					onSaved={() => {
+						// Rows already show the optimistic edit, and the save
+						// itself re-resolves variant queries in the background
+						// — only the product row's metrics need refreshing.
 						invalidateList();
-						// Invalidate the variants query so the inline rows
-						// show the edit without collapsing the row.
-						expanded.retry(editingVariant.product?.id);
 					}}
 				/>
 			)}
