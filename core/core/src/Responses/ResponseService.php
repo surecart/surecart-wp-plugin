@@ -223,7 +223,7 @@ class ResponseService {
 	 * @param  RequestInterface|null $request
 	 * @return RedirectResponse
 	 */
-	public function redirect( RequestInterface $request = null ) {
+	public function redirect( ?RequestInterface $request = null ) {
 		$request = $request ? $request : $this->request;
 		return new RedirectResponse( $request );
 	}
