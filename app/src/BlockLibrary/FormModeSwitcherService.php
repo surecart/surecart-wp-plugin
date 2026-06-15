@@ -177,7 +177,7 @@ class FormModeSwitcherService {
 		<script>
 			// IIFE so top-level declarations don't collide with other classic scripts.
 			(function() {
-				var items = document.querySelectorAll('#wp-admin-bar-sc_change_checkout_mode a:not([href="#"])');
+				const items = document.querySelectorAll('#wp-admin-bar-sc_change_checkout_mode a:not([href="#"])');
 				(items || []).forEach(item => {
 					item.addEventListener('click', function(e) {
 						if (!confirm('<?php echo esc_js( $message ); ?>')) {
