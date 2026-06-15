@@ -11,7 +11,7 @@ import { state as processorsState } from '@store/processors';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
-import { getResolvedBillingAddress, toStripeAddress } from '@store/checkout/getters';
+import { getResolvedBillingAddress, getResolvedBillingEmail, toStripeAddress } from '@store/checkout/getters';
 import { getProcessorByType } from '@store/processors/getters';
 
 @Component({
@@ -220,7 +220,7 @@ export class ScStripePaymentElement {
         defaultValues: {
           billingDetails: {
             ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
-            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(getResolvedBillingEmail() ? { email: getResolvedBillingEmail() } : {}),
             ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
             ...(address ? { address } : {}),
           },
@@ -275,7 +275,7 @@ export class ScStripePaymentElement {
       defaultValues: {
         billingDetails: {
           ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
-          ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+          ...(getResolvedBillingEmail() ? { email: getResolvedBillingEmail() } : {}),
           ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
           ...(address ? { address } : {}),
         },
@@ -332,7 +332,7 @@ export class ScStripePaymentElement {
         }),
         payment_method_data: {
           billing_details: {
-            ...(checkoutState.checkout?.email ? { email: checkoutState.checkout.email } : {}),
+            ...(getResolvedBillingEmail() ? { email: getResolvedBillingEmail() } : {}),
             ...(checkoutState.checkout?.name ? { name: checkoutState.checkout.name } : {}),
             ...(checkoutState.checkout?.phone ? { phone: checkoutState.checkout.phone } : {}),
             ...(address ? { address } : {}),

@@ -9,7 +9,7 @@ import { availableProcessors } from '@store/processors/getters';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
-import { getResolvedBillingAddress, toStripeAddress } from '@store/checkout/getters';
+import { getResolvedBillingAddress, getResolvedBillingEmail, toStripeAddress } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -129,9 +129,10 @@ export class ScStripeElement {
   getBillingDetails() {
     const order = this.order;
     const address = toStripeAddress(getResolvedBillingAddress(order));
+    const email = getResolvedBillingEmail(order);
     return {
       ...(order?.name ? { name: order.name } : {}),
-      ...(order?.email ? { email: order.email } : {}),
+      ...(email ? { email } : {}),
       ...(order?.phone ? { phone: order.phone } : {}),
       ...(address ? { address } : {}),
     };
