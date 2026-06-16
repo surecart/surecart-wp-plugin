@@ -7,15 +7,13 @@ import { maybeConvertAmount } from '../../utilities/currency';
  * @see https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking#object-properties Payload properties (content_ids, contents, value, currency).
  */
 
-const isTrackingDisabled = () =>
-	!window?.fbq || window?.scData?.facebook_tracking_enabled === false;
+// No fbq / tracking-enabled guard here: this module is only ever imported behind that
+// same check (see product-page and product-list init). Keep it guard-free intentionally.
 
 /**
  * Handle search event for Facebook.
  */
 window.addEventListener('scSearched', function (e) {
-	if (isTrackingDisabled()) return;
-
 	const { searchString, searchResultIds } = e.detail;
 
 	window.fbq('track', 'Search', {
@@ -28,8 +26,6 @@ window.addEventListener('scSearched', function (e) {
  * Handle add to cart event.
  */
 window.addEventListener('scAddedToCart', function (e) {
-	if (isTrackingDisabled()) return;
-
 	// get the added item from the event.
 	const item = e.detail;
 
@@ -68,8 +64,6 @@ window.addEventListener('scAddedToCart', function (e) {
  * Handle view content event.
  */
 window.addEventListener('scProductViewed', function (e) {
-	if (isTrackingDisabled()) return;
-
 	const product = e.detail;
 
 	window.fbq('track', 'ViewContent', {
