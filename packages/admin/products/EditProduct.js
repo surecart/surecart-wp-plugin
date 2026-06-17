@@ -5,7 +5,7 @@ import { external } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useCallback, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
@@ -52,18 +52,6 @@ export default ({ id, setBrowserURL, navigation }) => {
 	const { setEditedPost } = useDispatch('core/editor');
 	const { requestNavigation } = useNavigationConfirm();
 
-	// Prompts to save/discard unsaved changes before going back to the list.
-	const backToList = () => {
-		if (navigation) {
-			requestNavigation(
-				{ page: navigation.pageSlug },
-				{ successMessage: __('Product updated.', 'surecart') }
-			);
-		} else {
-			window.location.href = 'admin.php?page=sc-products';
-		}
-	};
-
 	const {
 		product,
 		saveProduct,
@@ -75,6 +63,25 @@ export default ({ id, setBrowserURL, navigation }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	// Prompts to save/discard unsaved changes before going back to the list.
+	// requestNavigation needs raw router params rather than navigation.goToList()
+	// because NavigationConfirmProvider operates on history params directly.
+	const backToList = useCallback(() => {
+		if (navigation) {
+			requestNavigation(
+				{ page: navigation.pageSlug },
+				{
+					successMessage: product?.id
+						? __('Product updated.', 'surecart')
+						: __('Product created.', 'surecart'),
+				}
+			);
+		} else {
+			// Non-SPA context: navigate directly. Dirty-record check is SPA-only.
+			window.location.href = 'admin.php?page=sc-products';
+		}
+	}, [requestNavigation, navigation, product?.id]);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()

@@ -5,11 +5,13 @@ import {
 	createContext,
 	useCallback,
 	useContext,
+	useEffect,
 	useMemo,
+	useRef,
 	useState,
 } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { Button, Modal } from '@wordpress/components';
@@ -25,17 +27,52 @@ const NavigationConfirmContext = createContext(undefined);
 export function NavigationConfirmProvider({ children }) {
 	const [pending, setPending] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
+	// retryRef holds the tx.retry() function from history.block() for browser back navigation.
+	const retryRef = useRef(null);
+	const unblockRef = useRef(null);
 
 	const { save, discard } = useSave();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
+	const hasDirtyRecords = useSelect((select) => {
+		return (
+			select(coreStore).__experimentalGetDirtyEntityRecords().length > 0
+		);
+	}, []);
+
+	// Intercept browser back/forward when there are unsaved changes.
+	useEffect(() => {
+		if (!hasDirtyRecords) {
+			return;
+		}
+
+		unblockRef.current = history.block((tx) => {
+			retryRef.current = tx.retry;
+			setPending({ params: null, successMessage: null });
+		});
+
+		return () => {
+			unblockRef.current?.();
+			unblockRef.current = null;
+		};
+	}, [hasDirtyRecords]);
+
 	const closeDialog = useCallback(() => {
 		setPending(null);
+		retryRef.current = null;
 		setIsSaving(false);
 	}, []);
 
 	const navigateToPending = useCallback(() => {
-		if (pending) {
+		// Unblock before navigating so our push/retry isn't intercepted again.
+		unblockRef.current?.();
+		unblockRef.current = null;
+
+		if (retryRef.current) {
+			// Browser back button: resume the blocked navigation.
+			retryRef.current();
+			retryRef.current = null;
+		} else if (pending?.params) {
 			history.push(pending.params);
 			window.scrollTo(0, 0);
 		}
