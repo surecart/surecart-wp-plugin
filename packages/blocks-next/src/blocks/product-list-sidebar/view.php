@@ -9,7 +9,7 @@
 	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	data-wp-bind--hidden="!state.open"
-	data-wp-on-window--resize="actions.close"
+	data-wp-on-window--resize="actions.handleResize"
 >
 	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
@@ -20,7 +20,7 @@
 	aria-modal="true"
 	data-wp-interactive='{ "namespace": "surecart/sidebar" }'
 	aria-label="<?php echo esc_attr( $attributes['label'] ); ?>"
-	data-wp-on-window--resize="actions.close"
+	data-wp-on-window--resize="surecart/sidebar::actions.handleResize"
 	data-wp-class--open="surecart/sidebar::state.mobileOpen"
 	data-wp-on--keydown="surecart/sidebar::actions.handleKeydown"
 >

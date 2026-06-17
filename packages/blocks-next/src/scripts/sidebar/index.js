@@ -111,6 +111,17 @@ const { state, actions } = store('surecart/sidebar', {
 		}),
 
 		/**
+		 * Close the mobile drawer once the viewport grows to desktop width (≥ 780px).
+		 *
+		 * Gating on width ignores Android keyboard resizes (height-only) that would otherwise close it.
+		 */
+		handleResize: withSyncEvent(() => {
+			if (state.mobileOpen && window.innerWidth >= 780) {
+				actions.close();
+			}
+		}),
+
+		/**
 		 * Handle keydown events.
 		 */
 		handleKeydown: withSyncEvent((event) => {
