@@ -2,7 +2,8 @@ import { state as checkoutState, dispose as disposeCheckout } from '..';
 import { getCheckout } from '../../checkouts/mutations';
 import { dispose } from '../../checkouts';
 import { Checkout, LineItem } from '../../../types';
-import { getCompleteAddress, getResolvedBillingAddress, toStripeAddress } from '../getters';
+import { getCompleteAddress, getResolvedBillingAddress, getResolvedBillingEmail, toStripeAddress } from '../getters';
+import { state as userState, resetUser } from '../../user';
 
 describe('checkout store', () => {
   beforeEach(() => {
@@ -310,6 +311,42 @@ describe('checkout store', () => {
         postal_code: '67890',
         country: 'US',
       });
+    });
+  });
+
+  describe('getResolvedBillingEmail', () => {
+    afterEach(() => {
+      resetUser();
+    });
+
+    it('returns the checkout email when present', () => {
+      const result = getResolvedBillingEmail({ email: 'checkout@example.com' } as Checkout);
+      expect(result).toEqual('checkout@example.com');
+    });
+
+    it('falls back to the linked customer email when checkout email is empty', () => {
+      const result = getResolvedBillingEmail({ customer: { email: 'customer@example.com' } } as Checkout);
+      expect(result).toEqual('customer@example.com');
+    });
+
+    it('falls back to the logged-in user email when checkout and customer have none', () => {
+      userState.email = 'user@example.com';
+      const result = getResolvedBillingEmail({} as Checkout);
+      expect(result).toEqual('user@example.com');
+    });
+
+    it('prefers the checkout email over customer and user emails', () => {
+      userState.email = 'user@example.com';
+      const result = getResolvedBillingEmail({
+        email: 'checkout@example.com',
+        customer: { email: 'customer@example.com' },
+      } as Checkout);
+      expect(result).toEqual('checkout@example.com');
+    });
+
+    it('returns undefined when no email is available', () => {
+      const result = getResolvedBillingEmail({} as Checkout);
+      expect(result).toBeUndefined();
     });
   });
 
