@@ -2,6 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/react';
 import { addQueryArgs } from '@wordpress/url';
+import { ScTag } from '@surecart/components-react';
 import ProductThumbnail from '../../components/ProductThumbnail';
 
 const getEditUrl = (id) =>
@@ -55,7 +56,18 @@ export default ({ navigation } = {}) => ({
 					}
 				`}
 			>
-				{item?.name}
+				{item?.name}{' '}
+				{item?.archived && (
+					<ScTag
+						css={css`
+							flex-shrink: 0;
+						`}
+						type="warning"
+						size="small"
+					>
+						{__('Archived', 'surecart')}
+					</ScTag>
+				)}
 			</a>
 		</div>
 	),
