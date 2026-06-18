@@ -50,7 +50,8 @@ export default ({ id, setBrowserURL, navigation }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
-	const { requestNavigation } = useNavigationConfirm();
+	const { requestNavigation, setDefaultSuccessMessage } =
+		useNavigationConfirm();
 
 	const {
 		product,
@@ -64,6 +65,16 @@ export default ({ id, setBrowserURL, navigation }) => {
 		productError,
 	} = useEntity('product', id);
 
+	const saveSuccessMessage = product?.id
+		? __('Product updated.', 'surecart')
+		: __('Product created.', 'surecart');
+
+	// So the browser-back path shows this message too (it can't pass params).
+	useEffect(() => {
+		setDefaultSuccessMessage(saveSuccessMessage);
+		return () => setDefaultSuccessMessage(null);
+	}, [saveSuccessMessage, setDefaultSuccessMessage]);
+
 	// Prompts to save/discard unsaved changes before going back to the list.
 	// requestNavigation needs raw router params rather than navigation.goToList()
 	// because NavigationConfirmProvider operates on history params directly.
@@ -71,17 +82,13 @@ export default ({ id, setBrowserURL, navigation }) => {
 		if (navigation) {
 			requestNavigation(
 				{ page: navigation.pageSlug },
-				{
-					successMessage: product?.id
-						? __('Product updated.', 'surecart')
-						: __('Product created.', 'surecart'),
-				}
+				{ successMessage: saveSuccessMessage }
 			);
 		} else {
 			// Non-SPA context: navigate directly. Dirty-record check is SPA-only.
 			window.location.href = 'admin.php?page=sc-products';
 		}
-	}, [requestNavigation, navigation, product?.id]);
+	}, [requestNavigation, navigation, saveSuccessMessage]);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()

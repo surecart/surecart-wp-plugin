@@ -31,6 +31,9 @@ export function NavigationConfirmProvider({ children }) {
 	const retryRef = useRef(null);
 	const unblockRef = useRef(null);
 
+	// Save message a page registers, for the browser-back path which can't pass one.
+	const defaultSuccessMessageRef = useRef(null);
+
 	const { save, discard } = useSave();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
@@ -48,7 +51,10 @@ export function NavigationConfirmProvider({ children }) {
 
 		unblockRef.current = history.block((tx) => {
 			retryRef.current = tx.retry;
-			setPending({ params: null, successMessage: null });
+			setPending({
+				params: null,
+				successMessage: defaultSuccessMessageRef.current,
+			});
 		});
 
 		return () => {
@@ -92,6 +98,11 @@ export function NavigationConfirmProvider({ children }) {
 		window.scrollTo(0, 0);
 	}, []);
 
+	// Ref, not state: only navigation handlers read it, never the render.
+	const setDefaultSuccessMessage = useCallback((message) => {
+		defaultSuccessMessageRef.current = message;
+	}, []);
+
 	const handleDismiss = useCallback(() => {
 		if (isSaving) {
 			return;
@@ -131,8 +142,9 @@ export function NavigationConfirmProvider({ children }) {
 	const contextValue = useMemo(
 		() => ({
 			requestNavigation,
+			setDefaultSuccessMessage,
 		}),
-		[requestNavigation]
+		[requestNavigation, setDefaultSuccessMessage]
 	);
 
 	return (
