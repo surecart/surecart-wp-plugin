@@ -5,11 +5,13 @@ import {
 	createContext,
 	useCallback,
 	useContext,
+	useEffect,
 	useMemo,
+	useRef,
 	useState,
 } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { Button, Modal } from '@wordpress/components';
@@ -23,40 +25,83 @@ import useSave from '../settings/UseSave';
 const NavigationConfirmContext = createContext(undefined);
 
 export function NavigationConfirmProvider({ children }) {
-	const [pendingParams, setPendingParams] = useState(null);
+	const [pending, setPending] = useState(null);
 	const [isSaving, setIsSaving] = useState(false);
+	// retryRef holds the tx.retry() function from history.block() for browser back navigation.
+	const retryRef = useRef(null);
+	const unblockRef = useRef(null);
+
+	// Save message a page registers, for the browser-back path which can't pass one.
+	const defaultSuccessMessageRef = useRef(null);
 
 	const { save, discard } = useSave();
 	const { createErrorNotice } = useDispatch(noticesStore);
 
+	const hasDirtyRecords = useSelect((select) => {
+		return (
+			select(coreStore).__experimentalGetDirtyEntityRecords().length > 0
+		);
+	}, []);
+
+	// Intercept browser back/forward when there are unsaved changes.
+	useEffect(() => {
+		if (!hasDirtyRecords) {
+			return;
+		}
+
+		unblockRef.current = history.block((tx) => {
+			retryRef.current = tx.retry;
+			setPending({
+				params: null,
+				successMessage: defaultSuccessMessageRef.current,
+			});
+		});
+
+		return () => {
+			unblockRef.current?.();
+			unblockRef.current = null;
+		};
+	}, [hasDirtyRecords]);
+
 	const closeDialog = useCallback(() => {
-		setPendingParams(null);
+		setPending(null);
+		retryRef.current = null;
 		setIsSaving(false);
 	}, []);
 
 	const navigateToPending = useCallback(() => {
-		if (pendingParams) {
-			history.push(pendingParams);
+		// Unblock before navigating so our push/retry isn't intercepted again.
+		unblockRef.current?.();
+		unblockRef.current = null;
+
+		if (retryRef.current) {
+			// Browser back button: resume the blocked navigation.
+			retryRef.current();
+			retryRef.current = null;
+		} else if (pending?.params) {
+			history.push(pending.params);
 			window.scrollTo(0, 0);
 		}
 		closeDialog();
-	}, [pendingParams, closeDialog]);
+	}, [pending, closeDialog]);
 
-	const requestNavigation = useCallback(
-		(params) => {
-			const dirtyRecords =
-				select(coreStore).__experimentalGetDirtyEntityRecords();
+	const requestNavigation = useCallback((params, { successMessage } = {}) => {
+		const dirtyRecords =
+			select(coreStore).__experimentalGetDirtyEntityRecords();
 
-			if (dirtyRecords.length > 0) {
-				setPendingParams(params);
-				return;
-			}
+		if (dirtyRecords.length > 0) {
+			setPending({ params, successMessage });
+			return;
+		}
 
-			history.push(params);
-			window.scrollTo(0, 0);
-		},
-		[]
-	);
+		history.push(params);
+		window.scrollTo(0, 0);
+	}, []);
+
+	// Ref, not state: only navigation handlers read it, never the render.
+	const setDefaultSuccessMessage = useCallback((message) => {
+		defaultSuccessMessageRef.current = message;
+	}, []);
 
 	const handleDismiss = useCallback(() => {
 		if (isSaving) {
@@ -74,7 +119,9 @@ export function NavigationConfirmProvider({ children }) {
 		setIsSaving(true);
 		try {
 			await save({
-				successMessage: __('Settings saved.', 'surecart'),
+				successMessage:
+					pending?.successMessage ||
+					__('Settings saved.', 'surecart'),
 			});
 			navigateToPending();
 		} catch (error) {
@@ -90,19 +137,20 @@ export function NavigationConfirmProvider({ children }) {
 		} finally {
 			setIsSaving(false);
 		}
-	}, [save, navigateToPending, createErrorNotice]);
+	}, [save, pending, navigateToPending, createErrorNotice]);
 
 	const contextValue = useMemo(
 		() => ({
 			requestNavigation,
+			setDefaultSuccessMessage,
 		}),
-		[requestNavigation]
+		[requestNavigation, setDefaultSuccessMessage]
 	);
 
 	return (
 		<NavigationConfirmContext.Provider value={contextValue}>
 			{children}
-			{pendingParams && (
+			{pending && (
 				<Modal
 					contentLabel={__('Unsaved changes', 'surecart')}
 					__experimentalHideHeader

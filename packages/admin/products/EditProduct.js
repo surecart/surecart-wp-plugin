@@ -5,7 +5,7 @@ import { external } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useCallback, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
@@ -13,6 +13,7 @@ import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
+import { useNavigationConfirm } from '../router';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
@@ -49,6 +50,8 @@ export default ({ id, setBrowserURL, navigation }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
+	const { requestNavigation, setDefaultSuccessMessage } =
+		useNavigationConfirm();
 
 	const {
 		product,
@@ -61,6 +64,31 @@ export default ({ id, setBrowserURL, navigation }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	const saveSuccessMessage = product?.id
+		? __('Product updated.', 'surecart')
+		: __('Product created.', 'surecart');
+
+	// So the browser-back path shows this message too (it can't pass params).
+	useEffect(() => {
+		setDefaultSuccessMessage(saveSuccessMessage);
+		return () => setDefaultSuccessMessage(null);
+	}, [saveSuccessMessage, setDefaultSuccessMessage]);
+
+	// Prompts to save/discard unsaved changes before going back to the list.
+	// requestNavigation needs raw router params rather than navigation.goToList()
+	// because NavigationConfirmProvider operates on history params directly.
+	const backToList = useCallback(() => {
+		if (navigation) {
+			requestNavigation(
+				{ page: navigation.pageSlug },
+				{ successMessage: saveSuccessMessage }
+			);
+		} else {
+			// Non-SPA context: navigate directly. Dirty-record check is SPA-only.
+			window.location.href = 'admin.php?page=sc-products';
+		}
+	}, [requestNavigation, navigation, saveSuccessMessage]);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
@@ -306,14 +334,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 							{...(navigation
 								? {}
 								: { href: 'admin.php?page=sc-products' })}
-							onClick={() => {
-								if (navigation) {
-									navigation.goToList();
-								} else {
-									window.location.href =
-										'admin.php?page=sc-products';
-								}
-							}}
+							onClick={backToList}
 						>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
@@ -327,7 +348,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 									onClick={(e) => {
 										if (navigation) {
 											e.preventDefault();
-											navigation.goToList();
+											backToList();
 										}
 									}}
 									css={css`
