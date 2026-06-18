@@ -15,6 +15,7 @@ export const refreshProductRow = async (productId, { expand } = {}) => {
 		path: addQueryArgs(`${baseURL}/${productId}`, {
 			...baseURLParams,
 			expand,
+			expand_mode: 'replace',
 		}),
 	});
 	dispatch(coreStore).receiveEntityRecords('surecart', 'product', product);

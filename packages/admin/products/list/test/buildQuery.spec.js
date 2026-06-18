@@ -24,6 +24,7 @@ describe('buildProductsQuery', () => {
 	test('builds default filter args (active products, lean expands)', () => {
 		const args = buildProductsQuery(baseView);
 		expect(args).toEqual({
+			expand_mode: 'replace',
 			archived: false,
 			expand: BASE_EXPANDS,
 		});

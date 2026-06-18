@@ -92,7 +92,7 @@ class PostSyncService {
 	 *
 	 * @return void
 	 */
-	protected function primeByModelIds( $model_ids ) {
+	public function primeByModelIds( $model_ids ) {
 		$missing = array_values(
 			array_filter(
 				array_unique( array_filter( (array) $model_ids ) ),
@@ -147,7 +147,7 @@ class PostSyncService {
 	 *
 	 * @return \WP_Post|\WP_Error|null
 	 */
-	protected function findByModelId( $model_id ) {
+	public function findByModelId( $model_id ) {
 		// if we don't have a model id, return null.
 		if ( empty( $model_id ) ) {
 			return null;

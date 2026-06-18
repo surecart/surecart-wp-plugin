@@ -143,14 +143,7 @@ const PlaceholderCell = ({ item, onRetry }) => {
 				color: var(--sc-color-gray-600);
 			`}
 		>
-			{/* <Spinner
-				css={css`
-					margin: 0;
-					flex: none;
-				`}
-			/> */}
-			<ProgressBar />
-			{/* {__('Loading variants…', 'surecart')} */}
+				<ProgressBar />
 		</div>
 	);
 };
