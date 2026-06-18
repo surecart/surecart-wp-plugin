@@ -190,6 +190,12 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
+			'expand_mode'            => [
+				'description' => __( 'Whether `expand` augments the default relations (`merge`) or replaces them (`replace`).', 'surecart' ),
+				'type'        => 'string',
+				'enum'        => [ 'merge', 'replace' ],
+				'default'     => 'merge',
+			],
 			'ids'                    => [
 				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',

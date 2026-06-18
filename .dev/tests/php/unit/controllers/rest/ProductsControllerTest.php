@@ -33,18 +33,59 @@ class ProductsControllerTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Collection GETs that declare their own expand own the relation set.
+	 * Without `expand_mode=replace`, a client `expand` augments the forced set
+	 * (additive) rather than replacing it.
 	 *
 	 * @group products-rest
 	 */
-	public function test_collection_get_with_client_expand_is_used_verbatim() {
+	public function test_collection_get_with_client_expand_merges_by_default() {
 		$request = new WP_REST_Request( 'GET', '/surecart/v1/products' );
 		$request->set_param( 'context', 'edit' );
-		$request->set_param( 'expand', [ 'prices', 'product_collections' ] );
+		$request->set_param( 'expand', [ 'shipping_profile' ] );
 
 		$model = $this->runMiddleware( $request );
 
-		$this->assertEqualsCanonicalizing( [ 'prices', 'product_collections' ], $model->getQuery()['expand'] );
+		$this->assertEqualsCanonicalizing(
+			array_merge( ProductsController::EDIT_EXPANDS, [ 'shipping_profile' ] ),
+			$model->getQuery()['expand']
+		);
+	}
+
+	/**
+	 * `expand_mode=replace` opts a collection GET out of the forced set: the
+	 * client's `expand` is used verbatim. This is how the products dataview
+	 * requests a lean list.
+	 *
+	 * @group products-rest
+	 */
+	public function test_collection_get_with_replace_mode_uses_client_expand_verbatim() {
+		$request = new WP_REST_Request( 'GET', '/surecart/v1/products' );
+		$request->set_param( 'context', 'edit' );
+		$request->set_param( 'expand_mode', 'replace' );
+		$request->set_param( 'expand', [ 'variant_options', 'product_medias' ] );
+
+		$model = $this->runMiddleware( $request );
+
+		$this->assertEqualsCanonicalizing(
+			[ 'variant_options', 'product_medias' ],
+			$model->getQuery()['expand']
+		);
+	}
+
+	/**
+	 * `expand_mode=replace` with an empty expand yields a truly lean request
+	 * (no relations) — it does not flip back to the forced set.
+	 *
+	 * @group products-rest
+	 */
+	public function test_collection_get_with_replace_mode_and_empty_expand_is_lean() {
+		$request = new WP_REST_Request( 'GET', '/surecart/v1/products' );
+		$request->set_param( 'context', 'edit' );
+		$request->set_param( 'expand_mode', 'replace' );
+
+		$model = $this->runMiddleware( $request );
+
+		$this->assertSame( [], $model->getQuery()['expand'] );
 	}
 
 	/**

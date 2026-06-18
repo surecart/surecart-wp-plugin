@@ -36,12 +36,12 @@ class ProductsController extends RestController {
 	 * Run some middleware to run before request.
 	 *
 	 * Expand contract for edit-context/write requests:
-	 * - Collection GET with a non-empty client `expand`: the client's list is
-	 *   used verbatim — clients that pass `expand` own their relation set
-	 *   (lets the products dataview request a lean list).
-	 * - Collection GET without `expand`: EDIT_EXPANDS applies (back-compat).
-	 * - Single GET (`id` param) and all write methods: EDIT_EXPANDS merged
-	 *   with any client `expand`.
+	 * - Collection GET with `expand_mode=replace`: the client's `expand` is used
+	 *   verbatim (may be empty) — lets the products dataview request a lean list.
+	 * - Collection GET without `expand_mode=replace`: EDIT_EXPANDS merged with any
+	 *   client `expand` (default; `expand` is additive).
+	 * - Single GET (`id` param) and all write methods: EDIT_EXPANDS merged with
+	 *   any client `expand`.
 	 * - `view` context GETs are untouched; `expand` passes through query args.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
@@ -55,12 +55,14 @@ class ProductsController extends RestController {
 
 		if ( 'edit' === $request->get_param( 'context' ) || $is_write ) {
 			$is_collection_get = ! $is_write && empty( $request->get_param( 'id' ) );
+			// Only an explicit opt-in replaces the defaults; otherwise `expand` is additive.
+			$replace = $is_collection_get && 'replace' === $request->get_param( 'expand_mode' );
 
-			if ( $is_collection_get && ! empty( $client_expand ) ) {
-				$class->with( $client_expand );
-			} else {
-				$class->with( array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) );
-			}
+			$class->with(
+				$replace
+					? $client_expand                                                   // lean: the client owns the relation set.
+					: array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) // additive: defaults plus any client expand.
+			);
 		}
 
 		return parent::middleware( $class, $request );
