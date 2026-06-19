@@ -12,7 +12,7 @@ import { TextControl, ExternalLink } from '@wordpress/components';
 import useBundleLabels from '../../hooks/useBundleLabels';
 
 export default ({ product, updateProduct, onClose }) => {
-	const { isBundle } = useBundleLabels(product);
+	const { viewPageLabel } = useBundleLabels(product);
 	return (
 		<div
 			css={css`
@@ -69,9 +69,7 @@ export default ({ product, updateProduct, onClose }) => {
 					display: block;
 				`}
 			>
-				{isBundle
-					? __('View Bundle', 'surecart')
-					: __('View Product', 'surecart')}
+				{viewPageLabel}
 			</h3>
 
 			<p>

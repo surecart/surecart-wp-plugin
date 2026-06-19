@@ -21,6 +21,11 @@ export default (product) => {
 			? __('Bundles', 'surecart')
 			: __('Products', 'surecart'),
 
+		// View page labels.
+		viewPageLabel: isBundle
+			? __('View Bundle', 'surecart')
+			: __('View Product', 'surecart'),
+
 		// Screen titles.
 		editLabel: isBundle
 			? __('Edit Bundle', 'surecart')
