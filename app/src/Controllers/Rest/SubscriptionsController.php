@@ -2,12 +2,15 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Controllers\Rest\Traits\FiltersResource;
 use SureCart\Models\Subscription;
 
 /**
  * Handle Price requests through the REST API
  */
 class SubscriptionsController extends RestController {
+	use FiltersResource;
+
 	/**
 	 * Class to make the requests.
 	 *
