@@ -132,8 +132,6 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
-
-		$this->registerFilterRoutes();
 	}
 
 	/**

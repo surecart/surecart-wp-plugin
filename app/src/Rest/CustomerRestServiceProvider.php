@@ -167,8 +167,6 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
-
-		$this->registerFilterRoutes();
 	}
 
 	/**

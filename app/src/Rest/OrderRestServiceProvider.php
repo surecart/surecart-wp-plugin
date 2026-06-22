@@ -50,8 +50,6 @@ class OrderRestServiceProvider extends RestServiceProvider implements RestServic
 				'schema' => array( $this, 'get_item_schema' ),
 			)
 		);
-
-		$this->registerFilterRoutes();
 	}
 
 	/**

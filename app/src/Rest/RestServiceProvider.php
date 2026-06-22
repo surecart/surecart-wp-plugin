@@ -172,57 +172,6 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	}
 
 	/**
-	 * Register the rule-based filter routes for the resource.
-	 *
-	 * Registers both {endpoint}/filter_schema (GET) and {endpoint}/filter (POST)
-	 * with shared pagination args, so providers don't duplicate the pair.
-	 *
-	 * @return void
-	 */
-	protected function registerFilterRoutes() {
-		$args = [
-			'page'     => [
-				'default' => 1,
-				'type'    => 'integer',
-				'minimum' => 1,
-			],
-			'per_page' => [
-				'default' => 20,
-				'type'    => 'integer',
-				'minimum' => 1,
-				'maximum' => 100,
-			],
-		];
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/filter_schema',
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => $this->callback( $this->controller, 'filter_schema' ),
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/filter',
-			[
-				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => $this->callback( $this->controller, 'filter' ),
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					'args'                => $args,
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
-
-	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post

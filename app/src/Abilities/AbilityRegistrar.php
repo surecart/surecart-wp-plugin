@@ -21,7 +21,13 @@ use SureCart\Abilities\Abilities\CreateRefund;
 use SureCart\Abilities\Abilities\GetRefund;
 use SureCart\Abilities\Abilities\CreatePrice;
 use SureCart\Abilities\Abilities\DuplicateProduct;
+use SureCart\Abilities\Abilities\FilterCustomers;
+use SureCart\Abilities\Abilities\FilterOrders;
+use SureCart\Abilities\Abilities\FilterSubscriptions;
 use SureCart\Abilities\Abilities\GetCustomer;
+use SureCart\Abilities\Abilities\GetCustomersFilterSchema;
+use SureCart\Abilities\Abilities\GetOrdersFilterSchema;
+use SureCart\Abilities\Abilities\GetSubscriptionsFilterSchema;
 use SureCart\Abilities\Abilities\GetLicense;
 use SureCart\Abilities\Abilities\GetOrder;
 use SureCart\Abilities\Abilities\GetOrderStatistics;
@@ -155,6 +161,8 @@ class AbilityRegistrar {
 			new ListOrders(),
 			new GetOrder(),
 			new GetOrderStatistics(),
+			new FilterOrders(),
+			new GetOrdersFilterSchema(),
 			// Abandoned Checkouts.
 			new ListAbandonedCheckouts(),
 			new GetAbandonedCheckout(),
@@ -164,11 +172,15 @@ class AbilityRegistrar {
 			new CreateCustomer(),
 			new UpdateCustomer(),
 			new DeleteCustomer(),
+			new FilterCustomers(),
+			new GetCustomersFilterSchema(),
 			// Subscriptions.
 			new ListSubscriptions(),
 			new GetSubscription(),
 			new CancelSubscription(),
 			new UpdateSubscriptionRenewalDate(),
+			new FilterSubscriptions(),
+			new GetSubscriptionsFilterSchema(),
 			// Prices.
 			new ListPrices(),
 			new CreatePrice(),

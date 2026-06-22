@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Controllers\Rest\Traits\FiltersResource;
 use SureCart\Models\Customer;
 use SureCart\Models\User;
 
@@ -10,8 +9,6 @@ use SureCart\Models\User;
  * Handle Customer related REST API requests.
  */
 class CustomerController extends RestController {
-	use FiltersResource;
-
 	/**
 	 * Class to make the requests.
 	 *

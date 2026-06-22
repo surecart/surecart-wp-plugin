@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Controllers\Rest\Traits\FiltersResource;
 use SureCart\Models\Order;
 use SureCart\Models\Form;
 use SureCart\Models\User;
@@ -12,8 +11,6 @@ use SureCart\WordPress\Users\CustomerLinkService;
  * Handle price requests through the REST API
  */
 class OrderController extends RestController {
-	use FiltersResource;
-
 	/**
 	 * Class to make the requests.
 	 *
