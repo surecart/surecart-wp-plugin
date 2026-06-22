@@ -116,6 +116,11 @@ class FilterCustomers extends AbstractAbility {
 			return $this->error( 'invalid_filter', __( 'The filter must be a condition or group object.', 'surecart' ) );
 		}
 
+		$rules = $this->sanitize_rule_tree( $rules );
+		if ( is_wp_error( $rules ) ) {
+			return $rules;
+		}
+
 		$page     = absint( $input['page'] ?? 1 );
 		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
 

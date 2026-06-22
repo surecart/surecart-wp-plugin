@@ -185,7 +185,7 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	 * Test that all List/Get abilities are marked as readonly.
 	 */
 	public function test_readonly_abilities_have_correct_annotations() {
-		$readonly_prefixes = array( 'surecart/list-', 'surecart/get-' );
+		$readonly_prefixes = array( 'surecart/list-', 'surecart/get-', 'surecart/filter-' );
 		$abilities         = $this->registrar->get_abilities();
 
 		foreach ( $abilities as $ability ) {

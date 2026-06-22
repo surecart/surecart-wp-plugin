@@ -235,6 +235,102 @@ class FilterAbilitiesTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * An unsafe comparison_value is sanitized in the body actually sent to the API.
+	 */
+	public function test_filter_orders_sanitizes_comparison_value_in_request_body() {
+		$this->mockRequest(
+			(object) array(
+				'data'       => array(),
+				'pagination' => (object) array( 'count' => 0, 'limit' => 10, 'page' => 1 ),
+			),
+			$captured
+		);
+
+		$dirty    = "  paid<script>alert(1)</script>\n\tvalue  ";
+		$expected = sanitize_text_field( $dirty );
+
+		$result = ( new FilterOrders() )->execute(
+			array(
+				'filter' => array(
+					'type'             => 'condition',
+					'attribute_name'   => 'status',
+					'operator_label'   => 'is',
+					'comparison_value' => $dirty,
+				),
+			)
+		);
+
+		$this->assertEquals( 'orders/filter', $captured[0] );
+		$this->assertEquals( 'POST', $captured[1]['method'] );
+		$this->assertEquals( $expected, $captured[1]['body']['filter']['comparison_value'] );
+		$this->assertTrue( $result['success'] );
+	}
+
+	/**
+	 * Unknown extra keys in a condition are stripped from the body sent to the API.
+	 */
+	public function test_filter_orders_strips_unknown_keys_from_request_body() {
+		$this->mockRequest(
+			(object) array(
+				'data'       => array(),
+				'pagination' => (object) array( 'count' => 0, 'limit' => 10, 'page' => 1 ),
+			),
+			$captured
+		);
+
+		( new FilterOrders() )->execute(
+			array(
+				'filter' => array(
+					'type'             => 'condition',
+					'attribute_name'   => 'status',
+					'operator_label'   => 'is',
+					'comparison_value' => 'paid',
+					'evil'             => 'x',
+				),
+			)
+		);
+
+		$sent = $captured[1]['body']['filter'];
+		$this->assertArrayNotHasKey( 'evil', $sent );
+		$this->assertEqualsCanonicalizing(
+			array( 'type', 'attribute_name', 'operator_label', 'comparison_value' ),
+			array_keys( $sent )
+		);
+	}
+
+	/**
+	 * A rule with a type that is neither condition nor group returns invalid_filter without a request.
+	 */
+	public function test_filter_orders_unknown_type_returns_error_without_request() {
+		$this->mockRequestNeverCalled();
+
+		$result = ( new FilterOrders() )->execute( array( 'filter' => array( 'type' => 'bogus' ) ) );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'invalid_filter', $result->get_error_code() );
+	}
+
+	/**
+	 * A group with an invalid combinator returns invalid_filter without a request.
+	 */
+	public function test_filter_orders_invalid_combinator_returns_error_without_request() {
+		$this->mockRequestNeverCalled();
+
+		$result = ( new FilterOrders() )->execute(
+			array(
+				'filter' => array(
+					'type'       => 'group',
+					'combinator' => 'xor',
+					'conditions' => array( $this->rule_tree() ),
+				),
+			)
+		);
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'invalid_filter', $result->get_error_code() );
+	}
+
+	/**
 	 * All six new abilities are annotated readonly, non-destructive, idempotent.
 	 */
 	public function test_new_abilities_are_readonly() {
