@@ -1879,6 +1879,10 @@ export namespace Components {
           * Is the line item removable?
          */
         "removable": boolean;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems": boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -3232,6 +3236,10 @@ export namespace Components {
           * Product scratch display amount
          */
         "scratchDisplayAmount": string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems": boolean;
         /**
           * The SKU.
          */
@@ -9282,6 +9290,10 @@ declare namespace LocalJSX {
           * Is the line item removable?
          */
         "removable"?: boolean;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems"?: boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -10699,6 +10711,10 @@ declare namespace LocalJSX {
           * Product scratch display amount
          */
         "scratchDisplayAmount"?: string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems"?: boolean;
         /**
           * The SKU.
          */
