@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { dispose as disposeCheckout } from '@store/checkout';
 import { ScCheckoutStockAlert } from '../sc-checkout-stock-alert';
-import { buildStockAdjustedLineItems, buildStockAlertRows, getBundleQuantityReductions } from '../../../../../../functions/stock';
+import { buildStockAdjustedLineItems, buildStockAlertRows, getBundleComponentVariants, getBundleQuantityReductions } from '../../../../../../functions/stock';
 
 /**
  * Build line items for a bundle parent and one stock-limited component.
@@ -66,6 +66,22 @@ describe('stock', () => {
       const overrides = new Map([['parent', { pA: 'variant-blue' }]]);
 
       expect(buildStockAdjustedLineItems(items, overrides)).toEqual([{ id: 'parent', price_id: 'price_parent', quantity: 3, bundle_component_variants: { pA: 'variant-blue' } }]);
+    });
+  });
+
+  describe('getBundleComponentVariants', () => {
+    it('rebuilds the selection map from component line items, ignoring the empty parent field', () => {
+      const items = [
+        { id: 'parent', component_line_item: false, bundle_component_variants: [], price: { product: { name: 'Kit', bundle: true } } },
+        { id: 'c1', component_line_item: true, bundle_line_item: 'parent', variant: { id: 'v-tent' }, price: { product: { id: 'p-tent' } } },
+        { id: 'c2', component_line_item: true, bundle_line_item: 'parent', variant: { id: 'v-bag' }, price: { product: { id: 'p-bag' } } },
+        { id: 'c3', component_line_item: true, bundle_line_item: 'parent', price: { product: { id: 'p-lantern' } } }, // no variant -> skipped
+      ] as any;
+      expect(getBundleComponentVariants('parent', items)).toEqual({ 'p-tent': 'v-tent', 'p-bag': 'v-bag' });
+    });
+
+    it('returns an empty map for a parent with no components', () => {
+      expect(getBundleComponentVariants('parent', [])).toEqual({});
     });
   });
 

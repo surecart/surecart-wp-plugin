@@ -9,6 +9,28 @@ export interface StockAlertRow {
   to: number;
 }
 
+/**
+ * Reconstruct a bundle's `bundle_component_variants` map from its component
+ * line items (componentProductId -> variantId).
+ *
+ * The platform treats `bundle_component_variants` on the parent as write-only:
+ * it's accepted on create/update but reads back empty, so the live selection
+ * has to be derived from each component line item's chosen variant. Any update
+ * that re-posts the map (e.g. a stock swap) must rebuild the *full* map this way
+ * — seeding from the empty parent field drops the other components and trips the
+ * platform's "selection required" validation.
+ */
+export const getBundleComponentVariants = (parentId: string, lineItems: LineItem[] = []): Record<string, string> => {
+  const map: Record<string, string> = {};
+  (lineItems || []).forEach(item => {
+    if (item?.bundle_line_item !== parentId) return;
+    const productId = ((item?.price as Price)?.product as Product)?.id;
+    const variantId = item?.variant?.id;
+    if (productId && variantId) map[productId] = variantId;
+  });
+  return map;
+};
+
 /** Available stock for a line item (variant takes precedence over product). */
 export const getAvailableStock = (lineItem: LineItem): number => {
   const product = lineItem?.price?.product as Product;

@@ -4,7 +4,7 @@ import { Checkout, LineItemData, Product } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
 import { updateCheckout } from '@services/session';
 import { currentFormState } from '@store/form/getters';
-import { buildStockAdjustedLineItems, buildStockAlertRows, getBundleQuantityReductions, getOutOfStockLineItems } from '../../../../../functions/stock';
+import { buildStockAdjustedLineItems, buildStockAlertRows, getBundleComponentVariants, getBundleQuantityReductions, getOutOfStockLineItems } from '../../../../../functions/stock';
 
 /**
  * This component listens for stock requirements and displays a dialog to the user.
@@ -36,9 +36,10 @@ export class ScCheckoutStockAlert {
    * Update the checkout to the max available stock.
    *
    * Bundle shortages reduce the whole bundle quantity (a bundle is atomic). A
-   * bundle that can't make even one unit (reduced to 0) is only recoverable by
-   * swapping the gone variant to an in-stock sibling; if no swap exists we
-   * surface a message instead of re-posting an out-of-stock bundle (which 500s).
+   * bundle that can't make even one unit (reduced to 0) is first rescued by
+   * swapping a gone variant to an in-stock sibling when one exists; otherwise
+   * the unfulfillable bundle is dropped from the cart, matching the "→ 0" the
+   * dialog already shows.
    */
   async onSubmit() {
     let attemptedBundleSwap = false;
@@ -51,35 +52,30 @@ export class ScCheckoutStockAlert {
 
       // Only bundles reduced to 0 need rescuing — try swapping the gone
       // variant to an in-stock sibling so we don't drop a recoverable bundle.
+      // If no swap exists the bundle stays at 0 and is removed below.
       const parentOverrides = new Map<string, Record<string, string>>();
-      const unrecoverableBundleParents = new Set<string>();
       getOutOfStockLineItems(items).forEach(oos => {
         if (!oos.component_line_item || !oos.bundle_line_item) return;
         const parent = items.find(li => li.id === oos.bundle_line_item);
         if (!parent?.id || (reductions.get(parent.id) ?? 0) >= 1) return;
 
         const product = oos.price?.product as Product;
-        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
         if (!product?.id) return;
-        if (!swap?.id) {
-          unrecoverableBundleParents.add(parent.id);
-          return;
-        }
-        const map = parentOverrides.get(parent.id) || { ...(parent.bundle_component_variants || {}) };
+        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
+        if (!swap?.id) return;
+
+        // Rebuild the full selection from the component line items (the parent
+        // field reads back empty), then swap the gone variant — posting only the
+        // swapped component would fail the platform's per-component requirement.
+        const map = parentOverrides.get(parent.id) || getBundleComponentVariants(parent.id, items);
         map[product.id] = swap.id;
         parentOverrides.set(parent.id, map);
       });
 
       attemptedBundleSwap = parentOverrides.size > 0;
 
-      // A bundle reduced to 0 with no available swap can't be fulfilled — bail
-      // with a clear message rather than looping on a platform 500.
-      const stillUnrecoverable = Array.from(unrecoverableBundleParents).filter(id => !parentOverrides.has(id));
-      if (stillUnrecoverable.length) {
-        this.error = __('One or more bundle items are out of stock and cannot be substituted. Please remove the item or choose a different bundle.', 'surecart');
-        return;
-      }
-
+      // Bundles still capped at 0 (no in-stock swap) fall to quantity 0 and are
+      // filtered out here — the unfulfillable bundle is simply removed.
       const lineItems = buildStockAdjustedLineItems(items, parentOverrides).filter(lineItem => !!lineItem.quantity);
 
       checkoutState.checkout = (await updateCheckout({
