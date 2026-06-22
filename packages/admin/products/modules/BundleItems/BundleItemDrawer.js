@@ -14,7 +14,7 @@ import {
 import HelpTooltip from '../../../components/HelpTooltip';
 import Thumb from './Thumb';
 import ComponentName from './ComponentName';
-import { productView } from './utils';
+import { componentProductIdOf, productView } from './utils';
 import useBundleItemProduct from './useBundleItemProduct';
 
 export default ({ item, currency, isOpen, onClose, onSave }) => {
@@ -28,8 +28,10 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 	const [qty, setQty] = useState(item?.quantity ?? 1);
 	const [basis, setBasis] = useState(item?.basis_amount ?? '');
 
-	// Reset form state when the editing target changes.
-	const itemKey = item?.id ?? null;
+	// Reset form state when the editing target changes. New (unsaved) items have
+	// no id, so fall back to the component product id to keep the key stable and
+	// distinct per item.
+	const itemKey = item?.id ?? componentProductIdOf(item);
 	useEffect(() => {
 		setQty(item?.quantity ?? 1);
 		setBasis(item?.basis_amount ?? '');
@@ -205,7 +207,7 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 								}
 								placeholder={__('Optional', 'surecart')}
 								value={basis === null ? '' : basis}
-								onScChange={(e) => setBasis(e.target.value)}
+								onScChange={(e) => setBasis(e.detail)}
 							/>
 							<div
 								css={css`

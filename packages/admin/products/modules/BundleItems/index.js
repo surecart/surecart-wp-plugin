@@ -27,8 +27,13 @@ export default ({ product, updateProduct, loading }) => {
 		[]
 	);
 
-	const [editingIndex, setEditingIndex] = useState(null);
-	const editingItem = editingIndex !== null ? items[editingIndex] : null;
+	// Track the item being edited by a stable id, not its array index — index
+	// goes stale after a drag-to-reorder and would edit the wrong component.
+	const keyOf = (item) => item.id || componentProductIdOf(item);
+	const [editingKey, setEditingKey] = useState(null);
+	const editingIndex =
+		editingKey !== null ? items.findIndex((it) => keyOf(it) === editingKey) : -1;
+	const editingItem = editingIndex >= 0 ? items[editingIndex] : null;
 
 	const replace = (next) =>
 		updateProduct({ bundle_items: next.map(normalizeBundleItem) });
@@ -126,7 +131,7 @@ export default ({ product, updateProduct, loading }) => {
 							<div>
 								<BundleItem
 									item={item}
-									onEdit={() => setEditingIndex(index)}
+									onEdit={() => setEditingKey(keyOf(item))}
 									onUpdate={(patch) => updateAt(index, patch)}
 									onRemove={() => removeAt(index)}
 									mixedBasisWarning={hasMixedBasis(item)}
@@ -143,7 +148,7 @@ export default ({ product, updateProduct, loading }) => {
 					item={editingItem}
 					currency={displayCurrency}
 					isOpen={true}
-					onClose={() => setEditingIndex(null)}
+					onClose={() => setEditingKey(null)}
 					onSave={(patch) => updateAt(editingIndex, patch)}
 				/>
 			)}

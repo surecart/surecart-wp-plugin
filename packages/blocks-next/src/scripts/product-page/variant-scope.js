@@ -26,7 +26,7 @@ export const getVariantFromValues = ({ variants, values }) => {
 
 		if (
 			variantValues?.length === variantValueKeys?.length &&
-			variantValueKeys.every((key) => variantValues.includes(values[key]))
+			variantValueKeys.every((key) => variant[key] === values[key])
 		) {
 			return variant;
 		}

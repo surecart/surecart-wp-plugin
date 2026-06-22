@@ -822,11 +822,13 @@ class Product extends Model implements PageModel {
 	 */
 	public function getInStockVariantsAttribute() {
 		if ( ! $this->has_unlimited_stock && ! empty( $this->variants->data ) ) {
-			return array_map(
-				function ( $variant ) {
-					return $variant->available_stock > 0;
-				},
-				$this->variants->data,
+			return array_values(
+				array_filter(
+					$this->variants->data,
+					function ( $variant ) {
+						return $variant->available_stock > 0;
+					}
+				)
 			);
 		}
 		return $this->variants->data ?? null;

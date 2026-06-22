@@ -481,7 +481,7 @@ const { state, actions } = store('surecart/checkout', {
 		 */
 		get lineItemPriceName() {
 			const { line_item } = getContext();
-			return line_item.price.name ?? '';
+			return line_item?.price?.name ?? '';
 		},
 
 		/**
