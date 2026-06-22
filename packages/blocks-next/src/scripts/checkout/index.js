@@ -187,12 +187,16 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Get the bundle components for the current line item (from context).
 		 *
-		 * Components without a variant selection are skipped.
+		 * Every component is shown by default. When the block sets
+		 * `showBundleVariantsOnly` in context, only components with a variant
+		 * selection are listed.
 		 */
 		get bundleComponents() {
-			const { line_item } = getContext();
+			const ctx = getContext();
+			const { line_item } = ctx;
 			if (!line_item?.price?.product?.bundle) return [];
 			const components = line_item?.component_line_items?.data || [];
+			if (ctx?.showBundleVariantsOnly !== true) return components;
 			return components.filter((component) => {
 				const display = (
 					component?.variant_display_options || ''

@@ -1,5 +1,14 @@
 <div
 	data-wp-interactive='{ "namespace": "surecart/checkout" }'
+	<?php
+	echo wp_kses_data(
+		wp_interactivity_data_wp_context(
+			array(
+				'showBundleVariantsOnly' => ! ( $attributes['showAllBundleItems'] ?? true ),
+			)
+		)
+	);
+	?>
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-bind--hidden="!state.hasLineItemVariantContent"
 >
