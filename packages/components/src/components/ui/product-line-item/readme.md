@@ -26,6 +26,7 @@
 | `reviewButtonLink`     | `review-button-link`     | The review button link. If set, a review button will be shown linking to this URL.                                          | `string`          | `''`        |
 | `scratch`              | `scratch`                | The line item scratch amount                                                                                                | `string`          | `undefined` |
 | `scratchDisplayAmount` | `scratch-display-amount` | Product scratch display amount                                                                                              | `string`          | `undefined` |
+| `showAllBundleItems`   | `show-all-bundle-items`  | Show every bundle component (default), or only those with a selected variant when set to `false`.                           | `boolean`         | `true`      |
 | `sku`                  | `sku`                    | The SKU.                                                                                                                    | `string`          | `''`        |
 | `trial`                | `trial`                  | Trial text                                                                                                                  | `string`          | `undefined` |
 | `variant`              | `variant`                | Product variant label                                                                                                       | `string`          | `''`        |

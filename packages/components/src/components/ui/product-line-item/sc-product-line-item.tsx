@@ -99,6 +99,12 @@ export class ScProductLineItem {
    */
   @Prop() bundleComponents: LineItem[] = [];
 
+  /**
+   * Show every bundle component (default), or only those with a selected
+   * variant when set to `false`.
+   */
+  @Prop() showAllBundleItems: boolean = true;
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -160,7 +166,7 @@ export class ScProductLineItem {
    * Collapsed, only the first two lines show; the chevron reveals the rest.
    */
   renderDetails() {
-    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity);
+    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems);
     const hasNote = !!this.note;
     if (!rows.length && !hasNote) return null;
 

@@ -14,19 +14,23 @@ export const getPerBundleQuantity = (component: LineItem, parentQuantity = 1): n
 };
 
 /**
- * Build display rows from bundle component line items. Components without a
- * variant selection are skipped.
+ * Build display rows from bundle component line items.
+ *
+ * By default every component is shown (variant items render `Name - Variant`,
+ * plain items render just `Name`). Pass `showAll = false` for variants-only
+ * mode, which lists only the components that have a variant selection.
  */
-export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1): BundleComponentRow[] => {
+export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1, showAll = true): BundleComponentRow[] => {
   return (components || [])
     .map(component => {
       const variants = component?.variant_display_options || '';
-      if (!variants) return null;
+      // Variants-only mode: drop components without a selection.
+      if (!showAll && !variants) return null;
       const componentProduct = (component?.price as Price)?.product as Product;
       const name = componentProduct?.name || '';
-      const qty = getPerBundleQuantity(component, parentQuantity);
-      const label = `${name} - ${variants}`;
       if (!name) return null;
+      const qty = getPerBundleQuantity(component, parentQuantity);
+      const label = variants ? `${name} - ${variants}` : name;
       return { id: component?.id, label, qty };
     })
     .filter(Boolean) as BundleComponentRow[];

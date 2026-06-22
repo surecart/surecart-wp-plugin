@@ -5,10 +5,11 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                 | Type      | Default     |
-| ----------- | ----------- | --------------------------- | --------- | ----------- |
-| `editable`  | `editable`  | Is the line item editable?  | `boolean` | `undefined` |
-| `removable` | `removable` | Is the line item removable? | `boolean` | `undefined` |
+| Property             | Attribute               | Description                                                                                       | Type      | Default     |
+| -------------------- | ----------------------- | ------------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `editable`           | `editable`              | Is the line item editable?                                                                        | `boolean` | `undefined` |
+| `removable`          | `removable`             | Is the line item removable?                                                                       | `boolean` | `undefined` |
+| `showAllBundleItems` | `show-all-bundle-items` | Show every bundle component (default), or only those with a selected variant when set to `false`. | `boolean` | `true`      |
 
 
 ## Shadow Parts

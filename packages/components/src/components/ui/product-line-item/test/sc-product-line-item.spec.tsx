@@ -45,6 +45,38 @@ describe('sc-product-line-item', () => {
     expect(page.root.shadowRoot.querySelector('sc-product-line-item-note')).toBeNull();
   });
 
+  it('shows bundle items without a variant by default (name only)', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item></sc-product-line-item>`,
+    });
+
+    page.root.bundleComponents = [bundleComponent('c1', 'Sleeping Bag', '10°C / Forest', 1), bundleComponent('c2', 'Camp Mug', '', 1)];
+    await page.waitForChanges();
+
+    const rows = page.root.shadowRoot.querySelectorAll('.line-item-details__row');
+    expect(rows.length).toBe(2);
+    expect(rows[0].textContent).toContain('Sleeping Bag - 10°C / Forest');
+    // No variant => name only, no trailing " - ".
+    expect(rows[1].textContent).toContain('Camp Mug');
+    expect(rows[1].textContent).not.toContain('Camp Mug -');
+  });
+
+  it('hides bundle items without a variant when showAllBundleItems is false', async () => {
+    const page = await newSpecPage({
+      components: [ScProductLineItem],
+      html: `<sc-product-line-item></sc-product-line-item>`,
+    });
+
+    page.root.showAllBundleItems = false;
+    page.root.bundleComponents = [bundleComponent('c1', 'Sleeping Bag', '10°C / Forest', 1), bundleComponent('c2', 'Camp Mug', '', 1)];
+    await page.waitForChanges();
+
+    const rows = page.root.shadowRoot.querySelectorAll('.line-item-details__row');
+    expect(rows.length).toBe(1);
+    expect(rows[0].textContent).toContain('Sleeping Bag - 10°C / Forest');
+  });
+
   it('omits the details region when there is no note or bundle', async () => {
     const page = await newSpecPage({
       components: [ScProductLineItem],

@@ -48,6 +48,12 @@ export class ScLineItems {
   @Prop() removable: boolean;
 
   /**
+   * Show every bundle component (default), or only those with a selected
+   * variant when set to `false`.
+   */
+  @Prop() showAllBundleItems: boolean = true;
+
+  /**
    * Is the line item editable?
    */
   isEditable(item: LineItem) {
@@ -104,6 +110,7 @@ export class ScLineItems {
                 purchasableStatus={item?.purchasable_status_display}
                 note={item?.display_note}
                 bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
+                showAllBundleItems={this.showAllBundleItems}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={!item?.locked && this.removable}
