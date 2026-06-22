@@ -331,6 +331,76 @@ class FilterAbilitiesTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * A rule tree nested deeper than 10 levels returns invalid_filter without a request.
+	 */
+	public function test_filter_orders_rejects_deeply_nested_tree_without_request() {
+		$this->mockRequestNeverCalled();
+
+		// Build a group tree nested deeper than the depth limit.
+		$rules = $this->rule_tree();
+		for ( $i = 0; $i < 12; $i++ ) {
+			$rules = array(
+				'type'       => 'group',
+				'combinator' => 'and',
+				'conditions' => array( $rules ),
+			);
+		}
+
+		$result = ( new FilterOrders() )->execute( array( 'filter' => $rules ) );
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'invalid_filter', $result->get_error_code() );
+	}
+
+	/**
+	 * A group with more than 50 conditions returns invalid_filter without a request.
+	 */
+	public function test_filter_orders_rejects_oversized_group_without_request() {
+		$this->mockRequestNeverCalled();
+
+		$conditions = array();
+		for ( $i = 0; $i < 51; $i++ ) {
+			$conditions[] = $this->rule_tree();
+		}
+
+		$result = ( new FilterOrders() )->execute(
+			array(
+				'filter' => array(
+					'type'       => 'group',
+					'combinator' => 'and',
+					'conditions' => $conditions,
+				),
+			)
+		);
+
+		$this->assertInstanceOf( \WP_Error::class, $result );
+		$this->assertEquals( 'invalid_filter', $result->get_error_code() );
+	}
+
+	/**
+	 * A page of 0 is clamped to 1 in the returned pagination.
+	 */
+	public function test_filter_orders_clamps_page_to_minimum_of_one() {
+		$this->mockRequest(
+			(object) array(
+				'data'       => array(),
+				'pagination' => (object) array( 'count' => 0, 'limit' => 10, 'page' => 1 ),
+			),
+			$captured
+		);
+
+		$result = ( new FilterOrders() )->execute(
+			array(
+				'filter' => $this->rule_tree(),
+				'page'   => 0,
+			)
+		);
+
+		$this->assertTrue( $result['success'] );
+		$this->assertEquals( 1, $result['pagination']['page'] );
+	}
+
+	/**
 	 * All six new abilities are annotated readonly, non-destructive, idempotent.
 	 */
 	public function test_new_abilities_are_readonly() {

@@ -121,7 +121,7 @@ class FilterSubscriptions extends AbstractAbility {
 			return $rules;
 		}
 
-		$page     = absint( $input['page'] ?? 1 );
+		$page     = max( 1, absint( $input['page'] ?? 1 ) );
 		$per_page = max( 1, min( absint( $input['per_page'] ?? 10 ), 100 ) );
 
 		$result = Subscription::filter(

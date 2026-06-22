@@ -187,10 +187,15 @@ abstract class AbstractAbility {
 	 * whitelisting type and combinator, and sanitizing the scalar leaves.
 	 *
 	 * @param mixed $rules The raw rule tree (condition or group).
+	 * @param int   $depth Current recursion depth, used to bound deeply nested input.
 	 *
 	 * @return array|\WP_Error Clean rule tree, or WP_Error if structurally invalid.
 	 */
-	protected function sanitize_rule_tree( $rules ) {
+	protected function sanitize_rule_tree( $rules, $depth = 0 ) {
+		if ( $depth > 10 ) {
+			return new \WP_Error( 'invalid_filter', __( 'Filter rule tree is too deeply nested.', 'surecart' ) );
+		}
+
 		if ( ! is_array( $rules ) || empty( $rules ) ) {
 			return new \WP_Error( 'invalid_filter', __( 'The filter must be a condition or group object.', 'surecart' ) );
 		}
@@ -208,9 +213,13 @@ abstract class AbstractAbility {
 				return new \WP_Error( 'invalid_filter', __( 'A group must have at least one condition.', 'surecart' ) );
 			}
 
+			if ( count( $conditions ) > 50 ) {
+				return new \WP_Error( 'invalid_filter', __( 'A group has too many conditions (max 50).', 'surecart' ) );
+			}
+
 			$clean = array();
 			foreach ( $conditions as $condition ) {
-				$sanitized = $this->sanitize_rule_tree( $condition );
+				$sanitized = $this->sanitize_rule_tree( $condition, $depth + 1 );
 				if ( is_wp_error( $sanitized ) ) {
 					return $sanitized;
 				}
