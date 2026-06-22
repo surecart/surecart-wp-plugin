@@ -14,7 +14,11 @@ trait FiltersResource {
 	 * @return object|\WP_Error
 	 */
 	public function filter_schema( \WP_REST_Request $request ) {
-		return ( new $this->class() )->filterSchema();
+		$model = $this->middleware( new $this->class(), $request );
+		if ( is_wp_error( $model ) ) {
+			return $model;
+		}
+		return $model->filterSchema();
 	}
 
 	/**
@@ -30,12 +34,13 @@ trait FiltersResource {
 			return $model;
 		}
 
+		// expand/$this->with is intentionally not forwarded here — filter operates on the rule tree, not query expansion.
 		$params = $request->get_json_params() ?: [];
 		$items  = $model->filter(
 			$params['filter'] ?? [],
 			[
-				'page'     => $request['page'] ?? 1,
-				'per_page' => $request['per_page'] ?? 20,
+				'page'     => $request->get_param( 'page' ),
+				'per_page' => $request->get_param( 'per_page' ),
 			]
 		);
 

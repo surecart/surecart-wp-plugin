@@ -9,6 +9,9 @@ use SureCart\Models\Collection;
 use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
+/**
+ * Model-level coverage for the CanFilter trait across Order, Customer and Subscription.
+ */
 class CanFilterTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 

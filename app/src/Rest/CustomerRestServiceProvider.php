@@ -168,31 +168,7 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 			]
 		);
 
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/filter_schema',
-			[
-				[
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => $this->callback( $this->controller, 'filter_schema' ),
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/filter',
-			[
-				[
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => $this->callback( $this->controller, 'filter' ),
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
+		$this->registerFilterRoutes();
 	}
 
 	/**
