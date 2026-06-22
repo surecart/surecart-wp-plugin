@@ -6,7 +6,7 @@ use SureCart\Models\Order;
 use SureCart\Models\Customer;
 use SureCart\Models\Subscription;
 use SureCart\Models\Collection;
-use SureCart\Request\RequestService;
+use SureCart\Tests\MocksRequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 /**
@@ -14,6 +14,7 @@ use SureCart\Tests\SureCartUnitTestCase;
  */
 class CanFilterTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+	use MocksRequestService;
 
 	/**
 	 * Set up a new app instance to use for tests.
@@ -33,31 +34,8 @@ class CanFilterTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Mock the request service and capture the args passed to makeRequest.
-	 *
-	 * @param mixed $return Value to return from makeRequest.
-	 * @param array $captured Reference filled with the makeRequest args.
-	 * @return void
+	 * Order::filter() posts the rule tree to the orders filter endpoint and returns a Collection.
 	 */
-	protected function mockRequest( $return, &$captured ) {
-		$requests = \Mockery::mock( RequestService::class );
-		\SureCart::alias(
-			'request',
-			function () use ( $requests ) {
-				return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
-			}
-		);
-
-		$requests->shouldReceive( 'makeRequest' )
-			->once()
-			->andReturnUsing(
-				function ( ...$args ) use ( $return, &$captured ) {
-					$captured = $args;
-					return $return;
-				}
-			);
-	}
-
 	public function test_order_filter_posts_to_filter_endpoint() {
 		$this->mockRequest(
 			(object) [
@@ -76,6 +54,9 @@ class CanFilterTest extends SureCartUnitTestCase {
 		$this->assertEquals( [ 'filter' => $rules ], $captured[1]['body'] );
 	}
 
+	/**
+	 * Order::filterSchema() GETs from the orders filter_schema endpoint.
+	 */
 	public function test_order_filter_schema_gets_from_filter_schema_endpoint() {
 		$this->mockRequest( (object) [ 'object' => 'rule_schema' ], $captured );
 
@@ -85,6 +66,9 @@ class CanFilterTest extends SureCartUnitTestCase {
 		$this->assertEquals( 'GET', $captured[1]['method'] );
 	}
 
+	/**
+	 * Customer::filter() posts the rule tree to the customers filter endpoint.
+	 */
 	public function test_customer_filter_posts_to_filter_endpoint() {
 		$this->mockRequest(
 			(object) [
@@ -102,6 +86,9 @@ class CanFilterTest extends SureCartUnitTestCase {
 		$this->assertEquals( [ 'filter' => $rules ], $captured[1]['body'] );
 	}
 
+	/**
+	 * Customer::filterSchema() GETs from the customers filter_schema endpoint.
+	 */
 	public function test_customer_filter_schema_gets_from_filter_schema_endpoint() {
 		$this->mockRequest( (object) [ 'object' => 'rule_schema' ], $captured );
 
@@ -111,6 +98,9 @@ class CanFilterTest extends SureCartUnitTestCase {
 		$this->assertEquals( 'GET', $captured[1]['method'] );
 	}
 
+	/**
+	 * Subscription::filter() posts the rule tree to the subscriptions filter endpoint.
+	 */
 	public function test_subscription_filter_posts_to_filter_endpoint() {
 		$this->mockRequest(
 			(object) [
@@ -128,6 +118,9 @@ class CanFilterTest extends SureCartUnitTestCase {
 		$this->assertEquals( [ 'filter' => $rules ], $captured[1]['body'] );
 	}
 
+	/**
+	 * Subscription::filterSchema() GETs from the subscriptions filter_schema endpoint.
+	 */
 	public function test_subscription_filter_schema_gets_from_filter_schema_endpoint() {
 		$this->mockRequest( (object) [ 'object' => 'rule_schema' ], $captured );
 

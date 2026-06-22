@@ -3,7 +3,7 @@
 namespace SureCart\Tests\Controllers\Rest;
 
 use SureCart\Models\Order;
-use SureCart\Request\RequestService;
+use SureCart\Tests\MocksRequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Controllers\Rest\OrderController;
 use WP_Error;
@@ -14,6 +14,7 @@ use WP_REST_Request;
  */
 class FiltersResourceTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+	use MocksRequestService;
 
 	/**
 	 * Set up a new app instance to use for tests.
@@ -31,49 +32,6 @@ class FiltersResourceTest extends SureCartUnitTestCase {
 			],
 			false
 		);
-	}
-
-	/**
-	 * Mock the request service and capture the args passed to makeRequest.
-	 *
-	 * @param mixed $return   Value to return from makeRequest.
-	 * @param array $captured Reference filled with the makeRequest args.
-	 * @return void
-	 */
-	protected function mockRequest( $return, &$captured ) {
-		$requests = \Mockery::mock( RequestService::class );
-		\SureCart::alias(
-			'request',
-			function () use ( $requests ) {
-				return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
-			}
-		);
-
-		$requests->shouldReceive( 'makeRequest' )
-			->once()
-			->andReturnUsing(
-				function ( ...$args ) use ( $return, &$captured ) {
-					$captured = $args;
-					return $return;
-				}
-			);
-	}
-
-	/**
-	 * Mock the request service so makeRequest is never expected to run.
-	 *
-	 * @return void
-	 */
-	protected function mockRequestNeverCalled() {
-		$requests = \Mockery::mock( RequestService::class );
-		\SureCart::alias(
-			'request',
-			function () use ( $requests ) {
-				return call_user_func_array( [ $requests, 'makeRequest' ], func_get_args() );
-			}
-		);
-
-		$requests->shouldNotReceive( 'makeRequest' );
 	}
 
 	/**

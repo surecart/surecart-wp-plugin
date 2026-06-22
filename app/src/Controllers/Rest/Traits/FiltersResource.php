@@ -18,6 +18,7 @@ trait FiltersResource {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
+		// Returned as-is — the schema object (or a WP_Error on upstream failure) is handed straight to the REST layer to handle, same as RestController::find().
 		return $model->filterSchema();
 	}
 
@@ -50,7 +51,8 @@ trait FiltersResource {
 
 		$response = rest_ensure_response( $items->data );
 		$response->header( 'X-WP-Total', (int) ( $items->pagination->count ?? 0 ) );
-		$max_pages = ceil( ( $items->pagination->count ?? 0 ) / ( $items->pagination->limit ?? 1 ) );
+		$limit     = max( 1, (int) ( $items->pagination->limit ?? $request->get_param( 'per_page' ) ?? 20 ) );
+		$max_pages = ceil( ( $items->pagination->count ?? 0 ) / $limit );
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
 
 		return $response;
