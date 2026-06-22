@@ -113,6 +113,28 @@ class FiltersResourceTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * The filter_schema handler short-circuits and returns the middleware WP_Error without touching the model.
+	 */
+	public function test_filter_schema_returns_middleware_error_and_skips_model() {
+		$this->mockRequestNeverCalled();
+
+		add_filter(
+			'surecart/request/model',
+			function () {
+				return new WP_Error( 'rest_forbidden', 'Forbidden.' );
+			}
+		);
+
+		$request  = new WP_REST_Request( 'GET', '/surecart/v1/orders/filter_schema' );
+		$response = ( new OrderController() )->filter_schema( $request );
+
+		$this->assertInstanceOf( WP_Error::class, $response );
+		$this->assertEquals( 'rest_forbidden', $response->get_error_code() );
+
+		remove_all_filters( 'surecart/request/model' );
+	}
+
+	/**
 	 * The filter handler sets pagination headers from the returned collection.
 	 */
 	public function test_filter_sets_total_and_total_pages_headers() {

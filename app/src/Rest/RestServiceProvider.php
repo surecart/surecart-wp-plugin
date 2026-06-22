@@ -202,7 +202,6 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => $this->callback( $this->controller, 'filter_schema' ),
 					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					'args'                => $args,
 				],
 				'schema' => [ $this, 'get_item_schema' ],
 			]

@@ -4,6 +4,9 @@ namespace SureCart\Models\Traits;
 
 /**
  * Adds rule-based filtering against the resource's filter endpoints.
+ *
+ * These methods are protected but reachable from controllers/tests via Model::__call(),
+ * the same convention as resend_notification()/finalize().
  */
 trait CanFilter {
 	/**
