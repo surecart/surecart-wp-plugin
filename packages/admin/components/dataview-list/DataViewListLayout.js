@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { useRef } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { DataViews } from '@wordpress/dataviews/wp';
-import { Spinner } from '@wordpress/components';
+import { ProgressBar } from '@wordpress/components';
 import { InterfaceSkeleton, FullscreenMode } from '@wordpress/interface';
 import { useViewportMatch } from '@wordpress/compose';
 import Notifications from '../Notifications';
@@ -32,9 +32,40 @@ export default ({
 	const listRootRef = useRef(null);
 	useHorizontalScrollState(listRootRef);
 
+	// Reset scroll when the page number changes — pagination lives in the
+	// footer, so without this the user lands at the bottom of the new page.
+	// Also fires on DataViews' automatic page-reset when search/filters
+	// change (desirable: new result set → top). Seeded with the initial page
+	// so a deep-linked `paged=3` first paint doesn't scroll.
+	const previousPageRef = useRef(view?.page);
+	useEffect(() => {
+		const page = view?.page || 1;
+		if ((previousPageRef.current || 1) === page) {
+			return;
+		}
+		previousPageRef.current = page;
+
+		// The scroller differs by mode (see dataview-list-common.scss);
+		// scrollTo on a non-scrollable element is a no-op, so reset every
+		// candidate instead of detecting the active one.
+		const root = listRootRef.current;
+		root?.querySelector('.dataviews-wrapper')?.scrollTo(0, 0);
+		root?.querySelector('.interface-interface-skeleton__content')?.scrollTo(
+			0,
+			0
+		);
+		document.getElementById('wpcontent')?.scrollTo(0, 0);
+		window.scrollTo(0, 0);
+	}, [view?.page]);
+
 	// Workspace shell only fits tablet-and-up; force off-mode below.
 	const isLargeViewport = useViewportMatch('medium');
 	const showWorkspace = enabled && isLargeViewport;
+
+	// Refetches keep the previous (stale) rows on screen — see
+	// useDataViewState — so give them the same dimmed-overlay treatment as
+	// mutations instead of upstream's bare table swap.
+	const showOverlay = isMutating || (isLoading && !!data?.length);
 
 	const headerWithToggle = (
 		<div
@@ -78,7 +109,7 @@ export default ({
 				{...rest}
 			/>
 
-			{isMutating && (
+			{showOverlay && (
 				<div
 					css={css`
 						position: absolute;
@@ -87,8 +118,11 @@ export default ({
 						z-index: 10;
 					`}
 				>
-					{/* Off-mode the overlay spans the full table scroll width;
-					    a sticky scrollport-wide strip keeps the spinner in view. */}
+					{/* The overlay spans the full table scroll size; sticky
+					    keeps the spinner inside the visible scrollport. The
+					    strip pins horizontally; the inner box pins vertically
+					    (top wins over bottom when the constraints overlap on
+					    short scrollers, landing near the scrollport centre). */}
 					<div
 						css={css`
 							position: sticky;
@@ -100,7 +134,15 @@ export default ({
 							justify-content: center;
 						`}
 					>
-						<Spinner style={{ width: '28px', height: '28px' }} />
+						<div
+							css={css`
+								position: sticky;
+								top: calc(50vh - 14px);
+								bottom: calc(50vh - 14px);
+							`}
+						>
+							<ProgressBar />
+						</div>
 					</div>
 				</div>
 			)}

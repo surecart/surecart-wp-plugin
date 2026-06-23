@@ -8,6 +8,7 @@ const {
 	applyArchiveStatusFilter,
 	applyCollectionsFilter,
 	applyFeaturedFilter,
+	BASE_EXPANDS,
 } = require('../buildQuery');
 
 const baseView = {
@@ -20,12 +21,39 @@ const baseView = {
 };
 
 describe('buildProductsQuery', () => {
-	test('builds default filter args (active products, expands relations)', () => {
+	test('builds default filter args (active products, lean expands)', () => {
 		const args = buildProductsQuery(baseView);
 		expect(args).toEqual({
+			expand_mode: 'replace',
 			archived: false,
-			expand: ['product_collections', 'commission_structure'],
+			expand: BASE_EXPANDS,
 		});
+	});
+
+	test('lean expands stay stable and never include the heavy relations', () => {
+		const args = buildProductsQuery(baseView);
+		expect(args.expand).toEqual([
+			'product_collections',
+			'product_medias',
+			'product_media.media',
+			'variant_options',
+		]);
+		expect(args.expand).not.toContain('variants');
+		expect(args.expand).not.toContain('prices');
+	});
+
+	test('commission_structure is added only when the commission column is visible', () => {
+		const withColumn = buildProductsQuery({
+			...baseView,
+			fields: ['name', 'commission_amount'],
+		});
+		expect(withColumn.expand).toEqual([
+			...BASE_EXPANDS,
+			'commission_structure',
+		]);
+
+		const withoutColumn = buildProductsQuery(baseView);
+		expect(withoutColumn.expand).not.toContain('commission_structure');
 	});
 
 	test('does not emit pagination/sort/search — those belong to useDataViewState', () => {
@@ -146,7 +174,7 @@ describe('multiple filters compose correctly', () => {
 		expect(args).toMatchObject({
 			archived: true,
 			product_collection_ids: ['col_a'],
-			expand: ['product_collections', 'commission_structure'],
+			expand: BASE_EXPANDS,
 		});
 	});
 
@@ -162,7 +190,7 @@ describe('multiple filters compose correctly', () => {
 		expect(args).toMatchObject({
 			archived: false,
 			featured: true,
-			expand: ['product_collections', 'commission_structure'],
+			expand: BASE_EXPANDS,
 		});
 	});
 });

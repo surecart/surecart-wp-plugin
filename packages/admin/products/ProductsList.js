@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { jsx } from '@emotion/react';
-import { useDispatch, select, dispatch, resolveSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore, useEntityRecords } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback, useState } from 'react';
@@ -28,16 +28,17 @@ import {
 	PRODUCTS_SORT_MAP,
 } from './list/buildQuery';
 import { PRODUCTS_URL_FILTERS } from './list/urlFilters';
+import { refreshProductRow } from './list/refreshProductRow';
 import { useStatusTabs } from './list/useStatusTabs';
 import {
-	useExpandedVariants,
+	useLazyVariants,
 	useSavingVariantIds,
 	injectVariantRows,
 	applyVariantRenderers,
 	productOnlyItems,
+	patchVariant,
 } from './list/variants';
 import VariantEditPanel from './modules/Variations/VariantEditPanel';
-import { toVariantsArray } from './modules/Variations/utils';
 import './product-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -65,7 +66,8 @@ const PREFERENCE_KEY = 'products-list-view';
 const productsQueryArgs = ({ view }) => buildProductsQuery(view);
 
 export default ({ navigation }) => {
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, deleteEntityRecord, receiveEntityRecords } =
+		useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
@@ -75,7 +77,7 @@ export default ({ navigation }) => {
 
 	const { isMutating, run: runMutation } = useListMutation();
 
-	const expanded = useExpandedVariants();
+	const expanded = useLazyVariants();
 	const saving = useSavingVariantIds();
 	const [editingVariant, setEditingVariant] = useState(null);
 
@@ -109,6 +111,7 @@ export default ({ navigation }) => {
 		hasResolved,
 		paginationInfo,
 		invalidateList,
+		queryArgs,
 	} = useDataViewState({
 		entity: 'product',
 		defaultSort: PRODUCTS_DEFAULT_SORT,
@@ -161,13 +164,25 @@ export default ({ navigation }) => {
 				expandedIds: expanded.ids,
 				onToggle: expanded.toggle,
 				savingVariantIds: saving.ids,
+				onRetry: expanded.retry,
 			}),
-		[baseFields, expanded.ids, expanded.toggle, saving.ids]
+		[baseFields, expanded.ids, expanded.toggle, expanded.retry, saving.ids]
 	);
 
 	const dataWithVariants = useMemo(
-		() => injectVariantRows(records, expanded.ids),
-		[records, expanded.ids]
+		() =>
+			injectVariantRows(records, expanded.ids, {
+				variantsByProduct: expanded.variantsByProduct,
+				loadingIds: expanded.loadingIds,
+				failedIds: expanded.failedIds,
+			}),
+		[
+			records,
+			expanded.ids,
+			expanded.variantsByProduct,
+			expanded.loadingIds,
+			expanded.failedIds,
+		]
 	);
 
 	const handleArchiveToggle = useCallback(
@@ -303,51 +318,33 @@ export default ({ navigation }) => {
 
 			return runMutation(
 				async () => {
-					// resolveSelect (not just select) — the list's fetcher
-					// doesn't always prime the per-record cache. Without
-					// this we'd read `{}` and PATCH `variants: []`, wiping siblings.
-					await resolveSelect(coreStore).getEntityRecord(
-						'surecart',
-						'product',
-						productId
-					);
+					// Optimistic: receives merge by field, and the inline rows
+					// filter drafts out — so the row disappears immediately.
+					receiveEntityRecords('surecart', 'variant', {
+						id: variantId,
+						status: 'draft',
+					});
 
-					const current = select(coreStore).getEditedEntityRecord(
-						'surecart',
-						'product',
-						productId
-					);
-					const sourceVariants = toVariantsArray(current?.variants);
-
-					// Belt-and-suspenders for the same data-loss scenario.
-					if (sourceVariants.length === 0) {
-						throw new Error(
-							__(
-								'Could not load the product variants. Refresh the page and try again.',
-								'surecart'
-							)
-						);
+					try {
+						// Soft delete via a direct single-variant PATCH —
+						// siblings are untouched, and unlike saveEntityRecord
+						// this doesn't refetch every expanded row's variants.
+						const saved = await patchVariant(variantId, {
+							status: 'draft',
+						});
+						receiveEntityRecords('surecart', 'variant', saved);
+					} catch (error) {
+						// Restore server truth before surfacing the error.
+						expanded.retry(productId);
+						throw error;
 					}
 
-					// Soft delete — flip just the targeted variant.
-					const next = sourceVariants.map((v) =>
-						v?.id !== variantId ? v : { ...v, status: 'draft' }
-					);
-
-					await dispatch(coreStore).editEntityRecord(
-						'surecart',
-						'product',
-						productId,
-						{ variants: next }
-					);
-					await dispatch(coreStore).saveEditedEntityRecord(
-						'surecart',
-						'product',
-						productId,
-						{ throwOnError: true }
-					);
-
-					invalidateList();
+					// Refresh just this product's row — its aggregates
+					// (price range, stock) may include the deleted variant.
+					// Best-effort: a miss leaves the row momentarily stale.
+					refreshProductRow(productId, {
+						expand: queryArgs.expand,
+					}).catch(() => {});
 					createSuccessNotice(__('Variant deleted.', 'surecart'), {
 						type: 'snackbar',
 					});
@@ -355,7 +352,13 @@ export default ({ navigation }) => {
 				{ errorMessage: __('Failed to delete variant.', 'surecart') }
 			);
 		},
-		[runMutation, invalidateList, createSuccessNotice]
+		[
+			runMutation,
+			receiveEntityRecords,
+			queryArgs.expand,
+			expanded.retry,
+			createSuccessNotice,
+		]
 	);
 
 	// Partial-success path is handled below — only the all-failed branch
@@ -481,12 +484,19 @@ export default ({ navigation }) => {
 			/>
 			{editingVariant && (
 				<VariantEditPanel
-					productId={editingVariant.productId}
+					product={editingVariant.product}
 					variantId={editingVariant.variantId}
 					onClose={() => setEditingVariant(null)}
 					onSavingStart={(id) => saving.start(id)}
 					onSavingEnd={(id) => saving.end(id)}
-					onSaved={() => invalidateList()}
+					onSaved={() => {
+						// Rows already show the edit; only this product's
+						// aggregates (price range, stock) need refreshing —
+						// one lean record, not the whole list. Best-effort.
+						refreshProductRow(editingVariant.product?.id, {
+							expand: queryArgs.expand,
+						}).catch(() => {});
+					}}
 				/>
 			)}
 

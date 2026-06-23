@@ -58,19 +58,22 @@ export const buildProductActions = ({
 			label: iconLabel(<Icon icon={edit} />, __('Edit variant', 'surecart')),
 			icon: <Icon icon={edit} />,
 			isPrimary: true,
-			isEligible: (item) => isVariantRow(item),
+			// Requires a real variant id — excludes the lazy-load placeholder rows.
+			isEligible: (item) => isVariantRow(item) && !!getVariantOriginalId(item),
 			callback: ([item]) => {
 				const parent = getVariantParent(item);
 				const variantId = getVariantOriginalId(item);
 				if (!parent?.id || !variantId) return;
-				onEditVariant?.({ productId: parent.id, variantId });
+				// The full parent row goes along — the drawer reads option
+				// labels and fallback values from it instead of refetching.
+				onEditVariant?.({ product: parent, variantId });
 			},
 		},
 		{
 			id: 'deleteVariant',
 			label: __('Delete variant', 'surecart'),
 			icon: <Icon icon={trash} />,
-			isEligible: (item) => isVariantRow(item),
+			isEligible: (item) => isVariantRow(item) && !!getVariantOriginalId(item),
 			// Soft delete (status: 'draft') — same pattern as the
 			// in-product VariantItem menu. Drafts are filtered out of
 			// the list, so the row disappears; restore from the

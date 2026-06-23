@@ -1,15 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { Button, Spinner } from '@wordpress/components';
+import { Button, ProgressBar, Spinner } from '@wordpress/components';
 import { Icon, chevronDown, chevronRight } from '@wordpress/icons';
-import { __, _n, sprintf } from '@wordpress/i18n';
-import { ScTag } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
 
 import {
 	isVariantRow,
+	isVariantPlaceholder,
 	productHasVariants,
-	getActiveVariantCount,
+	productHasVariantOptions,
+	getVariantParent,
 	getVariantOriginalId,
+	VARIANT_PLACEHOLDER,
 } from './injectVariantRows';
 import VARIANT_CELLS from './cells';
 
@@ -55,31 +57,18 @@ const ChevronSpacer = () => (
 	/>
 );
 
-const VariantCountBadge = ({ count }) => (
-	<ScTag
-		css={css`
-			flex: none;
-			margin-left: 8px;
-		`}
-		title={sprintf(
-			/* translators: %d is the number of variants on the product. */
-			_n('%d variant', '%d variants', count, 'surecart'),
-			count
-		)}
-	>
-		{count}
-	</ScTag>
-);
-
 // Wrap (don't patch) `name.js` so plugins extending the original
 // field continue to work. Adds the chevron in front of the name cell.
+// Variant data loads lazily on expand, so option definitions (always in
+// the lean list response) decide whether a chevron shows; loaded variants
+// keep it for full-expand responses.
 const decorateNameField = (field, { expandedIds, onToggle }) => {
 	const originalRender = field.render;
 	return {
 		...field,
 		render: (props) => {
 			const { item } = props;
-			if (!productHasVariants(item)) {
+			if (!productHasVariantOptions(item) && !productHasVariants(item)) {
 				return (
 					<div
 						className="sc-product-name-row"
@@ -96,7 +85,6 @@ const decorateNameField = (field, { expandedIds, onToggle }) => {
 				);
 			}
 			const isExpanded = expandedIds.has(item?.id);
-			const variantCount = getActiveVariantCount(item);
 			return (
 				<div
 					className="sc-product-name-row"
@@ -113,19 +101,57 @@ const decorateNameField = (field, { expandedIds, onToggle }) => {
 						label={item?.name}
 					/>
 					{originalRender(props)}
-					{variantCount > 0 && (
-						<VariantCountBadge count={variantCount} />
-					)}
 				</div>
 			);
 		},
 	};
 };
 
+// Single-cell content for the lazy-fetch placeholder rows. Rendered in the
+// name cell only; every other cell stays empty.
+const PlaceholderCell = ({ item, onRetry }) => {
+	if (item[VARIANT_PLACEHOLDER] === 'error') {
+		return (
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					gap: 8px;
+					color: var(--sc-color-gray-600);
+				`}
+			>
+				{__('Failed to load variants.', 'surecart')}
+				<Button
+					size="small"
+					variant="link"
+					onClick={(e) => {
+						e.stopPropagation();
+						onRetry?.(getVariantParent(item)?.id);
+					}}
+				>
+					{__('Retry', 'surecart')}
+				</Button>
+			</div>
+		);
+	}
+	return (
+		<div
+			css={css`
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				color: var(--sc-color-gray-600);
+			`}
+		>
+				<ProgressBar />
+		</div>
+	);
+};
+
 // Variant rows route to their own renderer; product rows pass through.
 // `getValue` is zeroed for variants so they don't accidentally
 // participate in any future client-side sort/search aggregation.
-const decorateForVariants = (field, { savingVariantIds }) => {
+const decorateForVariants = (field, { savingVariantIds, onRetry }) => {
 	const originalRender = field.render;
 	const originalGetValue = field.getValue;
 	const VariantCell = VARIANT_CELLS[field.id] || (() => null);
@@ -135,6 +161,14 @@ const decorateForVariants = (field, { savingVariantIds }) => {
 		render: (props) => {
 			if (!isVariantRow(props.item)) {
 				return originalRender ? originalRender(props) : null;
+			}
+			if (isVariantPlaceholder(props.item)) {
+				if (field.id === 'name' || field.id === 'display_name') {
+					return (
+						<PlaceholderCell item={props.item} onRetry={onRetry} />
+					);
+				}
+				return null;
 			}
 			const isSaving = savingVariantIds?.has(
 				getVariantOriginalId(props.item)
@@ -179,8 +213,10 @@ const compose =
 		fns.reduce((acc, fn) => fn(acc), input);
 
 const getDecorators = (field, ctx) => {
-	const { expandedIds, onToggle, savingVariantIds } = ctx;
-	const decorators = [(f) => decorateForVariants(f, { savingVariantIds })];
+	const { expandedIds, onToggle, savingVariantIds, onRetry } = ctx;
+	const decorators = [
+		(f) => decorateForVariants(f, { savingVariantIds, onRetry }),
+	];
 	if (field.id === 'name') {
 		decorators.push((f) => decorateNameField(f, { expandedIds, onToggle }));
 	}

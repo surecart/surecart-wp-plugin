@@ -63,45 +63,125 @@ class PostSyncService {
 	];
 
 	/**
-	 * Find the post from the model.
+	 * Per-request map of model id => synced \WP_Post|null.
 	 *
-	 * @param string $model_id The model id.
+	 * A null entry memoizes "no synced post" — use array_key_exists, not isset.
 	 *
-	 * @return \WP_Post|\WP_Error|null
+	 * @var array
 	 */
-	protected function findByModelId( $model_id ) {
-		// if we don't have a model id, return null.
-		if ( empty( $model_id ) ) {
-			return null;
+	protected static $memoized_posts = [];
+
+	/**
+	 * Flush the memoized model id => post map.
+	 *
+	 * Needed in tests: the map is process-static while the DB resets between tests.
+	 *
+	 * @return void
+	 */
+	public static function flushMemoizedPosts() {
+		self::$memoized_posts = [];
+	}
+
+	/**
+	 * Resolve synced posts for many model ids with a single query.
+	 *
+	 * Hydrating a page of products triggers several synced-post lookups per
+	 * product; priming here turns those N queries into one.
+	 *
+	 * @param array $model_ids Model ids to prime.
+	 *
+	 * @return void
+	 */
+	public function primeByModelIds( $model_ids ) {
+		$missing = array_values(
+			array_filter(
+				array_unique( array_filter( (array) $model_ids ) ),
+				function ( $id ) {
+					return ! array_key_exists( $id, self::$memoized_posts );
+				}
+			)
+		);
+
+		if ( empty( $missing ) ) {
+			return;
 		}
 
-		// query the post.
 		$query = new \WP_Query(
 			array(
 				'post_type'        => $this->post_type,
 				'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived', 'future' ),
-				'posts_per_page'   => 1,
+				// One id can have duplicate posts (trash + live), so don't cap by id count.
+				'posts_per_page'   => -1,
 				'no_found_rows'    => true,
 				'suppress_filters' => true,
 				'meta_query'       => array(
 					array(
-						'key'   => 'sc_id',
-						'value' => $model_id, // query by model id.
+						'key'     => 'sc_id',
+						'value'   => $missing,
+						'compare' => 'IN',
 					),
 				),
 			)
 		);
 
-		// handle error.
-		if ( is_wp_error( $query ) ) {
-			return $query;
+		$found = array();
+		foreach ( $query->posts as $post ) {
+			// Meta cache is primed by the query above, so this is free.
+			$sc_id = get_post_meta( $post->ID, 'sc_id', true );
+			// Keep the first match per id — same post the single lookup returns.
+			if ( $sc_id && ! isset( $found[ $sc_id ] ) ) {
+				$found[ $sc_id ] = $post;
+			}
 		}
 
-		// get the post.
-		$post = $query->posts[0] ?? null;
+		foreach ( $missing as $id ) {
+			self::$memoized_posts[ $id ] = $found[ $id ] ?? null;
+		}
+	}
 
-		// return the post.
-		return apply_filters( "surecart_get_{$this->post_type}_post", $post, $model_id, $this );
+	/**
+	 * Find the post from the model.
+	 *
+	 * Lookups are memoized per request; create/update/delete refresh the map.
+	 *
+	 * @param string $model_id The model id.
+	 *
+	 * @return \WP_Post|\WP_Error|null
+	 */
+	public function findByModelId( $model_id ) {
+		// if we don't have a model id, return null.
+		if ( empty( $model_id ) ) {
+			return null;
+		}
+
+		if ( ! array_key_exists( $model_id, self::$memoized_posts ) ) {
+			// query the post.
+			$query = new \WP_Query(
+				array(
+					'post_type'        => $this->post_type,
+					'post_status'      => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived', 'future' ),
+					'posts_per_page'   => 1,
+					'no_found_rows'    => true,
+					'suppress_filters' => true,
+					'meta_query'       => array(
+						array(
+							'key'   => 'sc_id',
+							'value' => $model_id, // query by model id.
+						),
+					),
+				)
+			);
+
+			// handle error without memoizing it.
+			if ( is_wp_error( $query ) ) {
+				return $query;
+			}
+
+			self::$memoized_posts[ $model_id ] = $query->posts[0] ?? null;
+		}
+
+		// the filter is applied on every call, so filtered results are never memoized.
+		return apply_filters( "surecart_get_{$this->post_type}_post", self::$memoized_posts[ $model_id ], $model_id, $this );
 	}
 
 	/**
@@ -140,6 +220,8 @@ class PostSyncService {
 		if ( is_wp_error( $deleted ) ) {
 			return $deleted;
 		}
+
+		self::$memoized_posts[ $id ] = null;
 
 		// delete variant option values where post_id is the post id.
 		$deleted_option = VariantOptionValue::where( 'product_id', $id )->delete();
@@ -282,6 +364,9 @@ class PostSyncService {
 			// set the post on the model.
 			$this->post = get_post( $post_id );
 
+			// a null lookup may be memoized from before the insert.
+			self::$memoized_posts[ $model->id ] = $this->post;
+
 			// fire action.
 			do_action( 'surecart/product/sync/created', $this->post, $model );
 
@@ -346,6 +431,8 @@ class PostSyncService {
 		}
 
 		$this->post = get_post( $post_id );
+
+		self::$memoized_posts[ $model->id ] = $this->post;
 
 		// fire action.
 		do_action( 'surecart/product/sync/updated', $this->post, $model );

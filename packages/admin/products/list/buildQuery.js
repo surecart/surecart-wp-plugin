@@ -48,16 +48,43 @@ const DEFAULT_HANDLERS = [
 	applyFeaturedFilter,
 ];
 
+// Lean list expands — paired with `expand_mode: 'replace'` below, the
+// middleware uses this set verbatim instead of the forced edit defaults.
+// Price renders from base-object `metrics`; variants load lazily on row
+// expand; `variant_options` is only fetched to know the expander exists.
+export const BASE_EXPANDS = [
+	'product_collections',
+	'product_medias',
+	'product_media.media',
+	'variant_options',
+];
+
+const buildProductsExpand = (view) => {
+	const expand = [...BASE_EXPANDS];
+	if (view?.fields?.includes('commission_amount')) {
+		expand.push('commission_structure');
+	}
+	return expand;
+};
+
 export const buildProductsQuery = (view) => {
 	const filterHandlers = applyFilterHandlerExtensions(
 		'products',
 		DEFAULT_HANDLERS,
 		{ view }
 	);
-	return buildFilterArgsFromView({
-		view,
-		filterHandlers,
-	});
+	// Expand first so filter-handler extensions can override it for custom
+	// columns that need extra relations. `expand_mode: 'replace'` opts this
+	// list out of the server's forced edit expands so the set above is used
+	// verbatim; extensions that add relations augment it additively.
+	return {
+		expand_mode: 'replace',
+		expand: buildProductsExpand(view),
+		...buildFilterArgsFromView({
+			view,
+			filterHandlers,
+		}),
+	};
 };
 
 export const PRODUCTS_DEFAULT_SORT = DEFAULT_SORT;
