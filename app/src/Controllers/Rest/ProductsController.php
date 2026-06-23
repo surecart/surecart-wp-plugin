@@ -60,8 +60,8 @@ class ProductsController extends RestController {
 
 			$class->with(
 				$replace
-					? $client_expand                                                   // lean: the client owns the relation set.
-					: array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) // additive: defaults plus any client expand.
+					? $client_expand                                                                  // lean: the client owns the relation set.
+					: array_values( array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) ) // additive: defaults plus any client expand (re-indexed so an overlap can't leave a sparse array).
 			);
 		}
 
