@@ -136,6 +136,37 @@ class PostSyncServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * A duplicate post for one id must not starve another id's only post.
+	 *
+	 * One model id can own more than one post (e.g. a trashed copy left
+	 * beside a live one). A per-page limit of count( $ids ) would let the
+	 * duplicates consume the budget and drop a different id's single post,
+	 * memoizing it null. The prime must resolve every id regardless.
+	 *
+	 * @group post-sync
+	 */
+	public function test_prime_resolves_all_ids_when_one_id_has_duplicate_posts() {
+		// Two posts share `prod_dup`, both newer than the lone `prod_single`,
+		// so a tight limit would order them first and starve `prod_single`.
+		$this->createProductPost( 'prod_dup', [ 'post_date' => '2026-01-01 00:00:00', 'post_status' => 'trash' ] );
+		$dup_live   = $this->createProductPost( 'prod_dup', [ 'post_date' => '2026-01-02 00:00:00' ] );
+		$single_id  = $this->createProductPost( 'prod_single', [ 'post_date' => '2025-01-01 00:00:00' ] );
+
+		$service = new PostSyncService();
+		$service->primeByModelIds( [ 'prod_dup', 'prod_single' ] );
+
+		$queries_before = get_num_queries();
+		$single         = $service->findByModelId( 'prod_single' );
+		$dup            = $service->findByModelId( 'prod_dup' );
+
+		$this->assertNotNull( $single, 'The single-post id must survive the prime.' );
+		$this->assertSame( $single_id, $single->ID );
+		// Same post the single lookup returns: newest match for the id.
+		$this->assertSame( $dup_live, $dup->ID );
+		$this->assertSame( 0, get_num_queries() - $queries_before, 'Both ids should be primed, not re-queried.' );
+	}
+
+	/**
 	 * The map holds until flushed — this is why create/update/delete refresh it.
 	 *
 	 * @group post-sync
