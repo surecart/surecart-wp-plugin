@@ -15,6 +15,14 @@ class CartLineItemDetailsMigrationService extends VersionMigration {
 	protected $migration_key = 'surecart_cart_line_item_details_migration_version';
 
 	/**
+	 * Whether any post update failed during the run. When true we skip marking
+	 * the migration complete so it retries on the next admin_init.
+	 *
+	 * @var bool
+	 */
+	protected $failed = false;
+
+	/**
 	 * Default child attributes — matches the default cart template.
 	 *
 	 * @var string
@@ -60,13 +68,32 @@ class CartLineItemDetailsMigrationService extends VersionMigration {
 				continue;
 			}
 
-			wp_update_post(
+			$result = wp_update_post(
 				array(
 					'ID'           => $cart_post->ID,
 					'post_content' => $migrated,
-				)
+				),
+				true
 			);
+
+			// Leave the migration unmarked (see complete()) so a failed update
+			// retries next admin_init instead of being stranded on the old markup.
+			if ( is_wp_error( $result ) || empty( $result ) ) {
+				$this->failed = true;
+			}
 		}
+	}
+
+	/**
+	 * Only mark the migration complete when every cart updated cleanly.
+	 *
+	 * @return void
+	 */
+	public function complete() {
+		if ( $this->failed ) {
+			return;
+		}
+		parent::complete();
 	}
 
 	/**

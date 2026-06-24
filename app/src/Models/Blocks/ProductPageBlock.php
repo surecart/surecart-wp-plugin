@@ -14,6 +14,13 @@ class ProductPageBlock {
 	protected $url;
 
 	/**
+	 * Per-instance memo of resolved bundle component products, keyed by id.
+	 *
+	 * @var array
+	 */
+	private $component_cache = array();
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -261,11 +268,10 @@ class ProductPageBlock {
 			return null;
 		}
 
-		// Memoize per request — context(), state() and bundle.php each resolve the
-		// same components, so this avoids repeating the lookup.
-		static $cache = array();
-		if ( array_key_exists( $component_id, $cache ) ) {
-			return $cache[ $component_id ];
+		// Memoize on the instance — context() and state() resolve the same
+		// components, so this avoids repeating the lookup within a render.
+		if ( array_key_exists( $component_id, $this->component_cache ) ) {
+			return $this->component_cache[ $component_id ];
 		}
 
 		$posts = get_posts(
@@ -285,13 +291,13 @@ class ProductPageBlock {
 		);
 		$product = ! empty( $posts[0] ) ? get_post_meta( $posts[0]->ID, 'product', true ) : null;
 		if ( empty( $product ) ) {
-			$cache[ $component_id ] = null;
+			$this->component_cache[ $component_id ] = null;
 			return null;
 		}
 
-		$decoded                = is_string( $product ) ? json_decode( $product ) : json_decode( wp_json_encode( $product ) );
-		$cache[ $component_id ] = new \SureCart\Models\Product( $decoded );
-		return $cache[ $component_id ];
+		$decoded                                = is_string( $product ) ? json_decode( $product ) : json_decode( wp_json_encode( $product ) );
+		$this->component_cache[ $component_id ] = new \SureCart\Models\Product( $decoded );
+		return $this->component_cache[ $component_id ];
 	}
 
 	/**
