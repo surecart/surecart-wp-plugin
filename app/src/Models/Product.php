@@ -20,7 +20,7 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
-	use canDuplicate {
+	use CanDuplicate {
 		duplicate as protected originalDuplicate;
 	}
 

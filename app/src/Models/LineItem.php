@@ -63,7 +63,9 @@ class LineItem extends Model {
 	 * @return void
 	 */
 	public function setBundleComponentVariantsAttribute( $value ) {
-		$this->attributes['bundle_component_variants'] = is_array( $value ) ? $value : array();
+		// Coerce both arrays and decoded JSON objects (stdClass) to a map; a
+		// stdClass would otherwise be dropped, losing the component selections.
+		$this->attributes['bundle_component_variants'] = ( is_array( $value ) || is_object( $value ) ) ? (array) $value : array();
 	}
 
 	/**
@@ -415,7 +417,7 @@ class LineItem extends Model {
 	 */
 	public function getPurchasableStatusDisplayAttribute() {
 		if ( 'purchasable' === $this->purchasable_status ) {
-			return;
+			return '';
 		}
 
 		// translations for purchaseable status.
