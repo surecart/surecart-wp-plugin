@@ -56,6 +56,8 @@ class BundleItemsRestServiceProvider extends RestServiceProvider implements Rest
 	 * @return true|\WP_Error True if the request has access, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		// Bundle items are sub-resources of products, so they intentionally reuse
+		// the product capabilities rather than defining their own set.
 		return current_user_can( 'publish_sc_products' );
 	}
 

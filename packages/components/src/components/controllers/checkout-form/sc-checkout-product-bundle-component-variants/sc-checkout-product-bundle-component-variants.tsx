@@ -40,12 +40,18 @@ export class ScCheckoutProductBundleComponentVariants {
 
   private removeListener?: () => void;
 
+  /** True while a persistSelection() PATCH is in flight (see onChange guard). */
+  private updating = false;
+
   componentWillLoad() {
     this.seedFromProductDefaults();
 
     // Once the checkout exists, prefer the variants already on the bundle
     // line item — keeps the picker in sync with the seeded server state.
     this.removeListener = onChange('checkout', () => {
+      // While our own PATCH is in flight the store still holds the pre-PATCH
+      // selection; hydrating from it would clobber the user's fresh pick.
+      if (this.updating) return;
       const lineItem = this.bundleLineItem();
       if (lineItem?.bundle_component_variants) {
         this.hydrateFromLineItem(lineItem.bundle_component_variants);
@@ -185,9 +191,9 @@ export class ScCheckoutProductBundleComponentVariants {
     });
     if (!variant?.id) {
       if (this.selectedVariants[component.id]) {
-        const next = { ...this.selectedVariants };
-        delete next[component.id];
-        this.selectedVariants = next;
+        const updatedVariants = { ...this.selectedVariants };
+        delete updatedVariants[component.id];
+        this.selectedVariants = updatedVariants;
       }
       return;
     }
@@ -217,6 +223,7 @@ export class ScCheckoutProductBundleComponentVariants {
     if (same) return;
 
     try {
+      this.updating = true;
       updateFormState('FETCH');
       checkoutState.checkout = await updateLineItem({
         id: lineItem.id,
@@ -227,6 +234,8 @@ export class ScCheckoutProductBundleComponentVariants {
       console.error(e);
       createErrorNotice(e);
       updateFormState('REJECT');
+    } finally {
+      this.updating = false;
     }
   }
 
