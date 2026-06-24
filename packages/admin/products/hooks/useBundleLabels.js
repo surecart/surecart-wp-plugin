@@ -33,9 +33,6 @@ export default (product) => {
 		saveLabel: isBundle
 			? __('Save Bundle', 'surecart')
 			: __('Save Product', 'surecart'),
-		viewPageLabel: isBundle
-			? __('View Bundle Page', 'surecart')
-			: __('View Product Page', 'surecart'),
 		updatedNotice: isBundle
 			? __('Bundle updated.', 'surecart')
 			: __('Product updated.', 'surecart'),
