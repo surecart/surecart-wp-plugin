@@ -39,7 +39,7 @@
 		<?php endif; ?>
 
 		<div>
-			<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-checkout-product-price-variant-selector>
+			<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( $product->id ); ?>"></sc-checkout-product-price-variant-selector>
 			<?php
 			\SureCart::assets()->addComponentData(
 				'sc-checkout-product-price-variant-selector',
