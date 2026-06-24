@@ -609,6 +609,13 @@ export interface BundleItem {
   bundle_product: string | Product;
   /** The component product included in the bundle. Must not itself be a bundle. */
   component_product: string | Product;
+  /**
+   * Shortcut association: the component product's variants with live stock,
+   * one level shallower than the (dropped) component_product.variants expand.
+   */
+  component_variants?: { object: 'list'; pagination?: Pagination; data: Variant[] };
+  /** Shortcut association: the component product's variant option dimensions. */
+  component_variant_options?: { object: 'list'; pagination?: Pagination; data: VariantOption[] };
   quantity: number;
   /** Optional weighting input (cents) for tax allocation. Nil → even split by quantity. */
   basis_amount?: number | null;

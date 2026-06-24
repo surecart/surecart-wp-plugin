@@ -55,4 +55,26 @@ class BundleItem extends Model {
 	public function getComponentProductIdAttribute() {
 		return $this->getRelationId( 'component_product' );
 	}
+
+	/**
+	 * Component variants with live stock. A shortcut association returning the
+	 * component product's variants one level shallower than the (dropped)
+	 * bundle_items.component_product.variants expand.
+	 *
+	 * @param array $value Variants payload.
+	 * @return void
+	 */
+	public function setComponentVariantsAttribute( $value ) {
+		$this->setCollection( 'component_variants', $value, Variant::class );
+	}
+
+	/**
+	 * Component variant option dimensions (name + values), mirroring component_variants.
+	 *
+	 * @param array $value Variant options payload.
+	 * @return void
+	 */
+	public function setComponentVariantOptionsAttribute( $value ) {
+		$this->setCollection( 'component_variant_options', $value, VariantOption::class );
+	}
 }

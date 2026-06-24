@@ -4,7 +4,13 @@ $page_block = new \SureCart\Models\Blocks\ProductPageBlock();
 ob_start();
 
 foreach ( ( $product->bundle_items->data ?? array() ) as $bundle_item ) :
-	$component       = $bundle_item->component_product ?? null;
+	// Resolve the component (live associations on the buy page, else the
+	// component's own synced cache) so variant stock is always current.
+	$component = $page_block->resolveBundleComponent( $bundle_item );
+	if ( empty( $component->id ) ) {
+		continue;
+	}
+
 	$variant_options = $component->variant_options->data ?? array();
 
 	// Skip components with no selectable variants — nothing to interact with.

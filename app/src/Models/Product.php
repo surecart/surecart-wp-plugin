@@ -70,6 +70,28 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Expands needed to render a product on the storefront with live component
+	 * stock. Shared by the buy page and the live bundle PDP fetch so the two
+	 * can't drift. Bundle expands are harmless for non-bundles (no bundle_items).
+	 *
+	 * @return array
+	 */
+	public static function storefrontExpands(): array {
+		return array(
+			'image',
+			'prices',
+			'product_medias',
+			'product_media.media',
+			'variants',
+			'variant_options',
+			'bundle_items',
+			'bundle_items.component_product',
+			'bundle_items.component_variants',
+			'bundle_items.component_variant_options',
+		);
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.

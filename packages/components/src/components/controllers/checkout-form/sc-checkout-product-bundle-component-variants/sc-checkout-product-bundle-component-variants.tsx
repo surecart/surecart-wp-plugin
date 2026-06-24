@@ -22,7 +22,7 @@ import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@s
 export class ScCheckoutProductBundleComponentVariants {
   @Element() el: HTMLScCheckoutProductBundleComponentVariantsElement;
 
-  /** The bundle product (must include bundle_items.component_product variants/variant_options). */
+  /** The bundle product (must include bundle_items.component_variants + component_variant_options). */
   @Prop() product: Product;
 
   /**
@@ -108,7 +108,26 @@ export class ScCheckoutProductBundleComponentVariants {
    */
   private variableItems(): Array<{ item: BundleItem; component: Product }> {
     const items = (this.product?.bundle_items?.data || []) as BundleItem[];
-    return items.map(item => ({ item, component: item.component_product as Product })).filter(({ component }) => !!component?.id && !!component?.variant_options?.data?.length);
+    return items
+      .map(item => ({ item, component: this.toComponentView(item) }))
+      .filter((entry): entry is { item: BundleItem; component: Product } => !!entry.component?.id && !!entry.component?.variant_options?.data?.length);
+  }
+
+  /**
+   * Normalize a bundle item into a product-shaped view whose variants/options
+   * come from the shortcut associations (component_variants /
+   * component_variant_options), keeping id/name/stock from component_product.
+   * Lets the rest of the picker — and the shared sold-out/missing helpers —
+   * read `.variants.data` / `.variant_options.data` unchanged.
+   */
+  private toComponentView(item: BundleItem): Product | null {
+    const product = item?.component_product as Product;
+    if (!product?.id) return null;
+    return {
+      ...product,
+      variants: item?.component_variants ?? { data: [] },
+      variant_options: item?.component_variant_options ?? { data: [] },
+    } as Product;
   }
 
   private variableComponents(): Product[] {

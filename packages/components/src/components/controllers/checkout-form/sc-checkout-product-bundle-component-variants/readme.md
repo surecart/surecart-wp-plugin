@@ -13,9 +13,9 @@ selection straight into the bundle line item's `bundle_component_variants`.
 
 ## Properties
 
-| Property  | Attribute | Description                                                                                | Type      | Default     |
-| --------- | --------- | ------------------------------------------------------------------------------------------ | --------- | ----------- |
-| `product` | --        | The bundle product (must include bundle_items.component_product variants/variant_options). | `Product` | `undefined` |
+| Property  | Attribute | Description                                                                                    | Type      | Default     |
+| --------- | --------- | ---------------------------------------------------------------------------------------------- | --------- | ----------- |
+| `product` | --        | The bundle product (must include bundle_items.component_variants + component_variant_options). | `Product` | `undefined` |
 
 
 ## Dependencies

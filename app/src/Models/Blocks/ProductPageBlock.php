@@ -243,6 +243,91 @@ class ProductPageBlock {
 	}
 
 	/**
+	 * Load a bundle component from its own synced post-meta cache by product id.
+	 *
+	 * A component is a standalone product, so its variants and stock stay current
+	 * through the normal product sync (surecart/product_stock_adjusted etc.). We
+	 * read the component's own cache rather than a snapshot baked into the bundle,
+	 * so a sub-product stock change reflects on the bundle without re-saving it.
+	 * Bypasses sc_get_product()'s current-product short-circuit so it resolves the
+	 * component even while the bundle is the active product context.
+	 *
+	 * @param string|null $component_id Component product id.
+	 *
+	 * @return \SureCart\Models\Product|null
+	 */
+	public function getBundleComponentProduct( $component_id ) {
+		if ( empty( $component_id ) ) {
+			return null;
+		}
+
+		// Memoize per request — context(), state() and bundle.php each resolve the
+		// same components, so this avoids repeating the lookup.
+		static $cache = array();
+		if ( array_key_exists( $component_id, $cache ) ) {
+			return $cache[ $component_id ];
+		}
+
+		$posts = get_posts(
+			array(
+				'post_type'        => 'sc_product',
+				'post_status'      => array( 'publish', 'draft', 'sc_archived', 'private' ),
+				'posts_per_page'   => 1,
+				'no_found_rows'    => true,
+				'suppress_filters' => true,
+				'meta_query'       => array(
+					array(
+						'key'   => 'sc_id',
+						'value' => $component_id,
+					),
+				),
+			)
+		);
+		$product = ! empty( $posts[0] ) ? get_post_meta( $posts[0]->ID, 'product', true ) : null;
+		if ( empty( $product ) ) {
+			$cache[ $component_id ] = null;
+			return null;
+		}
+
+		$decoded                = is_string( $product ) ? json_decode( $product ) : json_decode( wp_json_encode( $product ) );
+		$cache[ $component_id ] = new \SureCart\Models\Product( $decoded );
+		return $cache[ $component_id ];
+	}
+
+	/**
+	 * Resolve a bundle component into a product-shaped object carrying its
+	 * variants and variant_options.
+	 *
+	 * Prefers the live shortcut associations on the bundle item (buy page live
+	 * fetch carries component_variants / component_variant_options). Falls back to
+	 * the component's own synced cache (cached PDP model, where the bundle stores
+	 * no component stock) — that cache stays fresh via the component's own product
+	 * webhooks. Using the live associations on the buy page is essential: a
+	 * component need not be synced as its own WP post, so the cache lookup can miss
+	 * it and drop it from the seeded bundle_component_variants.
+	 *
+	 * @param object $item Bundle item.
+	 * @return object|null Component product with variants/variant_options, or null.
+	 */
+	public function resolveBundleComponent( $item ) {
+		if ( empty( $item ) ) {
+			return null;
+		}
+
+		$component = $item->component_product ?? null;
+
+		// Live associations present (buy page): attach them to the component object.
+		if ( is_object( $component ) && ! empty( $item->component_variants->data ?? array() ) ) {
+			$component->variants        = $item->component_variants;
+			$component->variant_options = $item->component_variant_options ?? (object) array( 'data' => array() );
+			return $component;
+		}
+
+		// Cached PDP model: read the component's own synced cache.
+		return $this->getBundleComponentProduct( $item->component_product_id );
+	}
+
+	/**
 	 * IDs of bundle components with variant options — the only ones the buy
 	 * button gates on when unfilled.
 	 *
@@ -256,8 +341,8 @@ class ProductPageBlock {
 		}
 		$ids = array();
 		foreach ( $product->bundle_items->data ?? array() as $item ) {
-			$component = $item->component_product ?? null;
-			if ( empty( $component ) || empty( $component->variant_options->data ?? array() ) ) {
+			$component = $this->resolveBundleComponent( $item );
+			if ( empty( $component->id ) || empty( $component->variant_options->data ?? array() ) ) {
 				continue;
 			}
 			$ids[] = $component->id;
@@ -280,8 +365,8 @@ class ProductPageBlock {
 
 		$map = array();
 		foreach ( $product->bundle_items->data ?? array() as $item ) {
-			$component = $item->component_product ?? null;
-			if ( empty( $component ) || empty( $component->id ) ) {
+			$component = $this->resolveBundleComponent( $item );
+			if ( empty( $component->id ) ) {
 				continue;
 			}
 
@@ -297,7 +382,7 @@ class ProductPageBlock {
 	/**
 	 * Pick a sensible default variant for a bundle component product.
 	 *
-	 * @param object $component Component product.
+	 * @param object $component Component product (resolved from its own cache).
 	 *
 	 * @return object|null
 	 */
@@ -329,7 +414,7 @@ class ProductPageBlock {
 	/**
 	 * Resolve a component's variant from URL slugs (written by the scope-aware setOption callback).
 	 *
-	 * @param object $component Component product.
+	 * @param object $component Component product (resolved from its own cache).
 	 *
 	 * @return object|null
 	 */
@@ -397,8 +482,8 @@ class ProductPageBlock {
 
 		$components = array();
 		foreach ( $product->bundle_items->data ?? array() as $item ) {
-			$component = $item->component_product ?? null;
-			if ( empty( $component ) || empty( $component->id ) ) {
+			$component = $this->resolveBundleComponent( $item );
+			if ( empty( $component->id ) ) {
 				continue;
 			}
 

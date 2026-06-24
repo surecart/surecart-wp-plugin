@@ -558,7 +558,7 @@ export namespace Components {
      */
     interface ScCheckoutProductBundleComponentVariants {
         /**
-          * The bundle product (must include bundle_items.component_product variants/variant_options).
+          * The bundle product (must include bundle_items.component_variants + component_variant_options).
          */
         "product": Product;
     }
@@ -7808,7 +7808,7 @@ declare namespace LocalJSX {
      */
     interface ScCheckoutProductBundleComponentVariants {
         /**
-          * The bundle product (must include bundle_items.component_product variants/variant_options).
+          * The bundle product (must include bundle_items.component_variants + component_variant_options).
          */
         "product"?: Product;
     }

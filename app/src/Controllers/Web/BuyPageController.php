@@ -73,34 +73,14 @@ class BuyPageController extends BasePageController {
 		// The route always passes a product slug here.
 		$id = get_query_var( 'sc_checkout_product_id' );
 
-		// fetch the product by id/slug.
+		// fetch the product by id/slug. Bundle expands carry live component
+		// variant stock, so the buy page renders fresh availability in one fetch.
 		$this->model = \SureCart\Models\Product::with(
-			[
-				'image',
-				'prices',
-				'product_medias',
-				'product_media.media',
-				'variants',
-				'variant_options',
-				'bundle_items',
-				'bundle_items.component_product',
-			]
+			\SureCart\Models\Product::storefrontExpands()
 		)->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
-		}
-
-		// For bundles, overlay the bundle structure from the PDP-synced post meta so
-		// the buy page renders the same components as the PDP. Price and availability
-		// still come from the live API response above; we only swap in the cached
-		// bundle data. The API's `bundle` flag lets us skip this lookup for non-bundles.
-		if ( ! empty( $this->model->bundle ) ) {
-			$cached = $this->loadProductFromMeta( $id );
-			if ( ! empty( $cached ) && ! empty( $cached->bundle ) ) {
-				$this->model->bundle       = $cached->bundle;
-				$this->model->bundle_items = $cached->bundle_items;
-			}
 		}
 
 		// if this buy page is not enabled, check read permissions.
@@ -289,27 +269,5 @@ class BuyPageController extends BasePageController {
 		?>
 		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
 		<?php
-	}
-
-	/**
-	 * Resolve the post-meta synced Product by slug — used to merge in
-	 * bundle structure that the live API may not deeply expand.
-	 *
-	 * @param string $slug Product slug from the URL.
-	 * @return \SureCart\Models\Product|null
-	 */
-	protected function loadProductFromMeta( string $slug ) {
-		$posts = get_posts(
-			[
-				'post_type'      => 'sc_product',
-				'name'           => $slug,
-				'post_status'    => [ 'publish', 'draft' ],
-				'posts_per_page' => 1,
-			]
-		);
-		if ( empty( $posts ) ) {
-			return null;
-		}
-		return sc_get_product( $posts[0] );
 	}
 }
