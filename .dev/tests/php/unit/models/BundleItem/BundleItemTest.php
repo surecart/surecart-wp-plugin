@@ -59,6 +59,55 @@ class BundleItemTest extends SureCartUnitTestCase {
 		$this->assertSame( 'p-component-only-id', $item->component_product_id );
 	}
 
+	public function test_component_variants_collection_hydrates() {
+		$item = new BundleItem(
+			array(
+				'id'                 => 'bi-cv',
+				'component_variants' => (object) array(
+					'object' => 'list',
+					'data'   => array(
+						array(
+							'id'              => 'v1',
+							'option_1'        => 'Small',
+							'available_stock' => 10,
+						),
+						array(
+							'id'              => 'v2',
+							'option_1'        => 'Large',
+							'available_stock' => 0,
+						),
+					),
+				),
+			)
+		);
+
+		$this->assertCount( 2, $item->component_variants->data );
+		$this->assertInstanceOf( \SureCart\Models\Variant::class, $item->component_variants->data[0] );
+		$this->assertSame( 'v1', $item->component_variants->data[0]->id );
+		$this->assertSame( 10, $item->component_variants->data[0]->available_stock );
+	}
+
+	public function test_component_variant_options_collection_hydrates() {
+		$item = new BundleItem(
+			array(
+				'id'                        => 'bi-cvo',
+				'component_variant_options' => (object) array(
+					'object' => 'list',
+					'data'   => array(
+						array(
+							'name'   => 'Size',
+							'values' => array( 'Small', 'Large' ),
+						),
+					),
+				),
+			)
+		);
+
+		$this->assertCount( 1, $item->component_variant_options->data );
+		$this->assertInstanceOf( \SureCart\Models\VariantOption::class, $item->component_variant_options->data[0] );
+		$this->assertSame( 'Size', $item->component_variant_options->data[0]->name );
+	}
+
 	public function test_bundle_product_relation_hydrates() {
 		$item = new BundleItem(
 			array(
