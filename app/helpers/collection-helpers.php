@@ -18,7 +18,7 @@ if ( ! function_exists( 'sc_get_collection' ) ) {
 		$term = get_term( $term );
 
 		// no post.
-		if ( ! $term ) {
+		if ( null === $term || is_wp_error( $term ) ) {
 			return null;
 		}
 
