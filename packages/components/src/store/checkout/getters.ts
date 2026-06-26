@@ -1,6 +1,7 @@
-import { Product, Address, Checkout } from 'src/types';
+import { Product, Address, Checkout, Customer } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
+import { state as userState } from '../user';
 import { isAddressComplete } from 'src/functions/address';
 
 /**
@@ -64,6 +65,18 @@ export const getResolvedBillingAddress = (checkout?: Checkout): Address | undefi
   if (!address?.line_1) return undefined;
 
   return address;
+};
+
+/**
+ * Resolve the billing email for payment processors.
+ *
+ * The Stripe Payment Element is created with `fields.billing_details.email = 'never'`,
+ * so an email must always be passed on confirm. Logged-in customers never fill the email
+ * input, so fall back to the linked customer and the logged-in user session.
+ */
+export const getResolvedBillingEmail = (checkout?: Checkout): string | undefined => {
+  const currentOrder = checkout || state.checkout;
+  return currentOrder?.email || (currentOrder?.customer as Customer)?.email || userState?.email || undefined;
 };
 
 /**
