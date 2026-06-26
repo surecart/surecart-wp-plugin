@@ -569,6 +569,8 @@ export interface LineItem extends Object {
   display_note?: string;
   component_line_item?: boolean;
   component_line_items?: { data: LineItem[] };
+  /** Sort order within the bundle, mirroring the bundle item's position. */
+  position?: number;
   /** Id of the bundle parent line item (set on bundle component line items). */
   bundle_line_item?: string | null;
   bundle_component_variants?: Record<string, string>;

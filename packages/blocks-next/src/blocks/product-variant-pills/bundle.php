@@ -3,7 +3,11 @@ $page_block = new \SureCart\Models\Blocks\ProductPageBlock();
 
 ob_start();
 
-foreach ( ( $product->bundle_items->data ?? array() ) as $bundle_item ) :
+// Order components by their `position` (the order set in the bundle).
+$bundle_items = $product->bundle_items->data ?? array();
+usort( $bundle_items, fn( $a, $b ) => ( $a->position ?? 0 ) <=> ( $b->position ?? 0 ) );
+
+foreach ( $bundle_items as $bundle_item ) :
 	// Resolve the component (live associations on the buy page, else the
 	// component's own synced cache) so variant stock is always current.
 	$component = $page_block->resolveBundleComponent( $bundle_item );

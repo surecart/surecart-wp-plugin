@@ -2,6 +2,9 @@ import { getQueryArg } from '@wordpress/url';
 
 import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
 
+// Order bundle items by their `position` (the order set in the bundle).
+const byPosition = <T extends { position?: number }>(items: T[] = []): T[] => [...items].sort((a, b) => (a?.position ?? 0) - (b?.position ?? 0));
+
 /**
  * A bundle component's line item `quantity` is the total across the whole
  * purchase (per-bundle count × bundle quantity). Divide it back out by the
@@ -42,7 +45,7 @@ export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [],
  * only the bundle definition).
  */
 export const getBundleComponentRowsFromBundleItems = (items: BundleItem[] = []): BundleComponentRow[] => {
-  return (items || [])
+  return byPosition(items)
     .map(item => {
       const componentProduct = item?.component_product as Product;
       const name = componentProduct?.name || '';
@@ -70,7 +73,7 @@ export const groupBundleLineItems = (items: LineItem[] = []) => {
     const product = (item?.price as Price)?.product as Product | undefined;
     if (product?.bundle) {
       bundleParents.push(item);
-      componentsByParent[item.id] = item?.component_line_items?.data || [];
+      componentsByParent[item.id] = byPosition(item?.component_line_items?.data || []);
       return;
     }
 

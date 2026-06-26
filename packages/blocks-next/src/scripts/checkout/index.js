@@ -195,7 +195,9 @@ const { state, actions } = store('surecart/checkout', {
 			const ctx = getContext();
 			const { line_item } = ctx;
 			if (!line_item?.price?.product?.bundle) return [];
-			const components = line_item?.component_line_items?.data || [];
+			const components = [
+				...(line_item?.component_line_items?.data || []),
+			].sort((a, b) => (a?.position ?? 0) - (b?.position ?? 0));
 			if (ctx?.showBundleVariantsOnly !== true) return components;
 			return components.filter((component) => {
 				const display = (

@@ -1,4 +1,4 @@
-import { calculateInitialLineItems, getSessionId, getPerBundleQuantity, getBundleComponentRowsFromLineItems } from '../index';
+import { calculateInitialLineItems, getSessionId, getPerBundleQuantity, getBundleComponentRowsFromLineItems, groupBundleLineItems } from '../index';
 
 const prices = [
   {
@@ -66,6 +66,42 @@ describe('Line items functions', () => {
         { id: 'c1', label: 'Air Beats - Red / XL', qty: 2 },
         { id: 'c2', label: 'Sleeping Bag - 10°C', qty: 1 },
       ]);
+    });
+  });
+
+  describe('groupBundleLineItems', () => {
+    it('orders bundle components by position, regardless of payload order', () => {
+      const items = [
+        {
+          id: 'bundle',
+          price: { product: { bundle: true } },
+          component_line_items: {
+            data: [
+              { id: 'c-third', position: 2 },
+              { id: 'c-first', position: 0 },
+              { id: 'c-second', position: 1 },
+            ],
+          },
+        },
+      ];
+
+      const { componentsByParent } = groupBundleLineItems(items as any);
+      expect(componentsByParent.bundle.map(c => c.id)).toEqual(['c-first', 'c-second', 'c-third']);
+    });
+
+    it('preserves payload order when position is missing', () => {
+      const items = [
+        {
+          id: 'bundle',
+          price: { product: { bundle: true } },
+          component_line_items: {
+            data: [{ id: 'a' }, { id: 'b' }, { id: 'c' }],
+          },
+        },
+      ];
+
+      const { componentsByParent } = groupBundleLineItems(items as any);
+      expect(componentsByParent.bundle.map(c => c.id)).toEqual(['a', 'b', 'c']);
     });
   });
 
