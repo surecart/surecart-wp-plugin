@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-import { Checkout, GeoCoordinates, LineItemData, Product, TaxProtocol } from '../../types';
+import { Checkout, GeoCapture, GeoCoordinates, LineItemData, Product, TaxProtocol } from '../../types';
 import { getSerializedState } from '@store/utils';
 const { checkout } = getSerializedState();
 
@@ -14,6 +14,7 @@ interface Store {
   currencyCode: string;
   abandonedCheckoutEnabled: boolean;
   captureGeoAddressEnabled: boolean;
+  geoCapture: GeoCapture | null;
   geoCoordinates: GeoCoordinates | null;
   showLoginPrompt: boolean;
   initialLineItems: LineItemData[];
@@ -35,6 +36,7 @@ const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
     currencyCode: 'usd',
     abandonedCheckoutEnabled: true,
     captureGeoAddressEnabled: false,
+    geoCapture: null,
     geoCoordinates: null,
     showLoginPrompt: true,
     initialLineItems: [],

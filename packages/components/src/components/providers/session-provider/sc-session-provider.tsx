@@ -8,7 +8,6 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 import { updateFormState } from '@store/form/mutations';
 
 import { parseFormData } from '../../../functions/form-data';
-import { getGeoCoordinates } from '../../../functions/geolocation';
 import { createCheckout, createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 import { createErrorNotice, createInfoNotice, removeNotice } from '@store/notices/mutations';
@@ -177,17 +176,6 @@ export class ScSessionProvider {
   /** Find or create session on load. */
   componentDidLoad() {
     this.findOrCreateOrder();
-    this.maybeCaptureGeoCoordinates();
-  }
-
-  /**
-   * Capture coordinates for the checkout's geo address when enabled.
-   * Non-blocking — checkout proceeds normally if permission is denied.
-   * Coordinates ride along on the next checkout update or finalize.
-   */
-  async maybeCaptureGeoCoordinates() {
-    if (!checkoutState.captureGeoAddressEnabled || checkoutState.geoCoordinates) return;
-    checkoutState.geoCoordinates = await getGeoCoordinates();
   }
 
   /** Find or create an order */

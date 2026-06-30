@@ -225,6 +225,42 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'checkout_geo_capture_title',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_content',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'wp_kses_post',
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_allow_label',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_decline_label',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
 			'shop_admin_menu',
 			[
 				'type'              => 'boolean',

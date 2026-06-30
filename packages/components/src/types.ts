@@ -1292,6 +1292,13 @@ export interface Address extends Object {
   country?: string | null;
 }
 
+export interface GeoCapture {
+  title?: string;
+  content?: string;
+  allowLabel?: string;
+  declineLabel?: string;
+}
+
 export interface GeoCoordinates {
   latitude: number;
   longitude: number;
