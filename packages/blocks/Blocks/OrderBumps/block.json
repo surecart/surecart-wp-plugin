@@ -21,6 +21,10 @@
 		"show_control": {
 			"type": "boolean",
 			"default": true
+		},
+		"hide_added_items": {
+			"type": "boolean",
+			"default": false
 		}
 	}
 }
