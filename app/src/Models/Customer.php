@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanFilter;
 use SureCart\Models\Traits\HasBillingAddress;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPurchases;
@@ -16,6 +17,7 @@ class Customer extends Model {
 	use HasShippingAddress;
 	use HasBillingAddress;
 	use HasDates;
+	use CanFilter;
 
 	/**
 	 * Rest API endpoint

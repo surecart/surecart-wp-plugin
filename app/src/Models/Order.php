@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanFilter;
 use SureCart\Models\Traits\CanResendNotifications;
 use SureCart\Models\Traits\HasCheckout;
 use SureCart\Models\Traits\HasDates;
@@ -13,6 +14,7 @@ class Order extends Model {
 	use HasCheckout;
 	use HasDates;
 	use CanResendNotifications;
+	use CanFilter;
 
 	/**
 	 * Rest API endpoint
