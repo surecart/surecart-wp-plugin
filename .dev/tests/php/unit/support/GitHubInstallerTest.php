@@ -55,4 +55,30 @@ class GitHubInstallerTest extends SureCartUnitTestCase {
 		$result = GitHubInstaller::resolveZipUrl( $url );
 		$this->assertEquals( $url, $result );
 	}
+
+	/**
+	 * The allow-list host check accepts the CDN hosts that release assets redirect to.
+	 *
+	 * @group github_installer
+	 */
+	public function test_is_allowed_host_accepts_release_cdn_hosts() {
+		$this->assertTrue( GitHubInstaller::isAllowedHost( 'github.com' ) );
+		$this->assertTrue( GitHubInstaller::isAllowedHost( 'codeload.github.com' ) );
+		$this->assertTrue( GitHubInstaller::isAllowedHost( 'objects.githubusercontent.com' ) );
+		$this->assertTrue( GitHubInstaller::isAllowedHost( 'release-assets.githubusercontent.com' ) );
+		// Case-insensitive.
+		$this->assertTrue( GitHubInstaller::isAllowedHost( 'GitHub.com' ) );
+	}
+
+	/**
+	 * The allow-list host check rejects lookalike and unrelated hosts.
+	 *
+	 * @group github_installer
+	 */
+	public function test_is_allowed_host_rejects_other_hosts() {
+		$this->assertFalse( GitHubInstaller::isAllowedHost( 'evil.com' ) );
+		$this->assertFalse( GitHubInstaller::isAllowedHost( 'github.com.evil.com' ) );
+		$this->assertFalse( GitHubInstaller::isAllowedHost( 'evil-github.com' ) );
+		$this->assertFalse( GitHubInstaller::isAllowedHost( '127.0.0.1' ) );
+	}
 }

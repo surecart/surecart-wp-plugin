@@ -49,6 +49,16 @@ export default function useIntegrationActivation(
 		return null;
 	})();
 
+	// Offer a manual install link for GitHub-sourced plugins.
+	const githubActions = record?.github_repo_url
+		? [
+				{
+					label: __('View on GitHub', 'surecart'),
+					url: record.github_repo_url,
+				},
+		  ]
+		: undefined;
+
 	// Plugin activation function
 	const activate = async () => {
 		try {
@@ -61,11 +71,28 @@ export default function useIntegrationActivation(
 				record?.source === 'github' &&
 				record?.status === 'not-installed'
 			) {
-				await apiFetch({
+				const result = await apiFetch({
 					path: '/surecart/v1/integration_plugin_install',
 					method: 'POST',
 					data: { id: record.id },
 				});
+
+				// The endpoint returns HTTP 200 when the plugin installed but
+				// activation failed. Treat that as a recoverable failure so the
+				// user isn't told it succeeded.
+				if (result?.activated === false) {
+					onError?.(
+						new Error(
+							result?.message ||
+								__(
+									'Plugin installed but activation failed. Activate it from the Plugins screen.',
+									'surecart'
+								)
+						),
+						{ actions: githubActions }
+					);
+					return;
+				}
 			} else {
 				await saveEntityRecord(
 					'root',
@@ -100,17 +127,7 @@ export default function useIntegrationActivation(
 			console.error(err);
 			// Don't set error for invalid_json errors (common with plugin activation redirects)
 			if (err?.code !== 'invalid_json') {
-				onError?.(err, {
-					// Offer a manual install link for GitHub-sourced plugins.
-					actions: record?.github_repo_url
-						? [
-								{
-									label: __('View on GitHub', 'surecart'),
-									url: record.github_repo_url,
-								},
-						  ]
-						: undefined,
-				});
+				onError?.(err, { actions: githubActions });
 			}
 		} finally {
 			setIsSaving(false);

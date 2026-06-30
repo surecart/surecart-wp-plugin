@@ -70,7 +70,19 @@ class PluginInstallerController {
 		// Use a silent skin to suppress upgrader output.
 		$skin     = new \WP_Ajax_Upgrader_Skin();
 		$upgrader = new \Plugin_Upgrader( $skin );
-		$result   = $upgrader->install( $zip );
+
+		// WP HTTP follows redirects on download without re-checking the host, so
+		// scope two filters that close the loopback/internal SSRF vector and
+		// re-validate every redirect hop against the GitHub allow-list. Removed
+		// in finally so they never leak to other requests.
+		add_filter( 'http_request_args', [ $this, 'rejectUnsafeDownloadUrls' ], 10, 1 );
+		add_filter( 'pre_http_request', [ $this, 'guardDownloadHost' ], 10, 3 );
+		try {
+			$result = $upgrader->install( $zip );
+		} finally {
+			remove_filter( 'http_request_args', [ $this, 'rejectUnsafeDownloadUrls' ], 10 );
+			remove_filter( 'pre_http_request', [ $this, 'guardDownloadHost' ], 10 );
+		}
 
 		// Load-bearing dual error check — the upgrader can fail via either channel.
 		if ( is_wp_error( $result ) ) {
@@ -137,16 +149,56 @@ class PluginInstallerController {
 	/**
 	 * Read the plugin main file from the catalog record.
 	 *
+	 * Lives on the acf payload — there is no top-level plugin_file attribute.
+	 *
 	 * @param \SureCart\Models\IntegrationCatalog $record The integration catalog record.
 	 *
 	 * @return string
 	 */
 	protected function getPluginFile( $record ) {
-		$plugin_file = $record->plugin_file;
-		if ( ! empty( $plugin_file ) ) {
-			return (string) $plugin_file;
+		return (string) ( $record->acf['plugin_file'] ?? '' );
+	}
+
+	/**
+	 * Force WP HTTP to reject internal/loopback URLs during the scoped install.
+	 *
+	 * Closes the SSRF vector where a redirect points at a private or loopback
+	 * address. Scoped on/off around the upgrader install only.
+	 *
+	 * @param array $args The http request args.
+	 *
+	 * @return array
+	 */
+	public function rejectUnsafeDownloadUrls( $args ) {
+		$args['reject_unsafe_urls'] = true;
+		return $args;
+	}
+
+	/**
+	 * Re-validate each download hop host against the GitHub allow-list.
+	 *
+	 * WP HTTP follows redirects without re-checking the host. This fires on every
+	 * hop (including redirects) during the scoped install and aborts the request
+	 * if the target host is not allow-listed. Returns $preempt unchanged for
+	 * allowed hosts so the real request proceeds.
+	 *
+	 * @param false|array|\WP_Error $preempt Short-circuit response, false to proceed.
+	 * @param array                 $args    The http request args.
+	 * @param string                $url     The request URL.
+	 *
+	 * @return false|array|\WP_Error
+	 */
+	public function guardDownloadHost( $preempt, $args, $url ) {
+		$host = wp_parse_url( $url, PHP_URL_HOST );
+
+		if ( empty( $host ) || ! GitHubInstaller::isAllowedHost( $host ) ) {
+			return new \WP_Error(
+				'sc_invalid_host',
+				__( 'The plugin download was redirected to a host that is not allowed.', 'surecart' ),
+				[ 'status' => 400 ]
+			);
 		}
 
-		return (string) ( $record->acf['plugin_file'] ?? '' );
+		return $preempt;
 	}
 }

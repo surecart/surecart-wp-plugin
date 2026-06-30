@@ -65,7 +65,7 @@ class GitHubInstaller {
 
 		$host = strtolower( $parts['host'] );
 
-		if ( ! in_array( $host, self::$allowed_hosts, true ) ) {
+		if ( ! self::isAllowedHost( $host ) ) {
 			return new \WP_Error( 'sc_invalid_host', __( 'Only GitHub download URLs are allowed.', 'surecart' ) );
 		}
 
@@ -84,6 +84,20 @@ class GitHubInstaller {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Check whether a host is on the installable allow-list.
+	 *
+	 * Matched exactly (lowercased) — no suffix or substring matching. Exposed so
+	 * the install pipeline can re-validate redirect targets against the same list.
+	 *
+	 * @param string $host The host to check.
+	 *
+	 * @return bool
+	 */
+	public static function isAllowedHost( string $host ): bool {
+		return in_array( strtolower( $host ), self::$allowed_hosts, true );
 	}
 
 	/**
