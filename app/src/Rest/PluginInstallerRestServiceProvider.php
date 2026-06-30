@@ -52,6 +52,14 @@ class PluginInstallerRestServiceProvider extends RestServiceProvider implements 
 	 * @return true|\WP_Error True if the request can install plugins, WP_Error otherwise.
 	 */
 	public function install_permission_check( $request ) {
-		return current_user_can( 'install_plugins' );
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return new \WP_Error(
+				'sc_insufficient_permissions',
+				__( 'You do not have permission to install plugins.', 'surecart' ),
+				[ 'status' => 403 ]
+			);
+		}
+
+		return true;
 	}
 }

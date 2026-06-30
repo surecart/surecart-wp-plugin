@@ -20,7 +20,7 @@ class PluginInstallerController {
 	 * @return array|\WP_Error
 	 */
 	public function install( \WP_REST_Request $request ) {
-		$id = absint( $request['id'] );
+		$id = absint( $request->get_param( 'id' ) );
 
 		if ( ! $id ) {
 			return new \WP_Error( 'sc_invalid_request', __( 'A valid integration id is required.', 'surecart' ), [ 'status' => 400 ] );
@@ -76,6 +76,10 @@ class PluginInstallerController {
 		// re-validate every redirect hop against the GitHub allow-list. Removed
 		// in finally so they never leak to other requests.
 		add_filter( 'http_request_args', [ $this, 'rejectUnsafeDownloadUrls' ], 10, 1 );
+		// This fires on EVERY WP HTTP request during the install window, not just the zip
+		// download — so third-party hooks (e.g. upgrade_process_complete) making outbound
+		// requests in this window could be blocked. Accepted trade-off: the window is short
+		// and the SSRF protection outweighs it.
 		add_filter( 'pre_http_request', [ $this, 'guardDownloadHost' ], 10, 3 );
 		try {
 			$result = $upgrader->install( $zip );
@@ -156,7 +160,7 @@ class PluginInstallerController {
 	 * @return string
 	 */
 	protected function getPluginFile( $record ) {
-		return (string) ( $record->acf['plugin_file'] ?? '' );
+		return (string) ( ( $record->acf ?? [] )['plugin_file'] ?? '' );
 	}
 
 	/**

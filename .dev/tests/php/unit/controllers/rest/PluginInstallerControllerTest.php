@@ -3,6 +3,7 @@
 namespace SureCart\Tests\Controllers\Rest;
 
 use SureCart\Controllers\Rest\PluginInstallerController;
+use SureCart\Rest\PluginInstallerRestServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
 
@@ -65,5 +66,39 @@ class PluginInstallerControllerTest extends SureCartUnitTestCase {
 		$this->assertWPError( $result );
 		$this->assertSame( 'sc_file_mods_disabled', $result->get_error_code() );
 		$this->assertSame( 403, $result->get_error_data()['status'] );
+	}
+
+	/**
+	 * A user without install_plugins gets a 403 WP_Error from the permission check.
+	 *
+	 * @group plugin-installer
+	 */
+	public function test_install_permission_check_denies_user_without_cap() {
+		$user_id = self::factory()->user->create( [ 'role' => 'subscriber' ] );
+		wp_set_current_user( $user_id );
+
+		$provider = new PluginInstallerRestServiceProvider();
+		$request  = new WP_REST_Request( 'POST', '/surecart/v1/integration_plugin_install' );
+
+		$result = $provider->install_permission_check( $request );
+
+		$this->assertWPError( $result );
+		$this->assertSame( 'sc_insufficient_permissions', $result->get_error_code() );
+		$this->assertSame( 403, $result->get_error_data()['status'] );
+	}
+
+	/**
+	 * A user with install_plugins passes the permission check.
+	 *
+	 * @group plugin-installer
+	 */
+	public function test_install_permission_check_allows_capable_user() {
+		$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+		wp_set_current_user( $user_id );
+
+		$provider = new PluginInstallerRestServiceProvider();
+		$request  = new WP_REST_Request( 'POST', '/surecart/v1/integration_plugin_install' );
+
+		$this->assertTrue( $provider->install_permission_check( $request ) );
 	}
 }
