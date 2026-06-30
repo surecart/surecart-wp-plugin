@@ -54,17 +54,31 @@ export default function useIntegrationActivation(
 		try {
 			setIsSaving(true);
 
-			await saveEntityRecord(
-				'root',
-				'plugin',
-				{
-					...(pluginData ?? { slug: record?.plugin_slug }),
-					status: 'active',
-				},
-				{
-					throwOnError: true,
-				}
-			);
+			// GitHub-sourced plugins that are not installed yet are installed
+			// and activated via our own endpoint. Already-installed GitHub
+			// plugins fall through to the standard activation path below.
+			if (
+				record?.source === 'github' &&
+				record?.status === 'not-installed'
+			) {
+				await apiFetch({
+					path: '/surecart/v1/integration_plugin_install',
+					method: 'POST',
+					data: { id: record.id },
+				});
+			} else {
+				await saveEntityRecord(
+					'root',
+					'plugin',
+					{
+						...(pluginData ?? { slug: record?.plugin_slug }),
+						status: 'active',
+					},
+					{
+						throwOnError: true,
+					}
+				);
+			}
 
 			const baseURL = select(coreStore).getEntityConfig(
 				'surecart',
@@ -86,7 +100,17 @@ export default function useIntegrationActivation(
 			console.error(err);
 			// Don't set error for invalid_json errors (common with plugin activation redirects)
 			if (err?.code !== 'invalid_json') {
-				onError?.(err);
+				onError?.(err, {
+					// Offer a manual install link for GitHub-sourced plugins.
+					actions: record?.github_repo_url
+						? [
+								{
+									label: __('View on GitHub', 'surecart'),
+									url: record.github_repo_url,
+								},
+						  ]
+						: undefined,
+				});
 			}
 		} finally {
 			setIsSaving(false);
