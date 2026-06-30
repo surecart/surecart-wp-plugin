@@ -142,10 +142,19 @@ abstract class CacheService {
 	/**
 	 * Check if the current page is the customer dashboard page.
 	 *
+	 * Uses is_page() instead of a URL comparison so dashboard subviews
+	 * with query args (?action=index&model=invoice) are also matched.
+	 *
 	 * @return bool
 	 */
 	protected function isCustomerDashboardPage(): bool {
-		return \SureCart::pages()->isCustomerDashboardPageByUrl();
+		$dashboard_page_id = \SureCart::pages()->getId( 'dashboard' );
+
+		if ( empty( $dashboard_page_id ) ) {
+			return false;
+		}
+
+		return is_page( $dashboard_page_id );
 	}
 
 	/**
@@ -181,11 +190,16 @@ abstract class CacheService {
 	/**
 	 * Check if the current page is a buy page.
 	 *
+	 * Pretty buy permalinks (/buy/{product-slug}/) rewrite to the
+	 * sc_checkout_product_id query var; sc-buy covers legacy buy links.
+	 *
 	 * @return bool
 	 */
 	protected function isBuyPage(): bool {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return isset( $_GET['sc-buy'] ) || ! empty( get_query_var( 'sc-buy' ) );
+		return isset( $_GET['sc-buy'] )
+			|| ! empty( get_query_var( 'sc-buy' ) )
+			|| ! empty( get_query_var( 'sc_checkout_product_id' ) );
 	}
 
 	/**
