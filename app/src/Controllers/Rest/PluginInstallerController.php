@@ -73,13 +73,12 @@ class PluginInstallerController {
 
 		// WP HTTP follows redirects on download without re-checking the host, so
 		// scope two filters that close the loopback/internal SSRF vector and
-		// re-validate every redirect hop against the GitHub allow-list. Removed
-		// in finally so they never leak to other requests.
+		// re-validate every redirect hop against the GitHub allow-list. Both only
+		// act on the streamed download chain (identified by $args['filename'], which
+		// download_url() sets and WP preserves across redirect hops), so unrelated
+		// HTTP fired by other hooks during this window passes through untouched.
+		// Removed in finally so they never leak to other requests.
 		add_filter( 'http_request_args', [ $this, 'rejectUnsafeDownloadUrls' ], 10, 1 );
-		// This fires on EVERY WP HTTP request during the install window, not just the zip
-		// download — so third-party hooks (e.g. upgrade_process_complete) making outbound
-		// requests in this window could be blocked. Accepted trade-off: the window is short
-		// and the SSRF protection outweighs it.
 		add_filter( 'pre_http_request', [ $this, 'guardDownloadHost' ], 10, 3 );
 		try {
 			$result = $upgrader->install( $zip );
@@ -164,17 +163,21 @@ class PluginInstallerController {
 	}
 
 	/**
-	 * Force WP HTTP to reject internal/loopback URLs during the scoped install.
+	 * Force WP HTTP to reject internal/loopback URLs for the plugin download.
 	 *
 	 * Closes the SSRF vector where a redirect points at a private or loopback
-	 * address. Scoped on/off around the upgrader install only.
+	 * address. Only touches the streamed download chain ($args['filename'] is set
+	 * by download_url() and preserved across redirect hops); any other request in
+	 * the install window is left as-is.
 	 *
 	 * @param array $args The http request args.
 	 *
 	 * @return array
 	 */
 	public function rejectUnsafeDownloadUrls( $args ) {
-		$args['reject_unsafe_urls'] = true;
+		if ( ! empty( $args['filename'] ) ) {
+			$args['reject_unsafe_urls'] = true;
+		}
 		return $args;
 	}
 
@@ -182,9 +185,10 @@ class PluginInstallerController {
 	 * Re-validate each download hop host against the GitHub allow-list.
 	 *
 	 * WP HTTP follows redirects without re-checking the host. This fires on every
-	 * hop (including redirects) during the scoped install and aborts the request
-	 * if the target host is not allow-listed. Returns $preempt unchanged for
-	 * allowed hosts so the real request proceeds.
+	 * hop of the streamed download (identified by $args['filename'], which WP keeps
+	 * across redirect hops) during the scoped install and aborts the request if the
+	 * target host is not allow-listed. Non-download requests in the window — and
+	 * allowed download hosts — return $preempt unchanged so they proceed normally.
 	 *
 	 * @param false|array|\WP_Error $preempt Short-circuit response, false to proceed.
 	 * @param array                 $args    The http request args.
@@ -193,6 +197,11 @@ class PluginInstallerController {
 	 * @return false|array|\WP_Error
 	 */
 	public function guardDownloadHost( $preempt, $args, $url ) {
+		// Only police the plugin download chain; leave other outbound HTTP alone.
+		if ( empty( $args['filename'] ) ) {
+			return $preempt;
+		}
+
 		$host = wp_parse_url( $url, PHP_URL_HOST );
 
 		if ( empty( $host ) || ! GitHubInstaller::isAllowedHost( $host ) ) {
