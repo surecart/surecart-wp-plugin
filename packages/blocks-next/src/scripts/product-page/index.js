@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withSyncEvent,
+} from '@wordpress/interactivity';
 
 /**
  * Internal dependencies.
@@ -383,7 +388,10 @@ const { state, actions } = store('surecart/product-page', {
 				);
 			}
 
-			if (window?.fbq) {
+			if (
+				window?.fbq &&
+				window?.scData?.facebook_tracking_enabled !== false
+			) {
 				yield import(
 					/* webpackIgnore: true */
 					'@surecart/facebook-events'
@@ -433,7 +441,8 @@ const { state, actions } = store('surecart/product-page', {
 			e.preventDefault();
 
 			// Get context values and option data
-			const { variantValues, optionNumber, urlPrefix, product } = getContext();
+			const { variantValues, optionNumber, urlPrefix, product } =
+				getContext();
 
 			// get data from select element or context.
 			let optionData = e?.target?.selectedOptions?.[0]?.dataset?.wpContext
@@ -459,7 +468,10 @@ const { state, actions } = store('surecart/product-page', {
 			if (product?.id) {
 				document.dispatchEvent(
 					new CustomEvent('scVariantValuesUpdated', {
-						detail: { productId: product.id, variantValues: { ...variantValues } },
+						detail: {
+							productId: product.id,
+							variantValues: { ...variantValues },
+						},
 					})
 				);
 			}
