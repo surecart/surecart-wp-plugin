@@ -238,7 +238,7 @@ class SettingService {
 			[
 				'type'              => 'string',
 				'show_in_rest'      => true,
-				'sanitize_callback' => 'wp_kses_post',
+				'sanitize_callback' => [ $this, 'sanitizeRichContent' ],
 			]
 		);
 		$this->register(
@@ -479,6 +479,32 @@ class SettingService {
 	public function register( $option_group, $option_name, $args = [] ) {
 		$service = new RegisterSettingService( $option_group, $option_name, $args );
 		return $service->register();
+	}
+
+	/**
+	 * Sanitize rich (post) content, normalizing "visually empty" editor output
+	 * (e.g. "<p></p>") to an empty string.
+	 *
+	 * The block/rich text editor submits "<p></p>" for an empty field, which
+	 * wp_kses_post preserves as a non-empty string. That breaks empty-value
+	 * default fallbacks. Collapsing it to '' keeps the emptiness contract
+	 * consistent with the plain-text settings sanitized via sanitize_text_field.
+	 *
+	 * @param string $value Raw setting value.
+	 * @return string Sanitized content, or '' when visually empty.
+	 */
+	public function sanitizeRichContent( $value ) {
+		$value = wp_kses_post( (string) $value );
+
+		// Keep media-only content (no text) as non-empty.
+		if ( preg_match( '/<(img|iframe|video|audio|embed|object|svg)\b/i', $value ) ) {
+			return $value;
+		}
+
+		// Collapse "<p></p>", "<p><br></p>", "&nbsp;" and whitespace to ''.
+		$text = trim( wp_strip_all_tags( str_replace( '&nbsp;', ' ', $value ) ) );
+
+		return '' === $text ? '' : $value;
 	}
 
 	/**
