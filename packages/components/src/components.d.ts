@@ -3615,7 +3615,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Checkout | Error | NodeJS.Timeout>;
+        "finalize": () => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
           * Should we persist the session.
          */

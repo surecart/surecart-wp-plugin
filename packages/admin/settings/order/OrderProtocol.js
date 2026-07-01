@@ -12,6 +12,7 @@ import {
 	ScSwitch,
 	ScTextarea,
 } from '@surecart/components-react';
+import { getGeoPermissionDefaults } from '@surecart/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useEntityProp } from '@wordpress/core-data';
@@ -48,6 +49,7 @@ export default () => {
 		'site',
 		'surecart_checkout_geo_capture_decline_label'
 	);
+	const geoDefaults = getGeoPermissionDefaults();
 
 	/**
 	 * Form is submitted.
@@ -211,10 +213,7 @@ export default () => {
 						<ScInput
 							label={__('Permission Modal Title', 'surecart')}
 							value={geoCaptureTitle}
-							placeholder={__(
-								'See pricing for your region',
-								'surecart'
-							)}
+							placeholder={geoDefaults.title}
 							onScInput={(e) =>
 								setGeoCaptureTitle(e.target.value)
 							}
@@ -230,10 +229,7 @@ export default () => {
 							)}
 							style={{ '--sc-rich-text-min-height': '140px' }}
 							value={geoCaptureContent}
-							placeholder={__(
-								"We adjust prices to be fairer based on where you're shopping from. Allow location access to see the price for your region — it's used only to set your price, never stored or shared. Your browser will ask you to confirm next.",
-								'surecart'
-							)}
+							placeholder={geoDefaults.content}
 							onScInput={(e) =>
 								setGeoCaptureContent(e.target.value)
 							}
@@ -248,7 +244,7 @@ export default () => {
 								style={{ flex: 1 }}
 								label={__('Allow Button Label', 'surecart')}
 								value={geoCaptureAllowLabel}
-								placeholder={__('Allow location', 'surecart')}
+								placeholder={geoDefaults.allowLabel}
 								onScInput={(e) =>
 									setGeoCaptureAllowLabel(e.target.value)
 								}
@@ -257,7 +253,7 @@ export default () => {
 								style={{ flex: 1 }}
 								label={__('Decline Button Label', 'surecart')}
 								value={geoCaptureDeclineLabel}
-								placeholder={__('Not now', 'surecart')}
+								placeholder={geoDefaults.declineLabel}
 								onScInput={(e) =>
 									setGeoCaptureDeclineLabel(e.target.value)
 								}

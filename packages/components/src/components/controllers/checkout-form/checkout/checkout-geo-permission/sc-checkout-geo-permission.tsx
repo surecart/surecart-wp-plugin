@@ -1,7 +1,7 @@
 import { Component, Host, h, State } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { getGeoCoordinates } from '../../../../../functions/geolocation';
+import { getGeoPermissionDefaults } from '../../../../../functions/geo-permission';
 
 /** localStorage key that remembers the customer's decision so we honor it on future visits. */
 const DECISION_KEY = 'sc_geo_capture_decision';
@@ -94,16 +94,13 @@ export class ScCheckoutGeoPermission {
   render() {
     const { geoCapture } = checkoutState;
 
-    // Defaults live here (not in PHP) so they're translatable and merchant fields can stay empty.
-    const title = geoCapture?.title || __('See pricing for your region', 'surecart');
-    const content =
-      geoCapture?.content ||
-      __(
-        "We adjust prices to be fairer based on where you're shopping from. Allow location access to see the price for your region — it's used only to set your price, never stored or shared. Your browser will ask you to confirm next.",
-        'surecart',
-      );
-    const allowLabel = geoCapture?.allowLabel || __('Allow location', 'surecart');
-    const declineLabel = geoCapture?.declineLabel || __('Not now', 'surecart');
+    // Shared defaults (see getGeoPermissionDefaults) so merchant fields can stay empty and
+    // the admin placeholders and this dialog never drift apart.
+    const defaults = getGeoPermissionDefaults();
+    const title = geoCapture?.title || defaults.title;
+    const content = geoCapture?.content || defaults.content;
+    const allowLabel = geoCapture?.allowLabel || defaults.allowLabel;
+    const declineLabel = geoCapture?.declineLabel || defaults.declineLabel;
 
     return (
       <Host>

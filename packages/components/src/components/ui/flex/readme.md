@@ -28,6 +28,7 @@
 
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-checkout-geo-permission](../../controllers/checkout-form/checkout/checkout-geo-permission)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
@@ -54,6 +55,7 @@
 graph TD;
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
+  sc-checkout-geo-permission --> sc-flex
   sc-checkout-stock-alert --> sc-flex
   sc-customer-edit --> sc-flex
   sc-customer-login --> sc-flex
