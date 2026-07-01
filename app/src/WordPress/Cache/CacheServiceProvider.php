@@ -30,6 +30,9 @@ class CacheServiceProvider implements ServiceProviderInterface {
 		$container['surecart.w3total_cache']   = function () {
 			return new W3TotalCacheService();
 		};
+		$container['surecart.donotcache_page'] = function () {
+			return new DoNotCachePageService();
+		};
 	}
 
 	/**
@@ -46,6 +49,7 @@ class CacheServiceProvider implements ServiceProviderInterface {
 				$container['surecart.litespeed_cache']->bootstrap();
 				$container['surecart.wpfastest_cache']->bootstrap();
 				$container['surecart.w3total_cache']->bootstrap();
+				$container['surecart.donotcache_page']->bootstrap();
 			},
 			999 // Late priority to ensure it runs after most plugins have loaded.
 		);

@@ -150,13 +150,13 @@ export class ScDownloadsList {
   };
 
   renderList() {
-    if (this?.busy && !this?.downloads?.length) {
+    const downloads = (this.downloads || []).filter((d: Download) => !d.archived);
+    if (this?.busy && !downloads.length) {
       return this.renderLoading();
     }
-    if (!this?.downloads?.length) {
+    if (!downloads.length) {
       return this.renderEmpty();
     }
-    const downloads = this.downloads || [];
 
     return (
       <sc-card no-padding>

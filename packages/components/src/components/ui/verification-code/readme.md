@@ -14,6 +14,19 @@
 | `total`    | `total`   | Total number of inputs                                | `number`                  | `6`         |
 
 
+## Methods
+
+### `triggerFocus() => Promise<void>`
+
+Focus the first code input.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ## Dependencies
 
 ### Used by

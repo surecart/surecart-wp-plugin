@@ -97,6 +97,14 @@ class DownloadController extends BaseController {
 			return null;
 		}
 
+		// Only scope to the variant when it has its own files; otherwise fall back to product-level downloads.
+		$variant                  = $purchase->variant ?? null;
+		$active_variant_downloads = array_filter(
+			(array) ( $variant->downloads->data ?? [] ),
+			fn( $download ) => empty( $download->archived )
+		);
+		$has_variant_downloads    = ! empty( $variant->downloads_enabled ) && ! empty( $active_variant_downloads );
+
 		ob_start();
 		?>
 
@@ -135,7 +143,7 @@ class DownloadController extends BaseController {
 							'heading'    => __( 'Downloads', 'surecart' ),
 							'customerId' => $purchase->customer->id ?? '',
 							'productId'  => $purchase->product->id ?? '',
-							'variantId'  => $purchase->variant->id ?? '',
+							'variantId'  => $has_variant_downloads ? ( $variant->id ?? '' ) : '',
 						]
 					)->render()
 				);

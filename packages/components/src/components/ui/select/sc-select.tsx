@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element, Listen } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Event, EventEmitter, Method, Element, Listen, Host } from '@stencil/core';
 import { ChoiceItem } from '../../../types';
 import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
@@ -170,7 +170,6 @@ export class ScSelectDropdown {
 
   handleFocus() {
     this.hasFocus = true;
-    this.el.focus();
     this.scFocus.emit();
   }
 
@@ -367,7 +366,7 @@ export class ScSelectDropdown {
     // Close select dropdown on Esc/Escape key
     if (event.key === 'Escape') {
       if (this.open) {
-        this.input.focus();
+        this.el.focus();
         this.handleHide();
       }
 
@@ -379,7 +378,7 @@ export class ScSelectDropdown {
       if (this.open) {
         items[itemIndex - 1]?.click?.();
         this.handleHide();
-        this.input.focus();
+        this.el.focus();
       } else {
         this.handleShow();
       }
@@ -446,7 +445,19 @@ export class ScSelectDropdown {
   }
 
   render() {
+    const displayValue = this.displayValue() || this.placeholder || __('Select...', 'surecart');
+    const accessibleName = this.label ? `${this.label}, ${displayValue}` : displayValue;
+
     return (
+      <Host
+        tabindex={this.disabled ? -1 : 0}
+        role="button"
+        aria-haspopup="listbox"
+        aria-expanded={this.open ? 'true' : 'false'}
+        aria-label={accessibleName}
+        onFocus={() => this.handleFocus()}
+        onBlur={() => this.handleBlur()}
+      >
       <div
         part="base"
         class={{
@@ -500,13 +511,11 @@ export class ScSelectDropdown {
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}
-            role="select"
-            aria-open={this.open ? 'true' : 'false'}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger" role="button" tabIndex={-1} onFocus={() => this.handleFocus()} onBlur={() => this.handleBlur()}>
+              <div class="trigger" tabIndex={-1} onFocus={() => this.handleFocus()} onBlur={() => this.handleBlur()}>
                 <div class="select__value">
-                  <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
+                  <slot>{displayValue}</slot>
                 </div>
                 <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
               </div>
@@ -553,6 +562,7 @@ export class ScSelectDropdown {
           </sc-dropdown>
         </sc-form-control>
       </div>
+      </Host>
     );
   }
 }
