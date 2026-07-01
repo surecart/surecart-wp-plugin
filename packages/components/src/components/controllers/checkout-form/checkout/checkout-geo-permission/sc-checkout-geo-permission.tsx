@@ -1,5 +1,5 @@
 import { Component, Host, h, State } from '@stencil/core';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, onChange } from '@store/checkout';
 import { getGeoCoordinates } from '../../../../../functions/geolocation';
 import { getGeoPermissionDefaults } from '../../../../../functions/geo-permission';
 
@@ -18,6 +18,14 @@ const DECISION_KEY = 'sc_geo_capture_decision';
 export class ScCheckoutGeoPermission {
   /** Whether the explainer dialog is open. */
   @State() open: boolean = false;
+
+  /** Disposer for the checkout store subscription while we wait for the cart to load. */
+  private removeCartListener?: () => void;
+
+  /** Whether the cart currently has at least one line item. */
+  cartHasItems(): boolean {
+    return !!checkoutState.checkout?.line_items?.pagination?.count;
+  }
 
   /** Whether the customer dismissed our explainer ("Not now") on a previous visit. */
   wasDismissed(): boolean {
@@ -56,6 +64,28 @@ export class ScCheckoutGeoPermission {
     if (!checkoutState.captureGeoAddressEnabled) return;
     if (!window?.isSecureContext || !navigator?.geolocation) return;
 
+    // Don't request location for an empty cart — there's nothing to price yet, and a
+    // full-screen prompt before adding items feels premature. The cart loads async, so
+    // if it's not ready we wait for the first change that adds an item.
+    if (this.cartHasItems()) {
+      this.maybePromptForLocation();
+      return;
+    }
+
+    this.removeCartListener = onChange('checkout', () => {
+      if (!this.cartHasItems()) return;
+      this.removeCartListener?.();
+      this.removeCartListener = undefined;
+      this.maybePromptForLocation();
+    });
+  }
+
+  disconnectedCallback() {
+    this.removeCartListener?.();
+  }
+
+  /** Decide, based on the browser permission, whether to capture silently, explain, or do nothing. */
+  async maybePromptForLocation() {
     const permission = await this.getPermissionState();
 
     // Already granted at the browser level: capture silently — no need to ask again.
