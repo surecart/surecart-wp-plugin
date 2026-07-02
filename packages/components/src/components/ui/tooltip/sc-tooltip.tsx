@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Element, Listen, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Element, Listen } from '@stencil/core';
 
 /**
  * @part base - The elements base wrapper.
@@ -46,7 +46,9 @@ export class ScTooltip {
   @State() top: number = -10000;
   @State() left: number = -10000;
 
-  componentDidLoad() {
+  // Reposition after render, once the bubble ref exists — a post-watch
+  // setTimeout raced the first render and could leave the bubble parked.
+  componentDidRender() {
     this.handleWindowScroll();
   }
 
@@ -77,14 +79,20 @@ export class ScTooltip {
       left = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2 + this.padding;
     }
 
-    // Clamp horizontal so the bubble never sits off-screen.
+    // clientWidth, not innerWidth: the bubble must not sit under the scrollbar.
+    // Overflowing top/bottom bubbles align to the trigger's edge — pinning
+    // them to the viewport edge reads as clipped.
+    const edgeMargin = 8;
+    const maxLeft = document.documentElement.clientWidth - tooltipRect.width - edgeMargin;
+    if (this.placement === 'top' || this.placement === 'bottom') {
+      if (left > maxLeft) {
+        left = triggerRect.right - tooltipRect.width;
+      } else if (left < edgeMargin) {
+        left = triggerRect.left;
+      }
+    }
     this.top = top;
-    this.left = Math.min(Math.max(left, 0), Math.max(window.innerWidth - tooltipRect.width, 0));
-  }
-
-  @Watch('open')
-  handleOpenChange() {
-    setTimeout(() => this.handleWindowScroll(), 0);
+    this.left = Math.min(Math.max(left, edgeMargin), Math.max(maxLeft, edgeMargin));
   }
 
   handleBlur() {
