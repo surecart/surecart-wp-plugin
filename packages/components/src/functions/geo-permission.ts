@@ -13,9 +13,9 @@ export const getGeoPermissionDefaults = (): {
   allowLabel: string;
   declineLabel: string;
 } => ({
-  title: __('See pricing for your region', 'surecart'),
+  title: __('Location-based pricing', 'surecart'),
   content: __(
-    'Allow location access to show pricing for your region. Your approximate location (city, state, and country) is saved to your order. Your browser will ask you to confirm next.',
+    'This store uses your approximate location (city, state, and country) to calculate pricing at checkout. Your location is saved to your order. Your browser will ask you to confirm next.',
     'surecart',
   ),
   allowLabel: __('Allow location', 'surecart'),
