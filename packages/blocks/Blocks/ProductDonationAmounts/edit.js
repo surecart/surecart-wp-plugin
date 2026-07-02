@@ -117,7 +117,7 @@ export default ({ attributes, setAttributes, context }) => {
 					<RangeControl
 						__nextHasNoMarginBottom
 						__next40pxDefaultSize
-						label={__('Columns')}
+						label={__('Columns', 'surecart')}
 						value={columns}
 						onChange={(columns) => setAttributes({ columns })}
 						min={1}
@@ -126,7 +126,8 @@ export default ({ attributes, setAttributes, context }) => {
 					{columns > 6 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
+								'This column count exceeds the recommended amount and may cause visual breakage.',
+								'surecart'
 							)}
 						</Notice>
 					)}

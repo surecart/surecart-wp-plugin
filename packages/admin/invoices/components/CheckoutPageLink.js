@@ -51,7 +51,7 @@ export default ({ checkoutPageUrl }) => {
 				ref={checkoutPageUrlRef}
 				onClick={onClose}
 			>
-				{__('Copy URL')} &nbsp;
+				{__('Copy URL', 'surecart')} &nbsp;
 				<ScIcon slot="prefix" name="copy" />
 			</Button>
 
@@ -64,7 +64,7 @@ export default ({ checkoutPageUrl }) => {
 					display: block;
 				`}
 			>
-				{__('View Payment Page')}
+				{__('View Payment Page', 'surecart')}
 			</h3>
 
 			<p>

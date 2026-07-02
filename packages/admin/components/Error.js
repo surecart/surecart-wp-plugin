@@ -20,7 +20,8 @@ export default ({
 
 	const invalidJSONErrorMessage = createInterpolateElement(
 		__(
-			'Please ensure that your site is not in debug mode as this may interfere with API responses. <a>More Information</a>'
+			'Please ensure that your site is not in debug mode as this may interfere with API responses. <a>More Information</a>',
+			'surecart'
 		),
 		{
 			a: (

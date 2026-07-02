@@ -14,8 +14,8 @@ import { __ } from '@wordpress/i18n';
 const variations = [
 	{
 		name: 'one-column-full',
-		title: __('100'),
-		description: __('One column'),
+		title: __('100', 'surecart'),
+		description: __('One column', 'surecart'),
 		icon: (
 			<SVG
 				width="48"
@@ -35,8 +35,8 @@ const variations = [
 	},
 	{
 		name: 'two-columns-equal',
-		title: __('50 / 50'),
-		description: __('Two columns; equal split'),
+		title: __('50 / 50', 'surecart'),
+		description: __('Two columns; equal split', 'surecart'),
 		icon: (
 			<SVG
 				width="48"
@@ -57,8 +57,8 @@ const variations = [
 	},
 	{
 		name: 'two-columns-one-third-two-thirds',
-		title: __('30 / 70'),
-		description: __('Two columns; one-third, two-thirds split'),
+		title: __('30 / 70', 'surecart'),
+		description: __('Two columns; one-third, two-thirds split', 'surecart'),
 		icon: (
 			<SVG
 				width="48"
@@ -81,8 +81,8 @@ const variations = [
 	},
 	{
 		name: 'two-columns-two-thirds-one-third',
-		title: __('70 / 30'),
-		description: __('Two columns; two-thirds, one-third split'),
+		title: __('70 / 30', 'surecart'),
+		description: __('Two columns; two-thirds, one-third split', 'surecart'),
 		icon: (
 			<SVG
 				width="48"
@@ -105,8 +105,8 @@ const variations = [
 	},
 	{
 		name: 'three-columns-equal',
-		title: __('33 / 33 / 33'),
-		description: __('Three columns; equal split'),
+		title: __('33 / 33 / 33', 'surecart'),
+		description: __('Three columns; equal split', 'surecart'),
 		icon: (
 			<SVG
 				width="48"
@@ -129,8 +129,8 @@ const variations = [
 	},
 	{
 		name: 'three-columns-wider-center',
-		title: __('25 / 50 / 25'),
-		description: __('Three columns; wide center column'),
+		title: __('25 / 50 / 25', 'surecart'),
+		description: __('Three columns; wide center column', 'surecart'),
 		icon: (
 			<SVG
 				width="48"

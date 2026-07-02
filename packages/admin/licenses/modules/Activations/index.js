@@ -97,7 +97,7 @@ export default ({ id, license }) => {
 				!loading && (
 					<ScTag type="info" style={{ minWidth: 'max-content' }}>
 						{sprintf(
-							__('%1s of %2s Activations Used'),
+							__('%1s of %2s Activations Used', 'surecart'),
 							parseInt(license?.activations_count || 0),
 							parseInt(license?.activation_limit) || '∞'
 						)}

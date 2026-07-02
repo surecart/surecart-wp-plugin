@@ -33,8 +33,8 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 			<ScDashboardModule>
 				<RichText
-					aria-label={__('Title')}
-					placeholder={__('Add A Title…')}
+					aria-label={__('Title', 'surecart')}
+					placeholder={__('Add A Title…', 'surecart')}
 					value={title}
 					onChange={(title) => setAttributes({ title })}
 					withoutInteractiveFormatting

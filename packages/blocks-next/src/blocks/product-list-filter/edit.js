@@ -27,12 +27,12 @@ export default ({
 	return (
 		<div {...blockProps} role="menu" tabIndex="-1">
 			<InspectorControls>
-				<PanelBody title={__('Settings')}>
+				<PanelBody title={__('Settings', 'surecart')}>
 					{Array.isArray(taxonomies) && (
 						<SelectControl
 							__nextHasNoMarginBottom
 							__next40pxDefaultSize
-							label={__('Taxonomy')}
+							label={__('Taxonomy', 'surecart')}
 							options={taxonomies.map((t) => ({
 								label: t.name,
 								value: t.slug,
