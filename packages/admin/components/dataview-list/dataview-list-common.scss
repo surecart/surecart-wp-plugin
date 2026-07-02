@@ -314,6 +314,10 @@ body:has(.sc-dataview-list-wrapper) {
 		#sc-admin-header {
 		border-bottom: 1px solid #f0f0f0;
 		position: sticky;
+		// Sticky traps descendants (the view-toggle tooltip) in this stacking
+		// context at level 0, letting `.sc-list-header` (z 11) slice them.
+		// The two bars never overlap on scroll, so painting above is safe.
+		z-index: 12;
 		inset-inline-start: 0;
 		// The partial's width/margin compensate for #wpcontent's padding,
 		// which is removed here.
