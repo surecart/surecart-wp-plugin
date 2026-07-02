@@ -6,7 +6,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
+import { submitBatchOperations } from '../util/batches';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -100,23 +100,19 @@ export default ({ navigation }) => {
 						return;
 					}
 
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: items.map((item) => ({
-								http_method: 'DELETE',
-								path: `/v1/product_collections/${item.id}`,
-							})),
-						},
-					});
+					await submitBatchOperations(
+						items.map((item) => ({
+							http_method: 'DELETE',
+							path: `/v1/product_collections/${item.id}`,
+						}))
+					);
 					invalidateList();
 					createSuccessNotice(
 						sprintf(
-							/* translators: %d is the number of collections queued for deletion. */
+							/* translators: %d is the number of deleted collections. */
 							_n(
-								'Queued %d collection for deletion. Refresh in a moment to see the result.',
-								'Queued %d collections for deletion. Refresh in a moment to see the result.',
+								'Deleted %d collection.',
+								'Deleted %d collections.',
 								items.length,
 								'surecart'
 							),

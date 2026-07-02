@@ -6,7 +6,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { useMemo, useCallback } from 'react';
 import { store as noticesStore } from '@wordpress/notices';
-import apiFetch from '@wordpress/api-fetch';
 import {
 	DataViewListLayout,
 	useDataViewState,
@@ -16,6 +15,7 @@ import {
 	ModernViewIntroModal,
 	DismissibleInfo,
 } from '../components/dataview-list';
+import { submitBatchOperations } from '../util/batches';
 import useSiteContext from '../hooks/useSiteContext';
 import useModernViewIntroProps from '../hooks/useModernViewIntroProps';
 import useListMutation from '../hooks/useListMutation';
@@ -100,21 +100,17 @@ export default ({ navigation }) => {
 							{ throwOnError: true }
 						);
 					} else {
-						await apiFetch({
-							path: '/surecart/v1/batches',
-							method: 'POST',
-							data: {
-								batch_operations: items.map((item) => ({
-									http_method: 'PATCH',
-									path: `/v1/product_groups/${item.id}`,
-									body: {
-										product_group: {
-											archived: !item.archived,
-										},
+						await submitBatchOperations(
+							items.map((item) => ({
+								http_method: 'PATCH',
+								path: `/v1/product_groups/${item.id}`,
+								body: {
+									product_group: {
+										archived: !item.archived,
 									},
-								})),
-							},
-						});
+								},
+							}))
+						);
 					}
 					invalidateList();
 					createSuccessNotice(
@@ -123,10 +119,10 @@ export default ({ navigation }) => {
 								? __('Upgrade group unarchived.', 'surecart')
 								: __('Upgrade group archived.', 'surecart')
 							: sprintf(
-									/* translators: %d is the number of groups in the batch. */
+									/* translators: %d is the number of updated groups. */
 									_n(
-										'Queued %d upgrade group for update. Refresh in a moment to see the result.',
-										'Queued %d upgrade groups for update. Refresh in a moment to see the result.',
+										'Updated %d upgrade group.',
+										'Updated %d upgrade groups.',
 										items.length,
 										'surecart'
 									),
@@ -142,12 +138,7 @@ export default ({ navigation }) => {
 					),
 				}
 			),
-		[
-			runMutation,
-			saveEntityRecord,
-			invalidateList,
-			createSuccessNotice,
-		]
+		[runMutation, saveEntityRecord, invalidateList, createSuccessNotice]
 	);
 
 	const handleDelete = useCallback(
@@ -169,23 +160,19 @@ export default ({ navigation }) => {
 						return;
 					}
 
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: items.map((item) => ({
-								http_method: 'DELETE',
-								path: `/v1/product_groups/${item.id}`,
-							})),
-						},
-					});
+					await submitBatchOperations(
+						items.map((item) => ({
+							http_method: 'DELETE',
+							path: `/v1/product_groups/${item.id}`,
+						}))
+					);
 					invalidateList();
 					createSuccessNotice(
 						sprintf(
-							/* translators: %d is the number of upgrade groups queued for deletion. */
+							/* translators: %d is the number of deleted upgrade groups. */
 							_n(
-								'Queued %d upgrade group for deletion. Refresh in a moment to see the result.',
-								'Queued %d upgrade groups for deletion. Refresh in a moment to see the result.',
+								'Deleted %d upgrade group.',
+								'Deleted %d upgrade groups.',
 								items.length,
 								'surecart'
 							),
@@ -201,12 +188,7 @@ export default ({ navigation }) => {
 					),
 				}
 			),
-		[
-			runMutation,
-			deleteEntityRecord,
-			createSuccessNotice,
-			invalidateList,
-		]
+		[runMutation, deleteEntityRecord, createSuccessNotice, invalidateList]
 	);
 
 	const actions = useMemo(

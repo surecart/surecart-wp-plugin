@@ -30,6 +30,7 @@ import {
 import { PRODUCTS_URL_FILTERS } from './list/urlFilters';
 import { refreshProductRow } from './list/refreshProductRow';
 import { useStatusTabs } from './list/useStatusTabs';
+import { submitBatchOperations } from '../util/batches';
 import {
 	useLazyVariants,
 	useSavingVariantIds,
@@ -203,22 +204,18 @@ export default ({ navigation }) => {
 							{ throwOnError: true }
 						);
 					} else {
-						// Bulk — submit one Batch API request and let the platform
-						// process N PATCHes asynchronously. Far kinder to rate
-						// limits than the previous N-fanout from the browser.
-						await apiFetch({
-							path: '/surecart/v1/batches',
-							method: 'POST',
-							data: {
-								batch_operations: products.map((item) => ({
-									http_method: 'PATCH',
-									path: `/v1/products/${item.id}`,
-									body: {
-										product: { archived: !item.archived },
-									},
-								})),
-							},
-						});
+						// Bulk — Batch API requests processed asynchronously by
+						// the platform. Far kinder to rate limits than the
+						// previous N-fanout from the browser.
+						await submitBatchOperations(
+							products.map((item) => ({
+								http_method: 'PATCH',
+								path: `/v1/products/${item.id}`,
+								body: {
+									product: { archived: !item.archived },
+								},
+							}))
+						);
 					}
 					invalidateList();
 					createSuccessNotice(
@@ -227,10 +224,10 @@ export default ({ navigation }) => {
 								? __('Product unarchived.', 'surecart')
 								: __('Product archived.', 'surecart')
 							: sprintf(
-									/* translators: %d is the number of products in the batch. */
+									/* translators: %d is the number of updated products. */
 									_n(
-										'Queued %d product for update. Refresh in a moment to see the result.',
-										'Queued %d products for update. Refresh in a moment to see the result.',
+										'Updated %d product.',
+										'Updated %d products.',
 										products.length,
 										'surecart'
 									),
@@ -242,12 +239,7 @@ export default ({ navigation }) => {
 				{ errorMessage: __('Failed to update product.', 'surecart') }
 			);
 		},
-		[
-			runMutation,
-			saveEntityRecord,
-			createSuccessNotice,
-			invalidateList,
-		]
+		[runMutation, saveEntityRecord, createSuccessNotice, invalidateList]
 	);
 
 	const handleDelete = useCallback(
@@ -417,12 +409,7 @@ export default ({ navigation }) => {
 				}
 			});
 		},
-		[
-			runMutation,
-			createSuccessNotice,
-			createErrorNotice,
-			invalidateList,
-		]
+		[runMutation, createSuccessNotice, createErrorNotice, invalidateList]
 	);
 
 	const actions = useMemo(

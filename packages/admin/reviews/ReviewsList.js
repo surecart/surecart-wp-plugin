@@ -29,6 +29,7 @@ import {
 } from './list/buildQuery';
 import { REVIEWS_URL_FILTERS } from './list/urlFilters';
 import { useStatusTabs } from './list/useStatusTabs';
+import { submitBatchOperations } from '../util/batches';
 import './reviews-list-style.scss';
 
 const LAYOUT_STYLES = {
@@ -92,14 +93,7 @@ export default ({ navigation }) => {
 
 	// Use batch endpoints for status changes to avoid per-resource locks that delay the UI when processing many items.
 	const mutateStatus = useCallback(
-		(
-			items,
-			endpoint,
-			nextStatus,
-			instantMessage,
-			queuedMessage,
-			errorLabel
-		) =>
+		(items, endpoint, nextStatus, message, errorLabel) =>
 			runMutation(
 				async () => {
 					if (items.length === 1) {
@@ -116,33 +110,20 @@ export default ({ navigation }) => {
 							undefined,
 							false
 						);
-						invalidateList();
-						createSuccessNotice(instantMessage, {
-							type: 'snackbar',
-						});
-						return;
-					}
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: items.map((item) => ({
+					} else {
+						await submitBatchOperations(
+							items.map((item) => ({
 								http_method: 'PATCH',
 								path: `/v1/reviews/${item.id}/${endpoint}`,
-							})),
-						},
-					});
+							}))
+						);
+					}
 					invalidateList();
-					createSuccessNotice(queuedMessage, { type: 'snackbar' });
+					createSuccessNotice(message, { type: 'snackbar' });
 				},
 				{ errorMessage: errorLabel }
 			),
-		[
-			runMutation,
-			receiveEntityRecords,
-			invalidateList,
-			createSuccessNotice,
-		]
+		[runMutation, receiveEntityRecords, invalidateList, createSuccessNotice]
 	);
 
 	const handleApprove = useCallback(
@@ -156,16 +137,6 @@ export default ({ navigation }) => {
 					_n(
 						'Approved %d review.',
 						'Approved %d reviews.',
-						items.length,
-						'surecart'
-					),
-					items.length
-				),
-				sprintf(
-					/* translators: %d is the number of reviews queued for approval. */
-					_n(
-						'Queued %d review for approval. Refresh in a moment to see the result.',
-						'Queued %d reviews for approval. Refresh in a moment to see the result.',
 						items.length,
 						'surecart'
 					),
@@ -187,16 +158,6 @@ export default ({ navigation }) => {
 					_n(
 						'Rejected %d review.',
 						'Rejected %d reviews.',
-						items.length,
-						'surecart'
-					),
-					items.length
-				),
-				sprintf(
-					/* translators: %d is the number of reviews queued for rejection. */
-					_n(
-						'Queued %d review for rejection. Refresh in a moment to see the result.',
-						'Queued %d reviews for rejection. Refresh in a moment to see the result.',
 						items.length,
 						'surecart'
 					),
@@ -228,27 +189,23 @@ export default ({ navigation }) => {
 						});
 						return;
 					}
-					// Bulk — one Batch API request. The platform processes
+					// Bulk — Batch API requests. The platform processes
 					// N DELETEs asynchronously; far kinder to rate limits
 					// than N parallel browser requests (and avoids the
 					// per-resource lock that approve/reject hits).
-					await apiFetch({
-						path: '/surecart/v1/batches',
-						method: 'POST',
-						data: {
-							batch_operations: items.map((item) => ({
-								http_method: 'DELETE',
-								path: `/v1/reviews/${item.id}`,
-							})),
-						},
-					});
+					await submitBatchOperations(
+						items.map((item) => ({
+							http_method: 'DELETE',
+							path: `/v1/reviews/${item.id}`,
+						}))
+					);
 					invalidateList();
 					createSuccessNotice(
 						sprintf(
-							/* translators: %d is the number of reviews queued for deletion. */
+							/* translators: %d is the number of deleted reviews. */
 							_n(
-								'Queued %d review for deletion. Refresh in a moment to see the result.',
-								'Queued %d reviews for deletion. Refresh in a moment to see the result.',
+								'Deleted %d review.',
+								'Deleted %d reviews.',
 								items.length,
 								'surecart'
 							),
@@ -259,12 +216,7 @@ export default ({ navigation }) => {
 				},
 				{ errorMessage: __('Failed to delete review.', 'surecart') }
 			),
-		[
-			runMutation,
-			deleteEntityRecord,
-			createSuccessNotice,
-			invalidateList,
-		]
+		[runMutation, deleteEntityRecord, createSuccessNotice, invalidateList]
 	);
 
 	const actions = useMemo(
