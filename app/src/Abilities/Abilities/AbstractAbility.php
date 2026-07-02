@@ -181,6 +181,72 @@ abstract class AbstractAbility {
 	}
 
 	/**
+	 * Recursively sanitize and structurally validate a filter rule tree.
+	 *
+	 * Rebuilds a clean tree from known keys only, dropping any unexpected keys,
+	 * whitelisting type and combinator, and sanitizing the scalar leaves.
+	 *
+	 * @param mixed $rules The raw rule tree (condition or group).
+	 * @param int   $depth Current recursion depth, used to bound deeply nested input.
+	 *
+	 * @return array|\WP_Error Clean rule tree, or WP_Error if structurally invalid.
+	 */
+	protected function sanitize_rule_tree( $rules, $depth = 0 ) {
+		if ( $depth > 10 ) {
+			return new \WP_Error( 'invalid_filter', __( 'Filter rule tree is too deeply nested.', 'surecart' ) );
+		}
+
+		if ( ! is_array( $rules ) || empty( $rules ) ) {
+			return new \WP_Error( 'invalid_filter', __( 'The filter must be a condition or group object.', 'surecart' ) );
+		}
+
+		$type = sanitize_text_field( $rules['type'] ?? '' );
+
+		if ( 'group' === $type ) {
+			$combinator = sanitize_text_field( $rules['combinator'] ?? '' );
+			if ( ! in_array( $combinator, array( 'and', 'or' ), true ) ) {
+				return new \WP_Error( 'invalid_filter', __( 'A group combinator must be "and" or "or".', 'surecart' ) );
+			}
+
+			$conditions = $rules['conditions'] ?? array();
+			if ( ! is_array( $conditions ) || empty( $conditions ) ) {
+				return new \WP_Error( 'invalid_filter', __( 'A group must have at least one condition.', 'surecart' ) );
+			}
+
+			if ( count( $conditions ) > 50 ) {
+				return new \WP_Error( 'invalid_filter', __( 'A group has too many conditions (max 50).', 'surecart' ) );
+			}
+
+			$clean = array();
+			foreach ( $conditions as $condition ) {
+				$sanitized = $this->sanitize_rule_tree( $condition, $depth + 1 );
+				if ( is_wp_error( $sanitized ) ) {
+					return $sanitized;
+				}
+				$clean[] = $sanitized;
+			}
+
+			return array(
+				'type'       => 'group',
+				'combinator' => $combinator,
+				'conditions' => $clean,
+			);
+		}
+
+		if ( 'condition' === $type ) {
+			$value = $rules['comparison_value'] ?? '';
+			return array(
+				'type'             => 'condition',
+				'attribute_name'   => sanitize_text_field( $rules['attribute_name'] ?? '' ),
+				'operator_label'   => sanitize_text_field( $rules['operator_label'] ?? '' ),
+				'comparison_value' => is_scalar( $value ) ? sanitize_text_field( (string) $value ) : '',
+			);
+		}
+
+		return new \WP_Error( 'invalid_filter', __( 'Each rule must have a type of "condition" or "group".', 'surecart' ) );
+	}
+
+	/**
 	 * Validate a date string is in YYYY-MM-DD format.
 	 *
 	 * @param string $date The date string to validate.

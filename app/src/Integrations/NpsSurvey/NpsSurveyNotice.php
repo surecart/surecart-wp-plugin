@@ -166,6 +166,31 @@ class NpsSurveyNotice {
 	];
 
 	/**
+	 * Screen ids the NPS survey is allowed to render on.
+	 *
+	 * Scoped to the Dashboard and Settings screens only, so the survey does not
+	 * appear across every SureCart admin page (e.g. the Product Editor).
+	 *
+	 * @return array
+	 */
+	private function getNpsScreenIds(): array {
+		/**
+		 * Filter the admin screen ids the NPS survey is allowed to render on.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param array $screen_ids Screen ids the survey may render on.
+		 */
+		return apply_filters(
+			'surecart_nps_survey_screen_ids',
+			[
+				'toplevel_page_sc-dashboard',
+				'surecart_page_sc-settings',
+			]
+		);
+	}
+
+	/**
 	 * Force NPS survey assets to load from SureCart's vendor copy on SureCart admin pages.
 	 *
 	 * Bound to `script_loader_src` / `style_loader_src`, which may pass `null` for
@@ -187,7 +212,7 @@ class NpsSurveyNotice {
 		}
 
 		$screen = get_current_screen();
-		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+		if ( ! $screen || ! in_array( $screen->id, $this->getNpsScreenIds(), true ) ) {
 			return $src;
 		}
 
@@ -203,9 +228,9 @@ class NpsSurveyNotice {
 	 * @return void
 	 */
 	public function showNpsNotice(): void {
-		// Only show on SureCart admin pages.
+		// Only show on the SureCart Dashboard and Settings screens.
 		$screen = get_current_screen();
-		if ( ! $screen || ! in_array( $screen->id, \SureCart::pages()->getSureCartPageScreenIds(), true ) ) {
+		if ( ! $screen || ! in_array( $screen->id, $this->getNpsScreenIds(), true ) ) {
 			return;
 		}
 
@@ -230,7 +255,7 @@ class NpsSurveyNotice {
 				'dismiss_count'    => 0, // We handle dismissals ourselves in handleStatusUpdate().
 				'plugin_slug'      => 'surecart',
 				'allow_review'     => true, // Enables promoter (8-10) vs non-promoter (<8) split.
-				'show_on_screens'  => \SureCart::pages()->getSureCartPageScreenIds(),
+				'show_on_screens'  => $this->getNpsScreenIds(),
 				'message'          => [
 					// Rating step.
 					'logo'                  => esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/icon.svg' ),

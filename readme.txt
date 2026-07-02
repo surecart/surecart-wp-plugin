@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 7.0
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -421,6 +421,21 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.4.2 - July 1st, 2026 =
+- New: SureCart MCP now allows filtering of orders, customers, and subscriptions with advanced rule-based conditions.
+- Improvement: Better compatibility with caching plugins and hosts by keeping dynamic pages like checkout from being cached and served stale.
+- Improvement: The checkout Order Bumps block now matches the cart version, with a full styled preview in the editor and a "Hide added items" option so customers aren't offered products already in their order.
+- Improvement: The feedback survey now only appears on the SureCart Dashboard and Settings screens instead of across all SureCart admin pages.
+- Improvement: Faster WooCommerce importing removing duplicate background queries from WooCommerce import status checks.
+- Fix: Checkout Country and State dropdowns accessiblity issue.
+- Fix: Facebook (Meta) Pixel now dedupes purchase events that handles and edge case where purchases can be doubled in some instances.
+- Fix: Block editor no longer fails to load pages containing SureCart blocks on some sites (such as those using certain plugins or starter templates).
+- Fix: Site menus and navigation no longer break on the front end for logged-in users on some themes (such as Astra Pro) due to a script conflict on checkout pages.
+- Fix: Customer portal now shows the product's downloads on the download detail page when a purchased variant has downloads enabled but no files of its own.
+- Fix: Shop search and filters no longer close unexpectedly on some Android devices when the on-screen keyboard opens.
+- Fix: Checkout order summary styling — the "Summary" heading no longer wraps mid-word with dual-currency prices, and trial fee and description text can now be styled with custom CSS.
+- Fix: Removed a PHP 8.4 deprecation notice.
 
 = 4.4.1 - June 16th, 2026 =
 - Fix: Billing email sometimes not being sent to Stripe when logged-in customers complete checkout.

@@ -1146,6 +1146,7 @@
   },
   "sc-order-bumps": {
     "help": true,
+    "hide-added-items": true,
     "label": true,
     "show-control": true,
     "style": true,

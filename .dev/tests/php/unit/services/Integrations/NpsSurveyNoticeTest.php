@@ -322,4 +322,50 @@ class NpsSurveyNoticeTest extends SureCartUnitTestCase {
 		$this->assertStringEndsWith( '?ver=1.2.3', $result );
 		$this->assertStringNotContainsString( 'astra', $result );
 	}
+
+	public function test_force_nps_asset_src_passes_through_on_non_scoped_surecart_screen(): void {
+		// The Product Editor is a SureCart page but is no longer in the NPS scope.
+		set_current_screen( 'sc_product' );
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-script' );
+
+		$this->assertSame( $astra_src, $result );
+	}
+
+	public function test_force_nps_asset_src_overrides_on_settings_screen(): void {
+		set_current_screen( 'surecart_page_sc-settings' );
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-script' );
+
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/main.js', $result );
+		$this->assertStringNotContainsString( 'astra', $result );
+	}
+
+	public function test_get_nps_screen_ids_returns_only_dashboard_and_settings(): void {
+		$screen_ids = $this->callProtected( 'getNpsScreenIds' );
+
+		$this->assertContains( 'toplevel_page_sc-dashboard', $screen_ids );
+		$this->assertContains( 'surecart_page_sc-settings', $screen_ids );
+		$this->assertNotContains( 'sc_product', $screen_ids );
+	}
+
+	public function test_nps_survey_screen_ids_filter_can_extend_scope(): void {
+		$extend = function ( $screen_ids ) {
+			$screen_ids[] = 'sc_product';
+			return $screen_ids;
+		};
+		add_filter( 'surecart_nps_survey_screen_ids', $extend );
+
+		set_current_screen( 'sc_product' );
+
+		$astra_src = 'https://example.com/wp-content/themes/astra/inc/lib/nps-survey/dist/main.js?ver=1.0.0';
+		$result    = $this->notice->forceNpsAssetSrc( $astra_src, 'nps-survey-script' );
+
+		remove_filter( 'surecart_nps_survey_screen_ids', $extend );
+
+		$this->assertStringContainsString( 'vendor/brainstormforce/nps-survey/dist/main.js', $result );
+		$this->assertStringNotContainsString( 'astra', $result );
+	}
 }

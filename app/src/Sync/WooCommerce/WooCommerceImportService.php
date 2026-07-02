@@ -29,6 +29,16 @@ class WooCommerceImportService {
 	protected $import_state;
 
 	/**
+	 * Cached running state for this request.
+	 *
+	 * Both admin_notices callbacks call isRunning(), which runs a wp_options
+	 * query plus Action Scheduler lookups. Memoize so that chain runs once per request.
+	 *
+	 * @var bool|null
+	 */
+	private $is_running = null;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \SureCart\Application $app The application.
@@ -64,7 +74,10 @@ class WooCommerceImportService {
 	 * @return boolean
 	 */
 	public function isRunning() {
-		return $this->job()->isRunning();
+		if ( null === $this->is_running ) {
+			$this->is_running = $this->job()->isRunning();
+		}
+		return $this->is_running;
 	}
 
 	/**
