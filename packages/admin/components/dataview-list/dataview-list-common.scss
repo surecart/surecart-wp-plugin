@@ -325,6 +325,38 @@ body:has(.sc-dataview-list-wrapper) {
 		margin-inline-start: 0;
 	}
 
+	// Overlay scrollbars (Chromium's default on newer OSes) float over the
+	// scrollport, where the sticky footer sits pinned — the footer then wins
+	// pointer hit-testing and the horizontal scrollbar can't be dragged.
+	// Styling the scrollbar opts Chromium out of overlay mode, giving it
+	// reserved space below the footer where nothing can cover it.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpcontent {
+		&::-webkit-scrollbar {
+			width: 12px;
+			height: 12px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(0, 0, 0, 0.3);
+			border-radius: 6px;
+			// Transparent border + padding-box clip fakes a track inset so the
+			// thumb doesn't touch the content edge.
+			border: 3px solid transparent;
+			background-clip: padding-box;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+
 	// Horizontal pinning for the in-app bars, compositor-native. Sticky can
 	// only travel within its containing block, so grow the wrappers to the
 	// full scroll width, then cap each bar back to the visible scrollport
