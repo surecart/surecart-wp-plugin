@@ -5,6 +5,7 @@
 	"title": "Product List",
 	"description": "Display a list of products from your store.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["products", "product", "list", "store"],
 	"supports": {
 		"align": true,

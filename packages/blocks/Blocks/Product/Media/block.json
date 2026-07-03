@@ -4,6 +4,7 @@
 	"title": "Product Media",
 	"description": "A container to display the product media",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["image", "media"],
 	"supports": {
 		"reusable": false,
