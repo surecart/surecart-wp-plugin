@@ -11,7 +11,7 @@ export default ({ record }) => {
 	const { isLoading, activate, activationLink, canActivate } =
 		useIntegrationActivation(record, {
 			onSuccess: (message) => {
-				createSuccessNotice(__(message, 'surecart'), {
+				createSuccessNotice(message, {
 					type: 'snackbar',
 				});
 			},
