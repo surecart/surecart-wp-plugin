@@ -28,7 +28,10 @@ export default ({ product, updateProduct, onClose }) => {
 				}
 			`}
 		>
-			<InspectorPopoverHeader title={__('URL', 'surecart')} onClose={onClose} />
+			<InspectorPopoverHeader
+				title={__('URL', 'surecart')}
+				onClose={onClose}
+			/>
 
 			<TextControl
 				__next40pxDefaultSize
@@ -37,18 +40,7 @@ export default ({ product, updateProduct, onClose }) => {
 				value={product?.slug}
 				autoComplete="off"
 				spellCheck="false"
-				help={
-					<>
-						{__('The last part of the URL.', 'surecart')}{' '}
-						{/* <ExternalLink
-							href={__(
-								'https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink'
-							)}
-						>
-							{__('Learn more.')}
-						</ExternalLink> */}
-					</>
-				}
+				help={__('The last part of the URL.', 'surecart')}
 				onChange={(slug) => updateProduct({ slug })}
 				onBlur={(event) =>
 					updateProduct({

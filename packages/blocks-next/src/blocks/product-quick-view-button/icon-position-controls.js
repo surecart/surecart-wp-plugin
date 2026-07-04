@@ -20,11 +20,19 @@ export function IconPositionControls({ value, onChange }) {
 		>
 			<ToggleGroupControlOption
 				value="after"
-				label={_x('After', 'The position of the icon in the button.', 'surecart')}
+				label={_x(
+					'After',
+					'The position of the icon in the button.',
+					'surecart'
+				)}
 			/>
 			<ToggleGroupControlOption
 				value="before"
-				label={_x('Before', 'The position of the icon in the button.', 'surecart')}
+				label={_x(
+					'Before',
+					'The position of the icon in the button.',
+					'surecart'
+				)}
 			/>
 		</ToggleGroupControl>
 	);

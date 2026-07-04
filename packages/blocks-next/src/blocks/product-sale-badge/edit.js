@@ -26,7 +26,11 @@ export default ({ attributes, setAttributes, context: { postId } }) => {
 			tagName="div"
 			value={text}
 			onChange={(text) => setAttributes({ text })}
-			aria-label={text ? __('Sale Label', 'surecart') : __('Empty Sale label', 'surecart')}
+			aria-label={
+				text
+					? __('Sale Label', 'surecart')
+					: __('Empty Sale label', 'surecart')
+			}
 			data-empty={text ? false : true}
 			placeholder={__('Type in sale badge text', 'surecart')}
 			allowedFormats={['core/bold', 'core/italic']}
