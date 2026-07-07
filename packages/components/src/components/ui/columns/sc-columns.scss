@@ -43,6 +43,8 @@
     // important since the Column assigns its own width as an inline style.
     @media (max-width: 781px) {
       flex-basis: 100% !important;
+      // Cap stacked columns so wide intrinsic content (e.g. the login verification code inputs) can't stretch them past the viewport.
+      max-width: 100%;
     }
 
     // At large viewports, show all columns horizontally.
