@@ -2435,6 +2435,7 @@
     "freeze": true,
     "open": true,
     "padding": true,
+    "placement": true,
     "text": true,
     "type": true,
     "width": true,

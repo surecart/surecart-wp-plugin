@@ -355,18 +355,50 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Batch-prime synced-post lookups for a page of products.
+	 *
+	 * Hydration triggers maybeQueueSync -> getSyncedAttribute, which looks up
+	 * the synced post per product. Resolve them all with one query instead.
+	 *
+	 * @param array $items Raw product objects from the API response, pre-hydration.
+	 *
+	 * @return void
+	 */
+	protected function primeCollectionCaches( $items ) {
+		$ids = array_values(
+			array_filter(
+				array_map(
+					function ( $item ) {
+						return $item->id ?? null;
+					},
+					(array) $items
+				)
+			)
+		);
+
+		if ( empty( $ids ) ) {
+			return;
+		}
+
+		\SureCart::sync()->product()->post()->primeByModelIds( $ids );
+	}
+
+	/**
 	 * Get the is synced attribute.
 	 *
 	 * @return bool
 	 */
 	protected function getSyncedAttribute() {
+		// each post access is a fresh lookup, so read it once.
+		$post = $this->post;
+
 		// we don't have a post.
-		if ( empty( $this->post ) ) {
+		if ( empty( $post ) ) {
 			return false;
 		}
 
 		// the post is trashed.
-		if ( 'trash' === $this->post->post_status ) {
+		if ( 'trash' === $post->post_status ) {
 			return false;
 		}
 
@@ -376,8 +408,8 @@ class Product extends Model implements PageModel {
 		}
 
 		// get the product and decode it.
-		$product = get_post_meta( $this->post->ID, 'product', true );
-		$product = is_string( $product ) ? json_decode( get_post_meta( $this->post->ID, 'product', true ) ) : $product;
+		$product = get_post_meta( $post->ID, 'product', true );
+		$product = is_string( $product ) ? json_decode( $product ) : $product;
 		$product = (object) $product;
 		if ( empty( $product ) || ! isset( $product->updated_at ) ) {
 			return false;

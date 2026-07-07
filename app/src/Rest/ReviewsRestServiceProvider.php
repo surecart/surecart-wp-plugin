@@ -148,14 +148,27 @@ class ReviewsRestServiceProvider extends RestServiceProvider implements RestServ
 		return [
 			'status'       => [
 				'description' => esc_html__( 'Filter by review status.', 'surecart' ),
-				'type'        => 'string',
-				'enum'        => [ 'published', 'in_review', 'unpublished' ],
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+					'enum' => [ 'published', 'in_review', 'unpublished' ],
+				],
+				'default'     => [],
 			],
 			'product_ids'  => [
 				'description' => esc_html__( 'Only return reviews for the given products.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
 					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'stars'        => [
+				'description' => esc_html__( 'Filter by star rating (1-5).', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+					'enum' => [ '1', '2', '3', '4', '5' ],
 				],
 				'default'     => [],
 			],

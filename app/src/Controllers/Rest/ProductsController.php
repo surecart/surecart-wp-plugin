@@ -16,7 +16,33 @@ class ProductsController extends RestController {
 	protected $class = Product::class;
 
 	/**
+	 * Resource slug for the dynamic list filter hooks
+	 * (`surecart/products/list/query_args`, `.../list/response`).
+	 *
+	 * @var string
+	 */
+	protected $resource = 'products';
+
+	/**
+	 * Relations expanded by default for edit-context and write requests.
+	 *
+	 * The product edit screen and the WP post sync depend on the full set.
+	 *
+	 * @var array
+	 */
+	const EDIT_EXPANDS = [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ];
+
+	/**
 	 * Run some middleware to run before request.
+	 *
+	 * Expand contract for edit-context/write requests:
+	 * - Collection GET with `expand_mode=replace`: the client's `expand` is used
+	 *   verbatim (may be empty) — lets the products dataview request a lean list.
+	 * - Collection GET without `expand_mode=replace`: EDIT_EXPANDS merged with any
+	 *   client `expand` (default; `expand` is additive).
+	 * - Single GET (`id` param) and all write methods: EDIT_EXPANDS merged with
+	 *   any client `expand`.
+	 * - `view` context GETs are untouched; `expand` passes through query args.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
 	 * @param \WP_REST_Request       $request Request object.
@@ -24,10 +50,21 @@ class ProductsController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if we are in edit context, we want to fetch the variants, variant options and prices.
-		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
-			$class->with( array_unique( array_filter( array_merge( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ], $request['expand'] ?? [] ) ) ) );
+		$is_write      = in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ], true );
+		$client_expand = array_values( array_unique( array_filter( (array) ( $request['expand'] ?? [] ) ) ) );
+
+		if ( 'edit' === $request->get_param( 'context' ) || $is_write ) {
+			$is_collection_get = ! $is_write && empty( $request->get_param( 'id' ) );
+			// Only an explicit opt-in replaces the defaults; otherwise `expand` is additive.
+			$replace = $is_collection_get && 'replace' === $request->get_param( 'expand_mode' );
+
+			$class->with(
+				$replace
+					? $client_expand                                                                  // lean: the client owns the relation set.
+					: array_values( array_unique( array_merge( self::EDIT_EXPANDS, $client_expand ) ) ) // additive: defaults plus any client expand (re-indexed so an overlap can't leave a sparse array).
+			);
 		}
+
 		return parent::middleware( $class, $request );
 	}
 

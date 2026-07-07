@@ -23,6 +23,13 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 	protected $path = 'admin/product-collections';
 
 	/**
+	 * Opt into the dataviews stylesheet enqueue (handled by the parent).
+	 *
+	 * @var bool
+	 */
+	protected $needs_dataviews_style = true;
+
+	/**
 	 * Add the api url to the data.
 	 */
 	public function __construct() {

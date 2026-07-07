@@ -24,7 +24,7 @@ import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import Permalink from '../components/Permalink';
 
-export default ({ id, setId }) => {
+export default ({ id, setId, navigation }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -140,8 +140,15 @@ export default ({ id, setId }) => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-products'}
+								{...(navigation ? {} : { href: 'admin.php?page=sc-product-collections' })}
 								type="text"
+								onClick={() => {
+									if (navigation) {
+										navigation.goToList();
+									} else {
+										window.location.href = 'admin.php?page=sc-product-collections';
+									}
+								}}
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>

@@ -138,6 +138,10 @@ When working on a PR that introduces user-facing changes, add feature documentat
 
 Use the `/surecart-feature-doc` skill to auto-generate and update the PR description from the branch diff. It analyzes changes, generates the documentation, and updates the PR via `gh pr edit`.
 
+## Comments
+
+PHP gets full WP-style docblocks (class, method, property, `@var`/`@param`/`@return`) — non-negotiable for phpcs. JS/TS comments must add information the code, function name, or variable names don't already convey; restating the code is a smell. Keep kept comments to 1–2 lines.
+
 ## Git
 
 - **Never add `Co-Authored-By` lines to commit messages.** Commits should use the developer's git account only.

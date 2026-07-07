@@ -11,7 +11,7 @@ import { Modal } from '@wordpress/components';
  */
 import { ScAlert, ScButton, ScFlex } from '@surecart/components-react';
 
-export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
+export default ({ deleteItem, deletingItem, setError, onClose = () => {}, navigation }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 
@@ -28,7 +28,11 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 			createSuccessNotice(__('Product Collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
-			window.location.assign('admin.php?page=sc-product-collections');
+			if (navigation) {
+				navigation.goToList();
+			} else {
+				window.location.assign('admin.php?page=sc-product-collections');
+			}
 		} catch (e) {
 			console.error(e?.message);
 			setError(e);

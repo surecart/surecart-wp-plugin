@@ -9,13 +9,12 @@ import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ id, setId }) => {
+export default ({ id, setId, navigation } = {}) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
-	// create the product.
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -28,14 +27,22 @@ export default ({ id, setId }) => {
 				},
 				{ throwOnError: true }
 			);
-			console.log({ group });
 			setId(group.id);
-		} catch (e) {
-			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+		} catch (err) {
+			console.error(err);
+			setError(err?.message || __('Something went wrong.', 'surecart'));
 			setIsSaving(false);
 		}
 	};
+
+	const cancelProps = navigation
+		? {
+				onClick: (e) => {
+					e.preventDefault();
+					navigation.goToList();
+				},
+		  }
+		: { href: 'admin.php?page=sc-product-groups' };
 
 	return (
 		<CreateTemplate id={id}>
@@ -55,7 +62,7 @@ export default ({ id, setId }) => {
 							label={__('Group Name', 'surecart')}
 							className="sc-product-name hydrated"
 							help={__(
-								'A name for your product group. It is not shown to customers.',
+								'A name for your upgrade group. It is not shown to customers.',
 								'surecart'
 							)}
 							onScChange={(e) => {
@@ -68,15 +75,15 @@ export default ({ id, setId }) => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`
+								display: flex;
+								gap: var(--sc-spacing-small);
+							`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
 							</ScButton>
-							<ScButton
-								href={'admin.php?page=sc-products'}
-								type="text"
-							>
+							<ScButton type="text" {...cancelProps}>
 								{__('Cancel', 'surecart')}
 							</ScButton>
 						</div>

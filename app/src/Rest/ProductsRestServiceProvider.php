@@ -165,7 +165,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return array
 	 */
 	public function get_collection_params() {
-		return [
+		$args = [
 			'archived'               => [
 				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
@@ -177,6 +177,24 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			'query'                  => [
 				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
+			],
+			'sort'                   => [
+				'description' => __( 'Sort directive in the form `field:direction`, e.g. `cataloged_at:desc`.', 'surecart' ),
+				'type'        => 'string',
+			],
+			'expand'                 => [
+				'description' => __( 'Relations to expand on each returned product.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'expand_mode'            => [
+				'description' => __( 'Whether `expand` augments the default relations (`merge`) or replaces them (`replace`).', 'surecart' ),
+				'type'        => 'string',
+				'enum'        => [ 'merge', 'replace' ],
+				'default'     => 'merge',
 			],
 			'ids'                    => [
 				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
@@ -211,6 +229,17 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'type'        => 'integer',
 			],
 		];
+
+		/**
+		 * Filter the products REST collection params.
+		 *
+		 * Allows plugins to register additional query args (e.g. custom
+		 * metadata filters) without forking the controller.
+		 *
+		 * @param array $args  Args keyed by param name.
+		 * @return array
+		 */
+		return apply_filters( 'surecart/products/rest_args', $args );
 	}
 
 	/**

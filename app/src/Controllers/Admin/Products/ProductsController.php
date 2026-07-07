@@ -3,9 +3,10 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\RendersEnhancedAdminView;
+use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Models\Product;
 use SureCart\Models\ImportRow;
-use SureCart\Controllers\Admin\Products\ProductsListTable;
 use SureCart\Background\BulkActionService;
 use SureCart\Sync\ImportState;
 
@@ -13,6 +14,8 @@ use SureCart\Sync\ImportState;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
+	use RendersEnhancedAdminView;
+
 	/**
 	 * WooCommerce import state tracker.
 	 *
@@ -32,7 +35,7 @@ class ProductsController extends AdminController {
 	/**
 	 * Products index.
 	 */
-	public function index() {
+	protected function renderWpListView() {
 		// instantiate the bulk actions service.
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
@@ -44,12 +47,13 @@ class ProductsController extends AdminController {
 		// add header.
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
+				'breadcrumbs'         => [
 					'products' => [
 						'title' => __( 'Products', 'surecart' ),
 					],
 				],
-				'suffix'      => isset( $_GET['debug'] ) ? $this->syncDropdown() : null, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'suffix'              => isset( $_GET['debug'] ) ? $this->syncDropdown() : null, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'enhanced_view_promo' => admin_url( 'admin.php?page=sc-products' ),
 			),
 		);
 
@@ -65,6 +69,25 @@ class ProductsController extends AdminController {
 
 		// return view.
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Render the SPA view for products.
+	 */
+	protected function renderSpaView() {
+		$this->enqueueSpaScripts( ProductScriptsController::class );
+
+		$bulk_action_service = new BulkActionService();
+		$bulk_action_service->bootstrap();
+
+		add_action(
+			'admin_notices',
+			function () use ( $bulk_action_service ) {
+				$bulk_action_service->showBulkActionAdminNotice( 'delete_products' );
+			}
+		);
+
+		return $this->renderSpaShell( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
 	}
 
 	/**
@@ -92,8 +115,12 @@ class ProductsController extends AdminController {
 	 * Confirm Bulk Delete.
 	 */
 	public function confirmBulkDelete() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view; nonce is enforced on the downstream POST to bulkDelete().
+		$raw_ids     = isset( $_REQUEST['bulk_action_product_ids'] ) ? wp_unslash( $_REQUEST['bulk_action_product_ids'] ) : [];
+		$product_ids = is_array( $raw_ids ) ? array_map( 'sanitize_text_field', $raw_ids ) : [];
+
 		// find the products queued for bulk deletion.
-		if ( empty( $_REQUEST['bulk_action_product_ids'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $product_ids ) ) {
 			wp_die(
 				sprintf(
 					'%s <a href="%s">%s</a>',
@@ -104,15 +131,19 @@ class ProductsController extends AdminController {
 			);
 		}
 
+		if ( $this->isEnhancedAdminViewsEnabled() ) {
+			return $this->renderSpaView();
+		}
+
 		$products = Product::where(
 			[
-				'ids' => array_map( 'esc_html', $_REQUEST['bulk_action_product_ids'] ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'ids' => $product_ids,
 			]
 		)->get();
 
 		// handle empty.
 		if ( empty( $products ) ) {
-			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $_REQUEST['bulk_action_product_ids'] ), 'surecart' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_die( esc_html( _n( 'This product has already been deleted.', 'These products have already been deleted.', count( $product_ids ), 'surecart' ) ) );
 		}
 
 		// handle error.
@@ -137,10 +168,15 @@ class ProductsController extends AdminController {
 	 * Bulk Delete.
 	 */
 	public function bulkDelete() {
-		$product_ids = array_map(
-			'sanitize_text_field',
-			$_REQUEST['bulk_action_product_ids'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		);
+		// Route middleware `nonce:bulk_delete_nonce` has already verified the
+		// nonce; we only need to coerce the payload to a sanitized array here.
+		$product_ids = isset( $_REQUEST['bulk_action_product_ids'] ) && is_array( $_REQUEST['bulk_action_product_ids'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['bulk_action_product_ids'] ) )
+			: [];
+
+		if ( empty( $product_ids ) ) {
+			return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
+		}
 
 		// get all posts where the sc_id meta key is in the product_ids using wp_query.
 		$query = new \WP_Query(
@@ -189,12 +225,12 @@ class ProductsController extends AdminController {
 	 */
 	public function edit( $request ) {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
+		$this->enqueueSpaScripts( ProductScriptsController::class );
 
 		// define product.
 		$product = null;
 
-		// find the product.
+		// find the product for preloading.
 		if ( $request->query( 'id' ) ) {
 			$product = Product::find( $request->query( 'id' ) );
 
@@ -253,24 +289,26 @@ class ProductsController extends AdminController {
 		}
 
 		// add product link.
-		add_action(
-			'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $product ) {
-				$wp_admin_bar->add_node(
-					[
-						'id'    => 'view-product-page',
-						'title' => __( 'View Product', 'surecart' ),
-						'href'  => esc_url( $product->permalink ?? '#' ),
-						'meta'  => [
-							'class' => empty( $product->permalink ) ? 'hidden' : '',
-						],
-					]
-				);
-			},
-			99
-		);
+		if ( ! empty( $product ) ) {
+			add_action(
+				'admin_bar_menu',
+				function ( $wp_admin_bar ) use ( $product ) {
+					$wp_admin_bar->add_node(
+						[
+							'id'    => 'view-product-page',
+							'title' => __( 'View Product', 'surecart' ),
+							'href'  => esc_url( $product->permalink ?? '#' ),
+							'meta'  => [
+								'class' => empty( $product->permalink ) ? 'hidden' : '',
+							],
+						]
+					);
+				},
+				99
+			);
+		}
 
-		return '<div id="app"></div>';
+		return $this->renderSpaShell( 'admin/products/spa' );
 	}
 
 	/**
@@ -431,7 +469,7 @@ class ProductsController extends AdminController {
 				if ( 'succeeded' === ( $row->status ?? '' ) ) {
 					++$succeeded_count;
 				} else {
-					$import_data = $row->import_data ?? null;
+					$import_data   = $row->import_data ?? null;
 					$failed_rows[] = [
 						'name'   => is_object( $import_data ) ? ( $import_data->name ?? __( 'Unknown', 'surecart' ) ) : __( 'Unknown', 'surecart' ),
 						'reason' => $row->failure_reason ?? __( 'Unknown error', 'surecart' ),

@@ -289,7 +289,6 @@ export default function DisplayCurrenciesSettings() {
 							id: 'delete',
 							icon: <Icon icon={trash} />,
 							label: __('Delete', 'surecart'),
-							isDestructive: true,
 							supportsBulk: true,
 							isEligible: (item) => !item.is_default_currency,
 							hideModalHeader: true,

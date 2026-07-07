@@ -4231,13 +4231,17 @@ export namespace Components {
          */
         "padding": number;
         /**
+          * The tooltip's placement relative to the trigger.
+         */
+        "placement": 'top' | 'bottom' | 'left' | 'right';
+        /**
           * Tooltip text
          */
         "text": string;
         /**
-          * The tooltip's type.
+          * The tooltip's type.  - `info` (default) — current SureCart blue/info style with a colored arrow. - `primary`/`success`/`warning`/`danger` — accent-colored variants. - `text` — legacy passthrough used by long-form tooltips. - `dark` — flat black background with white text, matching the   WordPress admin button tooltip ("View options"-style). No colored   accent, no arrow, no padding flourish — just the WP look.
          */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'dark';
         /**
           * Tooltip fixed width
          */
@@ -11798,13 +11802,17 @@ declare namespace LocalJSX {
          */
         "padding"?: number;
         /**
+          * The tooltip's placement relative to the trigger.
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        /**
           * Tooltip text
          */
         "text"?: string;
         /**
-          * The tooltip's type.
+          * The tooltip's type.  - `info` (default) — current SureCart blue/info style with a colored arrow. - `primary`/`success`/`warning`/`danger` — accent-colored variants. - `text` — legacy passthrough used by long-form tooltips. - `dark` — flat black background with white text, matching the   WordPress admin button tooltip ("View options"-style). No colored   accent, no arrow, no padding flourish — just the WP look.
          */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'dark';
         /**
           * Tooltip fixed width
          */

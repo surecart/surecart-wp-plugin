@@ -1,7 +1,6 @@
 .tooltip {
   position: relative;
 
-
   &--has-width .tooltip-text {
     white-space: normal;
     min-width: var(--sc-tooltip-width);
@@ -12,7 +11,7 @@
 .tooltip-text {
   position: fixed;
   background: var(--sc-color-gray-900);
-  border-radius:var(--sc-border-radius-small);
+  border-radius: var(--sc-border-radius-small);
   padding: var(--sc-spacing-small);
   font-family: var(--sc-input-font-family);
   font-size: var(--sc-input-font-size-small);
@@ -21,46 +20,92 @@
   color: var(--sc-color-white);
   z-index: 99999;
 
+  // Base arrow — a CSS triangle whose direction is set by `border-*-color`
+  // on the modifier classes below. (4×7px transparent borders; the placement
+  // class fills in exactly one side.)
   &:after {
     content: '';
     position: absolute;
-    transform: translateX(-50%);
-    top: calc(100% - 1px);
-    left: 50%;
     height: 0;
     width: 0;
     border: 7px solid transparent;
-    border-top-color: var(--sc-color-gray-900);
   }
 }
 
-.tooltip--primary .tooltip-text {
-  background: var(--sc-color-primary-500);
-  &:after {
-    border-top-color: var(--sc-color-primary-500);
-  }
+// =============================================================================
+// Placement — controls where the arrow sits + which way it points. Using
+// modifier classes on `.tooltip` (instead of `:host([placement])`) keeps the
+// selector simple and reliably more specific than the typed-color rules
+// below, regardless of source order.
+// =============================================================================
+
+.tooltip--top .tooltip-text:after {
+  top: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--sc-color-gray-900);
 }
-.tooltip--success .tooltip-text {
-  background: var(--sc-color-success-500);
-  &:after {
-    border-top-color: var(--sc-color-success-500);
-  }
+
+.tooltip--bottom .tooltip-text:after {
+  bottom: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--sc-color-gray-900);
 }
-.tooltip--info .tooltip-text {
-  background: var(--sc-color-info-500);
-  &:after {
-    border-top-color: var(--sc-color-info-500);
-  }
+
+.tooltip--left .tooltip-text:after {
+  left: calc(100% - 1px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: var(--sc-color-gray-900);
 }
-.tooltip--warning .tooltip-text {
-  background: var(--sc-color-warning-500);
-  &:after {
-    border-top-color: var(--sc-color-warning-500);
-  }
+
+.tooltip--right .tooltip-text:after {
+  right: calc(100% - 1px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: var(--sc-color-gray-900);
 }
-.tooltip--danger .tooltip-text {
-  background: var(--sc-color-danger-500);
+
+// =============================================================================
+// Typed variants — accent the bubble background AND the matching arrow side
+// per placement. A mixin keeps every type × placement pairing in one block,
+// so adding a new placement (or new type) is a one-line change.
+// =============================================================================
+
+@mixin typed($type-class, $color-var) {
+  .#{$type-class} .tooltip-text {
+    background: $color-var;
+  }
+  .#{$type-class}.tooltip--top    .tooltip-text:after { border-top-color: $color-var; }
+  .#{$type-class}.tooltip--bottom .tooltip-text:after { border-bottom-color: $color-var; }
+  .#{$type-class}.tooltip--left   .tooltip-text:after { border-left-color: $color-var; }
+  .#{$type-class}.tooltip--right  .tooltip-text:after { border-right-color: $color-var; }
+}
+
+@include typed('tooltip--primary', var(--sc-color-primary-500));
+@include typed('tooltip--success', var(--sc-color-success-500));
+@include typed('tooltip--info',    var(--sc-color-info-500));
+@include typed('tooltip--warning', var(--sc-color-warning-500));
+@include typed('tooltip--danger',  var(--sc-color-danger-500));
+
+// =============================================================================
+// `dark` — the WordPress admin tooltip look. Flat near-black background,
+// white text, no arrow. Same surface as the WP "View options" / icon-button
+// tooltip so it sits naturally next to native WP UI.
+// =============================================================================
+
+.tooltip--dark .tooltip-text {
+  background: #1e1e1e;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+
+  // No arrow — WP's tooltip is a plain pill. Hide the pseudo entirely
+  // so callers don't have to remember to set `--no-arrow`.
   &:after {
-    border-top-color: var(--sc-color-danger-500);
+    display: none;
   }
 }

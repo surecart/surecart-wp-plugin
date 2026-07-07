@@ -21,6 +21,15 @@ abstract class RestController {
 	protected $class = '';
 
 	/**
+	 * Resource slug used in dynamic filter names — e.g. `products`,
+	 * `product_collections`. Subclasses set this to opt into the
+	 * resource-scoped `surecart/{resource}/list/...` filter hooks.
+	 *
+	 * @var string
+	 */
+	protected $resource = '';
+
+	/**
 	 * Run some middleware to run before request.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
@@ -69,14 +78,35 @@ abstract class RestController {
 			$model = $model->with( $this->with );
 		}
 
-		$items = $model->where( $request->get_params() )->paginate(
+		$args = $request->get_params();
+
+		/**
+		 * Filter the query args for any list endpoint.
+		 *
+		 * @param array            $args     Query args, keyed by param name.
+		 * @param \WP_REST_Request $request  The original request.
+		 * @param string           $resource Resource slug (empty if controller didn't set one).
+		 */
+		$args = apply_filters( 'surecart/rest/list/query_args', $args, $request, $this->resource );
+
+		if ( $this->resource ) {
+			/**
+			 * Filter the query args for a specific list endpoint
+			 * (e.g. `surecart/products/list/query_args`).
+			 *
+			 * @param array            $args    Query args, keyed by param name.
+			 * @param \WP_REST_Request $request The original request.
+			 */
+			$args = apply_filters( "surecart/{$this->resource}/list/query_args", $args, $request );
+		}
+
+		$items = $model->where( $args )->paginate(
 			[
 				'per_page' => $request->get_param( 'per_page' ),
 				'page'     => $request->get_param( 'page' ),
 			]
 		);
 
-		// check for error.
 		if ( is_wp_error( $items ) ) {
 			return $items;
 		}
@@ -86,7 +116,18 @@ abstract class RestController {
 		$max_pages = ceil( ( $items->pagination->count ?? 0 ) / ( $items->pagination->limit ?? 1 ) );
 		$response->header( 'X-WP-TotalPages', (int) $max_pages );
 
-		return $response;
+		if ( $this->resource ) {
+			/**
+			 * Filter the response for a specific list endpoint
+			 * (e.g. `surecart/products/list/response`).
+			 */
+			$response = apply_filters( "surecart/{$this->resource}/list/response", $response, $request, $args );
+		}
+
+		/**
+		 * Filter the response for any list endpoint.
+		 */
+		return apply_filters( 'surecart/rest/list/response', $response, $request, $args, $this->resource );
 	}
 
 	/**

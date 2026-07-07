@@ -273,6 +273,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product Group', 'surecart'),
 		baseURL: '/surecart/v1/product_groups',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'product-collection',
@@ -280,6 +281,7 @@ dispatch(coreStore).addEntities([
 		label: __('Product Collections', 'surecart'),
 		baseURL: '/surecart/v1/product_collections',
 		baseURLParams: { context: 'edit', expand: ['media'] },
+		supportsPagination: true,
 	},
 	{
 		name: 'price',
@@ -521,6 +523,7 @@ dispatch(coreStore).addEntities([
 		label: __('Review', 'surecart'),
 		baseURL: '/surecart/v1/reviews',
 		baseURLParams: { context: 'edit' },
+		supportsPagination: true,
 	},
 	{
 		name: 'review_protocol',

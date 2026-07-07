@@ -3,6 +3,16 @@
  */
 import { __ } from '@wordpress/i18n';
 
+// Normalize the `variants` (or `variant_options`) relation to an
+// array. The list endpoint returns `{ data: [...] }`, the detail
+// endpoint returns the flat array — anything iterating must call this
+// or it'll crash depending on which fetch primed core-data.
+export const toVariantsArray = (variants) => {
+	if (Array.isArray(variants)) return variants;
+	if (Array.isArray(variants?.data)) return variants.data;
+	return [];
+};
+
 /**
  * Generate Variants based on options.
  */
@@ -11,6 +21,12 @@ export const generateVariants = (
 	previousOptions,
 	previousVariants = []
 ) => {
+	// SureCart returns relations either flat or as `{ data: [...] }`.
+	// Normalize at the boundary so every caller is safe.
+	variantOptions = toVariantsArray(variantOptions);
+	previousOptions = toVariantsArray(previousOptions);
+	previousVariants = toVariantsArray(previousVariants);
+
 	// initialize position we need to store in the variant.
 	let position = 0;
 	// holds the variants based on options.
@@ -76,7 +92,7 @@ export const generateVariants = (
  * Generate value combinations based on options.
  */
 export const generateValueCombinations = (options = []) =>
-	(options || []).reduce((acc, curr) => {
+	toVariantsArray(options).reduce((acc, curr) => {
 		// use just the label for the combination.
 		const values = curr.values.filter((value) => !!value);
 		// not values, just return the existing accumulator.
