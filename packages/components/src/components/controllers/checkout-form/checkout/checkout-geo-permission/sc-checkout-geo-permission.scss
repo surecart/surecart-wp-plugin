@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.geo-permission {
+  --body-spacing: var(--sc-spacing-x-large);
+  --width: 460px;
+
+  // Inherit the dialog's themed (description-slot) color so it stays readable in light and dark.
+  &__content {
+    line-height: 1.5;
+
+    p {
+      margin: 0 0 var(--sc-spacing-small);
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

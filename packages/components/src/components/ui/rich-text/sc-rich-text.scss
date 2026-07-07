@@ -368,6 +368,7 @@
   border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
   padding: var(--sc-input-spacing-medium);
   overflow-y: auto;
+  min-height: var(--sc-rich-text-min-height, auto);
   max-height: var(--sc-rich-text-max-height, none);
 }
 
