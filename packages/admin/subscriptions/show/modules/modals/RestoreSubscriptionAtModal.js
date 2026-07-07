@@ -128,7 +128,7 @@ export default ({ open, onRequestClose, subscription }) => {
 						{sprintf(
 							__(
 								'This subscription is going to be paused on %s. When would you like the subscription to be restored?',
-								'surecart '
+								'surecart'
 							),
 							subscription?.current_period_end_at_date
 						)}

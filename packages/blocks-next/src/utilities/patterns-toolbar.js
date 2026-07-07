@@ -17,7 +17,7 @@ export default ({ openPatternSelectionModal, name, clientId }) => {
 			{hasPatterns && (
 				<ToolbarGroup className="wp-block-template-part__block-control-group">
 					<ToolbarButton onClick={openPatternSelectionModal}>
-						{__('Replace')}
+						{__('Replace', 'surecart')}
 					</ToolbarButton>
 				</ToolbarGroup>
 			)}

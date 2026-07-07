@@ -56,7 +56,8 @@ export default ({ product, updateProduct }) => {
 						<InspectorPopoverHeader
 							title={__('Status', 'surecart')}
 							help={__(
-								'Status defines is the public product page visibilty.'
+								'Status defines is the public product page visibilty.',
+								'surecart'
 							)}
 							onClose={onClose}
 						/>

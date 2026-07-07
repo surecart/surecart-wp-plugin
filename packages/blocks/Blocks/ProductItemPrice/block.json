@@ -5,6 +5,7 @@
 	"title": "Product Item Price",
 	"description": "Displays the price of the product with the scratched price.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["product", "price", "discount"],
 	"ancestor": ["surecart/product-item"],
 	"attributes": {

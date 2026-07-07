@@ -43,7 +43,7 @@ export default ({
 							__('Bills Now', 'surecart')
 						) : (
 							<>
-								{__('Bills on')} {upcoming?.start_at_date}
+								{__('Bills on', 'surecart')} {upcoming?.start_at_date}
 							</>
 						)}
 					</span>
@@ -80,7 +80,7 @@ export default ({
 						</span>
 						<span slot="price-description">
 							<>
-								{__('Ends on')} {upcoming?.end_at_date}
+								{__('Ends on', 'surecart')} {upcoming?.end_at_date}
 							</>
 						</span>
 					</ScLineItem>

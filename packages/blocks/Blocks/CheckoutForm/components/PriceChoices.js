@@ -43,7 +43,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 									width: 'auto',
 								}}
 							>
-								{__('Product')}
+								{__('Product', 'surecart')}
 							</th>
 							<th
 								style={{
@@ -52,7 +52,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 									width: '70px',
 								}}
 							>
-								{__('Quantity')}
+								{__('Quantity', 'surecart')}
 							</th>
 							<th
 								style={{
@@ -60,7 +60,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 									textAlign: 'right',
 								}}
 							>
-								{__('Total')}
+								{__('Total', 'surecart')}
 							</th>
 							<th
 								style={{

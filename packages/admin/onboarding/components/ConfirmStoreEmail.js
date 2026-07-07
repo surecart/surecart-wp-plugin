@@ -55,7 +55,7 @@ export default ({
 						'surecart'
 					)}
 				>
-					<ScFormControl label={__('Email Address')}>
+					<ScFormControl label={__('Email Address', 'surecart')}>
 						<ScInput
 							size="large"
 							placeholder={__('Enter email address', 'surecart')}

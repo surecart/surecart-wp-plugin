@@ -118,7 +118,7 @@ export default ({ price, product, allPrices }) => {
 			createSuccessNotice(
 				currentPrice?.archived
 					? __('Price unarchived.', 'surecart')
-					: __('Price archived.'),
+					: __('Price archived.', 'surecart'),
 				{
 					type: 'snackbar',
 				}

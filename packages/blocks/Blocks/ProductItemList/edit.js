@@ -246,7 +246,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 							style={{ marginBottom: '20px' }}
 						>
 							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
+								'This column count exceeds the recommended amount and may cause visual breakage.',
+								'surecart'
 							)}
 						</Notice>
 					)}

@@ -4,6 +4,7 @@
 	"title": "Product Price",
 	"description": "Displays the product price or price range.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["price", "product"],
 	"ancestor": ["surecart/upsell"],
 	"attributes": {

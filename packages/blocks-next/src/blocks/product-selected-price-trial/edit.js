@@ -4,5 +4,5 @@ import { useBlockProps } from '@wordpress/block-editor';
 
 export default () => {
 	const blockProps = useBlockProps();
-	return <span {...blockProps}>{__('Starting in 7 days.')}</span>;
+	return <span {...blockProps}>{__('Starting in 7 days.', 'surecart')}</span>;
 };

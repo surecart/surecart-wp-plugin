@@ -34,7 +34,7 @@ export default ({ product, updateProduct }) => {
 						variant="tertiary"
 						aria-expanded={isOpen}
 						// translators: %s: Current post status.
-						aria-label={sprintf(__('Change Status: %s'), label)}
+						aria-label={sprintf(__('Change Status: %s', 'surecart'), label)}
 						onClick={onClick}
 					>
 						Category
@@ -82,7 +82,8 @@ export default ({ product, updateProduct }) => {
 						<InspectorPopoverHeader
 							title={__('Status', 'surecart')}
 							help={__(
-								'Status defines is the public product page visibilty.'
+								'Status defines is the public product page visibilty.',
+								'surecart'
 							)}
 							onClose={onClose}
 						/>

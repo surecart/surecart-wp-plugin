@@ -7,6 +7,11 @@ module.exports = {
 		'import/extensions': 'off',
 		// Prevent warnings for import statements with aliases.
 		'import/first': 'off',
+		// Enforce the plugin text domain so wrong/missing domains are caught statically.
+		'@wordpress/i18n-text-domain': [
+			'error',
+			{ allowedTextDomain: 'surecart' },
+		],
 	},
 	settings: {
 		react: {

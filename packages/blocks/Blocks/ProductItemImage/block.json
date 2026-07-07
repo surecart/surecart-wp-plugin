@@ -5,6 +5,7 @@
 	"title": "Product Image",
 	"description": "Displays a product item image.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["product", "image", "thumbnail"],
 	"ancestor": ["surecart/product-item"],
 	"attributes": {

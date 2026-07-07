@@ -15,15 +15,15 @@ export default ({ clientId, __unstableLayoutClassNames }) => {
 				blockContexts={[
 					{
 						id: 'filter-1',
-						'surecart/filterTag/name': __('Filter 1'),
+						'surecart/filterTag/name': __('Filter 1', 'surecart'),
 					},
 					{
 						id: 'filter-2',
-						'surecart/filterTag/name': __('Filter 2'),
+						'surecart/filterTag/name': __('Filter 2', 'surecart'),
 					},
 					{
 						id: 'filter-3',
-						'surecart/filterTag/name': __('Filter 3'),
+						'surecart/filterTag/name': __('Filter 3', 'surecart'),
 					},
 				]}
 				className={__unstableLayoutClassNames}

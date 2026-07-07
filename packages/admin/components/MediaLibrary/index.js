@@ -197,7 +197,7 @@ export default ({
 				>
 					{__('Upload Media', 'surecart')}
 				</FormFileUpload>{' '}
-				{__('or drag and drop a file to upload.')}
+				{__('or drag and drop a file to upload.', 'surecart')}
 				{!!fileLimit && (
 					<span style={{ color: 'var(--sc-color-gray-400)' }}>
 						(<ScFormatBytes value={fileLimit} />{' '}

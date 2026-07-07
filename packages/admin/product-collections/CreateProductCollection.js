@@ -53,7 +53,7 @@ export default ({ id, setId, navigation }) => {
 				throw {
 					message: __(
 						'Could not create product collection. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}

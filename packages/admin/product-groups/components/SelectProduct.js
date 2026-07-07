@@ -47,7 +47,7 @@ export default ({ onSelect }) => {
 
 	return (
 		<SelectModel
-			placeholder={__('Add Another Product', 'SURECART')}
+			placeholder={__('Add Another Product', 'surecart')}
 			position={'bottom-left'}
 			choices={(data || []).map((product) => ({
 				label: product.name,

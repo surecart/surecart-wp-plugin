@@ -18,8 +18,8 @@ export default ({ attributes, setAttributes }) => {
 		<div {...blockProps}>
 			<ScButton type={type} full={full} size={size}>
 				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
 					value={text}
 					onChange={(value) => setAttributes({ text: value })}
 					withoutInteractiveFormatting

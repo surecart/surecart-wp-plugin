@@ -319,7 +319,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					<PanelRow>
 						<UnitControl
 							__next40pxDefaultSize
-							label={__('Row Gap')}
+							label={__('Row Gap', 'surecart')}
 							onChange={(gap) => setAttributes({ gap })}
 							value={gap}
 							help={__(

@@ -37,7 +37,7 @@ export default function AspectRatioDropdown({
 	return (
 		<DropdownMenu
 			icon={aspectRatioIcon}
-			label={__('Aspect Ratio')}
+			label={__('Aspect Ratio', 'surecart')}
 			popoverProps={POPOVER_PROPS}
 			toggleProps={toggleProps}
 			className="wp-block-image__aspect-ratio"
@@ -52,13 +52,13 @@ export default function AspectRatioDropdown({
 						value={aspect}
 						aspectRatios={[
 							{
-								title: __('Square'),
+								title: __('Square', 'surecart'),
 								aspect: 1,
 							},
 						]}
 					/>
 					<AspectGroup
-						label={__('Landscape')}
+						label={__('Landscape', 'surecart')}
 						onClick={(newAspect) => {
 							setAspect(newAspect);
 							onClose();
@@ -66,25 +66,25 @@ export default function AspectRatioDropdown({
 						value={aspect}
 						aspectRatios={[
 							{
-								title: __('16:10'),
+								title: __('16:10', 'surecart'),
 								aspect: 16 / 10,
 							},
 							{
-								title: __('16:9'),
+								title: __('16:9', 'surecart'),
 								aspect: 16 / 9,
 							},
 							{
-								title: __('4:3'),
+								title: __('4:3', 'surecart'),
 								aspect: 4 / 3,
 							},
 							{
-								title: __('3:2'),
+								title: __('3:2', 'surecart'),
 								aspect: 3 / 2,
 							},
 						]}
 					/>
 					<AspectGroup
-						label={__('Portrait')}
+						label={__('Portrait', 'surecart')}
 						onClick={(newAspect) => {
 							setAspect(newAspect);
 							onClose();
@@ -92,19 +92,19 @@ export default function AspectRatioDropdown({
 						value={aspect}
 						aspectRatios={[
 							{
-								title: __('10:16'),
+								title: __('10:16', 'surecart'),
 								aspect: 10 / 16,
 							},
 							{
-								title: __('9:16'),
+								title: __('9:16', 'surecart'),
 								aspect: 9 / 16,
 							},
 							{
-								title: __('3:4'),
+								title: __('3:4', 'surecart'),
 								aspect: 3 / 4,
 							},
 							{
-								title: __('2:3'),
+								title: __('2:3', 'surecart'),
 								aspect: 2 / 3,
 							},
 						]}

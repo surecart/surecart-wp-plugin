@@ -92,7 +92,8 @@ export default function QueryPlaceholder({
 				'surecart'
 		  )
 		: __(
-				'Choose a product & pattern for the product page or start with a basic layout.'
+				'Choose a product & pattern for the product page or start with a basic layout.',
+				'surecart'
 		  );
 
 	const onChoose = (post) => {

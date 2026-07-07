@@ -5,6 +5,7 @@
 	"title": "Collapsible Row",
 	"description": "Display a collapsible row",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["toggle", "collapse"],
 	"supports": {
 		"html": false,

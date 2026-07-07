@@ -4,6 +4,7 @@
 	"title": "Product Title",
 	"description": "Displays the product title.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["title", "form", "product"],
 	"attributes": {
 		"textAlign": {

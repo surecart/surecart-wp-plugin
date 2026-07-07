@@ -102,7 +102,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 
 	const label = sprintf(
 		/* translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type */
-		__('%1$s (%2$d of %3$d)'),
+		__('%1$s (%2$d of %3$d)', 'surecart'),
 		blockProps['aria-label'],
 		currentColumnPosition,
 		columnsCount
@@ -128,17 +128,17 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={__('Layout')}>
+				<PanelBody title={__('Layout', 'surecart')}>
 					<Spacing
 						attributes={attributes}
 						setAttributes={setAttributes}
 					/>
 				</PanelBody>
 
-				<PanelBody title={__('Column settings')}>
+				<PanelBody title={__('Column settings', 'surecart')}>
 					<UnitControl
 						__next40pxDefaultSize
-						label={__('Width')}
+						label={__('Width', 'surecart')}
 						labelPosition="edge"
 						__unstableInputWidth="80px"
 						value={width || ''}
@@ -150,7 +150,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 						units={units}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Sticky')}>
+				<PanelBody title={__('Sticky', 'surecart')}>
 					<ToggleControl
 						__nextHasNoMarginBottom
 						label={__('Sticky', 'surecart')}
@@ -160,7 +160,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 					{sticky && (
 						<UnitControl
 							__next40pxDefaultSize
-							label={__('Top Offset')}
+							label={__('Top Offset', 'surecart')}
 							labelPosition="edge"
 							__unstableInputWidth="80px"
 							value={stickyOffset || ''}

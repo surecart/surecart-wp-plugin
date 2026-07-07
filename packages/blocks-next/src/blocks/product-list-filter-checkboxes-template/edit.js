@@ -14,15 +14,15 @@ const TEMPLATE = [['surecart/product-list-filter-checkbox']];
 const FALLBACK_FILTER_TEMPLATE = [
 	{
 		id: 'filter-1',
-		'surecart/checkbox/name': __('Filter 1'),
+		'surecart/checkbox/name': __('Filter 1', 'surecart'),
 	},
 	{
 		id: 'filter-2',
-		'surecart/checkbox/name': __('Filter 2'),
+		'surecart/checkbox/name': __('Filter 2', 'surecart'),
 	},
 	{
 		id: 'filter-3',
-		'surecart/checkbox/name': __('Filter 3'),
+		'surecart/checkbox/name': __('Filter 3', 'surecart'),
 	},
 ];
 

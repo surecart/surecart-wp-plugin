@@ -34,7 +34,7 @@ export default ({ id, onCreateProduct, navigation }) => {
 				throw {
 					message: __(
 						'Could not create product. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}
