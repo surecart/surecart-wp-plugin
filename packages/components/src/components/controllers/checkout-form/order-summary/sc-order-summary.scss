@@ -29,7 +29,10 @@
 }
 
 .price {
-  display: inline-block;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
   opacity: 0;
   visibility: hidden;
   transform: translateY(5px);

@@ -2,10 +2,19 @@ import { maybeConvertAmount } from '../../functions/currency';
 import { ProductsSearchedParams } from 'src/types';
 
 /**
+ * Facebook (Meta) Pixel standard events for product pages.
+ *
+ * @see https://developers.facebook.com/docs/meta-pixel/reference Standard event names & expected payloads.
+ * @see https://developers.facebook.com/docs/meta-pixel/implementation/conversion-tracking#object-properties Payload properties (content_ids, contents, value, currency).
+ */
+
+const isTrackingDisabled = () => !window?.fbq || window?.scData?.facebook_tracking_enabled === false;
+
+/**
  * Handle search event.
  */
 window.addEventListener('scSearched', function (e: CustomEvent) {
-  if (!window?.fbq) return;
+  if (isTrackingDisabled()) return;
 
   const eventDetail: ProductsSearchedParams = e.detail;
 
@@ -20,7 +29,7 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
  * Handle view content event.
  */
 window.addEventListener('scProductViewed', function (e: CustomEvent) {
-  if (!window?.fbq) return;
+  if (isTrackingDisabled()) return;
 
   const product = e.detail;
 

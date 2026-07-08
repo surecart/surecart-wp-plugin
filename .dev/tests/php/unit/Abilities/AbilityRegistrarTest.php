@@ -97,6 +97,8 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/list-orders',
 			'surecart/get-order',
 			'surecart/get-order-statistics',
+			'surecart/filter-orders',
+			'surecart/get-orders-filter-schema',
 			// Abandoned Checkouts.
 			'surecart/list-abandoned-checkouts',
 			'surecart/get-abandoned-checkout',
@@ -106,10 +108,14 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 			'surecart/create-customer',
 			'surecart/update-customer',
 			'surecart/delete-customer',
+			'surecart/filter-customers',
+			'surecart/get-customers-filter-schema',
 			// Subscriptions.
 			'surecart/list-subscriptions',
 			'surecart/get-subscription',
 			'surecart/cancel-subscription',
+			'surecart/filter-subscriptions',
+			'surecart/get-subscriptions-filter-schema',
 			// Prices.
 			'surecart/list-prices',
 			'surecart/create-price',
@@ -179,7 +185,7 @@ class AbilityRegistrarTest extends SureCartUnitTestCase {
 	 * Test that all List/Get abilities are marked as readonly.
 	 */
 	public function test_readonly_abilities_have_correct_annotations() {
-		$readonly_prefixes = array( 'surecart/list-', 'surecart/get-' );
+		$readonly_prefixes = array( 'surecart/list-', 'surecart/get-', 'surecart/filter-' );
 		$abilities         = $this->registrar->get_abilities();
 
 		foreach ( $abilities as $ability ) {

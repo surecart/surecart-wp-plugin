@@ -15,8 +15,26 @@ export class ScOrderBumps {
   /** Should we show the controls (classic design) */
   @Prop() showControl: boolean;
 
+  /** Hide bumps that have already been added to the checkout. */
+  @Prop() hideAddedItems: boolean;
+
+  /** Check if a bump is already added as a line item. */
+  isBumpAdded(bumpId: string) {
+    return (checkoutState?.checkout?.line_items?.data || []).some(item => item?.bump === bumpId);
+  }
+
   render() {
-    const bumps = (checkoutState?.checkout?.recommended_bumps?.data || []).filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0); // exclude variants for now.;
+    const bumps = (checkoutState?.checkout?.recommended_bumps?.data || []).filter(bump => {
+      // exclude variants for now.
+      if (((bump?.price as Price)?.product as Product)?.variants?.pagination?.count !== 0) {
+        return false;
+      }
+      // optionally exclude bumps already added to the checkout.
+      if (this.hideAddedItems && this.isBumpAdded(bump?.id)) {
+        return false;
+      }
+      return true;
+    });
 
     if (!bumps?.length) {
       return null;

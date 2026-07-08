@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\CanFilter;
 use SureCart\Models\Traits\HasCustomer;
 use SureCart\Models\Traits\HasDates;
 use SureCart\Models\Traits\HasPrice;
@@ -17,6 +18,7 @@ class Subscription extends Model {
 	use HasPrice;
 	use HasPurchase;
 	use HasDates;
+	use CanFilter;
 
 	/**
 	 * Rest API endpoint

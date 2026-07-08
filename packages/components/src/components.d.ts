@@ -1989,6 +1989,10 @@ export namespace Components {
     }
     interface ScOrderBumps {
         "help": string;
+        /**
+          * Hide bumps that have already been added to the checkout.
+         */
+        "hideAddedItems": boolean;
         "label": string;
         /**
           * Should we show the controls (classic design)
@@ -9397,6 +9401,10 @@ declare namespace LocalJSX {
     }
     interface ScOrderBumps {
         "help"?: string;
+        /**
+          * Hide bumps that have already been added to the checkout.
+         */
+        "hideAddedItems"?: boolean;
         "label"?: string;
         /**
           * Should we show the controls (classic design)
