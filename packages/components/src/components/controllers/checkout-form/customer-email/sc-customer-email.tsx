@@ -5,7 +5,7 @@ import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
-import { getValueFromUrl, isRateLimited } from '../../../../functions/util';
+import { getValueFromUrl, isRateLimited, getBlockedDuplicateSeconds } from '../../../../functions/util';
 import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
@@ -143,16 +143,22 @@ export class ScCustomerEmail {
       this.busy = true;
       this.error = '';
       this.loginMode = 'code';
-      await apiFetch({
+      const response = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
           login: this.value,
           checkout_mode: checkoutState.mode,
         },
-      });
+      })) as any;
       userState.email = this.value;
       userState.verificationStatus = CODE_SENT;
+
+      // Anchor the resend cooldown to the platform's window (may be a resumed
+      // one when no fresh email was sent), so reload/tab switch stay accurate.
+      if (response?.resend_available_in != null) {
+        userState.resendAvailableAt = Date.now() + response.resend_available_in * 1000;
+      }
 
       speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
     } catch (e) {
@@ -213,10 +219,16 @@ export class ScCustomerEmail {
       return;
     }
 
+    const blockedSeconds = getBlockedDuplicateSeconds(error);
+
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
         userState.verificationStatus = CODE_SENT;
+        // Resume the countdown from the platform's reported backoff window.
+        if (blockedSeconds) {
+          userState.resendAvailableAt = Date.now() + blockedSeconds * 1000;
+        }
       } else {
         this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
       }

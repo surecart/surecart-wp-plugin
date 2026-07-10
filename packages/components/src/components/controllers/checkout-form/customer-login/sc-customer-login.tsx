@@ -11,7 +11,10 @@ import { speak } from '@wordpress/a11y';
  */
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState } from '@store/checkout';
-import { isRateLimited } from '../../../../functions/util';
+import { isRateLimited, secondsUntil, getBlockedDuplicateSeconds } from '../../../../functions/util';
+
+/** Fallback cooldown (seconds) when the platform window is unknown. */
+const DEFAULT_RESEND_COOLDOWN = 60;
 
 @Component({
   tag: 'sc-customer-login',
@@ -132,17 +135,20 @@ export class ScCustomerLogin {
       this.error = '';
       this.codeResending = true;
       speak(__('Sending code...', 'surecart'), 'assertive');
-      await apiFetch({
+      const response = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
           login: userState.email,
           checkout_mode: checkoutState.mode,
         },
-      });
+      })) as any;
 
       speak(__('Code sent', 'surecart'), 'assertive');
       userState.verificationStatus = UNVERIFIED;
+      if (response?.resend_available_in != null) {
+        userState.resendAvailableAt = Date.now() + response.resend_available_in * 1000;
+      }
       this.startCooldown();
     } catch (e) {
       console.error(e);
@@ -162,20 +168,35 @@ export class ScCustomerLogin {
       return;
     }
 
+    const blockedSeconds = getBlockedDuplicateSeconds(error);
+
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
+        // Resume from the platform's reported backoff window.
+        if (blockedSeconds) {
+          userState.resendAvailableAt = Date.now() + blockedSeconds * 1000;
+        }
         this.startCooldown();
       }
     });
   }
 
+  /** Seconds left in the cooldown, derived from the persisted platform window. */
+  private remainingCooldown(): number {
+    return userState.resendAvailableAt ? secondsUntil(userState.resendAvailableAt) : DEFAULT_RESEND_COOLDOWN;
+  }
+
   startCooldown() {
     clearInterval(this.cooldownInterval);
-    this.resendCooldown = 60;
+    this.resendCooldown = this.remainingCooldown();
 
+    if (this.resendCooldown <= 0) return;
+
+    // Recompute from the anchor each tick so the timer stays correct even if the
+    // tab was backgrounded (throttled intervals) or the page was reloaded.
     this.cooldownInterval = setInterval(() => {
-      this.resendCooldown--;
+      this.resendCooldown = this.remainingCooldown();
 
       if (this.resendCooldown <= 0) {
         clearInterval(this.cooldownInterval);
