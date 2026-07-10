@@ -58,6 +58,7 @@ export class ScOrder {
           order_ids: [this.orderId],
           customer_ids: this.customerIds,
           downloadable: true,
+          revoked: false,
         }),
       })) as Purchase[];
     } catch (e) {
