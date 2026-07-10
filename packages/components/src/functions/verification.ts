@@ -23,7 +23,15 @@ export const getBlockedDuplicateSeconds = (error: any): number | null => {
 
 /**
  * Absolute ms timestamp when a resend becomes available, from a platform-provided
- * seconds value. Falls back to the default window when seconds are missing or <= 0,
- * so callers always end up with a concrete anchor (never an unset cooldown).
+ * seconds value.
+ *
+ * - `null`/`undefined` means the window is unknown → fall back to the default so
+ *   callers always get a concrete anchor (never an unset cooldown).
+ * - A numeric `0` (or negative) is a real "available now" signal (e.g. the window
+ *   lapsed by the time the request resolved) → anchor at now so the resend link
+ *   shows immediately instead of imposing another full cooldown.
  */
-export const resendAnchorFrom = (seconds?: number | null): number => Date.now() + (seconds && seconds > 0 ? seconds : RESEND_COOLDOWN_SECONDS) * 1000;
+export const resendAnchorFrom = (seconds?: number | null): number => {
+  const window = seconds == null ? RESEND_COOLDOWN_SECONDS : Math.max(0, seconds);
+  return Date.now() + window * 1000;
+};

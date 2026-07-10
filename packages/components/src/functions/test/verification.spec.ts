@@ -46,11 +46,18 @@ describe('resendAnchorFrom', () => {
     expect(secondsUntil(anchor)).toBeLessThanOrEqual(200);
   });
 
-  it('falls back to the default window when seconds are missing or invalid', () => {
-    for (const bad of [null, undefined, 0, -5]) {
-      const anchor = resendAnchorFrom(bad as any);
+  it('falls back to the default window when the value is unknown (null/undefined)', () => {
+    for (const unknown of [null, undefined]) {
+      const anchor = resendAnchorFrom(unknown as any);
       expect(secondsUntil(anchor)).toBeGreaterThan(RESEND_COOLDOWN_SECONDS - 2);
       expect(secondsUntil(anchor)).toBeLessThanOrEqual(RESEND_COOLDOWN_SECONDS);
+    }
+  });
+
+  it('anchors "now" for a 0 or negative window (resend available immediately)', () => {
+    for (const nowish of [0, -5]) {
+      const anchor = resendAnchorFrom(nowish as any);
+      expect(secondsUntil(anchor)).toBe(0);
     }
   });
 });
