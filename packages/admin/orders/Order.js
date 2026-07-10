@@ -178,9 +178,10 @@ export default () => {
 	const fulfilledItems =
 		order?.checkout?.line_items?.data?.filter(
 			(item) =>
-				item?.quantity === item?.fulfilled_quantity ||
-				(item?.fulfilled_quantity > 0 &&
-					item?.quantity !== item?.fulfilled_quantity)
+				!item?.is_bundle_parent &&
+				(item?.quantity === item?.fulfilled_quantity ||
+					(item?.fulfilled_quantity > 0 &&
+						item?.quantity !== item?.fulfilled_quantity))
 		) || [];
 
 	useEffect(() => {

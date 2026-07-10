@@ -576,6 +576,8 @@ export interface LineItem extends Object {
   bundle_line_item?: string | null;
   bundle_component_variants?: Record<string, string>;
   bundle_allocated_unit_amount?: number;
+  is_bundle_parent?: boolean;
+  is_bundle_component?: boolean;
   tax_rate?: number;
 }
 
@@ -808,6 +810,8 @@ export interface Checkout extends Object {
   number?: string;
   amount_due?: number;
   amount_due_display_amount?: string;
+  /** PHP model accessor: line item count excluding bundle containers. */
+  delivered_items_count?: number;
   amount_due_default_currency_display_amount?: string;
   remaining_amount_due?: number;
   remaining_amount_due_display_amount?: string;
