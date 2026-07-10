@@ -7,7 +7,56 @@ import {
 	isProductVariantOptionSoldOut,
 	getVariantScope,
 	hasEffectiveUnlimitedStock,
+	isAnyBundleComponentSoldOut,
 } from '../variant-scope';
+
+describe('isAnyBundleComponentSoldOut', () => {
+	it('empty or missing components never block', () => {
+		expect(isAnyBundleComponentSoldOut(null, null)).toBe(false);
+		expect(isAnyBundleComponentSoldOut({}, {})).toBe(false);
+	});
+
+	it('unlimited-stock component never blocks', () => {
+		const components = {
+			c1: { has_unlimited_stock: true, available_stock: 0, variants: [] },
+		};
+		expect(isAnyBundleComponentSoldOut(components, {})).toBe(false);
+	});
+
+	it('non-variant component blocks on zero stock', () => {
+		const components = {
+			c1: { available_stock: 0, variants: [] },
+		};
+		expect(isAnyBundleComponentSoldOut(components, {})).toBe(true);
+	});
+
+	it('variant component: unselected does not block (incompleteness is gated elsewhere)', () => {
+		const components = {
+			c1: { variants: [{ id: 'v1', available_stock: 0 }] },
+		};
+		expect(isAnyBundleComponentSoldOut(components, {})).toBe(false);
+	});
+
+	it('variant component: chosen out-of-stock variant blocks', () => {
+		const components = {
+			c1: {
+				variants: [
+					{ id: 'v1', available_stock: 0 },
+					{ id: 'v2', available_stock: 3 },
+				],
+			},
+		};
+		expect(isAnyBundleComponentSoldOut(components, { c1: 'v1' })).toBe(true);
+		expect(isAnyBundleComponentSoldOut(components, { c1: 'v2' })).toBe(false);
+	});
+
+	it('variant component: a selection with no matching variant blocks instead of silently passing', () => {
+		const components = {
+			c1: { variants: [{ id: 'v1', available_stock: 5 }] },
+		};
+		expect(isAnyBundleComponentSoldOut(components, { c1: 'unknown' })).toBe(true);
+	});
+});
 
 describe('hasEffectiveUnlimitedStock', () => {
 	it('uses the variant value when set', () => {

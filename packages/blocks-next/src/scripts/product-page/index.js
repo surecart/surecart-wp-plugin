@@ -16,6 +16,7 @@ import {
 	getVariantFromValues,
 	isProductVariantOptionSoldOut,
 	hasEffectiveUnlimitedStock,
+	isAnyBundleComponentSoldOut,
 } from './variant-scope';
 
 const { actions: checkoutActions } = store('surecart/checkout');
@@ -288,25 +289,10 @@ const { state, actions } = store('surecart/product-page', {
 		get isBundleComponentSoldOut() {
 			const context = getContext();
 			if (!context) return false;
-			const components = context.bundleComponents || {};
-			const ids = Object.keys(components);
-			if (!ids.length) return false;
-			const selections = context.bundleComponentVariants || {};
-
-			return ids.some((id) => {
-				const info = components[id];
-				if (!info || info.has_unlimited_stock) return false;
-
-				const variants = info.variants || [];
-				if (variants.length) {
-					const chosenId = selections[id];
-					if (!chosenId) return false;
-					const chosen = variants.find((v) => v.id === chosenId);
-					return chosen && (chosen.available_stock || 0) <= 0;
-				}
-
-				return (info.available_stock || 0) <= 0;
-			});
+			return isAnyBundleComponentSoldOut(
+				context.bundleComponents,
+				context.bundleComponentVariants
+			);
 		},
 
 		/**

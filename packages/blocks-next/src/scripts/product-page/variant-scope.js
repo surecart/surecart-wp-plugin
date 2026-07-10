@@ -96,6 +96,36 @@ export const isProductVariantOptionSoldOut = (
 };
 
 /**
+ * Is any bundle component unavailable for purchase, given the shopper's
+ * current variant selections.
+ *
+ * A selection that doesn't map to a known variant counts as unavailable —
+ * the stock snapshot and the selection map are seeded from the same data, so
+ * a mismatch means we can't verify the combination is purchasable.
+ *
+ * @param {Object} components Map of component_product_id -> stock snapshot
+ *                            ({has_unlimited_stock, available_stock, variants}).
+ * @param {Object} selections Map of component_product_id -> chosen variant id.
+ * @return {boolean} Whether any component blocks purchase.
+ */
+export const isAnyBundleComponentSoldOut = (components, selections) => {
+	return Object.entries(components || {}).some(([id, info]) => {
+		if (!info || info.has_unlimited_stock) return false;
+
+		const variants = info.variants || [];
+		if (variants.length) {
+			const chosenId = (selections || {})[id];
+			if (!chosenId) return false; // gated by isBundleIncomplete instead.
+			const chosen = variants.find((v) => v.id === chosenId);
+			if (!chosen) return true;
+			return (chosen.available_stock || 0) <= 0;
+		}
+
+		return (info.available_stock || 0) <= 0;
+	});
+};
+
+/**
  * Resolve the variant scope a pill is operating in.
  *
  * The same picker renders for the page product and for each bundle component.
