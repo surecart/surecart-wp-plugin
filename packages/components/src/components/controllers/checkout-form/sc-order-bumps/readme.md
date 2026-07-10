@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property         | Attribute          | Description                                              | Type      | Default     |
-| ---------------- | ------------------ | -------------------------------------------------------- | --------- | ----------- |
-| `help`           | `help`             |                                                          | `string`  | `undefined` |
-| `hideAddedItems` | `hide-added-items` | Hide bumps that have already been added to the checkout. | `boolean` | `undefined` |
-| `label`          | `label`            |                                                          | `string`  | `undefined` |
-| `showControl`    | `show-control`     | Should we show the controls (classic design)             | `boolean` | `undefined` |
+| Property      | Attribute      | Description                                  | Type      | Default     |
+| ------------- | -------------- | -------------------------------------------- | --------- | ----------- |
+| `help`        | `help`         |                                              | `string`  | `undefined` |
+| `label`       | `label`        |                                              | `string`  | `undefined` |
+| `showControl` | `show-control` | Should we show the controls (classic design) | `boolean` | `undefined` |
 
 
 ## Dependencies

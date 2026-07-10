@@ -5,7 +5,8 @@ import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
-import { getValueFromUrl, isRateLimited, getBlockedDuplicateSeconds } from '../../../../functions/util';
+import { getValueFromUrl, isRateLimited } from '../../../../functions/util';
+import { getBlockedDuplicateSeconds, resendAnchorFrom } from '../../../../functions/verification';
 import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
@@ -156,9 +157,8 @@ export class ScCustomerEmail {
 
       // Anchor the resend cooldown to the platform's window (may be a resumed
       // one when no fresh email was sent), so reload/tab switch stay accurate.
-      if (response?.resend_available_in != null) {
-        userState.resendAvailableAt = Date.now() + response.resend_available_in * 1000;
-      }
+      // Falls back to the default window if the platform omits the value.
+      userState.resendAvailableAt = resendAnchorFrom(response?.resend_available_in);
 
       speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
     } catch (e) {
@@ -225,10 +225,9 @@ export class ScCustomerEmail {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
         userState.verificationStatus = CODE_SENT;
-        // Resume the countdown from the platform's reported backoff window.
-        if (blockedSeconds) {
-          userState.resendAvailableAt = Date.now() + blockedSeconds * 1000;
-        }
+        // Resume the countdown from the platform's reported backoff window
+        // (default window if the platform didn't include seconds).
+        userState.resendAvailableAt = resendAnchorFrom(blockedSeconds);
       } else {
         this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
       }

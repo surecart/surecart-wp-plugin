@@ -69,22 +69,6 @@ export const getVariantFromValues = ({ variants, values }) => {
 /** WP_Error from apiFetch puts the upstream HTTP status under `data.status`. */
 export const isRateLimited = (error: any): boolean => error?.data?.status === 429;
 
-/** Whole seconds from now until an absolute timestamp (ms); 0 if unset or already past. */
-export const secondsUntil = (timestampMs?: number | null): number => {
-  if (!timestampMs) return 0;
-  return Math.max(0, Math.ceil((timestampMs - Date.now()) / 1000));
-};
-
-/**
- * The platform's resend backoff (in seconds) carried in a verification-code error.
- * Present on `blocked_duplicate` responses; returns null when absent.
- */
-export const getBlockedDuplicateSeconds = (error: any): number | null => {
-  const blocked = (error?.additional_errors || []).find((e: any) => e?.code === 'verification_code.email.blocked_duplicate');
-  const seconds = blocked?.data?.options?.seconds;
-  return seconds ? parseInt(seconds, 10) : null;
-};
-
 export const isInRange = (value, price) => {
   const valueInt = parseInt(value);
   if (!price) return true;

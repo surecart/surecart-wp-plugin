@@ -11,10 +11,8 @@ import { speak } from '@wordpress/a11y';
  */
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState } from '@store/checkout';
-import { isRateLimited, secondsUntil, getBlockedDuplicateSeconds } from '../../../../functions/util';
-
-/** Fallback cooldown (seconds) when the platform window is unknown. */
-const DEFAULT_RESEND_COOLDOWN = 60;
+import { isRateLimited } from '../../../../functions/util';
+import { secondsUntil, getBlockedDuplicateSeconds, resendAnchorFrom, RESEND_COOLDOWN_SECONDS } from '../../../../functions/verification';
 
 @Component({
   tag: 'sc-customer-login',
@@ -146,9 +144,8 @@ export class ScCustomerLogin {
 
       speak(__('Code sent', 'surecart'), 'assertive');
       userState.verificationStatus = UNVERIFIED;
-      if (response?.resend_available_in != null) {
-        userState.resendAvailableAt = Date.now() + response.resend_available_in * 1000;
-      }
+      // Always anchor a fresh window (falls back to default if platform omits it).
+      userState.resendAvailableAt = resendAnchorFrom(response?.resend_available_in);
       this.startCooldown();
     } catch (e) {
       console.error(e);
@@ -173,22 +170,27 @@ export class ScCustomerLogin {
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
-        // Resume from the platform's reported backoff window.
-        if (blockedSeconds) {
-          userState.resendAvailableAt = Date.now() + blockedSeconds * 1000;
-        }
+        // Resume from the platform's reported backoff window (default if absent).
+        userState.resendAvailableAt = resendAnchorFrom(blockedSeconds);
         this.startCooldown();
       }
     });
   }
 
-  /** Seconds left in the cooldown, derived from the persisted platform window. */
+  /** Seconds left in the cooldown, always derived from the (decaying) anchor timestamp. */
   private remainingCooldown(): number {
-    return userState.resendAvailableAt ? secondsUntil(userState.resendAvailableAt) : DEFAULT_RESEND_COOLDOWN;
+    return secondsUntil(userState.resendAvailableAt);
   }
 
   startCooldown() {
     clearInterval(this.cooldownInterval);
+
+    // Guarantee a concrete anchor so the countdown always decays to 0 and the
+    // resend link returns — never a stuck constant.
+    if (userState.resendAvailableAt == null) {
+      userState.resendAvailableAt = resendAnchorFrom(RESEND_COOLDOWN_SECONDS);
+    }
+
     this.resendCooldown = this.remainingCooldown();
 
     if (this.resendCooldown <= 0) return;

@@ -235,4 +235,57 @@ describe('sc-customer-login', () => {
     expect(timer).not.toBeNull();
     expect(timer.textContent).toContain('Resend code in');
   });
+
+  // Regression guard for the stuck-cooldown bug: when no window is anchored,
+  // startCooldown must fabricate a concrete future anchor so the countdown is a
+  // real decaying timestamp (secondsUntil), never a stuck constant.
+  it('guarantees a concrete resend anchor when none was set', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_SENT;
+    userState.resendAvailableAt = null;
+
+    const before = Date.now();
+    await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    // An anchor now exists, in the future — so the timer will decay to 0.
+    expect(typeof userState.resendAvailableAt).toBe('number');
+    expect(userState.resendAvailableAt).toBeGreaterThan(before);
+  });
+
+  // The soft-lock symptom was that an elapsed window never surfaced the resend
+  // link. With an already-past anchor, the link must show immediately.
+  it('shows the resend link (not a stuck timer) once the window has elapsed', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_SENT;
+    userState.resendAvailableAt = Date.now() - 1000; // window already passed
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    expect(page.root.shadowRoot.querySelector('.customer-code__resend-timer')).toBeNull();
+    const link = page.root.shadowRoot.querySelector('.customer-code__resend-link');
+    expect(link).not.toBeNull();
+    expect(link.textContent).toContain('Resend Code');
+  });
+
+  it('reflects an existing multi-minute platform window (not the flat 60s cap)', async () => {
+    userState.email = 'user@example.com';
+    userState.verificationStatus = CODE_SENT;
+    userState.resendAvailableAt = Date.now() + 150_000; // 2:30 window
+
+    const page = await newSpecPage({
+      components: [ScCustomerLogin],
+      html: `<sc-customer-login></sc-customer-login>`,
+    });
+
+    const timer = page.root.shadowRoot.querySelector('.customer-code__resend-timer');
+    expect(timer).not.toBeNull();
+    // Well over a minute — proves it reads the real window, not a 60s cap.
+    expect(timer.textContent).toContain('02:');
+  });
 });
