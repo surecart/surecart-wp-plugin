@@ -1,5 +1,6 @@
 .sc-cart-line-item-details {
 	display: flex;
+	flex-direction: column;
 	align-items: flex-start;
 	gap: 0.25em;
 	background: transparent;
@@ -25,7 +26,7 @@
 	}
 
 	&__content {
-		flex: 1 1 auto;
+		width: 100%;
 		min-width: 0;
 	}
 
@@ -48,17 +49,26 @@
 	}
 
 	&__toggle {
-		flex: 0 0 auto;
 		align-self: flex-start;
 		display: inline-flex;
 		align-items: center;
+		gap: 0.125em;
 		color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
-		transition: transform 0.2s ease, color 0.2s ease;
-		will-change: transform;
 
 		&[hidden] {
 			display: none !important;
 		}
+	}
+
+	&__toggle-label {
+		line-height: 1.4;
+	}
+
+	&__toggle-icon {
+		display: inline-flex;
+		align-items: center;
+		transition: transform 0.2s ease;
+		will-change: transform;
 
 		&--rotated {
 			transform: rotate(180deg);

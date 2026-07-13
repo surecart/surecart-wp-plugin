@@ -71,7 +71,28 @@ store( 'surecart/line-item-details', {
 				}
 
 				const checkOverflow = () => {
-					// Show the toggle only when the content exceeds the collapse threshold.
+					const collapseAfter = Math.max(
+						Number( context.collapseAfter ) || 2,
+						1
+					);
+
+					// Bundles render one row per component, so the overflow and
+					// the hidden count are exact — count the rendered rows
+					// directly (this already reflects the variants-only filter).
+					const bundleRows = content.querySelectorAll(
+						'.sc-cart-line-item-variant__bundle-item'
+					);
+					if ( bundleRows.length ) {
+						context.hiddenCount = Math.max(
+							bundleRows.length - collapseAfter,
+							0
+						);
+						context.showToggle = bundleRows.length > collapseAfter;
+						return;
+					}
+
+					// Non-bundle details (variant text, note): fall back to
+					// measuring wrapped lines. No countable items, so no "+N".
 					const styles = window.getComputedStyle( content );
 					let lineHeight = parseFloat( styles.lineHeight );
 					if ( ! lineHeight || Number.isNaN( lineHeight ) ) {
@@ -82,10 +103,7 @@ store( 'surecart/line-item-details', {
 						( content.scrollHeight + rowGap ) /
 							( lineHeight + rowGap )
 					);
-					const collapseAfter = Math.max(
-						Number( context.collapseAfter ) || 2,
-						1
-					);
+					context.hiddenCount = 0;
 					context.showToggle = lines > collapseAfter;
 				};
 
@@ -94,7 +112,18 @@ store( 'surecart/line-item-details', {
 				const resizeObserver = new ResizeObserver( checkOverflow );
 				resizeObserver.observe( content );
 
-				return () => resizeObserver.disconnect();
+				// Rows are rendered/filtered reactively; a resize may not fire
+				// when only their count changes, so watch the subtree too.
+				const mutationObserver = new MutationObserver( checkOverflow );
+				mutationObserver.observe( content, {
+					childList: true,
+					subtree: true,
+				} );
+
+				return () => {
+					resizeObserver.disconnect();
+					mutationObserver.disconnect();
+				};
 			}, [] );
 		},
 	},

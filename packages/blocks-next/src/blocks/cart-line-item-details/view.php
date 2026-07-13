@@ -17,6 +17,7 @@
 				'detailsExpanded' => $expanded,
 				'collapseAfter'   => $collapse_after,
 				'showToggle'      => false,
+				'hiddenCount'     => 0,
 			)
 		)
 	);
@@ -39,20 +40,28 @@
 	<span
 		class="sc-cart-line-item-details__toggle"
 		data-wp-bind--hidden="!context.showToggle"
-		data-wp-class--sc-cart-line-item-details__toggle--rotated="context.detailsExpanded"
 	>
-		<?php
-		echo wp_kses(
-			SureCart::svg()->get(
-				'chevron-down',
-				array(
-					'class'  => '',
-					'width'  => 16,
-					'height' => 16,
-				)
-			),
-			sc_allowed_svg_html()
-		);
-		?>
+		<span
+			class="sc-cart-line-item-details__toggle-label"
+			data-wp-text="surecart/checkout::state.detailsToggleLabel"
+		></span>
+		<span
+			class="sc-cart-line-item-details__toggle-icon"
+			data-wp-class--sc-cart-line-item-details__toggle-icon--rotated="context.detailsExpanded"
+		>
+			<?php
+			echo wp_kses(
+				SureCart::svg()->get(
+					'chevron-down',
+					array(
+						'class'  => '',
+						'width'  => 16,
+						'height' => 16,
+					)
+				),
+				sc_allowed_svg_html()
+			);
+			?>
+		</span>
 	</span>
 </div>

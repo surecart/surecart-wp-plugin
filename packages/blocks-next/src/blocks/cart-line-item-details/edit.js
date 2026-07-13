@@ -97,26 +97,35 @@ export default ({ clientId, attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<div {...innerBlocksProps} />
 				<span
-					className={`sc-cart-line-item-details__toggle${
-						expanded
-							? ' sc-cart-line-item-details__toggle--rotated'
-							: ''
-					}`}
+					className="sc-cart-line-item-details__toggle"
 					aria-hidden="true"
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
+					<span className="sc-cart-line-item-details__toggle-label">
+						{expanded
+							? __('Show less', 'surecart')
+							: __('Show more', 'surecart')}
+					</span>
+					<span
+						className={`sc-cart-line-item-details__toggle-icon${
+							expanded
+								? ' sc-cart-line-item-details__toggle-icon--rotated'
+								: ''
+						}`}
 					>
-						<polyline points="6 9 12 15 18 9"></polyline>
-					</svg>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<polyline points="6 9 12 15 18 9"></polyline>
+						</svg>
+					</span>
 				</span>
 			</div>
 		</>

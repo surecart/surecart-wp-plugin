@@ -218,6 +218,16 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * "(N)" suffix shown next to a bundle's name — the number of products
+		 * the bundle contains. Empty for non-bundle line items.
+		 */
+		get lineItemBundleCount() {
+			if (!state.isBundleParent) return '';
+			const count = state.bundleComponentsCount;
+			return count > 0 ? sprintf('(%d)', count) : '';
+		},
+
+		/**
 		 * Whether the current line item has bundle components to display.
 		 */
 		get hasBundleComponents() {
@@ -283,6 +293,30 @@ const { state, actions } = store('surecart/checkout', {
 						count
 				  )
 				: '';
+		},
+
+		/**
+		 * Label for the details expand/collapse toggle.
+		 *
+		 * `hiddenCount` is measured from the rendered rows (see the
+		 * `line-item-details` store), so it already reflects the variants-only
+		 * filter and is exact for bundles. Collapsed bundles show "+N more";
+		 * anything else that overflows shows a generic "Show more".
+		 */
+		get detailsToggleLabel() {
+			const detailsCtx = getContext('surecart/line-item-details');
+			if (detailsCtx?.detailsExpanded) {
+				return __('Show less', 'surecart');
+			}
+			const hidden = Math.max(Number(detailsCtx?.hiddenCount) || 0, 0);
+			if (hidden > 0) {
+				return sprintf(
+					/* translators: %d: number of hidden bundle items */
+					__('+%d more', 'surecart'),
+					hidden
+				);
+			}
+			return __('Show more', 'surecart');
 		},
 
 		/**
