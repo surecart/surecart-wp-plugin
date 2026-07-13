@@ -886,6 +886,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		$data     = $response->get_data();
 
 		$this->assertSame( 200, $response->get_status() );
+		$this->assertIsString( $data['product'] );
 		$this->assertSame( 'prod_draft_123', $data['product'] );
 
 		$body = wp_json_encode( $data );
@@ -1074,6 +1075,183 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		foreach ( [ 'brand-private@example.com', '+15555550100', '123 Private St' ] as $sentinel ) {
 			$this->assertStringNotContainsString( $sentinel, $body, "Anonymous brand response leaked {$sentinel}." );
 		}
+	}
+
+	/**
+	 * Anonymous callers cannot list prices in edit context.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_price_edit_context_is_rejected() {
+		wp_set_current_user( 0 );
+		$this->mockRequestNeverCalled();
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/prices', [ 'context' => 'edit' ] );
+
+		$this->assertSame( 401, $response->get_status() );
+		$this->assertSame( 'rest_forbidden_context', $response->get_data()['code'] );
+	}
+
+	/**
+	 * Anonymous callers cannot list bumps in edit context.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_bump_edit_context_is_rejected() {
+		wp_set_current_user( 0 );
+		$this->mockRequestNeverCalled();
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/bumps', [ 'context' => 'edit' ] );
+
+		$this->assertSame( 401, $response->get_status() );
+		$this->assertSame( 'rest_forbidden_context', $response->get_data()['code'] );
+	}
+
+	/**
+	 * Anonymous callers cannot request a variant in edit context.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_variant_edit_context_is_rejected() {
+		wp_set_current_user( 0 );
+		$this->mockRequestNeverCalled();
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/variants/variant_123', [ 'context' => 'edit' ] );
+
+		$this->assertSame( 401, $response->get_status() );
+		$this->assertSame( 'rest_forbidden_context', $response->get_data()['code'] );
+	}
+
+	/**
+	 * Edit context with the edit capability skips the per-item list
+	 * filtering, so admin list screens keep the private fields.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_editor_price_index_in_edit_context_keeps_list_items_unstripped() {
+		$this->actAsEditor( 'edit_sc_prices' );
+		$this->mockCatalogRequest(
+			(object) [
+				'data'       => [ $this->privatePriceFixture() ],
+				'pagination' => (object) [
+					'count' => 1,
+					'limit' => 20,
+				],
+			],
+			$captured
+		);
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/prices', [ 'context' => 'edit' ] );
+		// edit context skips the list filtering, so items stay models — normalize to arrays.
+		$items = json_decode( wp_json_encode( $response->get_data() ), true );
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertCount( 1, $items );
+		$this->assertSame( 'price_meta_secret_123', $items[0]['metadata']['internal_note'] );
+		$this->assertSame( 1700000001, $items[0]['archived_at'] );
+		$this->assertSame( 'sk_product_secret_123', $items[0]['product']['sku'] );
+	}
+
+	/**
+	 * A missing status on the expanded product counts as published — the
+	 * product is stripped, not collapsed to its id.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_price_response_treats_missing_product_status_as_published() {
+		wp_set_current_user( 0 );
+		$fixture = $this->privatePriceFixture();
+		unset( $fixture->product->status );
+		$this->mockCatalogRequest( $fixture, $captured );
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/prices/price_123' );
+		$data     = $response->get_data();
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertIsArray( $data['product'] );
+		$this->assertSame( 'Test Product', $data['product']['name'] );
+		$this->assertArrayNotHasKey( 'sku', $data['product'] );
+		$this->assertArrayNotHasKey( 'metadata', $data['product'] );
+	}
+
+	/**
+	 * A draft expanded product without an id is unset entirely, keeping the
+	 * product key two-shaped (id string or object) — never null.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_price_response_unsets_draft_expanded_product_without_id() {
+		wp_set_current_user( 0 );
+		$fixture = $this->draftProductPriceFixture();
+		unset( $fixture->product->id );
+		$this->mockCatalogRequest( $fixture, $captured );
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/prices/price_draft_123' );
+		$data     = $response->get_data();
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertArrayNotHasKey( 'product', $data );
+	}
+
+	/**
+	 * The anonymous expand allow-list is filterable, so integrations can
+	 * deliberately widen it per resource.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_expands_filter_can_widen_allow_list() {
+		wp_set_current_user( 0 );
+		$this->mockCatalogRequest( $this->emptyListFixture(), $captured );
+
+		add_filter(
+			'surecart/rest/anonymous_expands',
+			function ( $expands, $class ) {
+				if ( $class instanceof \SureCart\Models\Product ) {
+					$expands[] = 'downloads';
+				}
+				return $expands;
+			},
+			10,
+			2
+		);
+
+		$response = $this->dispatch(
+			'GET',
+			'/surecart/v1/products',
+			[ 'expand' => [ 'downloads', 'commission_structure' ] ]
+		);
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertSame( [ 'downloads' ], $captured[1]['query']['expand'] );
+	}
+
+	/**
+	 * The private field strip lists are filterable per object type.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_private_catalog_fields_filter_can_strip_more_fields() {
+		wp_set_current_user( 0 );
+		$this->mockCatalogRequest( $this->privateProductFixture(), $captured );
+
+		add_filter(
+			'surecart/rest/private_catalog_fields',
+			function ( $fields, $type ) {
+				if ( 'product' === $type ) {
+					$fields[] = 'slug';
+				}
+				return $fields;
+			},
+			10,
+			2
+		);
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/products/prod_123' );
+		$data     = $response->get_data();
+
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertArrayNotHasKey( 'slug', $data );
+		$this->assertSame( 'Test Product', $data['name'] );
 	}
 
 	/**

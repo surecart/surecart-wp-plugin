@@ -19,13 +19,30 @@ trait RestrictsAnonymousReads {
 	/**
 	 * Run some middleware to run before request.
 	 *
+	 * Controllers using this trait must not override this method — override
+	 * catalogMiddleware() instead, so the anonymous restriction can never be
+	 * silently shadowed away.
+	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
 	 * @param \WP_REST_Request       $request Request object.
 	 *
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		return parent::middleware( $this->restrictAnonymousReads( $class, $request ), $request );
+		// restriction runs first so the expand allow-list is applied before any controller expand logic.
+		return parent::middleware( $this->catalogMiddleware( $this->restrictAnonymousReads( $class, $request ), $request ), $request );
+	}
+
+	/**
+	 * Controller-specific middleware hook, run after the anonymous restriction.
+	 *
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model
+	 */
+	protected function catalogMiddleware( $class, \WP_REST_Request $request ) {
+		return $class;
 	}
 
 	/**
@@ -45,9 +62,24 @@ trait RestrictsAnonymousReads {
 			return $class;
 		}
 
+		/**
+		 * Filters the expand values callers without the edit capability may
+		 * forward to the platform for this resource.
+		 *
+		 * WARNING: this is a security control. Widening the allow-list forwards
+		 * the expand to the private platform API with the store's secret token
+		 * and re-exposes private platform data (files, commission structures,
+		 * customer PII) to anonymous callers.
+		 *
+		 * @param array                  $expands Allowed expand values.
+		 * @param \SureCart\Models\Model $class   Model class instance being queried.
+		 * @param \WP_REST_Request       $request Request object.
+		 */
+		$anonymous_expands = apply_filters( 'surecart/rest/anonymous_expands', $this->anonymous_expands, $class, $request );
+
 		// only allow-listed expands may be forwarded to the platform.
 		if ( ! empty( $request['expand'] ) ) {
-			$request->set_param( 'expand', array_values( array_intersect( array_filter( (array) $request['expand'], 'is_string' ), $this->anonymous_expands ) ) );
+			$request->set_param( 'expand', array_values( array_intersect( array_filter( (array) $request['expand'], 'is_string' ), $anonymous_expands ) ) );
 		}
 
 		if ( ! empty( $this->anonymous_scope ) ) {
@@ -65,12 +97,12 @@ trait RestrictsAnonymousReads {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \SureCart\Models\Model|\WP_Error
+	 * @return \SureCart\Models\Model|false|\WP_Error False when a 'finding' model event cancels the fetch.
 	 */
 	public function find( \WP_REST_Request $request ) {
 		$model = parent::find( $request );
 
-		if ( is_wp_error( $model ) || current_user_can( $this->edit_capability ) ) {
+		if ( empty( $model ) || is_wp_error( $model ) || current_user_can( $this->edit_capability ) ) {
 			return $model;
 		}
 

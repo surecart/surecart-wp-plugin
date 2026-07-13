@@ -153,12 +153,9 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit prices.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		return true;
@@ -171,12 +168,9 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit prices.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		if ( $request['archived'] ) {
@@ -236,7 +230,12 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 			// a missing status counts as published: archived products keep their name for
 			// grandfathered plans on customer dashboards.
 			if ( 'published' !== ( $response['product']['status'] ?? 'published' ) ) {
-				$response['product'] = $response['product']['id'] ?? null;
+				// keep the key two-shaped: id string when collapsed, object when published.
+				if ( empty( $response['product']['id'] ) ) {
+					unset( $response['product'] );
+				} else {
+					$response['product'] = $response['product']['id'];
+				}
 			} else {
 				$response['product'] = $this->stripPrivateProductFields( $response['product'] );
 			}

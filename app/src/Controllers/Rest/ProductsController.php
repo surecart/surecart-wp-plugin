@@ -53,21 +53,19 @@ class ProductsController extends RestController {
 	protected $anonymous_visible_statuses = [ 'published' ];
 
 	/**
-	 * Run some middleware to run before request.
+	 * Controller-specific middleware hook, run after the anonymous restriction.
 	 *
 	 * @param \SureCart\Models\Model $class Model class instance.
 	 * @param \WP_REST_Request       $request Request object.
 	 *
 	 * @return \SureCart\Models\Model
 	 */
-	protected function middleware( $class, \WP_REST_Request $request ) {
-		$class = $this->restrictAnonymousReads( $class, $request );
-
+	protected function catalogMiddleware( $class, \WP_REST_Request $request ) {
 		// if we are in edit context, we want to fetch the variants, variant options and prices.
 		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
 			$class->with( array_unique( array_filter( array_merge( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ], $request['expand'] ?? [] ) ) ) );
 		}
-		return parent::middleware( $class, $request );
+		return $class;
 	}
 
 	/**

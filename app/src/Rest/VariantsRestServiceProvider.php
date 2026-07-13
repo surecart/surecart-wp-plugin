@@ -116,12 +116,9 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit variants.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		return true;
@@ -134,12 +131,9 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit variants.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		if ( $request ['archived'] ) {

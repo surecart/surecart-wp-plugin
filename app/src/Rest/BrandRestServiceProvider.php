@@ -185,12 +185,9 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function get_item_permissions_check( $request ) {
 		// block-editor users need the edit-context read for the store logo block.
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit the brand.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, [ 'edit_posts', 'manage_options' ] );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		return true;

@@ -304,6 +304,32 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	}
 
 	/**
+	 * Reject edit-context reads from callers without the capability.
+	 *
+	 * @param \WP_REST_Request $request    Full details about the request.
+	 * @param string|array     $capability Capability that unlocks edit context. Any one of an array is enough.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function forbidEditContextWithout( $request, $capability ) {
+		if ( 'edit' !== $request['context'] ) {
+			return true;
+		}
+
+		foreach ( (array) $capability as $cap ) {
+			if ( current_user_can( $cap ) ) {
+				return true;
+			}
+		}
+
+		return new \WP_Error(
+			'rest_forbidden_context',
+			__( 'Sorry, you are not allowed to edit this resource.', 'surecart' ),
+			[ 'status' => rest_authorization_required_code() ]
+		);
+	}
+
+	/**
 	 * Retrieves the query params for collections.
 	 *
 	 * @return array

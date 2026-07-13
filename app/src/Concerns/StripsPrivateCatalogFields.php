@@ -8,45 +8,81 @@ namespace SureCart\Concerns;
  */
 trait StripsPrivateCatalogFields {
 	/**
+	 * Strip the given private fields from a catalog response array.
+	 *
+	 * @param array  $data   Response data.
+	 * @param array  $fields Default field keys to strip.
+	 * @param string $type   Catalog object type the fields belong to.
+	 *
+	 * @return array
+	 */
+	private function stripPrivateFields( $data, $fields, $type ) {
+		/**
+		 * Filters the private field keys stripped from view/embed catalog
+		 * REST responses.
+		 *
+		 * WARNING: this is a security control. These endpoints proxy the
+		 * private platform API with the store's secret token — removing a
+		 * key from this list re-exposes private platform data (stock, skus,
+		 * metadata, offer internals, customer PII) to anonymous callers.
+		 *
+		 * @param array  $fields Field keys stripped from the response.
+		 * @param string $type   Catalog object type (product, variant, price, review, product_collection).
+		 * @param array  $data   The response data being stripped.
+		 */
+		$fields = apply_filters( 'surecart/rest/private_catalog_fields', $fields, $type, $data );
+
+		foreach ( (array) $fields as $field ) {
+			unset( $data[ $field ] );
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Strip private fields from a product array.
 	 *
 	 * Covers fields the products schema strips at the top level, so it can
 	 * also be applied to products expanded on other resources (e.g. prices).
 	 *
-	 * @param array $product Product response data.
+	 * @param array|mixed $product Product response data. Non-arrays pass through untouched.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	protected function stripPrivateProductFields( $product ) {
 		if ( ! is_array( $product ) ) {
 			return $product;
 		}
 
-		unset(
-			// private sub-objects — never for anonymous callers.
-			$product['commission_structure'],
-			$product['downloads'],
-			$product['current_release_download'],
-			$product['files'],
-			$product['shipping_profile'],
-			// internals the schema strips on the products endpoint.
-			// metrics stays — the product list renders price ranges from it.
-			$product['available_stock'],
-			$product['held_stock'],
-			$product['stock'],
-			$product['status'],
-			$product['archived'],
-			$product['archived_at'],
-			$product['discarded_at'],
-			$product['cataloged_at'],
-			$product['sku'],
-			$product['metadata'],
-			$product['dimensions'],
-			$product['weight'],
-			$product['weight_unit'],
-			$product['tax_category'],
-			$product['tax_enabled'],
-			$product['purchase_limit']
+		$product = $this->stripPrivateFields(
+			$product,
+			[
+				// private sub-objects — never for anonymous callers.
+				'commission_structure',
+				'downloads',
+				'current_release_download',
+				'files',
+				'shipping_profile',
+				// internals the schema strips on the products endpoint.
+				// metrics stays — the product list renders price ranges from it.
+				'available_stock',
+				'held_stock',
+				'stock',
+				'status',
+				'archived',
+				'archived_at',
+				'discarded_at',
+				'cataloged_at',
+				'sku',
+				'metadata',
+				'dimensions',
+				'weight',
+				'weight_unit',
+				'tax_category',
+				'tax_enabled',
+				'purchase_limit',
+			],
+			'product'
 		);
 
 		if ( ! empty( $product['variants']['data'] ) && is_array( $product['variants']['data'] ) ) {
@@ -92,30 +128,32 @@ trait StripsPrivateCatalogFields {
 	/**
 	 * Strip private fields from a variant array.
 	 *
-	 * @param array $variant Variant response data.
+	 * @param array|mixed $variant Variant response data. Non-arrays pass through untouched.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	protected function stripPrivateVariantFields( $variant ) {
 		if ( ! is_array( $variant ) ) {
 			return $variant;
 		}
 
-		unset(
-			$variant['available_stock'],
-			$variant['held_stock'],
-			$variant['stock'],
-			$variant['sku'],
-			$variant['metadata'],
-			$variant['dimensions'],
-			$variant['weight'],
-			$variant['weight_unit'],
-			// signed download urls — never for anonymous callers.
-			$variant['downloads'],
-			$variant['current_release_download']
+		return $this->stripPrivateFields(
+			$variant,
+			[
+				'available_stock',
+				'held_stock',
+				'stock',
+				'sku',
+				'metadata',
+				'dimensions',
+				'weight',
+				'weight_unit',
+				// signed download urls — never for anonymous callers.
+				'downloads',
+				'current_release_download',
+			],
+			'variant'
 		);
-
-		return $variant;
 	}
 
 	/**
@@ -123,42 +161,46 @@ trait StripsPrivateCatalogFields {
 	 *
 	 * Keeps scratch_amount — the storefront renders it as the compare-at price.
 	 *
-	 * @param array $price Price response data.
+	 * @param array|mixed $price Price response data. Non-arrays pass through untouched.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	protected function stripPrivatePriceFields( $price ) {
 		if ( ! is_array( $price ) ) {
 			return $price;
 		}
 
-		unset(
-			$price['metadata'],
-			$price['archived_at'],
-			$price['discarded_at']
+		return $this->stripPrivateFields(
+			$price,
+			[
+				'metadata',
+				'archived_at',
+				'discarded_at',
+			],
+			'price'
 		);
-
-		return $price;
 	}
 
 	/**
 	 * Strip customer PII and purchase internals from a review array.
 	 *
-	 * @param array $review Review response data.
+	 * @param array|mixed $review Review response data. Non-arrays pass through untouched.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	protected function stripPrivateReviewFields( $review ) {
 		if ( ! is_array( $review ) ) {
 			return $review;
 		}
 
-		unset(
-			$review['customer'],
-			$review['purchase']
+		return $this->stripPrivateFields(
+			$review,
+			[
+				'customer',
+				'purchase',
+			],
+			'review'
 		);
-
-		return $review;
 	}
 
 	/**
@@ -167,20 +209,22 @@ trait StripsPrivateCatalogFields {
 	 * Covers the fields the collections schema makes edit-only, so it can
 	 * also be applied to collections expanded on products.
 	 *
-	 * @param array $collection Product collection response data.
+	 * @param array|mixed $collection Product collection response data. Non-arrays pass through untouched.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
 	protected function stripPrivateCollectionFields( $collection ) {
 		if ( ! is_array( $collection ) ) {
 			return $collection;
 		}
 
-		unset(
-			$collection['metadata'],
-			$collection['archived_at']
+		return $this->stripPrivateFields(
+			$collection,
+			[
+				'metadata',
+				'archived_at',
+			],
+			'product_collection'
 		);
-
-		return $collection;
 	}
 }
