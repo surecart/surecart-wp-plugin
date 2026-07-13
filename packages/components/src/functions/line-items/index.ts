@@ -23,18 +23,20 @@ export const getPerBundleQuantity = (component: LineItem, parentQuantity = 1): n
  * plain items render just `Name`). Pass `showAll = false` for variants-only
  * mode, which lists only the components that have a variant selection.
  */
-export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1, showAll = true): BundleComponentRow[] => {
+export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1, showAll = true, separator = '·'): BundleComponentRow[] => {
+  const sep = (separator || '·').trim() || '·';
   return (components || [])
     .map(component => {
-      const variants = component?.variant_display_options || '';
+      // Prefer the raw options array so we can join with the separator; fall back to the pre-joined display string when it's absent.
+      const options = (component?.variant_options || []).filter(Boolean);
+      const variants = options.length ? options.join(` ${sep} `) : (component?.variant_display_options || '').trim();
       // Variants-only mode: drop components without a selection.
       if (!showAll && !variants) return null;
       const componentProduct = (component?.price as Price)?.product as Product;
       const name = componentProduct?.name || '';
       if (!name) return null;
       const qty = getPerBundleQuantity(component, parentQuantity);
-      const label = variants ? `${name} - ${variants}` : name;
-      return { id: component?.id, label, qty };
+      return { id: component?.id, name, variants, qty };
     })
     .filter(Boolean) as BundleComponentRow[];
 };
@@ -51,7 +53,8 @@ export const getBundleComponentRowsFromBundleItems = (items: BundleItem[] = []):
       const name = componentProduct?.name || '';
       const qty = Math.max(Number(item?.quantity) || 1, 1);
       if (!name) return null;
-      return { id: item?.id, label: name, qty };
+      // Bundle definitions carry no variant selection.
+      return { id: item?.id, name, variants: '', qty };
     })
     .filter(Boolean) as BundleComponentRow[];
 };

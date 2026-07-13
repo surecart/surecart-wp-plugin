@@ -634,7 +634,8 @@ export interface BundleItem {
 
 export interface BundleComponentRow {
   id: string;
-  label: string;
+  name: string;
+  variants: string;
   qty: number;
 }
 

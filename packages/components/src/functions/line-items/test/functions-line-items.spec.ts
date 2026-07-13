@@ -55,17 +55,23 @@ describe('Line items functions', () => {
 
   describe('getBundleComponentRowsFromLineItems', () => {
     const components = [
-      { id: 'c1', quantity: 4, variant_display_options: 'Red / XL', price: { product: { name: 'Air Beats' } } },
+      { id: 'c1', quantity: 4, variant_options: ['Red', 'XL'], price: { product: { name: 'Air Beats' } } },
       { id: 'c2', quantity: 2, variant_display_options: '10°C', price: { product: { name: 'Sleeping Bag' } } },
-      { id: 'c3', quantity: 2, variant_display_options: '', price: { product: { name: 'No Variant' } } },
+      { id: 'c3', quantity: 2, variant_options: [], price: { product: { name: 'No Variant' } } },
     ];
 
-    it('builds per-bundle rows and skips components without a variant', () => {
+    it('builds per-bundle rows: options joined by " · ", display string fallback, all shown by default', () => {
       const rows = getBundleComponentRowsFromLineItems(components as any, 2);
       expect(rows).toEqual([
-        { id: 'c1', label: 'Air Beats - Red / XL', qty: 2 },
-        { id: 'c2', label: 'Sleeping Bag - 10°C', qty: 1 },
+        { id: 'c1', name: 'Air Beats', variants: 'Red · XL', qty: 2 },
+        { id: 'c2', name: 'Sleeping Bag', variants: '10°C', qty: 1 },
+        { id: 'c3', name: 'No Variant', variants: '', qty: 1 },
       ]);
+    });
+
+    it('drops components without a variant selection in variants-only mode', () => {
+      const rows = getBundleComponentRowsFromLineItems(components as any, 2, false);
+      expect(rows.map(r => r.id)).toEqual(['c1', 'c2']);
     });
   });
 

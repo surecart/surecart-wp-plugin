@@ -227,7 +227,7 @@ export class ScSubscriptionDetails {
           <div class="subscription-details__bundle-components">
             {rows.map(row => (
               <div class="bundle-component subscription-details__bundle-component" key={row.id}>
-                <span class="bundle-component__label">{row.label}</span>
+                <span class="bundle-component__label">{row.name}</span>
                 {row.qty > 1 && (
                   <span class="bundle-component__qty subscription-details__bundle-qty">
                     {sprintf(

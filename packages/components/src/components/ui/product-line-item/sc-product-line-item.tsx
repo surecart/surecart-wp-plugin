@@ -108,6 +108,9 @@ export class ScProductLineItem {
    */
   @Prop() showAllBundleItems: boolean = true;
 
+  /** Separator between a bundle component's name and its variant options. */
+  @Prop() separator: string = '·';
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -171,7 +174,8 @@ export class ScProductLineItem {
    * to measured overflow with a generic "Show more".
    */
   renderDetails() {
-    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems);
+    const sep = (this.separator || '·').trim() || '·';
+    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems, sep);
     const hasNote = !!this.note;
     if (!rows.length && !hasNote) return null;
 
@@ -199,8 +203,13 @@ export class ScProductLineItem {
         <div class="line-item-details__content" ref={el => (this.detailsEl = el as HTMLDivElement)}>
           {rows.map(row => (
             <div class="line-item-details__row" part="component" key={row.id}>
-              <span class="line-item-details__label">{row.label}</span>
-              {row.qty > 1 && <span class="line-item-details__qty">× {row.qty}</span>}
+              {row.qty > 1 && <span class="line-item-details__qty">{row.qty} ×</span>}
+              <span class="line-item-details__name">{row.name}</span>
+              {!!row.variants && (
+                <span class="line-item-details__variant">
+                  {sep} {row.variants}
+                </span>
+              )}
             </div>
           ))}
           {hasNote && <div class="line-item-details__note">{this.note}</div>}

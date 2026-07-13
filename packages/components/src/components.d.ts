@@ -1880,6 +1880,10 @@ export namespace Components {
          */
         "removable": boolean;
         /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator": string;
+        /**
           * Show every bundle component (default), or only those with a selected variant when set to `false`.
          */
         "showAllBundleItems": boolean;
@@ -3240,6 +3244,10 @@ export namespace Components {
           * Product scratch display amount
          */
         "scratchDisplayAmount": string;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator": string;
         /**
           * Show every bundle component (default), or only those with a selected variant when set to `false`.
          */
@@ -9295,6 +9303,10 @@ declare namespace LocalJSX {
          */
         "removable"?: boolean;
         /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator"?: string;
+        /**
           * Show every bundle component (default), or only those with a selected variant when set to `false`.
          */
         "showAllBundleItems"?: boolean;
@@ -10719,6 +10731,10 @@ declare namespace LocalJSX {
           * Product scratch display amount
          */
         "scratchDisplayAmount"?: string;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator"?: string;
         /**
           * Show every bundle component (default), or only those with a selected variant when set to `false`.
          */

@@ -1047,6 +1047,7 @@
   "sc-line-items": {
     "editable": true,
     "removable": true,
+    "separator": true,
     "show-all-bundle-items": true,
     "style": true,
     "id": true,
@@ -1799,6 +1800,7 @@
     "review-button-link": true,
     "scratch": true,
     "scratch-display-amount": true,
+    "separator": true,
     "show-all-bundle-items": true,
     "sku": true,
     "trial": true,

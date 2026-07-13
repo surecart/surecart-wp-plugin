@@ -291,22 +291,22 @@ sc-quantity-select::part(minus) {
     overflow: visible;
   }
 
+  // Inline text flow (not flex) so a long name wraps like a paragraph instead of orphaning the "N ×" prefix on its own line.
   &__row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--sc-spacing-x-small);
-
     &:empty {
       display: none;
     }
   }
 
-  &__label {
-    min-width: 0;
+  // Quantity prefix ("2 ×") — only rendered when > 1, same color as the name.
+  &__qty {
+    margin-inline-end: 0.35em;
   }
 
-  &__qty {
-    flex: 0 0 auto;
+  // Variant options ("· Red · Large") — muted, after the name.
+  &__variant {
+    margin-inline-start: 0.35em;
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
   }
 
   &__note {

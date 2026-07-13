@@ -54,6 +54,9 @@ export class ScLineItems {
    */
   @Prop() showAllBundleItems: boolean = true;
 
+  /** Separator between a bundle component's name and its variant options. */
+  @Prop() separator: string = '·';
+
   /**
    * Is the line item editable?
    */
@@ -112,6 +115,7 @@ export class ScLineItems {
                 note={item?.display_note}
                 bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
                 showAllBundleItems={this.showAllBundleItems}
+                separator={this.separator}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={!item?.locked && this.removable}
