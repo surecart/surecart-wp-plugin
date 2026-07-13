@@ -250,8 +250,8 @@ sc-quantity-select::part(minus) {
 // Line item details — collapsible region shared by bundle components and the note.
 .line-item-details {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  // Content-width so the chevron sits next to the text, not the row's far edge.
   align-self: flex-start;
   gap: 0.25em;
   margin-top: var(--sc-spacing-xx-small);
@@ -349,6 +349,14 @@ sc-quantity-select::part(minus) {
     }
   }
 
+  // Match the design's text-sm (14px / 20px). Don't use --sc-font-size-small
+  // here: it's 0.875em and compounds against the container, rendering the
+  // label far too small (~11px).
+  &__toggle-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
   // Don't override sc-icon's host display — it breaks its --width/--height sizing.
   &__toggle-icon {
     transition: transform 0.2s ease;
@@ -358,4 +366,22 @@ sc-quantity-select::part(minus) {
   &--is-expanded &__toggle-icon {
     transform: rotate(180deg);
   }
+}
+
+// Bundle product count next to the name — inherits the title's color/size (Figma).
+.item__title-count {
+  margin-inline-start: 0.25em;
+}
+
+// Screen-reader-only text (shadow DOM can't reach the global helper class).
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

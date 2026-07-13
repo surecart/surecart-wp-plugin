@@ -1,8 +1,11 @@
 import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { getBundleComponentRowsFromLineItems } from '../../../functions/line-items';
 import { Fee, ImageAttributes, LineItem } from '../../../types';
+
+/** Number of detail rows shown before the region collapses (matches the cart block default). */
+const COLLAPSE_AFTER = 2;
 
 /**
  * @part base - The component base
@@ -162,15 +165,26 @@ export class ScProductLineItem {
   }
 
   /**
-   * Bundle items + note share a single collapsible region with one chevron.
-   * Collapsed, only the first two lines show; the chevron reveals the rest.
+   * Bundle items + note share a single collapsible region. Collapsed, only the
+   * first `COLLAPSE_AFTER` rows show. Bundle components render one row each, so
+   * the hidden count is exact ("+N more"); a note (no discrete rows) falls back
+   * to measured overflow with a generic "Show more".
    */
   renderDetails() {
     const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems);
     const hasNote = !!this.note;
     if (!rows.length && !hasNote) return null;
 
-    const collapsible = this.detailsOverflowing || this.detailsExpanded;
+    const bundleHidden = rows.length > COLLAPSE_AFTER ? rows.length - COLLAPSE_AFTER : 0;
+    // Row count is authoritative for bundles (avoids a wrapped row falsely
+    // triggering a toggle); the note relies on measured overflow.
+    const collapsible = this.detailsExpanded || bundleHidden > 0 || (hasNote && this.detailsOverflowing);
+
+    const toggleLabel = this.detailsExpanded
+      ? __('Show less', 'surecart')
+      : bundleHidden > 0
+      ? sprintf(/* translators: %d: number of hidden bundle items */ __('+%d more', 'surecart'), bundleHidden)
+      : __('Show more', 'surecart');
 
     return (
       <div
@@ -198,14 +212,13 @@ export class ScProductLineItem {
             type="button"
             part="details__toggle"
             aria-expanded={this.detailsExpanded ? 'true' : 'false'}
-            aria-label={this.detailsExpanded ? __('Hide details', 'surecart') : __('Show all details', 'surecart')}
-            title={this.detailsExpanded ? __('Hide details', 'surecart') : __('Show all details', 'surecart')}
             onClick={e => {
               e.stopPropagation();
               this.toggleDetails();
             }}
           >
-            <sc-icon class="line-item-details__toggle-icon" name="chevron-down" style={{ width: '16px', height: '16px' }}></sc-icon>
+            <span class="line-item-details__toggle-label">{toggleLabel}</span>
+            <sc-icon class="line-item-details__toggle-icon" name="chevron-down" aria-hidden="true" style={{ width: '16px', height: '16px' }}></sc-icon>
           </button>
         )}
       </div>
@@ -214,6 +227,8 @@ export class ScProductLineItem {
 
   render() {
     const isImageFallback = this.image?.type === 'fallback';
+    // Number of products a bundle contains — shown as "(N)" next to the name.
+    const bundleCount = this.bundleComponents?.length || 0;
     const hasDescriptionDetails = !!this.variant || !!this.price || !!this.sku || !!this.purchasableStatus;
     const hasTrialFeesDetails = !!this.trial || (this.fees || []).some(fee => fee?.display_amount || fee?.description);
     const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails;
@@ -240,6 +255,12 @@ export class ScProductLineItem {
             <div class="item__row">
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
+                {bundleCount > 0 && (
+                  <span class="item__title-count" aria-hidden="true">
+                    ({bundleCount})
+                  </span>
+                )}
+                {bundleCount > 0 && <span class="visually-hidden">{sprintf(_n('Includes %d item', 'Includes %d items', bundleCount, 'surecart'), bundleCount)}</span>}
               </div>
               <div class="price" part="price__amount">
                 {!!this.scratch && this.scratch !== this.amount && <span class="item__scratch-price">{this.scratch}</span>}
