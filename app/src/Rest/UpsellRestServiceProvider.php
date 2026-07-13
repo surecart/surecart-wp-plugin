@@ -24,6 +24,13 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	protected $controller = UpsellsController::class;
 
 	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Whether the rest service provider converts currency.
 	 *
 	 * @var boolean
@@ -90,6 +97,11 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
+				'replacement_behavior'        => [
+					'description' => esc_html__( 'How this upsell replaces line items when accepted.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
 				'fee_description'             => [
 					'description' => esc_html__( 'The description for this upsell which will be visible to customers.', 'surecart' ),
 					'type'        => 'string',
@@ -123,6 +135,16 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				'filter_product_ids'          => [
 					'description' => esc_html__( 'The product ids that filter this upsell.', 'surecart' ),
 					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'filter_product_group_ids'    => [
+					'description' => esc_html__( 'The product group ids that filter this upsell.', 'surecart' ),
+					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'filter_match_type'           => [
+					'description' => esc_html__( 'How the filter conditions are matched – can be one of all, any, or none.', 'surecart' ),
+					'type'        => 'string',
 					'context'     => [ 'edit' ],
 				],
 				'metadata'                    => [

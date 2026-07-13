@@ -27,6 +27,13 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $controller = ProductsController::class;
 
 	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Register Additional REST Routes
 	 *
 	 * @return void

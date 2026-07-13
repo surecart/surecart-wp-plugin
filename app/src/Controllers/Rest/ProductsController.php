@@ -35,19 +35,15 @@ class ProductsController extends RestController {
 	/**
 	 * Query filters forced for anonymous callers.
 	 *
+	 * Archived products stay readable on find — grandfathered subscriptions
+	 * reference them when switching plans on the customer dashboard.
+	 *
 	 * @var array
 	 */
 	protected $anonymous_scope = [
 		'archived' => false,
 		'status'   => [ 'published' ],
 	];
-
-	/**
-	 * Hide archived products on find for anonymous callers.
-	 *
-	 * @var boolean
-	 */
-	protected $anonymous_hides_archived = true;
 
 	/**
 	 * Only published products are visible on find for anonymous callers.

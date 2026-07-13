@@ -17,6 +17,18 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	protected $converts_currency = false;
 
 	/**
+	 * Whether index responses get each item filtered by schema context.
+	 *
+	 * Off by default — most providers declared edit-only schema fields long
+	 * before lists were ever context-filtered, so enforcing this globally
+	 * would silently strip untested view-context list responses. Hardened
+	 * catalog endpoints opt in.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = false;
+
+	/**
 	 * Mark specific properties that need additional permissions checks
 	 * before modifying. We don't want customers being able to modify these.
 	 *
@@ -238,7 +250,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 
 			// index responses wrap a list of models the schema filter can't reach — filter each item.
 			if ( $model instanceof \WP_REST_Response ) {
-				if ( 'edit' !== $context && is_array( $model->get_data() ) ) {
+				if ( $this->filters_list_items && 'edit' !== $context && is_array( $model->get_data() ) ) {
 					$model->set_data(
 						array_map(
 							function ( $item ) use ( $context ) {

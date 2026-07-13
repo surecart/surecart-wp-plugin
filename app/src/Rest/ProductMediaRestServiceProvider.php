@@ -25,6 +25,13 @@ class ProductMediaRestServiceProvider extends RestServiceProvider implements Res
 	protected $controller = ProductMediaController::class;
 
 	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array

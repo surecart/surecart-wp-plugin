@@ -34,6 +34,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 					\SureCart\Rest\PriceRestServiceProvider::class,
 					\SureCart\Rest\VariantsRestServiceProvider::class,
 					\SureCart\Rest\BumpRestServiceProvider::class,
+					\SureCart\Rest\UpsellRestServiceProvider::class,
 					\SureCart\Rest\BrandRestServiceProvider::class,
 				],
 			],
@@ -321,6 +322,18 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 					],
 				],
 			],
+			'product_collections'      => (object) [
+				'data' => [
+					(object) [
+						'id'          => 'pcol_123',
+						'object'      => 'product_collection',
+						'name'        => 'Public Collection',
+						'slug'        => 'public-collection',
+						'metadata'    => (object) [ 'internal_note' => 'collection_meta_secret_123' ],
+						'archived_at' => 1700000004,
+					],
+				],
+			],
 		];
 	}
 
@@ -338,6 +351,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 			'price_meta_secret_123',
 			'private.reviewer@example.com',
 			'purch_private_123',
+			'collection_meta_secret_123',
 			'comm_secret_123',
 			'secret-download.zip',
 			'sp_secret_123',
@@ -434,20 +448,50 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 	 */
 	private function privateBumpFixture() {
 		return (object) [
-			'id'                 => 'bump_123',
-			'object'             => 'bump',
-			'name'               => 'Test Bump',
-			'enabled'            => true,
-			'archived'           => false,
-			'currency'           => 'usd',
-			'amount_off'         => 500,
-			'percent_off'        => 10,
-			'priority'           => 2,
-			'filters'            => 'price_ids:price_secret_filter_123',
-			'filter_price_ids'   => [ 'price_secret_filter_123' ],
-			'filter_product_ids' => [ 'prod_secret_filter_123' ],
-			'metadata'           => (object) [ 'internal_note' => 'bump_meta_secret_123' ],
-			'price'              => 'price_123',
+			'id'                       => 'bump_123',
+			'object'                   => 'bump',
+			'name'                     => 'Test Bump',
+			'enabled'                  => true,
+			'auto_apply'               => true,
+			'archived'                 => false,
+			'archived_at'              => 1700000003,
+			'currency'                 => 'usd',
+			'amount_off'               => 500,
+			'percent_off'              => 10,
+			'priority'                 => 2,
+			'filters'                  => 'price_ids:price_secret_filter_123',
+			'filter_price_ids'         => [ 'price_secret_filter_123' ],
+			'filter_product_ids'       => [ 'prod_secret_filter_123' ],
+			'filter_product_group_ids' => [ 'group_secret_filter_123' ],
+			'filter_match_type'        => 'match_type_secret_123',
+			'metadata'                 => (object) [ 'internal_note' => 'bump_meta_secret_123' ],
+			'price'                    => 'price_123',
+		];
+	}
+
+	/**
+	 * An upsell carrying private offer internals.
+	 *
+	 * @return object
+	 */
+	private function privateUpsellFixture() {
+		return (object) [
+			'id'                          => 'upsell_123',
+			'object'                      => 'upsell',
+			'fee_description'             => 'Test Upsell',
+			'step'                        => 'initial',
+			'duplicate_purchase_behavior' => 'allow',
+			'currency'                    => 'usd',
+			'amount_off'                  => 500,
+			'percent_off'                 => 10,
+			'priority'                    => 2,
+			'replacement_behavior'        => 'replacement_secret_123',
+			'filter_price_ids'            => [ 'price_secret_filter_123' ],
+			'filter_product_ids'          => [ 'prod_secret_filter_123' ],
+			'filter_product_group_ids'    => [ 'group_secret_filter_123' ],
+			'filter_match_type'           => 'match_type_secret_123',
+			'metadata'                    => (object) [ 'internal_note' => 'upsell_meta_secret_123' ],
+			'price'                       => 'price_123',
 		];
 	}
 
@@ -554,12 +598,14 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Anonymous find of an archived product returns a 404, since the
-	 * platform show endpoint ignores list filters.
+	 * Anonymous find of an archived-but-published product is deliberately
+	 * NOT hidden — grandfathered subscriptions fetch their product by id
+	 * when switching plans on the customer dashboard. Archived products
+	 * stay out of listings via the forced index scope.
 	 *
 	 * @group rest-catalog-hardening
 	 */
-	public function test_anonymous_product_find_hides_archived_product() {
+	public function test_anonymous_product_find_returns_archived_published_product() {
 		wp_set_current_user( 0 );
 		$this->mockCatalogRequest(
 			(object) [
@@ -573,9 +619,13 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		);
 
 		$response = $this->dispatch( 'GET', '/surecart/v1/products/prod_arch_123' );
+		$data     = $response->get_data();
 
-		$this->assertSame( 404, $response->get_status() );
-		$this->assertSame( 'rest_not_found', $response->get_data()['code'] );
+		$this->assertSame( 200, $response->get_status() );
+		$this->assertSame( 'prod_arch_123', $data['id'] );
+		// the archived state itself stays edit-only.
+		$this->assertArrayNotHasKey( 'archived', $data );
+		$this->assertArrayNotHasKey( 'status', $data );
 	}
 
 	/**
@@ -675,6 +725,12 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		$this->assertSame( 2000, $data['prices']['data'][0]['scratch_amount'] );
 		$this->assertSame( 'https://example.com/images/public-image.jpg', $data['product_medias']['data'][0]['media']['url'] );
 
+		// expanded collections keep their public fields, minus internals.
+		$this->assertSame( 'pcol_123', $data['product_collections']['data'][0]['id'] );
+		$this->assertSame( 'Public Collection', $data['product_collections']['data'][0]['name'] );
+		$this->assertArrayNotHasKey( 'metadata', $data['product_collections']['data'][0] );
+		$this->assertArrayNotHasKey( 'archived_at', $data['product_collections']['data'][0] );
+
 		// nothing private leaks anywhere in the payload, including accessor copies.
 		$body = wp_json_encode( $data );
 		foreach ( $this->privateProductSentinels() as $sentinel ) {
@@ -719,6 +775,19 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		foreach ( $this->privateProductSentinels() as $sentinel ) {
 			$this->assertStringNotContainsString( $sentinel, $body, "Anonymous product list leaked {$sentinel}." );
 		}
+	}
+
+	/**
+	 * List-item context filtering is opt-in — non-catalog providers with
+	 * pre-existing edit-only schema declarations keep their untouched
+	 * view-context list responses.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_list_item_filtering_defaults_off() {
+		$defaults = ( new \ReflectionClass( \SureCart\Rest\RestServiceProvider::class ) )->getDefaultProperties();
+
+		$this->assertFalse( $defaults['filters_list_items'] );
 	}
 
 	/**
@@ -911,7 +980,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 
 		$this->assertSame( 200, $response->get_status() );
 
-		foreach ( [ 'amount_off', 'percent_off', 'priority', 'filters', 'filter_price_ids', 'filter_product_ids', 'metadata' ] as $key ) {
+		foreach ( [ 'amount_off', 'percent_off', 'priority', 'filters', 'filter_price_ids', 'filter_product_ids', 'filter_product_group_ids', 'filter_match_type', 'auto_apply', 'archived', 'archived_at', 'metadata' ] as $key ) {
 			$this->assertArrayNotHasKey( $key, $data, "Anonymous bump response should not include {$key}." );
 		}
 
@@ -920,7 +989,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		$this->assertSame( 'price_123', $data['price'] );
 
 		$body = wp_json_encode( $data );
-		foreach ( [ 'price_secret_filter_123', 'prod_secret_filter_123', 'bump_meta_secret_123' ] as $sentinel ) {
+		foreach ( [ 'price_secret_filter_123', 'prod_secret_filter_123', 'group_secret_filter_123', 'match_type_secret_123', 'bump_meta_secret_123' ] as $sentinel ) {
 			$this->assertStringNotContainsString( $sentinel, $body, "Anonymous bump response leaked {$sentinel}." );
 		}
 	}
@@ -943,7 +1012,38 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 		$this->assertSame( 10, $data['percent_off'] );
 		$this->assertSame( 2, $data['priority'] );
 		$this->assertSame( [ 'price_secret_filter_123' ], $data['filter_price_ids'] );
+		$this->assertSame( [ 'group_secret_filter_123' ], $data['filter_product_group_ids'] );
+		$this->assertSame( 'match_type_secret_123', $data['filter_match_type'] );
 		$this->assertSame( 'bump_meta_secret_123', $data['metadata']['internal_note'] );
+	}
+
+	/**
+	 * Anonymous upsell responses drop the offer internals (discount amounts,
+	 * priority, filters, metadata) but keep the customer-facing fields.
+	 *
+	 * @group rest-catalog-hardening
+	 */
+	public function test_anonymous_upsell_response_strips_offer_internals() {
+		wp_set_current_user( 0 );
+		$this->mockCatalogRequest( $this->privateUpsellFixture(), $captured );
+
+		$response = $this->dispatch( 'GET', '/surecart/v1/upsells/upsell_123' );
+		$data     = $response->get_data();
+
+		$this->assertSame( 200, $response->get_status() );
+
+		foreach ( [ 'amount_off', 'percent_off', 'priority', 'replacement_behavior', 'filter_price_ids', 'filter_product_ids', 'filter_product_group_ids', 'filter_match_type', 'metadata' ] as $key ) {
+			$this->assertArrayNotHasKey( $key, $data, "Anonymous upsell response should not include {$key}." );
+		}
+
+		$this->assertSame( 'Test Upsell', $data['fee_description'] );
+		$this->assertSame( 'initial', $data['step'] );
+		$this->assertSame( 'price_123', $data['price'] );
+
+		$body = wp_json_encode( $data );
+		foreach ( [ 'price_secret_filter_123', 'prod_secret_filter_123', 'group_secret_filter_123', 'match_type_secret_123', 'replacement_secret_123', 'upsell_meta_secret_123' ] as $sentinel ) {
+			$this->assertStringNotContainsString( $sentinel, $body, "Anonymous upsell response leaked {$sentinel}." );
+		}
 	}
 
 	/**

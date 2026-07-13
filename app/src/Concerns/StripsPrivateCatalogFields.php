@@ -61,6 +61,10 @@ trait StripsPrivateCatalogFields {
 			$product['reviews']['data'] = array_map( [ $this, 'stripPrivateReviewFields' ], $product['reviews']['data'] );
 		}
 
+		if ( ! empty( $product['product_collections']['data'] ) && is_array( $product['product_collections']['data'] ) ) {
+			$product['product_collections']['data'] = array_map( [ $this, 'stripPrivateCollectionFields' ], $product['product_collections']['data'] );
+		}
+
 		// accessor-derived copies (Model::toArray appends every get*Attribute) leak the same fields.
 		foreach ( [ 'active_prices', 'active_ad_hoc_prices' ] as $key ) {
 			if ( ! empty( $product[ $key ] ) && is_array( $product[ $key ] ) ) {
@@ -155,5 +159,28 @@ trait StripsPrivateCatalogFields {
 		);
 
 		return $review;
+	}
+
+	/**
+	 * Strip private fields from a product collection array.
+	 *
+	 * Covers the fields the collections schema makes edit-only, so it can
+	 * also be applied to collections expanded on products.
+	 *
+	 * @param array $collection Product collection response data.
+	 *
+	 * @return array
+	 */
+	protected function stripPrivateCollectionFields( $collection ) {
+		if ( ! is_array( $collection ) ) {
+			return $collection;
+		}
+
+		unset(
+			$collection['metadata'],
+			$collection['archived_at']
+		);
+
+		return $collection;
 	}
 }

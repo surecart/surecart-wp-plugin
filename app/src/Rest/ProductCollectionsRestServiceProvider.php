@@ -24,6 +24,13 @@ class ProductCollectionsRestServiceProvider extends RestServiceProvider implemen
 	protected $controller = ProductCollectionsController::class;
 
 	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
