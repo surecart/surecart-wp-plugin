@@ -274,7 +274,7 @@ class ProductPageBlock {
 			return $this->component_cache[ $component_id ];
 		}
 
-		$posts = get_posts(
+		$posts   = get_posts(
 			array(
 				'post_type'        => 'sc_product',
 				'post_status'      => array( 'publish', 'draft', 'sc_archived', 'private' ),
@@ -497,9 +497,6 @@ class ProductPageBlock {
 				'has_unlimited_stock' => ! empty( $component->has_unlimited_stock ),
 				'available_stock'     => (int) ( $component->available_stock ?? 0 ),
 				'variants'            => array_map(
-					// Per-variant flag so the button gate can tell an out-of-stock
-					// tracked variant from a genuinely unlimited one, even when the
-					// component's product-level flag reads "unlimited".
 					fn( $variant ) => array(
 						'id'                  => $variant->id,
 						'available_stock'     => (int) ( $variant->available_stock ?? 0 ),
@@ -531,14 +528,14 @@ class ProductPageBlock {
 		return wp_parse_args(
 			$state,
 			[
-				'quantity'                           => 1,
-				'selectedDisplayAmount'              => $product->display_amount,
-				'isOnSale'                           => function () {
+				'quantity'              => 1,
+				'selectedDisplayAmount' => $product->display_amount,
+				'isOnSale'              => function () {
 					$context        = wp_interactivity_get_context();
 					$selected_price = $context['selectedPrice'] ?? [];
 					return $selected_price['is_on_sale'] ?? false;
 				},
-				'selectedAmount'                     => function () {
+				'selectedAmount'        => function () {
 					$context        = wp_interactivity_get_context();
 					$state          = wp_interactivity_state();
 					$selected_price = $context['selectedPrice'] ?? [];
@@ -550,8 +547,8 @@ class ProductPageBlock {
 
 					return $state['selectedVariant']['amount'] ?? $selected_price['amount'];
 				},
-				'busy'                               => false,
-				'shouldDisplayImage'                 => function () {
+				'busy'                  => false,
+				'shouldDisplayImage'    => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
 
@@ -561,8 +558,8 @@ class ProductPageBlock {
 
 					return $state['isOptionValueSelected']();
 				},
-				'adHocAmount'                        => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
-				'selectedVariant'                    => ! empty( $selected_variant ) && ! empty( $selected_variant->id ) ? $selected_variant->only(
+				'adHocAmount'           => ( ! empty( $selected_price->ad_hoc ) ? $selected_price->amount : 0 ) / ( ! empty( $selected_price->is_zero_decimal ) ? 1 : 100 ),
+				'selectedVariant'       => ! empty( $selected_variant ) && ! empty( $selected_variant->id ) ? $selected_variant->only(
 					[
 						'id',
 						'option_1',
@@ -578,7 +575,7 @@ class ProductPageBlock {
 				// Scope-aware: the same picker renders for the page product and for
 				// each bundle component. resolveVariantScope() resolves which slice
 				// of state to read, so this stays free of scope-specific branching.
-				'isOptionUnavailable'                => function () {
+				'isOptionUnavailable'   => function () {
 					$context       = wp_interactivity_get_context();
 					$option_number = (int) ( $context['optionNumber'] ?? 0 );
 					$option_value  = $context['option_value'] ?? null;
@@ -596,7 +593,7 @@ class ProductPageBlock {
 						$scope['missing_means_unavailable']
 					);
 				},
-				'isOptionValueSelected'              => function () {
+				'isOptionValueSelected' => function () {
 					$context = wp_interactivity_get_context();
 
 					if ( empty( $context['optionValue'] ) ) {
@@ -612,11 +609,11 @@ class ProductPageBlock {
 
 					return in_array( strtolower( $context['optionValue'] ), $values );
 				},
-				'imageDisplay'                       => function () {
+				'imageDisplay'          => function () {
 					$state = wp_interactivity_state();
 					return $state['shouldDisplayImage']() ? 'inherit' : 'none';
 				},
-				'isSoldOut'                          => function () {
+				'isSoldOut'             => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
 					$product = $context['product'] ?? [];
@@ -635,7 +632,7 @@ class ProductPageBlock {
 					}
 					return $product['available_stock'] <= 0;
 				},
-				'isUnavailable'                      => function () {
+				'isUnavailable'         => function () {
 					$context = wp_interactivity_get_context();
 					$state   = wp_interactivity_state();
 					if ( ! empty( $context['product']->archived ) || ! empty( $state['isSoldOut']() ) ) {
@@ -651,7 +648,7 @@ class ProductPageBlock {
 				},
 
 				// Drives the "Select options" button text and disables Add to cart.
-				'isBundleIncomplete'                 => function () {
+				'isBundleIncomplete'    => function () {
 					$context      = wp_interactivity_get_context();
 					$variable_ids = $context['bundleVariableComponentIds'] ?? array();
 					if ( empty( $variable_ids ) ) {
@@ -669,7 +666,7 @@ class ProductPageBlock {
 
 				// Scope-aware via resolveVariantScope(): bundle component selections
 				// live in componentOptionValues, page product selections in variantValues.
-				'isOptionSelected'                   => function () {
+				'isOptionSelected'      => function () {
 					$context       = wp_interactivity_get_context();
 					$option_number = $context['optionNumber'] ?? '';
 					$option_value  = $context['option_value'] ?? null;
@@ -679,14 +676,14 @@ class ProductPageBlock {
 					$scope = self::resolveVariantScope( $context );
 					return ( $scope['values'][ "option_$option_number" ] ?? null ) === $option_value;
 				},
-				'isPriceSelected'                    => function () {
+				'isPriceSelected'       => function () {
 					$context = wp_interactivity_get_context();
 					if ( ! isset( $context['price'] ) || ! isset( $context['selectedPrice'] ) ) {
 						return false;
 					}
 					return $context['price']['id'] === $context['selectedPrice']['id'];
 				},
-				'buttonText'                         => function () {
+				'buttonText'            => function () {
 					$state   = wp_interactivity_state();
 					$context = wp_interactivity_get_context();
 					if ( $state['isSoldOut']() ) {
@@ -744,13 +741,13 @@ class ProductPageBlock {
 	 * Shared by the page product and bundle component pickers. Mirrors the JS
 	 * `isProductVariantOptionSoldOut` in product-page/index.js.
 	 *
-	 * @param int    $option_number            Which option (1, 2 or 3) the pill represents.
-	 * @param mixed  $option_value             The pill's option value.
-	 * @param array  $values                   Currently selected option values for this scope.
-	 * @param array  $variants                 Variant data (arrays or objects) for this scope.
-	 * @param array  $product                  Parent product data for unlimited-stock fallback.
-	 * @param bool   $missing_means_unavailable When true, a combination with no matching
-	 *                                          variant counts as unavailable (bundle scope).
+	 * @param int   $option_number            Which option (1, 2 or 3) the pill represents.
+	 * @param mixed $option_value             The pill's option value.
+	 * @param array $values                   Currently selected option values for this scope.
+	 * @param array $variants                 Variant data (arrays or objects) for this scope.
+	 * @param array $product                  Parent product data for unlimited-stock fallback.
+	 * @param bool  $missing_means_unavailable When true, a combination with no matching
+	 *                                         variant counts as unavailable (bundle scope).
 	 * @return bool
 	 */
 	private static function isVariantOptionSoldOut( int $option_number, $option_value, array $values, array $variants, array $product, bool $missing_means_unavailable = false ): bool {
