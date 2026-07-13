@@ -95,7 +95,7 @@ class VerificationCodeController extends RestController {
 	 *
 	 * @return string
 	 */
-	protected function resendTransientKey( $email, $mode ) {
+	public static function resendTransientKey( $email, $mode ) {
 		return self::RESEND_TRANSIENT_PREFIX . md5( strtolower( $email ) . '|' . ( $mode ?: 'live' ) );
 	}
 
@@ -108,7 +108,7 @@ class VerificationCodeController extends RestController {
 	 * @return int|false Unix timestamp, or false when no active window.
 	 */
 	protected function getResendWindow( $email, $mode ) {
-		$available_at = (int) get_transient( $this->resendTransientKey( $email, $mode ) );
+		$available_at = (int) get_transient( self::resendTransientKey( $email, $mode ) );
 		return $available_at > time() ? $available_at : false;
 	}
 
@@ -126,7 +126,20 @@ class VerificationCodeController extends RestController {
 		if ( $ttl <= 0 ) {
 			return;
 		}
-		set_transient( $this->resendTransientKey( $email, $mode ), $available_at, $ttl );
+		set_transient( self::resendTransientKey( $email, $mode ), $available_at, $ttl );
+	}
+
+	/**
+	 * Clear the resend window for an email across both checkout modes.
+	 *
+	 * @param string $email Email address.
+	 *
+	 * @return void
+	 */
+	protected function clearResendWindow( $email ) {
+		foreach ( [ 'live', 'test' ] as $mode ) {
+			delete_transient( self::resendTransientKey( $email, $mode ) );
+		}
 	}
 
 	/**
@@ -212,6 +225,13 @@ class VerificationCodeController extends RestController {
 		if ( empty( $verify->verified ) ) {
 			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ), [ 'status' => 400 ] );
 		}
+
+		// The code was consumed — clear the local resend window so a later
+		// request gets a fresh code instead of resuming a countdown for a code
+		// that no longer exists. Verify requests don't carry checkout_mode, so
+		// clear both modes; if a genuine platform window remains, the next
+		// create re-stores it from the blocked_duplicate error.
+		$this->clearResendWindow( $user->user_email );
 
 		// get the user based on the login value.
 		$user = $this->getUser( $request->get_param( 'login' ) );

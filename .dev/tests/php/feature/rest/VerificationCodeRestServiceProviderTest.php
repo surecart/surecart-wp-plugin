@@ -238,14 +238,14 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * The transient key must match VerificationCodeController::resendTransientKey().
+	 * The transient key for an email's resend window.
 	 *
 	 * @param string $email Email address.
 	 * @param string $mode  Checkout mode.
 	 * @return string
 	 */
 	protected function resendKey( $email, $mode = 'live' ) {
-		return 'sc_vcode_resend_' . md5( strtolower( $email ) . '|' . $mode );
+		return \SureCart\Controllers\Rest\VerificationCodeController::resendTransientKey( $email, $mode );
 	}
 
 	/**
@@ -355,6 +355,36 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 
 		$this->assertSame(200, $response->get_status());
 		$this->assertSame( $available_at, (int) get_transient( $this->resendKey( $user->user_email ) ), 'ISO 8601 windows should normalize to a timestamp.' );
+	}
+
+	/**
+	 * A consumed code must not leave a stale resend window behind — otherwise a
+	 * user who verifies and later needs a new code is told to wait for a code
+	 * that no longer exists.
+	 *
+	 * @group login
+	 */
+	public function test_verify_success_clears_resend_window() {
+		$user = self::factory()->user->create_and_get();
+		set_transient( $this->resendKey( $user->user_email, 'live' ), time() + 240, 240 );
+		set_transient( $this->resendKey( $user->user_email, 'test' ), time() + 240, 240 );
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => $user->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+
+		$this->assertSame(200, $response->get_status());
+		$this->assertFalse( get_transient( $this->resendKey( $user->user_email, 'live' ) ), 'Live resend window should be cleared after verification.' );
+		$this->assertFalse( get_transient( $this->resendKey( $user->user_email, 'test' ) ), 'Test resend window should be cleared after verification.' );
 	}
 
 	/**

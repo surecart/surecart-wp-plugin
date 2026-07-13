@@ -2,6 +2,15 @@
  * Verification code utility functions.
  */
 
+/** Response shape from POST surecart/v1/verification_codes. */
+export interface VerificationCodeResponse {
+  email?: string;
+  /** False when an in-window request resumed an existing code instead of sending a new email. */
+  email_sent?: boolean;
+  resend_available_at?: number;
+  resend_available_in?: number;
+}
+
 /** Fallback resend window (seconds) used when the platform doesn't provide one. */
 export const RESEND_COOLDOWN_SECONDS = 60;
 

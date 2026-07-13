@@ -12,7 +12,7 @@ import { speak } from '@wordpress/a11y';
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState } from '@store/checkout';
 import { isRateLimited } from '../../../../functions/util';
-import { secondsUntil, getBlockedDuplicateSeconds, resendAnchorFrom, RESEND_COOLDOWN_SECONDS } from '../../../../functions/verification';
+import { secondsUntil, getBlockedDuplicateSeconds, resendAnchorFrom, RESEND_COOLDOWN_SECONDS, VerificationCodeResponse } from '../../../../functions/verification';
 
 @Component({
   tag: 'sc-customer-login',
@@ -133,16 +133,17 @@ export class ScCustomerLogin {
       this.error = '';
       this.codeResending = true;
       speak(__('Sending code...', 'surecart'), 'assertive');
-      const response = (await apiFetch({
+      const response = await apiFetch<VerificationCodeResponse>({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
           login: userState.email,
           checkout_mode: checkoutState.mode,
         },
-      })) as any;
+      });
 
-      speak(__('Code sent', 'surecart'), 'assertive');
+      // An in-window request resumes the existing code — don't announce a new email.
+      speak(response?.email_sent === false ? __('A code was already sent to your email.', 'surecart') : __('Code sent', 'surecart'), 'assertive');
       userState.verificationStatus = UNVERIFIED;
       // Always anchor a fresh window (falls back to default if platform omits it).
       userState.resendAvailableAt = resendAnchorFrom(response?.resend_available_in);
@@ -169,7 +170,7 @@ export class ScCustomerLogin {
 
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
-        this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
+        this.error = e?.message || __('A code was recently sent to you. Please wait before requesting another.', 'surecart');
         // Resume from the platform's reported backoff window (default if absent).
         userState.resendAvailableAt = resendAnchorFrom(blockedSeconds);
         this.startCooldown();

@@ -6,7 +6,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl, isRateLimited } from '../../../../functions/util';
-import { getBlockedDuplicateSeconds, resendAnchorFrom } from '../../../../functions/verification';
+import { getBlockedDuplicateSeconds, resendAnchorFrom, VerificationCodeResponse } from '../../../../functions/verification';
 import { state as userState, onChange as onChangeUser, resetUser, CODE_SENT, UNVERIFIED, VERIFYING, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
@@ -144,14 +144,14 @@ export class ScCustomerEmail {
       this.busy = true;
       this.error = '';
       this.loginMode = 'code';
-      const response = (await apiFetch({
+      const response = await apiFetch<VerificationCodeResponse>({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
           login: this.value,
           checkout_mode: checkoutState.mode,
         },
-      })) as any;
+      });
       userState.email = this.value;
       userState.verificationStatus = CODE_SENT;
 
@@ -160,7 +160,12 @@ export class ScCustomerEmail {
       // Falls back to the default window if the platform omits the value.
       userState.resendAvailableAt = resendAnchorFrom(response?.resend_available_in);
 
-      speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
+      // An in-window request resumes the existing code — don't announce a new email.
+      if (response?.email_sent === false) {
+        speak(__('A verification code was already sent to your email. Please check your email.', 'surecart'), 'assertive');
+      } else {
+        speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
+      }
     } catch (e) {
       this.handleCodeSendError(e);
     } finally {
