@@ -26,11 +26,12 @@ foreach ( $bundle_items as $bundle_item ) :
 
 	$variants_payload = array_map(
 		fn( $variant ) => array(
-			'id'              => $variant->id,
-			'option_1'        => $variant->option_1 ?? null,
-			'option_2'        => $variant->option_2 ?? null,
-			'option_3'        => $variant->option_3 ?? null,
-			'available_stock' => $variant->available_stock ?? 0,
+			'id'                  => $variant->id,
+			'option_1'            => $variant->option_1 ?? null,
+			'option_2'            => $variant->option_2 ?? null,
+			'option_3'            => $variant->option_3 ?? null,
+			'available_stock'     => $variant->available_stock ?? 0,
+			'has_unlimited_stock' => $variant->has_unlimited_stock,
 		),
 		$variants
 	);

@@ -497,9 +497,13 @@ class ProductPageBlock {
 				'has_unlimited_stock' => ! empty( $component->has_unlimited_stock ),
 				'available_stock'     => (int) ( $component->available_stock ?? 0 ),
 				'variants'            => array_map(
+					// Per-variant flag so the button gate can tell an out-of-stock
+					// tracked variant from a genuinely unlimited one, even when the
+					// component's product-level flag reads "unlimited".
 					fn( $variant ) => array(
-						'id'              => $variant->id,
-						'available_stock' => (int) ( $variant->available_stock ?? 0 ),
+						'id'                  => $variant->id,
+						'available_stock'     => (int) ( $variant->available_stock ?? 0 ),
+						'has_unlimited_stock' => $variant->has_unlimited_stock,
 					),
 					$component->variants->data ?? array()
 				),

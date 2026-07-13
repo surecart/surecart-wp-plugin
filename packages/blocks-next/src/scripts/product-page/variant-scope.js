@@ -110,7 +110,7 @@ export const isProductVariantOptionSoldOut = (
  */
 export const isAnyBundleComponentSoldOut = (components, selections) => {
 	return Object.entries(components || {}).some(([id, info]) => {
-		if (!info || info.has_unlimited_stock) return false;
+		if (!info) return false;
 
 		const variants = info.variants || [];
 		if (variants.length) {
@@ -118,9 +118,11 @@ export const isAnyBundleComponentSoldOut = (components, selections) => {
 			if (!chosenId) return false; // gated by isBundleIncomplete instead.
 			const chosen = variants.find((v) => v.id === chosenId);
 			if (!chosen) return true;
+			if (hasEffectiveUnlimitedStock(chosen, info)) return false;
 			return (chosen.available_stock || 0) <= 0;
 		}
 
+		if (info.has_unlimited_stock) return false;
 		return (info.available_stock || 0) <= 0;
 	});
 };
