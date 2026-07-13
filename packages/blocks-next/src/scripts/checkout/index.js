@@ -248,33 +248,42 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Label half of a bundle component row.
+		 * Product name for a bundle component row (shown in the default color).
 		 */
-		get lineItemBundleComponent() {
+		get lineItemBundleComponentName() {
 			const { bundle_component } = getContext();
-			if (!bundle_component) return '';
-
-			const name = bundle_component?.price?.product?.name || '';
-			// Prefer the display string (parity with Stencil); fall back to
-			// joining the raw options array.
-			const variants =
-				(bundle_component?.variant_display_options || '').trim() ||
-				(bundle_component?.variant_options || [])
-					.filter(Boolean)
-					.join(' / ');
-
-			return variants ? `${name} - ${variants}` : name;
+			return bundle_component?.price?.product?.name || '';
 		},
 
 		/**
-		 * "× N" multiplier for a bundle component row (per-bundle quantity).
+		 * Variant options for a bundle component row, joined by ' · ' and
+		 * prefixed with the separator so it reads "· Red · Large". Rendered
+		 * muted after the name. Empty when there's no variant.
+		 */
+		get lineItemBundleComponentVariant() {
+			const ctx = getContext();
+			const { bundle_component } = ctx;
+			if (!bundle_component) return '';
+			const sep = (ctx?.bundleSeparator || '·').trim() || '·';
+			const options = (bundle_component?.variant_options || []).filter(
+				Boolean
+			);
+			const variants = options.length
+				? options.join(` ${sep} `)
+				: (bundle_component?.variant_display_options || '').trim();
+			return variants ? `${sep} ${variants}` : '';
+		},
+
+		/**
+		 * "N ×" prefix for a bundle component row (per-bundle quantity). Hidden
+		 * for a quantity of one, since the multiplier adds nothing there.
 		 */
 		get lineItemBundleComponentQty() {
 			const { line_item, bundle_component } = getContext();
 			const total = Math.max(Number(bundle_component?.quantity) || 1, 1);
 			const parentQty = Math.max(Number(line_item?.quantity) || 1, 1);
 			const qty = Math.max(Math.round(total / parentQty), 1);
-			return qty > 1 ? `× ${qty}` : '';
+			return qty > 1 ? `${qty} ×` : '';
 		},
 
 		/**

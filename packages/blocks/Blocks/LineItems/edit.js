@@ -8,11 +8,12 @@ import {
 	PanelBody,
 	PanelRow,
 	ToggleControl,
+	TextControl,
 	Disabled,
 } from '@wordpress/components';
 
 export default ({ attributes, setAttributes }) => {
-	const { removable, editable, showAllBundleItems } = attributes;
+	const { removable, editable, showAllBundleItems, separator } = attributes;
 	const blockProps = useBlockProps();
 
 	return (
@@ -59,6 +60,20 @@ export default ({ attributes, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<TextControl
+							__nextHasNoMarginBottom
+							label={__('Bundle item separator', 'surecart')}
+							help={__(
+								'Character shown between a bundle item and its variant options (e.g. · or -).',
+								'surecart'
+							)}
+							value={separator}
+							onChange={(separator) =>
+								setAttributes({ separator })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
@@ -70,6 +85,7 @@ export default ({ attributes, setAttributes }) => {
 						show-all-bundle-items={
 							showAllBundleItems ? '1' : 'false'
 						}
+						separator={separator}
 					></sc-line-items>
 				</Disabled>
 			</div>

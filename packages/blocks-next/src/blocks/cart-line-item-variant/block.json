@@ -12,6 +12,10 @@
 		"showAllBundleItems": {
 			"type": "boolean",
 			"default": true
+		},
+		"separator": {
+			"type": "string",
+			"default": "·"
 		}
 	},
 	"supports": {

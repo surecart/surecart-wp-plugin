@@ -14,24 +14,28 @@
 			display: none !important;
 		}
 
+		// Inline text flow (not flex) so a long name wraps like a paragraph instead of orphaning the "N ×" prefix on its own line.
+		// Spacing between spans comes from the markup whitespace.
 		&__bundle-item {
-			display: flex;
-			align-items: baseline;
-			justify-content: space-between;
-			gap: var(--sc-spacing-x-small, 0.5em);
+			display: block;
 		}
 
-		&__label {
-			flex: 1 1 auto;
-			min-width: 0;
+		// Quantity prefix ("2 ×") and name share the darker label color.
+		&__qty,
+		&__name {
+			color: var(
+				--sc-cart-main-label-text-color,
+				var(--sc-input-label-color)
+			);
 		}
 
-		&__qty {
-			flex: 0 0 auto;
+		&__qty:empty {
+			display: none;
+		}
 
-			&:empty {
-				display: none;
-			}
+		// Variant options ("· Red · Large") stay muted (block's help-text color).
+		&__variant:empty {
+			display: none;
 		}
 	}
 }

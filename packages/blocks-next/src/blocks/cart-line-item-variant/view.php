@@ -5,6 +5,7 @@
 		wp_interactivity_data_wp_context(
 			array(
 				'showBundleVariantsOnly' => ! ( $attributes['showAllBundleItems'] ?? true ),
+				'bundleSeparator'        => $attributes['separator'] ?? '·',
 			)
 		)
 	);
@@ -23,12 +24,18 @@
 	>
 		<div class="sc-cart-line-item-variant__bundle-item">
 			<span
-				class="sc-cart-line-item-variant__label"
-				data-wp-text="state.lineItemBundleComponent"
+				class="sc-cart-line-item-variant__qty"
+				data-wp-bind--hidden="!state.lineItemBundleComponentQty"
+				data-wp-text="state.lineItemBundleComponentQty"
 			></span>
 			<span
-				class="sc-cart-line-item-variant__qty"
-				data-wp-text="state.lineItemBundleComponentQty"
+				class="sc-cart-line-item-variant__name"
+				data-wp-text="state.lineItemBundleComponentName"
+			></span>
+			<span
+				class="sc-cart-line-item-variant__variant"
+				data-wp-bind--hidden="!state.lineItemBundleComponentVariant"
+				data-wp-text="state.lineItemBundleComponentVariant"
 			></span>
 		</div>
 	</template>
