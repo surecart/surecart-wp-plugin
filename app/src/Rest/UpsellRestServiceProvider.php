@@ -83,7 +83,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				'amount_off'                  => [
 					'description' => esc_html__( 'Amount (in the currency of the price) that will be taken off line items associated with this upsell.', 'surecart' ),
 					'type'        => [ 'integer', 'null' ],
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
 				'duplicate_purchase_behavior' => [
 					'description' => esc_html__( 'How to handle duplicate purchases of the product – can be one of allow, block_within_checkout, or block.', 'surecart' ),
@@ -98,7 +98,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				'percent_off'                 => [
 					'description' => esc_html__( 'Percent that will be taken off line items associated with this upsell.', 'surecart' ),
 					'type'        => [ 'integer', 'null' ],
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
 				'step'                        => [
 					'description' => esc_html__( 'Where this upsell falls in position within the upsell funnel – can be one of initial, accepted, or declined.', 'surecart' ),
@@ -109,6 +109,26 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 					'description' => esc_html__( 'The UUID of the price.', 'surecart' ),
 					'type'        => [ 'string', 'object' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'priority'                    => [
+					'description' => esc_html__( 'The priority of this upsell in relation to other upsells.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'filter_price_ids'            => [
+					'description' => esc_html__( 'The price ids that filter this upsell.', 'surecart' ),
+					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'filter_product_ids'          => [
+					'description' => esc_html__( 'The product ids that filter this upsell.', 'surecart' ),
+					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'metadata'                    => [
+					'description' => esc_html__( 'Set of key-value pairs for custom data.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
 				],
 			],
 		];
@@ -123,6 +143,14 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit upsells.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		return true;
 	}
 
@@ -133,6 +161,14 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit upsells.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		if ( empty( $request['upsell_funnel_ids'] ) || count( $request['upsell_funnel_ids'] ) > 1 ) {
 			return current_user_can( 'edit_sc_prices' );
 		}

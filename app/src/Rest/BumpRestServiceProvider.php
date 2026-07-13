@@ -50,69 +50,79 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'          => [
+				'id'                 => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
-				'object'      => [
+				'object'             => [
 					'description' => esc_html__( 'Type of object (bump)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
-				'created_at'  => [
+				'created_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'updated_at'  => [
+				'updated_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'amount_off'  => [
+				'amount_off'         => [
 					'description' => esc_html__( 'Amount (in the currency of the price) that will be taken off line items associated with this bump.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
-				'enabled'     => [
+				'enabled'            => [
 					'description' => esc_html__( 'Whether or not this bump is currently enabled and being shown to customers.', 'surecart' ),
 					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'filters'     => [
+				'filters'            => [
 					'description' => esc_html__( 'The conditions that will filter this bump to be recommeneded. Accepted keys are price_ids, product_ids, and product_group_ids with array values.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
-				'name'        => [
+				'filter_price_ids'   => [
+					'description' => esc_html__( 'The price ids that filter this bump.', 'surecart' ),
+					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'filter_product_ids' => [
+					'description' => esc_html__( 'The product ids that filter this bump.', 'surecart' ),
+					'type'        => 'array',
+					'context'     => [ 'edit' ],
+				],
+				'name'               => [
 					'description' => esc_html__( 'This is shown to the customer on invoices and line items.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'percent_off' => [
+				'percent_off'        => [
 					'description' => esc_html__( 'Percent that will be taken off line items associated with this bump.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
-				'priority'    => [
+				'priority'           => [
 					'description' => esc_html__( 'The priority of this bump in relation to other bumps. Must be in the range of 1 - 5.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 				],
-				'price'       => [
+				'price'              => [
 					'description' => esc_html__( 'The UUID of the price.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'metadata'    => [
+				'metadata'           => [
 					'description' => esc_html__( 'Set of key-value pairs for custom data.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit', 'embed' ],
+					'context'     => [ 'edit' ],
 					'properties'  => [
 						'description' => [
 							'description'       => esc_html__( 'Offer description.', 'surecart' ),
@@ -134,6 +144,14 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit bumps.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		return true;
 	}
 
@@ -144,6 +162,14 @@ class BumpRestServiceProvider extends RestServiceProvider implements RestService
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_prices' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit bumps.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		if ( ! $request['enabled'] ) {
 			return current_user_can( 'edit_sc_prices' );
 		}

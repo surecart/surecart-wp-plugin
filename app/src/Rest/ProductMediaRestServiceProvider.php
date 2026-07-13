@@ -133,6 +133,14 @@ class ProductMediaRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit product media.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		return true;
 	}
 
@@ -143,6 +151,14 @@ class ProductMediaRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit product media.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
+		}
+
 		if ( $request['archived'] ) {
 			return current_user_can( 'edit_sc_products' );
 		}

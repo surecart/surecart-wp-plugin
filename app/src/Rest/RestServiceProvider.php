@@ -236,6 +236,28 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				return $model;
 			}
 
+			// index responses wrap a list of models the schema filter can't reach — filter each item.
+			if ( $model instanceof \WP_REST_Response ) {
+				if ( 'edit' !== $context && is_array( $model->get_data() ) ) {
+					$model->set_data(
+						array_map(
+							function ( $item ) use ( $context ) {
+								if ( ! is_a( $item, Model::class ) ) {
+									return $item;
+								}
+								// remove wp_created_by to prevent user ids from being leaked.
+								if ( ! empty( $item->metadata->wp_created_by ) ) {
+									unset( $item->metadata->wp_created_by );
+								}
+								return $this->filter_response_by_context( $item->toArray(), $context );
+							},
+							$model->get_data()
+						)
+					);
+				}
+				return $model;
+			}
+
 			// remove wp_created_by to prevent user ids from being leaked.
 			if ( 'edit' !== $context && ! empty( $model->metadata->wp_created_by ) ) {
 				unset( $model->metadata->wp_created_by );

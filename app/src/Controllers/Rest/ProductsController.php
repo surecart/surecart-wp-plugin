@@ -2,18 +2,59 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\RestrictsAnonymousReads;
 use SureCart\Models\Product;
 
 /**
  * Handle Product requests through the REST API
  */
 class ProductsController extends RestController {
+	use RestrictsAnonymousReads;
+
 	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
 	 */
 	protected $class = Product::class;
+
+	/**
+	 * Capability that unlocks unrestricted reads.
+	 *
+	 * @var string
+	 */
+	protected $edit_capability = 'edit_sc_products';
+
+	/**
+	 * Expands safe to forward for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_expands = [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media', 'product_collections', 'featured_product_media' ];
+
+	/**
+	 * Query filters forced for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_scope = [
+		'archived' => false,
+		'status'   => [ 'published' ],
+	];
+
+	/**
+	 * Hide archived products on find for anonymous callers.
+	 *
+	 * @var boolean
+	 */
+	protected $anonymous_hides_archived = true;
+
+	/**
+	 * Only published products are visible on find for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_visible_statuses = [ 'published' ];
 
 	/**
 	 * Run some middleware to run before request.
@@ -24,6 +65,8 @@ class ProductsController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
+		$class = $this->restrictAnonymousReads( $class, $request );
+
 		// if we are in edit context, we want to fetch the variants, variant options and prices.
 		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
 			$class->with( array_unique( array_filter( array_merge( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ], $request['expand'] ?? [] ) ) ) );

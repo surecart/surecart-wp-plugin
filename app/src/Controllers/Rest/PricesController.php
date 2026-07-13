@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\RestrictsAnonymousReads;
 use SureCart\Models\Price;
 use SureCart\Models\Product;
 
@@ -9,12 +10,38 @@ use SureCart\Models\Product;
  * Handle Price requests through the REST API
  */
 class PricesController extends RestController {
+	use RestrictsAnonymousReads;
+
 	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
 	 */
 	protected $class = Price::class;
+
+	/**
+	 * Capability that unlocks unrestricted reads.
+	 *
+	 * @var string
+	 */
+	protected $edit_capability = 'edit_sc_prices';
+
+	/**
+	 * Expands safe to forward for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_expands = [ 'product' ];
+
+	/**
+	 * Query filters forced for anonymous callers.
+	 *
+	 * Archived prices stay readable on find — grandfathered subscriptions
+	 * reference them on the customer dashboard.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_scope = [ 'archived' => false ];
 
 	/**
 	 * Run some middleware to run before request.
@@ -25,6 +52,8 @@ class PricesController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
+		$class = $this->restrictAnonymousReads( $class, $request );
+
 		// get the expands from the product for syncing.
 		$expands = array_merge( [ 'product' ], array_map( fn( $expand ) => strpos( $expand, '.' ) !== false ? $expand : 'product.' . $expand, Product::getSyncExpands() ) );
 		// If we are updating or creating, always return the product for syncing.
