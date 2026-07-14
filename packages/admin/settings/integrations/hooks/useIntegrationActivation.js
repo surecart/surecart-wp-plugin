@@ -49,22 +49,63 @@ export default function useIntegrationActivation(
 		return null;
 	})();
 
+	// Offer a manual install link for GitHub-sourced plugins.
+	const githubActions = record?.github_repo_url
+		? [
+				{
+					label: __('View on GitHub', 'surecart'),
+					url: record.github_repo_url,
+				},
+		  ]
+		: undefined;
+
 	// Plugin activation function
 	const activate = async () => {
 		try {
 			setIsSaving(true);
 
-			await saveEntityRecord(
-				'root',
-				'plugin',
-				{
-					...(pluginData ?? { slug: record?.plugin_slug }),
-					status: 'active',
-				},
-				{
-					throwOnError: true,
+			// GitHub-sourced plugins that are not installed yet are installed
+			// and activated via our own endpoint. Already-installed GitHub
+			// plugins fall through to the standard activation path below.
+			if (
+				record?.source === 'github' &&
+				record?.status === 'not-installed'
+			) {
+				const result = await apiFetch({
+					path: '/surecart/v1/integration_plugin_install',
+					method: 'POST',
+					data: { id: record.id },
+				});
+
+				// The endpoint returns HTTP 200 when the plugin installed but
+				// activation failed. Treat that as a recoverable failure so the
+				// user isn't told it succeeded.
+				if (result?.activated === false) {
+					onError?.(
+						new Error(
+							result?.message ||
+								__(
+									'Plugin installed but activation failed. Activate it from the Plugins screen.',
+									'surecart'
+								)
+						),
+						{ actions: githubActions }
+					);
+					return;
 				}
-			);
+			} else {
+				await saveEntityRecord(
+					'root',
+					'plugin',
+					{
+						...(pluginData ?? { slug: record?.plugin_slug }),
+						status: 'active',
+					},
+					{
+						throwOnError: true,
+					}
+				);
+			}
 
 			const baseURL = select(coreStore).getEntityConfig(
 				'surecart',
@@ -86,7 +127,7 @@ export default function useIntegrationActivation(
 			console.error(err);
 			// Don't set error for invalid_json errors (common with plugin activation redirects)
 			if (err?.code !== 'invalid_json') {
-				onError?.(err);
+				onError?.(err, { actions: githubActions });
 			}
 		} finally {
 			setIsSaving(false);
