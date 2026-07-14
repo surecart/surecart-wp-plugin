@@ -63,7 +63,7 @@ class Block extends BaseBlock {
 							'allowLabel'   => (string) get_option( 'surecart_checkout_geo_capture_allow_label' ),
 							'declineLabel' => (string) get_option( 'surecart_checkout_geo_capture_decline_label' ),
 						],
-						'showLoginPrompt'          => (bool) get_option( 'surecart_checkout_show_login_prompt', true ),
+						'showLoginPrompt'          => (bool) get_option( 'surecart_checkout_show_login_prompt', false ),
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
 						'validateStock'            => ! is_admin(),
