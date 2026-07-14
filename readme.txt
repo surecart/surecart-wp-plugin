@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 7.0
-Stable tag: 4.4.2
+Stable tag: 4.5.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -421,6 +421,14 @@ Yes, the checkout form can be customized using our visual builder. You can chang
 Accessibility is a huge priority for the entire team building SureCart. As you know, accessibility is an ongoing improvement task. Our development and QA teams are trained in accessibility best practices and build/test each new feature for accessibility. If you come across any edge issues, we want to know about it and will prioritize its resolution. Please contact us via our website.
 
 == Changelog ==
+
+= 4.5.0 - July 14th, 2026 =
+- New: Admin products and collections list UI. A faster, more powerful editing experience.
+- New: Geo address capture and country dynamic pricing, enabling Purchase Power Parity type prices.
+- New: EU Helper plugin listed on integrations page, with 1-click activation.
+- Fix: Some missing translation textdomains.
+- Fix: Stacking issue with 6 digit login on smaller mobile devices.
+- Fix: PHP warning in collection helper function.
 
 = 4.4.2 - July 1st, 2026 =
 - New: SureCart MCP now allows filtering of orders, customers, and subscriptions with advanced rule-based conditions.
