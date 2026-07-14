@@ -172,7 +172,7 @@ export default function ModernViewIntroModal({
 							fill="currentColor"
 						/>
 					</svg>
-					{__('New in SureCart 5.0', 'surecart')}
+					{__('New in SureCart 4.5', 'surecart')}
 				</span>
 
 				<h2
