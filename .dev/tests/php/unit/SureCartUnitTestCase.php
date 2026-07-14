@@ -14,6 +14,8 @@ abstract class SureCartUnitTestCase extends WP_UnitTestCase
 	{
 		parent::tearDown();
 		\SureCart::setApplication(null);
+		// The memoized post map is process-static while the DB resets between tests.
+		\SureCart\Sync\PostSyncService::flushMemoizedPosts();
 		\Mockery::close();
 	}
 

@@ -545,6 +545,12 @@ export namespace Components {
      */
     interface ScCheckoutFormErrors {
     }
+    /**
+     * Explains why location is requested (e.g. regional / purchasing-power-parity pricing) and gates
+     * the browser geolocation prompt behind an explicit opt-in when capture is enabled by the merchant.
+     */
+    interface ScCheckoutGeoPermission {
+    }
     interface ScCheckoutMolliePayment {
         "method": string;
         "processorId": string;
@@ -4231,13 +4237,17 @@ export namespace Components {
          */
         "padding": number;
         /**
+          * The tooltip's placement relative to the trigger.
+         */
+        "placement": 'top' | 'bottom' | 'left' | 'right';
+        /**
           * Tooltip text
          */
         "text": string;
         /**
-          * The tooltip's type.
+          * The tooltip's type.  - `info` (default) — current SureCart blue/info style with a colored arrow. - `primary`/`success`/`warning`/`danger` — accent-colored variants. - `text` — legacy passthrough used by long-form tooltips. - `dark` — flat black background with white text, matching the   WordPress admin button tooltip ("View options"-style). No colored   accent, no arrow, no padding flourish — just the WP look.
          */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'dark';
         /**
           * Tooltip fixed width
          */
@@ -4919,6 +4929,16 @@ declare global {
     var HTMLScCheckoutFormErrorsElement: {
         prototype: HTMLScCheckoutFormErrorsElement;
         new (): HTMLScCheckoutFormErrorsElement;
+    };
+    /**
+     * Explains why location is requested (e.g. regional / purchasing-power-parity pricing) and gates
+     * the browser geolocation prompt behind an explicit opt-in when capture is enabled by the merchant.
+     */
+    interface HTMLScCheckoutGeoPermissionElement extends Components.ScCheckoutGeoPermission, HTMLStencilElement {
+    }
+    var HTMLScCheckoutGeoPermissionElement: {
+        prototype: HTMLScCheckoutGeoPermissionElement;
+        new (): HTMLScCheckoutGeoPermissionElement;
     };
     interface HTMLScCheckoutMolliePaymentElement extends Components.ScCheckoutMolliePayment, HTMLStencilElement {
     }
@@ -6983,6 +7003,7 @@ declare global {
         "sc-checkout": HTMLScCheckoutElement;
         "sc-checkout-autofill-provider": HTMLScCheckoutAutofillProviderElement;
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
+        "sc-checkout-geo-permission": HTMLScCheckoutGeoPermissionElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
@@ -7763,6 +7784,12 @@ declare namespace LocalJSX {
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface ScCheckoutFormErrors {
+    }
+    /**
+     * Explains why location is requested (e.g. regional / purchasing-power-parity pricing) and gates
+     * the browser geolocation prompt behind an explicit opt-in when capture is enabled by the merchant.
+     */
+    interface ScCheckoutGeoPermission {
     }
     interface ScCheckoutMolliePayment {
         "method"?: string;
@@ -11798,13 +11825,17 @@ declare namespace LocalJSX {
          */
         "padding"?: number;
         /**
+          * The tooltip's placement relative to the trigger.
+         */
+        "placement"?: 'top' | 'bottom' | 'left' | 'right';
+        /**
           * Tooltip text
          */
         "text"?: string;
         /**
-          * The tooltip's type.
+          * The tooltip's type.  - `info` (default) — current SureCart blue/info style with a colored arrow. - `primary`/`success`/`warning`/`danger` — accent-colored variants. - `text` — legacy passthrough used by long-form tooltips. - `dark` — flat black background with white text, matching the   WordPress admin button tooltip ("View options"-style). No colored   accent, no arrow, no padding flourish — just the WP look.
          */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text';
+        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'dark';
         /**
           * Tooltip fixed width
          */
@@ -11921,6 +11952,7 @@ declare namespace LocalJSX {
         "sc-checkout": ScCheckout;
         "sc-checkout-autofill-provider": ScCheckoutAutofillProvider;
         "sc-checkout-form-errors": ScCheckoutFormErrors;
+        "sc-checkout-geo-permission": ScCheckoutGeoPermission;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
@@ -12169,6 +12201,11 @@ declare module "@stencil/core" {
              * This component listens for a confirmed event and redirects to the success url.
              */
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
+            /**
+             * Explains why location is requested (e.g. regional / purchasing-power-parity pricing) and gates
+             * the browser geolocation prompt behind an explicit opt-in when capture is enabled by the merchant.
+             */
+            "sc-checkout-geo-permission": LocalJSX.ScCheckoutGeoPermission & JSXBase.HTMLAttributes<HTMLScCheckoutGeoPermissionElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;

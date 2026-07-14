@@ -86,9 +86,10 @@ export default function PostTemplateForm({
 			`}
 		>
 			<InspectorPopoverHeader
-				title={__('Template')}
+				title={__('Template', 'surecart')}
 				help={__(
-					'Templates define the way this product collection is displayed when viewing your site.'
+					'Templates define the way this product collection is displayed when viewing your site.',
+					'surecart'
 				)}
 				actions={
 					canCreate && [
@@ -106,7 +107,7 @@ export default function PostTemplateForm({
 				__next40pxDefaultSize
 				__nextHasNoMarginBottom
 				hideLabelFromVision
-				label={__('Template')}
+				label={__('Template', 'surecart')}
 				value={template?.slug}
 				options={[
 					{
@@ -148,7 +149,7 @@ export default function PostTemplateForm({
 							canvas: 'edit',
 						})}
 					>
-						{__('Edit template')}
+						{__('Edit template', 'surecart')}
 					</Button>
 				</p>
 			)}

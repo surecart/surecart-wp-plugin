@@ -300,6 +300,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-geo-permission": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-mollie-payment": {
     "method": true,
     "processor-id": true,
@@ -2435,6 +2441,7 @@
     "freeze": true,
     "open": true,
     "padding": true,
+    "placement": true,
     "text": true,
     "type": true,
     "width": true,

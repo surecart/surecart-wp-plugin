@@ -72,7 +72,7 @@ export default function PostTemplateCreateModal({
 				<VStack spacing="3">
 					<TextControl
 						__nextHasNoMarginBottom
-						label={__('Name')}
+						label={__('Name', 'surecart')}
 						value={title}
 						onChange={setTitle}
 						placeholder={collection?.name}

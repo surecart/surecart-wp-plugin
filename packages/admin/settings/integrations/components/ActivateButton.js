@@ -11,14 +11,14 @@ export default ({ record }) => {
 	const { isLoading, activate, activationLink, canActivate } =
 		useIntegrationActivation(record, {
 			onSuccess: (message) => {
-				createSuccessNotice(__(message, 'surecart'), {
+				createSuccessNotice(message, {
 					type: 'snackbar',
 				});
 			},
-			onError: (error) => {
+			onError: (error, { actions } = {}) => {
 				createErrorNotice(
 					error?.message || __('Something went wrong', 'surecart'),
-					{ type: 'snackbar' }
+					{ type: 'snackbar', actions }
 				);
 			},
 		});

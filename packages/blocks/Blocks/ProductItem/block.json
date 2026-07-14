@@ -5,6 +5,7 @@
 	"title": "Product Item",
 	"description": "Displays a single product item.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["product", "item", "lite item"],
 	"ancestor": ["surecart/product-item-list", "surecart/product-collection"],
 	"supports": {

@@ -12,11 +12,12 @@ export function QueryPaginationArrowControls({ value, onChange }) {
 		<ToggleGroupControl
 			__next40pxDefaultSize
 			__nextHasNoMarginBottom
-			label={__('Arrow')}
+			label={__('Arrow', 'surecart')}
 			value={value}
 			onChange={onChange}
 			help={__(
-				'A decorative arrow appended to the next and previous page link.'
+				'A decorative arrow appended to the next and previous page link.',
+				'surecart'
 			)}
 			isBlock
 		>
@@ -24,21 +25,24 @@ export function QueryPaginationArrowControls({ value, onChange }) {
 				value="none"
 				label={_x(
 					'None',
-					'Arrow option for Query Pagination Next/Previous blocks'
+					'Arrow option for Query Pagination Next/Previous blocks',
+					'surecart'
 				)}
 			/>
 			<ToggleGroupControlOption
 				value="arrow"
 				label={_x(
 					'Arrow',
-					'Arrow option for Query Pagination Next/Previous blocks'
+					'Arrow option for Query Pagination Next/Previous blocks',
+					'surecart'
 				)}
 			/>
 			<ToggleGroupControlOption
 				value="chevron"
 				label={_x(
 					'Chevron',
-					'Arrow option for Query Pagination Next/Previous blocks'
+					'Arrow option for Query Pagination Next/Previous blocks',
+					'surecart'
 				)}
 			/>
 		</ToggleGroupControl>

@@ -4,7 +4,8 @@ import { store as noticesStore } from '@wordpress/notices';
 import NoticesList from './NoticesList';
 
 export default (props) => {
-	const notices = useSelect((select) => select(noticesStore).getNotices());
+	const notices =
+		useSelect((select) => select(noticesStore).getNotices()) || [];
 
 	return (
 		<>

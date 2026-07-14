@@ -62,7 +62,7 @@ export default ({
 		<>
 			{hasNextPreviousBlocks && (
 				<InspectorControls>
-					<PanelBody title={__('Settings')}>
+					<PanelBody title={__('Settings', 'surecart')}>
 						<QueryPaginationArrowControls
 							value={paginationArrow}
 							onChange={(value) => {

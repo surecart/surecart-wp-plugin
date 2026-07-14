@@ -1,34 +1,31 @@
+/**
+ * External dependencies.
+ */
 import { store } from '@surecart/data';
 import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 
+/**
+ * Internal dependencies.
+ */
 import CreateProductGroup from './CreateProductGroup';
 import EditProductGroup from './EditProductGroup';
 
 /**
  * Returns the Model Edit URL.
  *
- * @param {number} postId Post ID.
+ * @param {string} id Group ID.
  *
- * @return {string} Post edit URL.
+ * @return {string} Edit URL.
  */
 export function getEditURL(id) {
 	return addQueryArgs(window.location.href, { id });
 }
 
-export default () => {
+export default ({ navigation } = {}) => {
 	const [historyId, setHistoryId] = useState(null);
 
-	/**
-	 * Replaces the browser URL with a edit link for a given id ID.
-	 *
-	 * Note it is important that, since this function may be called when the
-	 * editor first loads, the result generated `getPostEditURL` matches that
-	 * produced by the server. Otherwise, the URL will change unexpectedly.
-	 *
-	 * @param {number} id id for the model for which to generate edit URL.
-	 */
 	const setBrowserURL = (id) => {
 		window.history.replaceState({ id }, 'Post ' + id, getEditURL(id));
 		setHistoryId(id);
@@ -36,16 +33,21 @@ export default () => {
 
 	const setId = (id) => {
 		if (id && id !== historyId) {
-			setBrowserURL(id);
+			if (navigation) {
+				navigation.goToEdit(id);
+			} else {
+				setBrowserURL(id);
+			}
 		}
 	};
 
-	// get the id from the url.
-	const id = useSelect((select) => select(store).selectPageId());
+	// SPA-provided id; data-store fallback for standalone loads.
+	const dataStoreId = useSelect((select) => select(store).selectPageId(), []);
+	const id = navigation?.id || dataStoreId;
 
 	return id ? (
-		<EditProductGroup id={id} />
+		<EditProductGroup id={id} navigation={navigation} />
 	) : (
-		<CreateProductGroup setId={setId} />
+		<CreateProductGroup setId={setId} navigation={navigation} />
 	);
 };

@@ -169,12 +169,10 @@ export class ScLicensesList {
               <div class="license__details">
                 <div class="license__name">{((purchase as Purchase)?.product as Product)?.name}</div>
                 <div>
-                  {this.renderStatus(status)} {sprintf(__('%1s of %2s Activations Used'), activation_count || 0, activation_limit || '∞')}
+                  {this.renderStatus(status)} {sprintf(__('%1s of %2s Activations Used', 'surecart'), activation_count || 0, activation_limit || '∞')}
                 </div>
               </div>
-              {/* <div>{this.renderStatus(status)}</div> */}
               <sc-icon name="chevron-right" slot="suffix"></sc-icon>
-              {/* <sc-tag type="info">{sprintf(__('%1s of %2s Activations Used'), activation_count || 0, activation_limit || '∞')}</sc-tag> */}
             </sc-stacked-list-row>
           ))}
         </sc-stacked-list>

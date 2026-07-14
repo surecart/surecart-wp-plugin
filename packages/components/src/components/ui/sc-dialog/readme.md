@@ -45,6 +45,7 @@
 ### Used by
 
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
+ - [sc-checkout-geo-permission](../../controllers/checkout-form/checkout/checkout-geo-permission)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-license](../../controllers/dashboard/sc-license)
@@ -69,6 +70,7 @@ graph TD;
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-dialog
+  sc-checkout-geo-permission --> sc-dialog
   sc-checkout-stock-alert --> sc-dialog
   sc-checkout-test-complete --> sc-dialog
   sc-license --> sc-dialog

@@ -1,4 +1,18 @@
-import { getInputType, getCurrencyCode, getAppliesWhileRule } from '../helper';
+import {
+	getInputType,
+	getCurrencyCode,
+	getAppliesWhileRule,
+	rulesHaveGeoAddressCountry,
+} from '../helper';
+
+// OR→AND group wrapping a single leaf condition.
+const wrapRule = ( leaf ) => ( {
+	type: 'group',
+	combinator: 'or',
+	conditions: [
+		{ type: 'group', combinator: 'and', conditions: [ leaf ] },
+	],
+} );
 
 describe( 'getInputType', () => {
 	it( 'returns "uuid" for uuid-type attributes', () => {
@@ -94,5 +108,55 @@ describe( 'getAppliesWhileRule', () => {
 			operator_label: 'is',
 			comparison_value: 'subscription',
 		} );
+	} );
+} );
+
+describe( 'rulesHaveGeoAddressCountry', () => {
+	it( 'detects geo_address.country leaves', () => {
+		expect(
+			rulesHaveGeoAddressCountry(
+				wrapRule( {
+					type: 'condition',
+					attribute_name: 'geo_address.country',
+					operator_label: 'is',
+					comparison_value: 'US',
+				} )
+			)
+		).toBe( true );
+	} );
+
+	it( 'detects checkout.geo_address.country leaves', () => {
+		expect(
+			rulesHaveGeoAddressCountry(
+				wrapRule( {
+					type: 'condition',
+					attribute_name: 'checkout.geo_address.country',
+					operator_label: 'is',
+					comparison_value: 'CA',
+				} )
+			)
+		).toBe( true );
+	} );
+
+	it( 'returns false when no geo condition is present', () => {
+		expect(
+			rulesHaveGeoAddressCountry(
+				wrapRule( {
+					type: 'condition',
+					attribute_name: 'product.name',
+					operator_label: 'is',
+					comparison_value: 'Shirt',
+				} )
+			)
+		).toBe( false );
+	} );
+
+	it( 'returns false for empty or malformed input', () => {
+		expect( rulesHaveGeoAddressCountry( null ) ).toBe( false );
+		expect( rulesHaveGeoAddressCountry( undefined ) ).toBe( false );
+		expect( rulesHaveGeoAddressCountry( {} ) ).toBe( false );
+		expect( rulesHaveGeoAddressCountry( { conditions: [] } ) ).toBe(
+			false
+		);
 	} );
 } );

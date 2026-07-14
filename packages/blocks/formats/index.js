@@ -52,7 +52,7 @@ export const buyLink = {
 
 		const onRemoveFormat = () => {
 			onChange(removeFormat(value, name));
-			speak(__('Link removed.'), 'assertive');
+			speak(__('Link removed.', 'surecart'), 'assertive');
 		};
 
 		return (

@@ -41,7 +41,7 @@ export default ({ product, updateProduct }) => {
 						variant="tertiary"
 						aria-expanded={isOpen}
 						// translators: %s: Current post status.
-						aria-label={sprintf(__('Change Status: %s'), label)}
+						aria-label={sprintf(__('Change Status: %s', 'surecart'), label)}
 						onClick={onToggle}
 					>
 						{product?.tax_category === 'tangible'

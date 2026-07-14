@@ -4,6 +4,7 @@
 	"title": "Product Collection Image",
 	"description": "Displays the product collection image.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["image", "collection", "product"],
 	"attributes": {
 		"aspectRatio": {

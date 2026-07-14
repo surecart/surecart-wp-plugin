@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
 import VariantItem from './VariantItem';
 import { maybeConvertAmount } from '../../../util';
 import { TableVirtuoso } from 'react-virtuoso';
+import { toVariantsArray } from './utils';
 
 export default ({ product, updateProduct }) => {
 	/**
@@ -42,8 +43,11 @@ export default ({ product, updateProduct }) => {
 			product?.id
 		);
 
-		// Use store's variants if available, otherwise fall back to props
-		const currentVariants = currentProduct?.variants || product?.variants;
+		// Prefer store state, fall back to props. Either can be
+		// enveloped depending on which fetch primed core-data.
+		const currentVariants = toVariantsArray(
+			currentProduct?.variants || product?.variants
+		);
 
 		const updatedVariants = currentVariants.map((item) =>
 			item?.position !== position ? item : { ...item, ...data }
@@ -53,7 +57,7 @@ export default ({ product, updateProduct }) => {
 		});
 	};
 
-	const activeVariants = (product?.variants ?? []).filter(
+	const activeVariants = toVariantsArray(product?.variants).filter(
 		(variant) => 'deleted' !== variant?.status
 	);
 

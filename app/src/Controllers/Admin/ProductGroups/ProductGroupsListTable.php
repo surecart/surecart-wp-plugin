@@ -185,7 +185,7 @@ class ProductGroupsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			[
-				'view' => '<a href="' . esc_url( \SureCart::getUrl()->show( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr__( 'View Product Group', 'surecart' ) . '">' . __( 'View', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_group', $group->id ) ) . '" aria-label="' . esc_attr__( 'Edit Upgrade Group', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		return ob_get_clean();

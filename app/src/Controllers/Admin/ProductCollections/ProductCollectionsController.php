@@ -2,18 +2,34 @@
 
 namespace SureCart\Controllers\Admin\ProductCollections;
 
+use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\RendersEnhancedAdminView;
 use SureCart\Models\ProductCollection;
 
 /**
  * Handles product collections admin requests.
  */
-class ProductCollectionsController {
+class ProductCollectionsController extends AdminController {
+	use RendersEnhancedAdminView;
+
 	/**
-	 * Index.
+	 * Render the WP List Table view.
 	 */
-	public function index() {
+	protected function renderWpListView() {
 		$table = new ProductCollectionsListTable();
 		$table->prepare_items();
+
+		$this->withHeader(
+			array(
+				'breadcrumbs'         => [
+					'product-collections' => [
+						'title' => __( 'Product Collections', 'surecart' ),
+					],
+				],
+				'enhanced_view_promo' => admin_url( 'admin.php?page=sc-product-collections' ),
+			),
+		);
+
 		return \SureCart::view( 'admin/product-collections/index' )->with(
 			[
 				'table' => $table,
@@ -22,13 +38,25 @@ class ProductCollectionsController {
 	}
 
 	/**
-	 * Edit a product.
+	 * Render the SPA view for product collections.
+	 */
+	protected function renderSpaView() {
+		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
+		return $this->renderSpaShell(
+			'admin/product-collections/spa',
+			'product-collections',
+			__( 'Product Collections', 'surecart' )
+		);
+	}
+
+	/**
+	 * Edit a product collection.
 	 *
 	 * @param \WP_REST_Request $request Request.
 	 */
 	public function edit( $request ) {
 		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductCollectionsScriptsController::class, 'enqueue' ) );
+		$this->enqueueSpaScripts( ProductCollectionsScriptsController::class );
 
 		$product_collection = null;
 
@@ -44,26 +72,27 @@ class ProductCollectionsController {
 			}
 
 			// add product collection link.
-			add_action(
-				'admin_bar_menu',
-				function( $wp_admin_bar ) use ( $product_collection ) {
-					$wp_admin_bar->add_node(
-						[
-							'id'    => 'view-product-collection-page',
-							'title' => __( 'View Collection', 'surecart' ),
-							'href'  => esc_url( $product_collection->permalink ?? '#' ),
-							'meta'  => [
-								'class' => empty( $product_collection->permalink ) ? 'hidden' : '',
-							],
-						]
-					);
-				},
-				99
-			);
+			if ( ! empty( $product_collection ) ) {
+				add_action(
+					'admin_bar_menu',
+					function ( $wp_admin_bar ) use ( $product_collection ) {
+						$wp_admin_bar->add_node(
+							[
+								'id'    => 'view-product-collection-page',
+								'title' => __( 'View Collection', 'surecart' ),
+								'href'  => esc_url( $product_collection->permalink ?? '#' ),
+								'meta'  => [
+									'class' => empty( $product_collection->permalink ) ? 'hidden' : '',
+								],
+							]
+						);
+					},
+					99
+				);
+			}
 		}
 
-		// return view.
-		return '<div id="app"></div>';
+		return $this->renderSpaShell( 'admin/product-collections/spa' );
 	}
 
 	/**
@@ -89,19 +118,6 @@ class ProductCollectionsController {
 			'/surecart/v1/product_collections/' . $product_collection->id . '?context=edit&expand[0]=media',
 		);
 
-		wp_add_inline_script(
-			'wp-api-fetch',
-			sprintf(
-				'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
-				wp_json_encode(
-					array_reduce(
-						$preload_paths,
-						'rest_preload_api_request',
-						array()
-					)
-				)
-			),
-			'after'
-		);
+		$this->preloadPaths( $preload_paths );
 	}
 }

@@ -19,19 +19,16 @@ export default ({ purchase }) => {
 			/>
 			<ScTooltip
 				type="text"
-				text={__(
+				text={
 					purchase?.revoked
-						? 'Unrevoke access to this purchase'
-						: 'Revoke access to this purchase',
-					'surecart'
-				)}
+						? __('Unrevoke access to this purchase', 'surecart')
+						: __('Revoke access to this purchase', 'surecart')
+				}
 			>
 				<ScButton onClick={toggleRevoke} size="small">
-					{__(
-						purchase?.revoked
-							? __('Unrevoke', 'surecart')
-							: __('Revoke', 'surecart')
-					)}
+					{purchase?.revoked
+						? __('Unrevoke', 'surecart')
+						: __('Revoke', 'surecart')}
 				</ScButton>
 			</ScTooltip>
 		</>

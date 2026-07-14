@@ -9,7 +9,7 @@ import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ id, onCreateProduct }) => {
+export default ({ id, onCreateProduct, navigation }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default ({ id, onCreateProduct }) => {
 				throw {
 					message: __(
 						'Could not create product. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}
@@ -81,8 +81,18 @@ export default ({ id, onCreateProduct }) => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-products'}
+								{...(navigation
+									? {}
+									: { href: 'admin.php?page=sc-products' })}
 								type="text"
+								onClick={() => {
+									if (navigation) {
+										navigation.goToList();
+									} else {
+										window.location.href =
+											'admin.php?page=sc-products';
+									}
+								}}
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>

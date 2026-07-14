@@ -13,10 +13,10 @@ $unformatted_date = TimeDate::formatDateAndTime( $review_timestamp );
 if ( isset( $attributes['format'] ) && 'human-diff' === $attributes['format'] ) {
 	if ( $review_timestamp > time() ) {
 		// translators: %s: human-readable time difference.
-		$formatted_date = sprintf( __( '%s from now' ), human_time_diff( $review_timestamp ) );
+		$formatted_date = sprintf( __( '%s from now', 'surecart' ), human_time_diff( $review_timestamp ) );
 	} else {
 		// translators: %s: human-readable time difference.
-		$formatted_date = sprintf( __( '%s ago' ), human_time_diff( $review_timestamp ) );
+		$formatted_date = sprintf( __( '%s ago', 'surecart' ), human_time_diff( $review_timestamp ) );
 	}
 } else {
 	$format         = empty( $attributes['format'] ) ? get_option( 'date_format' ) : $attributes['format'];

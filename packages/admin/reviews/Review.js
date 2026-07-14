@@ -33,7 +33,7 @@ import Details from './modules/Details';
 import Summary from './modules/Summary';
 import ActionsDropdown from './modules/ActionsDropdown';
 
-export default () => {
+export default ({ navigation } = {}) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
@@ -41,7 +41,9 @@ export default () => {
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord, receiveEntityRecords } =
 		useDispatch(coreStore);
-	const id = useSelect((select) => select(dataStore).selectPageId());
+	// SPA-provided id; data-store fallback for standalone loads.
+	const dataStoreId = useSelect((s) => s(dataStore).selectPageId(), []);
+	const id = navigation?.id || dataStoreId;
 
 	const updateReview = (data) =>
 		editEntityRecord('surecart', 'review', id, data);
@@ -53,24 +55,18 @@ export default () => {
 
 	const { review, isSaving, loadError, isDeleting, hasLoadedReview } =
 		useSelect(
-			(select) => {
+			(s) => {
 				const entityData = ['surecart', 'review', id];
 
 				return {
-					review: select(coreStore).getEditedEntityRecord(
-						...entityData
-					),
-					isSaving: select(coreStore)?.isSavingEntityRecord?.(
-						...entityData
-					),
-					loadError: select(coreStore)?.getResolutionError?.(
+					review: s(coreStore).getEditedEntityRecord(...entityData),
+					isSaving: s(coreStore)?.isSavingEntityRecord?.(...entityData),
+					loadError: s(coreStore)?.getResolutionError?.(
 						'getEditedEntityRecord',
 						...entityData
 					),
-					isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
-						...entityData
-					),
-					hasLoadedReview: select(coreStore)?.hasFinishedResolution?.(
+					isDeleting: s(coreStore)?.isDeletingEntityRecord?.(...entityData),
+					hasLoadedReview: s(coreStore)?.hasFinishedResolution?.(
 						'getEntityRecord',
 						[...entityData]
 					),
@@ -79,9 +75,14 @@ export default () => {
 			[id]
 		);
 
-	/**
-	 * Update the review.
-	 */
+	const goBackToList = () => {
+		if (navigation) {
+			navigation.goToList();
+		} else {
+			window.location.assign('admin.php?page=sc-reviews');
+		}
+	};
+
 	const onSubmit = async () => {
 		try {
 			await save({
@@ -93,25 +94,19 @@ export default () => {
 		}
 	};
 
-	/**
-	 * Delete the review.
-	 */
 	const onDelete = async () => {
 		try {
 			setError(null);
 			await deleteEntityRecord('surecart', 'review', id, undefined, {
 				throwOnError: true,
 			});
-			window.location.assign('admin.php?page=sc-reviews');
+			goBackToList();
 		} catch (e) {
 			console.error(e);
 			setError(e);
 		}
 	};
 
-	/**
-	 * Publish the review.
-	 */
 	const onPublish = async () => {
 		try {
 			setLoading(true);
@@ -147,9 +142,6 @@ export default () => {
 		}
 	};
 
-	/**
-	 * Unpublish the review.
-	 */
 	const onUnpublish = async () => {
 		try {
 			setLoading(true);
@@ -208,6 +200,16 @@ export default () => {
 		);
 	};
 
+	// In-SPA: intercept click for client-side nav; otherwise let the href navigate.
+	const backProps = navigation
+		? {
+				onClick: (e) => {
+					e.preventDefault();
+					navigation.goToList();
+				},
+		  }
+		: {};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -217,6 +219,7 @@ export default () => {
 						circle
 						size="small"
 						href="admin.php?page=sc-reviews"
+						{...backProps}
 					>
 						<ScIcon name="arrow-left"></ScIcon>
 					</ScButton>
@@ -224,7 +227,10 @@ export default () => {
 						<ScBreadcrumb>
 							<Logo display="block" />
 						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-reviews">
+						<ScBreadcrumb
+							href="admin.php?page=sc-reviews"
+							{...backProps}
+						>
 							{__('Reviews', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>

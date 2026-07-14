@@ -78,7 +78,7 @@ export default function PostTemplateForm({
 			`}
 		>
 			<InspectorPopoverHeader
-				title={__('Template')}
+				title={__('Template', 'surecart')}
 				help={__(
 					'Templates define the way product collection page is displayed when viewing your site.',
 					'surecart'

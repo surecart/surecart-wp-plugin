@@ -6,7 +6,7 @@ use SureCart\Models\Product;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
- * Create a new table class that will extend the WP_List_Table
+ * WP_List_Table for Products.
  */
 class ProductsListTable extends ListTable {
 	/**
@@ -145,7 +145,7 @@ class ProductsListTable extends ListTable {
 					'name'                => __( 'Name', 'surecart' ),
 					'price'               => __( 'Price', 'surecart' ),
 					'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-					'quantity'            => __( 'Quantity', 'surecart' ),
+					'quantity'            => __( 'Stock', 'surecart' ),
 					'integrations'        => __( 'Integrations', 'surecart' ),
 					'product_collections' => __( 'Collections', 'surecart' ),
 					'status'              => __( 'Product Page', 'surecart' ),

@@ -132,7 +132,7 @@ function ColumnsEditContainer({
 							<RangeControl
 								__nextHasNoMarginBottom
 								__next40pxDefaultSize
-								label={__('Columns')}
+								label={__('Columns', 'surecart')}
 								value={count}
 								onChange={(value) =>
 									updateColumns(
@@ -146,7 +146,8 @@ function ColumnsEditContainer({
 							{count > 6 && (
 								<Notice status="warning" isDismissible={false}>
 									{__(
-										'This column count exceeds the recommended amount and may cause visual breakage.'
+										'This column count exceeds the recommended amount and may cause visual breakage.',
+										'surecart'
 									)}
 								</Notice>
 							)}
@@ -154,7 +155,7 @@ function ColumnsEditContainer({
 					)}
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Stack on mobile')}
+						label={__('Stack on mobile', 'surecart')}
 						checked={isStackedOnMobile}
 						onChange={() =>
 							setAttributes({
@@ -164,7 +165,7 @@ function ColumnsEditContainer({
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Full vertical height')}
+						label={__('Full vertical height', 'surecart')}
 						checked={isFullHeight}
 						onChange={() =>
 							setAttributes({
@@ -174,7 +175,7 @@ function ColumnsEditContainer({
 					/>
 					<ToggleControl
 						__nextHasNoMarginBottom
-						label={__('Reverse order on mobile')}
+						label={__('Reverse order on mobile', 'surecart')}
 						checked={isReversedOnMobile}
 						onChange={() =>
 							setAttributes({

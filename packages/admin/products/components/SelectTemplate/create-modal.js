@@ -81,18 +81,19 @@ export default function PostTemplateCreateModal({
 				<VStack spacing="3">
 					<TextControl
 						__nextHasNoMarginBottom
-						label={__('Name')}
+						label={__('Name', 'surecart')}
 						value={title}
 						onChange={setTitle}
 						placeholder={DEFAULT_TITLE}
 						disabled={isBusy}
 						help={__(
-							'Describe the template, e.g. "T-Shirt Template". A custom template can be manually applied to any product.'
+							'Describe the template, e.g. "T-Shirt Template". A custom template can be manually applied to any product.',
+							'surecart'
 						)}
 					/>
 					<HStack justify="right">
 						<Button variant="tertiary" onClick={cancel}>
-							{__('Cancel')}
+							{__('Cancel', 'surecart')}
 						</Button>
 
 						<Button
@@ -101,7 +102,7 @@ export default function PostTemplateCreateModal({
 							isBusy={isBusy}
 							aria-disabled={isBusy}
 						>
-							{__('Create')}
+							{__('Create', 'surecart')}
 						</Button>
 					</HStack>
 				</VStack>

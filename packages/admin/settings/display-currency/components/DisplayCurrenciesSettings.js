@@ -78,7 +78,7 @@ export default function DisplayCurrenciesSettings() {
 	const fields = [
 		{
 			id: 'name',
-			label: __('Currency', 'presto-player'),
+			label: __('Currency', 'surecart'),
 			enableGlobalSearch: true,
 			render: ({ item }) => (
 				<div
@@ -103,7 +103,7 @@ export default function DisplayCurrenciesSettings() {
 		},
 		{
 			id: 'label',
-			label: __('Label', 'presto-player'),
+			label: __('Label', 'surecart'),
 			enableSorting: false,
 			render: ({ item }) => (
 				<ScTag type="success">{item?.currency?.toUpperCase?.()}</ScTag>
@@ -289,7 +289,6 @@ export default function DisplayCurrenciesSettings() {
 							id: 'delete',
 							icon: <Icon icon={trash} />,
 							label: __('Delete', 'surecart'),
-							isDestructive: true,
 							supportsBulk: true,
 							isEligible: (item) => !item.is_default_currency,
 							hideModalHeader: true,

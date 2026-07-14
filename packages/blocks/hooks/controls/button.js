@@ -52,7 +52,7 @@ const withToolbarButton = createHigherOrderComponent((BlockEdit) => {
 							icon="cart"
 							label={__(
 								'Custom Button',
-								'core-block-custom-attributes'
+								'surecart'
 							)}
 							isActive={paragraphAttribute === 'custom'}
 							onClick={() => {

@@ -22,7 +22,7 @@ export default ({ product, updateProduct }) => {
 
 	return (
 		<PanelRow className="edit-post-post-url" ref={setPopoverAnchor}>
-			<span>{__('Availability')}</span>
+			<span>{__('Availability', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-url__dropdown"
@@ -59,7 +59,8 @@ export default ({ product, updateProduct }) => {
 							`}
 							title={__('Availability', 'surecart')}
 							help={__(
-								'Status defines whether a product is purchasable.'
+								'Status defines whether a product is purchasable.',
+								'surecart'
 							)}
 							onClose={onClose}
 						/>

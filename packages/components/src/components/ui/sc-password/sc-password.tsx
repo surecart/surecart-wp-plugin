@@ -91,7 +91,7 @@ export class ScPassword {
 
     // hint text is not empty.
     if (!!this.hintText) {
-      this.input.setCustomValidity(__(this.hintText, 'surecart'));
+      this.input.setCustomValidity(this.hintText);
     }
 
     const valid = await this.input.reportValidity();

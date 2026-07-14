@@ -13,6 +13,7 @@ import {
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import OrGroup from './OrGroup';
+import GeoCaptureNotice from './GeoCaptureNotice';
 import { TYPE_CHOICES } from '../utils/constants';
 import { getCurrencyCode } from '../utils/helper';
 
@@ -151,6 +152,7 @@ export default ({ autoFee = {}, onUpdate, loading }) => {
 				)
 			}
 		>
+			<GeoCaptureNotice rules={rules} />
 			<label
 				css={css`
 					display: block;

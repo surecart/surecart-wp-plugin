@@ -5,6 +5,7 @@
 	"title": "Product Collections",
 	"description": "Display a list of products for a collection.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": [
 		"products",
 		"product",

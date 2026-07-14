@@ -15,7 +15,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<PanelColorSettings
-				title={__('Color Settings')}
+				title={__('Color Settings', 'surecart')}
 				colorSettings={[
 					{
 						value: backgroundColor,

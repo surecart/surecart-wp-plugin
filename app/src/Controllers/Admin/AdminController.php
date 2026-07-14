@@ -43,11 +43,12 @@ abstract class AdminController {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
-						'breadcrumbs'   => $args['breadcrumbs'] ?? [],
-						'suffix'        => $args['suffix'] ?? '',
-						'claim_url'     => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
-						'claim_expired' => \SureCart::account()->claim_expired ?? false,
-						'report_url'    => $args['report_url'] ?? '',
+						'breadcrumbs'         => $args['breadcrumbs'] ?? [],
+						'suffix'              => $args['suffix'] ?? '',
+						'claim_url'           => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'claim_expired'       => \SureCart::account()->claim_expired ?? false,
+						'report_url'          => $args['report_url'] ?? '',
+						'enhanced_view_promo' => $args['enhanced_view_promo'] ?? null,
 					]
 				);
 			}

@@ -39,7 +39,7 @@ export default function HeadingLevelDropdown({ selectedLevel, onChange }) {
 		<ToolbarDropdownMenu
 			popoverProps={POPOVER_PROPS}
 			icon={<HeadingLevelIcon level={selectedLevel} />}
-			label={__('Change heading level')}
+			label={__('Change heading level', 'surecart')}
 			controls={HEADING_LEVELS.map((targetLevel) => {
 				{
 					const isActive = targetLevel === selectedLevel;
@@ -53,7 +53,7 @@ export default function HeadingLevelDropdown({ selectedLevel, onChange }) {
 						),
 						label: sprintf(
 							// translators: %s: heading level e.g: "1", "2", "3"
-							__('Heading %d'),
+							__('Heading %d', 'surecart'),
 							targetLevel
 						),
 						isActive,
