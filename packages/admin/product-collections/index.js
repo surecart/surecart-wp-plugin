@@ -11,11 +11,12 @@ import '../store/add-entities';
 /**
  * App
  */
-import ProductCollections from './ProductCollections';
+import ProductCollectionsApp from './ProductCollectionsApp';
 
 /**
  * Render
  */
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<ProductCollections />);
+const container = document.getElementById('sc-product-collections-app');
+if (container) {
+	createRoot(container).render(<ProductCollectionsApp />);
+}

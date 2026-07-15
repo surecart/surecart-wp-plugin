@@ -56,6 +56,7 @@
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-geo-permission](../../controllers/checkout-form/checkout/checkout-geo-permission)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-checkout-test-complete](../../controllers/checkout-form/checkout-test-complete)
  - [sc-coupon-form](../coupon-form)
@@ -122,6 +123,7 @@ graph TD;
   sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
   sc-charges-list --> sc-button
+  sc-checkout-geo-permission --> sc-button
   sc-checkout-stock-alert --> sc-button
   sc-checkout-test-complete --> sc-button
   sc-coupon-form --> sc-button

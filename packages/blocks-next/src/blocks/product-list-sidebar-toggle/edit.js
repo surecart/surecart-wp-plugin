@@ -58,7 +58,8 @@ export default ({
 						value={icon}
 						onChange={(icon) => setAttributes({ icon })}
 						help={__(
-							'A decorative arrow appended to the next and previous page link.'
+							'A decorative arrow appended to the next and previous page link.',
+							'surecart'
 						)}
 						isBlock
 					>
@@ -66,21 +67,24 @@ export default ({
 							value="none"
 							label={_x(
 								'None',
-								'Arrow option for Product List Sidebar Toggle blocks'
+								'Arrow option for Product List Sidebar Toggle blocks',
+								'surecart'
 							)}
 						/>
 						<ToggleGroupControlOption
 							value="sliders"
 							label={_x(
 								'Sliders',
-								'Arrow option for Product List Sidebar Toggle blocks'
+								'Arrow option for Product List Sidebar Toggle blocks',
+								'surecart'
 							)}
 						/>
 						<ToggleGroupControlOption
 							value="menu"
 							label={_x(
 								'Menu',
-								'Arrow option for Product List Sidebar Toggle blocks'
+								'Arrow option for Product List Sidebar Toggle blocks',
+								'surecart'
 							)}
 						/>
 					</ToggleGroupControl>

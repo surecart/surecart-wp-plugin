@@ -6,7 +6,7 @@ use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\ProductCollection;
 
 /**
- * Create a new table class that will extend the WP_List_Table
+ * WP_List_Table for Product Collections.
  */
 class ProductCollectionsListTable extends ListTable {
 	/**

@@ -25,6 +25,8 @@
 	.wp-block-surecart-columns:not(.is-not-stacked-on-mobile)
 		> .wp-block-surecart-column {
 		flex-basis: 100% !important;
+		/* Cap stacked columns so wide intrinsic content (e.g. the login verification code inputs) can't stretch them past the viewport. */
+		max-width: 100%;
 	}
 	.wp-block-surecart-columns.is-reversed-on-mobile {
 		flex-direction: column-reverse;

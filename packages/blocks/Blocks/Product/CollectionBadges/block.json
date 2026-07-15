@@ -4,6 +4,7 @@
 	"title": "Product Collection Badges",
 	"description": "Displays product collection selector for a product.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["collection", "form", "product"],
 	"attributes": {
 		"count": {

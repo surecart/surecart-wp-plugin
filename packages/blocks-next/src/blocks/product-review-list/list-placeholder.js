@@ -63,7 +63,8 @@ export default function QueryPlaceholder({
 				icon={icon}
 				label={label}
 				instructions={__(
-					'Choose a pattern for the product review list or start with a basic layout.'
+					'Choose a pattern for the product review list or start with a basic layout.',
+					'surecart'
 				)}
 			>
 				{!!hasPatterns && (

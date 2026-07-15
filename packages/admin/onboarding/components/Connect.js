@@ -56,7 +56,7 @@ export default ({ setCurrentStep }) => {
 					<ScForm onScSubmit={onSubmit}>
 						<Error error={error} />
 						<ScInput
-							label={__('Your API Token')}
+							label={__('Your API Token', 'surecart')}
 							size="large"
 							placeholder={__('Enter your api token', 'surecart')}
 							required={true}

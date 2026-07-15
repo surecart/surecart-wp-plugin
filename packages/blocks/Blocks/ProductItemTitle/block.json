@@ -5,6 +5,7 @@
 	"title": "Product Title",
 	"description": "Displays the product title.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["product", "title", "list"],
 	"ancestor": ["surecart/product-item"],
 	"attributes": {

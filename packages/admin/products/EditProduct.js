@@ -5,7 +5,7 @@ import { external } from '@wordpress/icons';
 import { Button } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch, useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useCallback, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
@@ -13,6 +13,7 @@ import { doAction } from '@wordpress/hooks';
 import apiFetch from '@wordpress/api-fetch';
 
 import Error from '../components/Error';
+import { useNavigationConfirm } from '../router';
 import useEntity from '../hooks/useEntity';
 import useBundleLabels from './hooks/useBundleLabels';
 import Logo from '../templates/Logo';
@@ -44,7 +45,7 @@ import Editor from './components/Editor';
 import ConfirmNavigation from './components/ConfirmNavigation';
 import ProductOptions from './modules/ProductOptions';
 
-export default ({ id, setBrowserURL }) => {
+export default ({ id, setBrowserURL, navigation }) => {
 	const [error, setError] = useState(null);
 	const [saving, setSaving] = useState(false);
 	const [confirmUrl, setConfirmUrl] = useState(null);
@@ -52,6 +53,8 @@ export default ({ id, setBrowserURL }) => {
 	const { saveEditedEntityRecord, invalidateResolution } =
 		useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
+	const { requestNavigation, setDefaultSuccessMessage } =
+		useNavigationConfirm();
 
 	const {
 		product,
@@ -73,6 +76,31 @@ export default ({ id, setBrowserURL }) => {
 	});
 
 	const labels = useBundleLabels(product);
+
+	const saveSuccessMessage = product?.id
+		? __('Product updated.', 'surecart')
+		: __('Product created.', 'surecart');
+
+	// So the browser-back path shows this message too (it can't pass params).
+	useEffect(() => {
+		setDefaultSuccessMessage(saveSuccessMessage);
+		return () => setDefaultSuccessMessage(null);
+	}, [saveSuccessMessage, setDefaultSuccessMessage]);
+
+	// Prompts to save/discard unsaved changes before going back to the list.
+	// requestNavigation needs raw router params rather than navigation.goToList()
+	// because NavigationConfirmProvider operates on history params directly.
+	const backToList = useCallback(() => {
+		if (navigation) {
+			requestNavigation(
+				{ page: navigation.pageSlug },
+				{ successMessage: saveSuccessMessage }
+			);
+		} else {
+			// Non-SPA context: navigate directly. Dirty-record check is SPA-only.
+			window.location.href = labels.indexHref;
+		}
+	}, [requestNavigation, navigation, saveSuccessMessage, labels.indexHref]);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
@@ -216,6 +244,8 @@ export default ({ id, setBrowserURL }) => {
 	 * Toggle product delete.
 	 */
 	const onDeleteProduct = async () => {
+		setError(null);
+
 		const { deletedNotice, indexHref } = labels;
 
 		// Invalidate the in-flight post lookup before the delete so core-data's
@@ -227,11 +257,14 @@ export default ({ id, setBrowserURL }) => {
 		]);
 
 		try {
-			setError(null);
 			await deleteProduct({ throwOnError: true });
 		} catch (e) {
-			// Known WP core-data REMOVE_ITEMS reducer bug — the API DELETE has
-			// already succeeded by the time it throws, so let it through.
+			// Known WP core-data quirk: the REMOVE_ITEMS reducer runs
+			// `queryItems.itemIds.filter(...)` without a guard; an in-flight
+			// `getEntityRecords` query can leave `itemIds` undefined and
+			// throw TypeError *after* the API DELETE has already succeeded.
+			// Tolerate that one error and run the success path; surface
+			// anything else.
 			const isReducerBug =
 				e?.name === 'TypeError' &&
 				/undefined.*filter/i.test(e?.message || '');
@@ -247,7 +280,13 @@ export default ({ id, setBrowserURL }) => {
 		}
 
 		createSuccessNotice(deletedNotice, { type: 'snackbar' });
-		window.location.href = indexHref;
+
+		// Navigate back to products list.
+		if (navigation) {
+			navigation.goToList();
+		} else {
+			window.location.href = indexHref;
+		}
 	};
 
 	/**
@@ -313,15 +352,37 @@ export default ({ id, setBrowserURL }) => {
 							gap: 1em;
 						`}
 					>
-						<ScButton circle size="small" href={labels.indexHref}>
+						<ScButton
+							circle
+							size="small"
+							{...(navigation ? {} : { href: labels.indexHref })}
+							onClick={backToList}
+						>
 							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
 						<sc-breadcrumbs>
 							<sc-breadcrumb>
 								<Logo display="block" />
 							</sc-breadcrumb>
-							<sc-breadcrumb href={labels.indexHref}>
-								{labels.entitiesLabel}
+							<sc-breadcrumb>
+								<a
+									href={labels.indexHref}
+									onClick={(e) => {
+										if (navigation) {
+											e.preventDefault();
+											backToList();
+										}
+									}}
+									css={css`
+										text-decoration: none;
+										color: inherit;
+										&:hover {
+											text-decoration: underline;
+										}
+									`}
+								>
+									{labels.entitiesLabel}
+								</a>
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>

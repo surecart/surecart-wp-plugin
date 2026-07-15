@@ -1,10 +1,9 @@
 import { createRoot } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 
 /**
  * App
  */
-import Product from './Product';
+import ProductsApp from './ProductsApp';
 
 /**
  * register store and entities.
@@ -14,5 +13,7 @@ import '../store/add-entities';
 /**
  * Render
  */
-const root = createRoot(document.getElementById('app'));
-root.render(<Product />);
+const container = document.getElementById('sc-products-app');
+if (container) {
+	createRoot(container).render(<ProductsApp />);
+}

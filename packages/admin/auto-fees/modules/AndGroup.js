@@ -30,6 +30,7 @@ import {
 } from '../utils/constants';
 import ModelSelector from '../../components/ModelSelector';
 import PriceSelector from '../../components/PriceSelector';
+import { useCountries } from '../../hooks/useAtlas';
 
 const SEARCH_RESULT_LIMIT = 8;
 const ENTITY_DISPLAY = {
@@ -53,6 +54,7 @@ export default ({
 	const [value, setValue] = useState(leaf?.comparison_value || null);
 	const [metadataKey, setMetadataKey] = useState(leaf?.metadata_key || null);
 	const target = 'shipping' === feeTarget ? 'checkout' : feeTarget;
+	const { countries } = useCountries();
 	const { record: ruleSchema } = useEntityRecord(
 		'surecart',
 		'rule-schema',
@@ -255,6 +257,29 @@ export default ({
 						}}
 						placeholder={__('Enter a value', 'surecart')}
 						className={fullWidthClass}
+					/>
+				);
+			case 'country':
+				return (
+					<ScSelect
+						search={(countries ?? []).length > SEARCH_RESULT_LIMIT}
+						searchPlaceholder={__(
+							'Search for a country',
+							'surecart'
+						)}
+						searchPlaceholderValue={__(
+							'Search for a country...',
+							'surecart'
+						)}
+						value={value}
+						onScChange={(e) => {
+							setValue(e.target.value);
+						}}
+						required
+						choices={(countries ?? []).map(({ name, code }) => ({
+							label: name,
+							value: code,
+						}))}
 					/>
 				);
 			case 'user_role':

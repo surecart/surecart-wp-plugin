@@ -9,7 +9,7 @@ export default ({ bump, updateBump }) => {
 				updateBump({ auto_apply: e.target.checked });
 			}}
 		>
-			{__('Auto Apply Discount')}
+			{__('Auto Apply Discount', 'surecart')}
 			<span slot="description">
 				{__(
 					'If enabled, the discount will be applied if the price is already in the checkout and the display conditions are satisfied, even if they do not click the bump. If disabled, the discount will only be applied if the customer clicks the order bump.',

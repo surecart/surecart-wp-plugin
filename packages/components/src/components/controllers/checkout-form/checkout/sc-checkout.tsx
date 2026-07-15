@@ -253,6 +253,7 @@ export class ScCheckout {
         {/* Handles unsaved changes warning depending on checkout state */}
         <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
         {checkoutState.validateStock && <sc-checkout-stock-alert />}
+        {checkoutState.captureGeoAddressEnabled && <sc-checkout-geo-permission />}
 
         {/* Univers provider */}
         <Universe.Provider state={this.state()}>

@@ -4,6 +4,7 @@
 	"title": "Product Quantity",
 	"description": "Displays quantity selector for a product.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["quantity", "form", "product"],
 	"attributes": {
 		"label": {

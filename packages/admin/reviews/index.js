@@ -11,11 +11,12 @@ import '../store/add-entities';
 /**
  * App.
  */
-import Review from './Review';
+import ReviewsApp from './ReviewsApp';
 
 /**
  * Render.
  */
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<Review />);
+const container = document.getElementById('sc-reviews-app');
+if (container) {
+	createRoot(container).render(<ReviewsApp />);
+}

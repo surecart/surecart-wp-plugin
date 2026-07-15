@@ -30,7 +30,7 @@ import Publishing from './modules/Publishing';
 // import Image from './modules/Image';
 import useSave from '../../admin/settings/UseSave';
 
-export default ({ id }) => {
+export default ({ id, navigation }) => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
 	const { editEntityRecord } = useDispatch(coreStore);
@@ -132,7 +132,14 @@ export default ({ id }) => {
 					<ScButton
 						circle
 						size="small"
-						href="admin.php?page=sc-product-collections"
+						{...(navigation ? {} : { href: 'admin.php?page=sc-product-collections' })}
+						onClick={() => {
+							if (navigation) {
+								navigation.goToList();
+							} else {
+								window.location.href = 'admin.php?page=sc-product-collections';
+							}
+						}}
 					>
 						<sc-icon name="arrow-left"></sc-icon>
 					</ScButton>
@@ -140,8 +147,19 @@ export default ({ id }) => {
 						<sc-breadcrumb>
 							<Logo display="block" />
 						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-product-collections">
-							{__('Collections', 'surecart')}
+						<sc-breadcrumb>
+							<a
+								href="admin.php?page=sc-product-collections"
+								onClick={(e) => {
+									if (navigation) {
+										e.preventDefault();
+										navigation.goToList();
+									}
+								}}
+								style={{ textDecoration: 'none', color: 'inherit' }}
+							>
+								{__('Collections', 'surecart')}
+							</a>
 						</sc-breadcrumb>
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
@@ -193,6 +211,7 @@ export default ({ id }) => {
 						deletingItem={isDeleting}
 						onClose={() => setModal(null)}
 						setError={setError}
+						navigation={navigation}
 					/>
 				)}
 			</>

@@ -30,6 +30,13 @@ class ProductScriptsController extends AdminModelEditController {
 	protected $path = 'admin/products';
 
 	/**
+	 * Opt into the dataviews stylesheet enqueue (handled by the parent).
+	 *
+	 * @var bool
+	 */
+	protected $needs_dataviews_style = true;
+
+	/**
 	 * Add the app url to the data.
 	 */
 	public function __construct() {
@@ -40,6 +47,7 @@ class ProductScriptsController extends AdminModelEditController {
 		$available_templates              = wp_get_theme()->get_page_templates( null, 'sc_product' );
 		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout', 'surecart' ), 'rest-api' );
 		$this->data['availableTemplates'] = $available_templates;
+		$this->data['bulk_delete_nonce']  = wp_create_nonce( 'bulk_delete_nonce' );
 		parent::enqueue();
 	}
 

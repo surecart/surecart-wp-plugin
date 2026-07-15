@@ -4,6 +4,7 @@
 	"title": "Upsell Title",
 	"description": "Displays the title.",
 	"category": "surecart-upsell-page",
+	"textdomain": "surecart",
 	"keywords": ["title", "upsell", "cta", "heading"],
 	"ancestor": ["surecart/upsell"],
 	"attributes": {

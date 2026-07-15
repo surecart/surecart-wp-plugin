@@ -4,12 +4,15 @@ import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import {
+	ScAlert,
 	ScFlex,
 	ScInput,
+	ScRichText,
 	ScSelect,
 	ScSwitch,
 	ScTextarea,
 } from '@surecart/components-react';
+import { getGeoPermissionDefaults } from '@surecart/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useEntityProp } from '@wordpress/core-data';
@@ -26,6 +29,27 @@ export default () => {
 		'site',
 		'surecart_checkout_show_login_prompt'
 	);
+	const [geoCaptureTitle, setGeoCaptureTitle] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_geo_capture_title'
+	);
+	const [geoCaptureContent, setGeoCaptureContent] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_geo_capture_content'
+	);
+	const [geoCaptureAllowLabel, setGeoCaptureAllowLabel] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_geo_capture_allow_label'
+	);
+	const [geoCaptureDeclineLabel, setGeoCaptureDeclineLabel] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_geo_capture_decline_label'
+	);
+	const geoDefaults = getGeoPermissionDefaults();
 
 	/**
 	 * Form is submitted.
@@ -156,6 +180,87 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.capture_geo_address_enabled}
+					onScChange={(e) =>
+						editItem({
+							capture_geo_address_enabled: e.target.checked,
+						})
+					}
+				>
+					{__('Capture Location at Checkout', 'surecart')}
+					<span slot="description">
+						{__(
+							"Capture the customer's location during checkout and resolve it to an address on the order.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{!!item?.capture_geo_address_enabled && (
+					<>
+						<ScAlert type="info" open icon="info-circle">
+							<span slot="title">
+								{__(
+									'Customers will be asked for permission',
+									'surecart'
+								)}
+							</span>
+							{__(
+								'When the checkout loads, customers see the explainer below and choose whether to share their location. If they decline, checkout continues normally and no location is captured. Browsers only allow location access on sites served over HTTPS. Make sure this complies with the privacy regulations that apply to your store.',
+								'surecart'
+							)}
+						</ScAlert>
+						<ScInput
+							label={__('Permission Modal Title', 'surecart')}
+							value={geoCaptureTitle}
+							placeholder={geoDefaults.title}
+							onScInput={(e) =>
+								setGeoCaptureTitle(e.target.value)
+							}
+							help={__(
+								'The heading shown at the top of the location permission modal. Defaults are used if left empty.',
+								'surecart'
+							)}
+						/>
+						<ScRichText
+							label={__(
+								'Permission Modal Description',
+								'surecart'
+							)}
+							style={{ '--sc-rich-text-min-height': '140px' }}
+							value={geoCaptureContent}
+							placeholder={geoDefaults.content}
+							onScInput={(e) =>
+								setGeoCaptureContent(e.target.value)
+							}
+							maxlength={1000}
+							help={__(
+								'Shown in the modal body. If left empty, the default text shown here is used.',
+								'surecart'
+							)}
+						/>
+						<ScFlex>
+							<ScInput
+								style={{ flex: 1 }}
+								label={__('Allow Button Label', 'surecart')}
+								value={geoCaptureAllowLabel}
+								placeholder={geoDefaults.allowLabel}
+								onScInput={(e) =>
+									setGeoCaptureAllowLabel(e.target.value)
+								}
+							/>
+							<ScInput
+								style={{ flex: 1 }}
+								label={__('Decline Button Label', 'surecart')}
+								value={geoCaptureDeclineLabel}
+								placeholder={geoDefaults.declineLabel}
+								onScInput={(e) =>
+									setGeoCaptureDeclineLabel(e.target.value)
+								}
+							/>
+						</ScFlex>
+					</>
+				)}
 			</SettingsBox>
 
 			<SettingsBox

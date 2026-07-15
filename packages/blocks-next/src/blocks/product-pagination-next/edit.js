@@ -25,8 +25,8 @@ export default ({
 				<PlainText
 					__experimentalVersion={2}
 					tagName="span"
-					aria-label={__('Next page link')}
-					placeholder={__('Next')}
+					aria-label={__('Next page link', 'surecart')}
+					placeholder={__('Next', 'surecart')}
 					value={label}
 					onChange={(newLabel) => setAttributes({ label: newLabel })}
 				/>

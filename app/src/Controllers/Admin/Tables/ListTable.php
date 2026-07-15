@@ -38,12 +38,22 @@ abstract class ListTable extends \WP_List_Table {
 	}
 
 	/**
+	 * Sanitised `?page` query arg.
+	 *
+	 * @return string
+	 */
+	protected function getCurrentPage(): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return ! empty( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+	}
+
+	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return Array
 	 */
 	public function get_columns() {
-		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		$current_page = $this->getCurrentPage();
 
 		/**
 		 * Filters the columns displayed in the Coupons list table.
@@ -59,7 +69,7 @@ abstract class ListTable extends \WP_List_Table {
 	 * @param string  $column_name The current column name.
 	 */
 	public function column_default( $item, $column_name ) {
-		$current_page = ! empty( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		$current_page = $this->getCurrentPage();
 		/**
 		 * Fires for each custom column of any SureCart List Table.
 		 *
@@ -178,17 +188,35 @@ abstract class ListTable extends \WP_List_Table {
 				continue;
 			}
 			if ( ! empty( $item->label ) ) {
+				// Tooltip surfaces both the provider ("Zapier") and the item ("New order → Slack")
+				// so keyboard + screen-reader users aren't limited to the native `title` hover.
+				$tooltip_text = trim(
+					sprintf(
+						'%s%s%s',
+						! empty( $provider->label ) ? $provider->label : '',
+						! empty( $provider->label ) && ! empty( $item->label ) ? ' — ' : '',
+						$item->label ?? ''
+					)
+				);
 				ob_start();
 				?>
-				<sc-tooltip text="<?php echo esc_attr( $provider->label ?? '' ); ?>" type="text" style="display:inline-block; cursor: help">
-					<sc-flex justify-content="flex-start">
-					<?php if ( $provider->logo ) : ?>
-							<img src="<?php echo esc_url( $provider->logo ); ?>" style="width: 18px; height: 18px"/>
-						<?php endif; ?>
-					<?php echo wp_kses_post( $item->label ); ?>
-					</sc-flex>
+				<sc-tooltip
+					text="<?php echo esc_attr( $tooltip_text ); ?>"
+					type="text"
+					style="display: inline-block; cursor: help; margin: 2px;"
+				>
+					<?php if ( ! empty( $provider->logo ) ) : ?>
+						<img
+							src="<?php echo esc_url( $provider->logo ); ?>"
+							alt="<?php echo esc_attr( $tooltip_text ); ?>"
+							style="width: 20px; height: 20px; display: inline-block; vertical-align: middle;"
+						/>
+					<?php else : ?>
+						<span aria-label="<?php echo esc_attr( $tooltip_text ); ?>">
+							<?php echo wp_kses_post( $item->label ); ?>
+						</span>
+					<?php endif; ?>
 				</sc-tooltip>
-				<br />
 				<?php
 				$output .= ob_get_clean();
 			}

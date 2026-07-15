@@ -164,7 +164,7 @@ export default function Edit({ attributes, setAttributes }) {
 					{link_url && (
 						<TextControl
 							__next40pxDefaultSize
-							label={__('Link relation')}
+							label={__('Link relation', 'surecart')}
 							help={createInterpolateElement(
 								__(
 									'The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document.',
@@ -210,7 +210,7 @@ export default function Edit({ attributes, setAttributes }) {
 							...LinkControl.DEFAULT_LINK_SETTINGS,
 							{
 								id: 'nofollow',
-								title: __('Mark as nofollow'),
+								title: __('Mark as nofollow', 'surecart'),
 							},
 						]}
 						value={{

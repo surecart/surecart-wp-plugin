@@ -65,6 +65,61 @@ class ProductCollectionsRestServiceProvider extends RestServiceProvider implemen
 	}
 
 	/**
+	 * Get the collection params.
+	 *
+	 * Plugins can extend this list via the
+	 * `surecart/product_collections/rest_args` filter.
+	 *
+	 * @return array
+	 */
+	public function get_collection_params() {
+		$args = [
+			'query'    => [
+				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
+				'type'        => 'string',
+			],
+			'sort'     => [
+				'description' => __( 'Sort directive in the form `field:direction`, e.g. `created_at:desc`.', 'surecart' ),
+				'type'        => 'string',
+			],
+			'expand'   => [
+				'description' => __( 'Relations to expand on each returned collection.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [ 'type' => 'string' ],
+				'default'     => [],
+			],
+			'ids'         => [
+				'description' => __( 'Filter the result set to specific IDs.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [ 'type' => 'string' ],
+				'default'     => [],
+			],
+			'product_ids' => [
+				'description' => __( 'Only return collections that contain the given products.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [ 'type' => 'string' ],
+				'default'     => [],
+			],
+			'page'     => [
+				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
+				'type'        => 'integer',
+			],
+			'per_page' => [
+				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
+				'type'        => 'integer',
+			],
+		];
+
+		/**
+		 * Filter the product_collections REST collection params.
+		 *
+		 * @param array $args Args keyed by param name.
+		 * @return array
+		 */
+		return apply_filters( 'surecart/product_collections/rest_args', $args );
+	}
+
+	/**
 	 * You can get the product collection for edit context with permission
 	 * and for view context make it public.
 	 *

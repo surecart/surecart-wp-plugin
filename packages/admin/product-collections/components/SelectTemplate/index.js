@@ -65,7 +65,7 @@ export default function PostTemplate({ collection, updateCollection }) {
 
 	return (
 		<PanelRow className="edit-post-post-template" ref={setPopoverAnchor}>
-			<span>{__('Template')}</span>
+			<span>{__('Template', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-template__dropdown"
@@ -148,7 +148,7 @@ function PostTemplateToggle({ isOpen, onClick, template }) {
 							__('Select template: %s', 'surecart'),
 							template?.title
 					  )
-					: __('Select template')
+					: __('Select template', 'surecart')
 			}
 			onClick={onClick}
 		>

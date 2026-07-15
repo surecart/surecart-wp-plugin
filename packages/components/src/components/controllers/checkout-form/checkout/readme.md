@@ -74,6 +74,7 @@ Type: `Promise<boolean>`
 - [sc-alert](../../../ui/alert)
 - [sc-checkout-unsaved-changes-warning](../../../providers/checkout-unsaved-changes-warning)
 - [sc-checkout-stock-alert](checkout-stock-alert)
+- [sc-checkout-geo-permission](checkout-geo-permission)
 - [sc-login-provider](../../../providers/sc-login-provider)
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
@@ -90,6 +91,7 @@ graph TD;
   sc-checkout --> sc-alert
   sc-checkout --> sc-checkout-unsaved-changes-warning
   sc-checkout --> sc-checkout-stock-alert
+  sc-checkout --> sc-checkout-geo-permission
   sc-checkout --> sc-login-provider
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
@@ -115,6 +117,11 @@ graph TD;
   sc-button --> sc-spinner
   sc-dashboard-module --> sc-alert
   sc-block-ui --> sc-spinner
+  sc-checkout-geo-permission --> sc-dialog
+  sc-checkout-geo-permission --> sc-dashboard-module
+  sc-checkout-geo-permission --> sc-flex
+  sc-checkout-geo-permission --> sc-icon
+  sc-checkout-geo-permission --> sc-button
   sc-login-provider --> sc-dialog
   sc-login-provider --> sc-form
   sc-login-provider --> sc-alert

@@ -12,19 +12,27 @@ export function IconPositionControls({ value, onChange }) {
 		<ToggleGroupControl
 			__next40pxDefaultSize
 			__nextHasNoMarginBottom
-			label={__('Icon Position')}
+			label={__('Icon Position', 'surecart')}
 			value={value}
 			onChange={onChange}
-			help={__('The position of the icon in the button.')}
+			help={__('The position of the icon in the button.', 'surecart')}
 			isBlock
 		>
 			<ToggleGroupControlOption
 				value="after"
-				label={_x('After', 'The position of the icon in the button.')}
+				label={_x(
+					'After',
+					'The position of the icon in the button.',
+					'surecart'
+				)}
 			/>
 			<ToggleGroupControlOption
 				value="before"
-				label={_x('Before', 'The position of the icon in the button.')}
+				label={_x(
+					'Before',
+					'The position of the icon in the button.',
+					'surecart'
+				)}
 			/>
 		</ToggleGroupControl>
 	);

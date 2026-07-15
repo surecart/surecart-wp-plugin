@@ -35,7 +35,7 @@ export default ({ attributes, setAttributes }) => {
 					<TextControl
 						__next40pxDefaultSize
 						__nextHasNoMarginBottom
-						label={__('Header Text')}
+						label={__('Header Text', 'surecart')}
 						value={text}
 						onChange={(text) => setAttributes({ text })}
 					/>
@@ -48,8 +48,8 @@ export default ({ attributes, setAttributes }) => {
 					class="wp-block-surecart-slide-out-cart-header__close"
 				/>
 				<RichText
-					aria-label={__('Header Text')}
-					placeholder={__('Add a title…')}
+					aria-label={__('Header Text', 'surecart')}
+					placeholder={__('Add a title…', 'surecart')}
 					value={text}
 					onChange={(text) => setAttributes({ text })}
 					withoutInteractiveFormatting

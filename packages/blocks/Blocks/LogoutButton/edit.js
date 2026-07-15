@@ -25,7 +25,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title={__('Logout button settings')}>
+				<PanelBody title={__('Logout button settings', 'surecart')}>
 					<PanelRow>
 						<TextControl
 							__next40pxDefaultSize
@@ -38,7 +38,7 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<ToggleControl
 							__nextHasNoMarginBottom
-							label={__('Redirect to current URL')}
+							label={__('Redirect to current URL', 'surecart')}
 							checked={redirectToCurrent}
 							onChange={() =>
 								setAttributes({
@@ -50,7 +50,7 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<ToggleControl
 							__nextHasNoMarginBottom
-							label={__('Show icon')}
+							label={__('Show icon', 'surecart')}
 							checked={show_icon}
 							onChange={() =>
 								setAttributes({

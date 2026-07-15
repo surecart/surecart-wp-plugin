@@ -61,7 +61,7 @@ export default ({ variant, onRemove, size = '36px' }) => {
 				{variant?.image_url ? (
 					<img
 						src={variant?.image_url}
-						alt={sprintf(__('Image of %s', 'sc'), variant?.name)}
+						alt={sprintf(__('Image of %s', 'surecart'), variant?.name)}
 						css={css`
 							width: ${size};
 							height: ${size};

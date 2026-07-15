@@ -17,6 +17,14 @@ class ReviewsController extends RestController {
 	protected $class = Review::class;
 
 	/**
+	 * Resource slug — enables the per-resource filter
+	 * `surecart/reviews/list/query_args` invoked by the base controller.
+	 *
+	 * @var string
+	 */
+	protected $resource = 'reviews';
+
+	/**
 	 * Always fetch with these subcollections.
 	 *
 	 * @var array<string>

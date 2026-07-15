@@ -13,6 +13,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies.
  */
 import ContactInfo from './modules/ContactInfo';
+import GeoAddress from './modules/GeoAddress';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
@@ -89,6 +90,8 @@ export default ({ order, checkout, loading, onManuallyRefetchOrder }) => {
 				onEditAddress={() => setModal(modals.EDIT_ADDRESS)}
 				onDeleteAddress={() => setModal(modals.CONFIRM_DELETE_ADDRESS)}
 			/>
+
+			<GeoAddress checkout={checkout} loading={loading} />
 
 			<TaxInfo
 				checkout={checkout}
