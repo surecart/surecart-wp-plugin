@@ -32,17 +32,25 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * The canonical structure the migration produces — details container
-	 * wrapping the variant and note blocks.
+	 * The canonical structure the migration produces — a details container
+	 * wrapping ONLY the variant block. The note stays standalone.
 	 */
-	protected function detailsMarkup( ?string $variant_attrs = null, ?string $note_attrs = null ): string {
+	protected function detailsMarkup( ?string $variant_attrs = null ): string {
 		$variant_attrs = $variant_attrs ?? CartLineItemDetailsMigrationService::DEFAULT_CHILD_ATTRS;
-		$note_attrs    = $note_attrs ?? CartLineItemDetailsMigrationService::DEFAULT_CHILD_ATTRS;
 
 		return "<!-- wp:surecart/cart-line-item-details -->\n"
-			. '<!-- wp:surecart/cart-line-item-variant ' . $variant_attrs . " /-->\n\n"
-			. '<!-- wp:surecart/cart-line-item-note ' . $note_attrs . " /-->\n"
+			. '<!-- wp:surecart/cart-line-item-variant ' . $variant_attrs . " /-->\n"
 			. '<!-- /wp:surecart/cart-line-item-details -->';
+	}
+
+	/**
+	 * Grab the details container markup (opener → closer) from content.
+	 */
+	protected function detailsRegion( string $content ): ?string {
+		if ( preg_match( '/<!--\s*wp:surecart\/cart-line-item-details\b.*?<!--\s*\/wp:surecart\/cart-line-item-details\s*-->/s', $content, $m ) ) {
+			return $m[0];
+		}
+		return null;
 	}
 
 	/**
@@ -72,10 +80,10 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Released layout: standalone variant + note move inside one details
-	 * container at the variant's position.
+	 * Released layout: the standalone variant is wrapped in a details
+	 * container at its position; the note stays standalone, after it.
 	 */
-	public function test_wraps_standalone_variant_and_note_in_details() {
+	public function test_wraps_variant_and_keeps_note_standalone() {
 		$id = $this->createCart(
 			$this->variant_markup . "\n"
 			. $this->note_markup . "\n"
@@ -85,41 +93,50 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 		$this->service->run();
 		$content = $this->getContent( $id );
 
+		// Variant is wrapped in the details container.
 		$this->assertStringContainsString( $this->detailsMarkup(), $content );
 
-		// Exactly one of each — nothing standalone left outside the container.
+		// Exactly one of each block.
 		$this->assertSame( 1, substr_count( $content, 'wp:surecart/cart-line-item-variant' ) );
 		$this->assertSame( 1, substr_count( $content, 'wp:surecart/cart-line-item-note' ) );
 
-		// Placed where the variant was — before the status block.
+		// The note is NOT inside the container.
+		$region = $this->detailsRegion( $content );
+		$this->assertNotNull( $region );
+		$this->assertStringNotContainsString( 'cart-line-item-note', $region );
+
+		// Order: details container → note → status.
+		$this->assertLessThan(
+			strpos( $content, 'cart-line-item-note' ),
+			strpos( $content, '<!-- /wp:surecart/cart-line-item-details -->' )
+		);
 		$this->assertLessThan(
 			strpos( $content, 'cart-line-item-status' ),
-			strpos( $content, 'cart-line-item-details' )
+			strpos( $content, 'cart-line-item-note' )
 		);
 	}
 
 	/**
-	 * A details container already exists but the variant is still standalone
-	 * outside it: the container is rebuilt with variant + note inside.
+	 * The note is never folded into the container — it must remain a
+	 * standalone block after migration.
 	 */
-	public function test_rebuilds_container_when_variant_is_standalone_outside() {
-		$id = $this->createCart(
-			$this->variant_markup . "\n"
-			. '<!-- wp:surecart/cart-line-item-details -->' . "\n"
-			. $this->note_markup . "\n"
-			. '<!-- /wp:surecart/cart-line-item-details -->'
-		);
+	public function test_does_not_wrap_note_inside_details() {
+		$id = $this->createCart( $this->variant_markup . "\n" . $this->note_markup );
 
 		$this->service->run();
 		$content = $this->getContent( $id );
 
-		$this->assertStringContainsString( $this->detailsMarkup(), $content );
-		$this->assertSame( 1, substr_count( $content, 'wp:surecart/cart-line-item-variant' ) );
-		$this->assertSame( 1, substr_count( $content, '<!-- wp:surecart/cart-line-item-details -->' ) );
+		$region = $this->detailsRegion( $content );
+		$this->assertNotNull( $region );
+		$this->assertStringContainsString( 'cart-line-item-variant', $region );
+		$this->assertStringNotContainsString( 'cart-line-item-note', $region );
+		$this->assertStringContainsString( $this->note_markup, $content );
 	}
 
 	public function test_is_idempotent_when_already_migrated() {
-		$already = $this->detailsMarkup() . "\n" . '<!-- wp:surecart/cart-line-item-status /-->';
+		$already = $this->detailsMarkup() . "\n"
+			. $this->note_markup . "\n"
+			. '<!-- wp:surecart/cart-line-item-status /-->';
 
 		$id = $this->createCart( $already );
 
@@ -129,12 +146,13 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * No detail blocks at all: inject the container before the first anchor
-	 * so bundle items still show for older carts.
+	 * No variant block at all: inject the container before the first anchor
+	 * (the note) so bundle items still show for older/customized carts.
 	 */
 	public function test_fallback_injects_details_before_anchor() {
 		$id = $this->createCart(
 			'<!-- wp:surecart/cart-line-item-title /-->' . "\n"
+			. $this->note_markup . "\n"
 			. '<!-- wp:surecart/cart-line-item-status /-->'
 		);
 
@@ -142,28 +160,28 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 		$content = $this->getContent( $id );
 
 		$this->assertStringContainsString( $this->detailsMarkup(), $content );
-		// Injected before the status anchor.
+		// Injected before the note anchor.
 		$this->assertLessThan(
-			strpos( $content, 'cart-line-item-status' ),
+			strpos( $content, 'cart-line-item-note' ),
 			strpos( $content, 'cart-line-item-details' )
 		);
 	}
 
 	/**
-	 * Merchant styling on the released blocks (nested JSON attributes)
-	 * survives the move into the container.
+	 * Merchant styling on the released variant (nested JSON attributes)
+	 * survives the move into the container; the note is left untouched.
 	 */
 	public function test_preserves_nested_json_attributes() {
 		$rich_attrs   = '{"style":{"color":{"text":"#828c99"},"elements":{"link":{"color":{"text":"#828c99"}}},"typography":{"fontSize":"14px","lineHeight":"1.4"}}}';
 		$rich_variant = '<!-- wp:surecart/cart-line-item-variant ' . $rich_attrs . ' /-->';
-		$rich_note    = '<!-- wp:surecart/cart-line-item-note ' . $rich_attrs . ' /-->';
 
-		$id = $this->createCart( $rich_variant . "\n" . $rich_note );
+		$id = $this->createCart( $rich_variant . "\n" . $this->note_markup );
 
 		$this->service->run();
 		$content = $this->getContent( $id );
 
-		$this->assertStringContainsString( $this->detailsMarkup( $rich_attrs, $rich_attrs ), $content );
+		$this->assertStringContainsString( $this->detailsMarkup( $rich_attrs ), $content );
+		$this->assertStringContainsString( $this->note_markup, $content );
 	}
 
 	/**
@@ -180,7 +198,9 @@ class CartLineItemDetailsMigrationServiceTest extends SureCartUnitTestCase {
 		);
 
 		$this->service->run();
+		$content = $this->getContent( $id );
 
-		$this->assertStringContainsString( $this->detailsMarkup(), $this->getContent( $id ) );
+		$this->assertStringContainsString( $this->detailsMarkup(), $content );
+		$this->assertStringContainsString( $this->note_markup, $content );
 	}
 }
