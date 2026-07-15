@@ -6,7 +6,10 @@
 	"description": "Display the product line item note.",
 	"version": "1.0.0",
 	"category": "surecart-cart",
-	"ancestor": ["surecart/cart-line-item-details"],
+	"ancestor": [
+		"surecart/slide-out-cart-items",
+		"surecart/slide-out-cart-line-items"
+	],
 	"example": {},
 	"textdomain": "surecart",
 	"supports": {
@@ -40,5 +43,6 @@
 	},
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"viewScriptModule": ["@surecart/line-item-note"]
 }

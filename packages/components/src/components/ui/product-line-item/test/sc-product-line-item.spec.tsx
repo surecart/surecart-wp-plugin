@@ -17,7 +17,7 @@ describe('sc-product-line-item', () => {
     expect(page.root).toMatchSnapshot();
   });
 
-  it('renders bundle components and the note inside a single details region', async () => {
+  it('renders bundle components in the details region and the note as a standalone note', async () => {
     const page = await newSpecPage({
       components: [ScProductLineItem],
       html: `<sc-product-line-item></sc-product-line-item>`,
@@ -38,11 +38,11 @@ describe('sc-product-line-item', () => {
     // Quantity multiplier only when > 1.
     expect(rows[1].textContent).toContain('× 2');
 
-    // The note lives in the same region (no separate sc-product-line-item-note).
-    const note = page.root.shadowRoot.querySelector('.line-item-details__note');
+    // The note is a standalone note (not inside the collapsible details region).
+    expect(page.root.shadowRoot.querySelector('.line-item-details__note')).toBeNull();
+    const note = page.root.shadowRoot.querySelector('sc-product-line-item-note');
     expect(note).toBeTruthy();
-    expect(note.textContent).toContain('Please gift wrap this order.');
-    expect(page.root.shadowRoot.querySelector('sc-product-line-item-note')).toBeNull();
+    expect(note.getAttribute('note')).toContain('Please gift wrap this order.');
   });
 
   it('shows bundle items without a variant by default (name only)', async () => {
@@ -77,14 +77,19 @@ describe('sc-product-line-item', () => {
     expect(rows[0].textContent).toContain('Sleeping Bag - 10°C / Forest');
   });
 
-  it('omits the details region when there is no note or bundle', async () => {
+  it('omits the details region when there is no bundle; a note alone renders standalone', async () => {
     const page = await newSpecPage({
       components: [ScProductLineItem],
       html: `<sc-product-line-item></sc-product-line-item>`,
     });
+
+    page.root.note = 'Please gift wrap this order.';
     await page.waitForChanges();
 
+    // The details region is bundle-only now — a note does not create it.
     expect(page.root.shadowRoot.querySelector('.line-item-details')).toBeNull();
+    // The note still renders as a standalone note.
+    expect(page.root.shadowRoot.querySelector('sc-product-line-item-note')).toBeTruthy();
   });
 
   it('omits the meta row when there is no description or trial/fees content', async () => {

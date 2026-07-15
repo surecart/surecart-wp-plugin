@@ -18,17 +18,13 @@ const CHILD_STYLE = {
 	style: { typography: { fontSize: '14px', lineHeight: '1.4' } },
 };
 
-const ALLOWED_BLOCKS = [
-	'surecart/cart-line-item-variant',
-	'surecart/cart-line-item-note',
-];
+const ALLOWED_BLOCKS = ['surecart/cart-line-item-variant'];
 
 /**
- * Seed the two default child blocks (variant + note).
+ * Seed the default child block (bundle item variant).
  */
 const buildDefaultChildren = () => [
 	createBlock('surecart/cart-line-item-variant', CHILD_STYLE),
-	createBlock('surecart/cart-line-item-note', CHILD_STYLE),
 ];
 
 export default ({ clientId, attributes, setAttributes }) => {
@@ -73,7 +69,7 @@ export default ({ clientId, attributes, setAttributes }) => {
 					<ToggleControl
 						label={__('Expanded by default', 'surecart')}
 						help={__(
-							'When on, the details (variant, bundle items, note) show expanded on load. When off, they stay collapsed until the shopper expands them.',
+							'When on, the details (variant, bundle items) show expanded on load. When off, they stay collapsed until the shopper expands them.',
 							'surecart'
 						)}
 						checked={expanded}

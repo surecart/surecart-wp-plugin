@@ -117,72 +117,27 @@ export class ScProductLineItem {
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
-  /** Collapse the details region (bundle items + note) to the first two lines by default (matches the cart block). */
+  /** Collapse the bundle-items details region to the first two lines by default (matches the cart block). */
   @State() detailsExpanded = false;
-
-  /** Whether the collapsed details region overflows its clamped height. */
-  @State() detailsOverflowing = false;
-
-  private detailsEl?: HTMLDivElement;
-  private detailsResizeObserver?: ResizeObserver;
-  private detailsMutationObserver?: MutationObserver;
-
-  componentDidLoad() {
-    this.setupDetailsObservers();
-    this.checkDetailsOverflow();
-  }
-
-  disconnectedCallback() {
-    this.cleanupDetailsObservers();
-  }
-
-  setupDetailsObservers() {
-    if (!this.detailsEl) return;
-
-    if (typeof ResizeObserver !== 'undefined') {
-      this.detailsResizeObserver = new ResizeObserver(() => this.checkDetailsOverflow());
-      this.detailsResizeObserver.observe(this.detailsEl);
-    }
-
-    // Content changes (note text / bundle rows) re-evaluate the overflow.
-    if (typeof MutationObserver !== 'undefined') {
-      this.detailsMutationObserver = new MutationObserver(() => this.checkDetailsOverflow());
-      this.detailsMutationObserver.observe(this.detailsEl, { characterData: true, subtree: true, childList: true });
-    }
-  }
-
-  cleanupDetailsObservers() {
-    this.detailsResizeObserver?.disconnect();
-    this.detailsResizeObserver = undefined;
-    this.detailsMutationObserver?.disconnect();
-    this.detailsMutationObserver = undefined;
-  }
-
-  checkDetailsOverflow() {
-    if (!this.detailsEl) return;
-    this.detailsOverflowing = this.detailsEl.scrollHeight > this.detailsEl.clientHeight;
-  }
 
   toggleDetails() {
     this.detailsExpanded = !this.detailsExpanded;
   }
 
   /**
-   * Bundle items + note share a single collapsible region. Collapsed, only the
-   * first `COLLAPSE_AFTER` rows show. Bundle components render one row each, so
-   * the hidden count is exact ("+N more"); a note (no discrete rows) falls back
-   * to measured overflow with a generic "Show more".
+   * Bundle items render in a single collapsible region. Collapsed, only the
+   * first `COLLAPSE_AFTER` rows show; bundle components render one row each, so
+   * the hidden count is exact ("+N more").
    */
   renderDetails() {
     const sep = (this.separator || '·').trim() || '·';
     const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems, sep);
-    const hasNote = !!this.note;
-    if (!rows.length && !hasNote) return null;
+    if (!rows.length) return null;
 
     const bundleHidden = rows.length > COLLAPSE_AFTER ? rows.length - COLLAPSE_AFTER : 0;
     // Row count is authoritative for bundles (avoids a wrapped row falsely
-    // triggering a toggle); the note relies on measured overflow.
-    const collapsible = this.detailsExpanded || bundleHidden > 0 || (hasNote && this.detailsOverflowing);
+    // triggering a toggle).
+    const collapsible = this.detailsExpanded || bundleHidden > 0;
 
     const toggleLabel = this.detailsExpanded
       ? __('Show less', 'surecart')
@@ -200,7 +155,7 @@ export class ScProductLineItem {
         part="details"
         onClick={() => collapsible && this.toggleDetails()}
       >
-        <div class="line-item-details__content" ref={el => (this.detailsEl = el as HTMLDivElement)}>
+        <div class="line-item-details__content">
           {rows.map(row => (
             <div class="line-item-details__row" part="component" key={row.id}>
               {row.qty > 1 && <span class="line-item-details__qty">{row.qty} ×</span>}
@@ -212,7 +167,6 @@ export class ScProductLineItem {
               )}
             </div>
           ))}
-          {hasNote && <div class="line-item-details__note">{this.note}</div>}
         </div>
 
         {collapsible && (
@@ -240,7 +194,7 @@ export class ScProductLineItem {
     const bundleCount = this.bundleComponents?.length || 0;
     const hasDescriptionDetails = !!this.variant || !!this.price || !!this.sku || !!this.purchasableStatus;
     const hasTrialFeesDetails = !!this.trial || (this.fees || []).some(fee => fee?.display_amount || fee?.description);
-    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails;
+    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails || !!this.note;
 
     return (
       <div class="base" part="base">
@@ -291,6 +245,7 @@ export class ScProductLineItem {
                     </div>
                   )}
                   {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                  {!!this.note && <sc-product-line-item-note note={this.note} />}
                 </div>
 
                 <div class="item__description" part="trial-fees">

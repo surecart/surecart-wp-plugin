@@ -235,16 +235,13 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
-		 * Whether the line item has any extra details (variant, bundle
-		 * components or a note) for the `cart-line-item-details` block to
-		 * show. The block hides itself when there's nothing to render.
+		 * Whether the line item has any extra details (variant or bundle
+		 * components) for the `cart-line-item-details` block to show. The
+		 * block hides itself when there's nothing to render. The note is a
+		 * standalone block again, so it's intentionally excluded here.
 		 */
 		get hasLineItemDetails() {
-			return (
-				!!state.lineItemVariant ||
-				state.hasBundleComponents ||
-				!!state.lineItemNote
-			);
+			return !!state.lineItemVariant || state.hasBundleComponents;
 		},
 
 		/**

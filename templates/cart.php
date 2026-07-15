@@ -42,9 +42,9 @@ return [
 
 						<!-- wp:surecart/cart-line-item-details -->
 						<!-- wp:surecart/cart-line-item-variant {"style":{"color":{"text":"#828c99"},"elements":{"link":{"color":{"text":"#828c99"}}},"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
+						<!-- /wp:surecart/cart-line-item-details -->
 
 						<!-- wp:surecart/cart-line-item-note {"style":{"color":{"text":"#828c99"},"elements":{"link":{"color":{"text":"#828c99"}}},"typography":{"fontSize":"14px","lineHeight":"1.4"}}} /-->
-						<!-- /wp:surecart/cart-line-item-details -->
 					</div>
 					<!-- /wp:group -->
 

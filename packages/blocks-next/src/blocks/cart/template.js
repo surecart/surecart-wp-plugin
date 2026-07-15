@@ -302,21 +302,18 @@ export const TEMPLATE = [
 																					},
 																				},
 																			],
-																			[
-																				'surecart/cart-line-item-note',
-																				{
-																					style: {
-																						typography:
-																							{
-																								fontSize:
-																									'14px',
-																								lineHeight:
-																									'1.4',
-																							},
-																					},
-																				},
-																			],
 																		],
+																	],
+																	[
+																		'surecart/cart-line-item-note',
+																		{
+																			style: {
+																				typography: {
+																					fontSize: '14px',
+																					lineHeight: '1.4',
+																				},
+																			},
+																		},
 																	],
 																],
 															],
