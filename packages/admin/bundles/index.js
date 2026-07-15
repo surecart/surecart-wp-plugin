@@ -4,19 +4,20 @@
 import { createRoot } from '@wordpress/element';
 
 /**
- * register store and entities.
+ * Register store and entities. Bundles reuse the `product` entity.
  */
 import '../store/add-entities';
 
 /**
- * App. Bundles share the Product entity and the EditProduct UI; the list
- * screen is rendered server-side via the PHP `BundlesListTable`.
+ * App — list/edit/create SPA for `?page=sc-bundles`.
  */
-import EditBundle from './EditBundle';
+import BundlesApp from './BundlesApp';
 
 /**
  * Render.
  */
-const container = document.getElementById('app');
-const root = createRoot(container);
-root.render(<EditBundle />);
+const container = document.getElementById('sc-bundles-app');
+if (container) {
+	const root = createRoot(container);
+	root.render(<BundlesApp />);
+}

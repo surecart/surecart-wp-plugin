@@ -3,6 +3,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import { RouterProvider } from '../router';
 import ErrorBoundary from './error-boundary';
+import DetailSkeleton from './DetailSkeleton';
 import useAdminSpaNavigation from '../hooks/useAdminSpaNavigation';
 
 function useServerHeaderVisibility(isVisible) {
@@ -59,7 +60,7 @@ export default function createListEditApp({
 		}
 
 		return (
-			<Suspense fallback={null}>
+			<Suspense fallback={<DetailSkeleton />}>
 				{navigation.isBulkDelete && BulkDeleteComponent ? (
 					<BulkDeleteComponent navigation={navigation} />
 				) : (

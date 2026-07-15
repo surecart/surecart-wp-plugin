@@ -11,7 +11,7 @@ import Error from '../components/Error';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ onCreateProduct }) => {
+export default ({ onCreateProduct, navigation }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -89,9 +89,14 @@ export default ({ onCreateProduct }) => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={addQueryArgs('admin.php', {
-									page: 'sc-bundles',
-								})}
+								{...(navigation
+									? {}
+									: {
+											href: addQueryArgs('admin.php', {
+												page: 'sc-bundles',
+											}),
+									  })}
+								onClick={() => navigation?.goToList()}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}

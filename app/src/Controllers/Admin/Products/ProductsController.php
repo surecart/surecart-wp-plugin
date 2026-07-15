@@ -59,6 +59,14 @@ class ProductsController extends AdminController {
 	protected $bulk_delete_view_key = 'products';
 
 	/**
+	 * Bulk-action name used for the async delete pipeline + admin notice.
+	 * Bundles are `sc_product` posts too, so they share this processor.
+	 *
+	 * @var string
+	 */
+	protected $bulk_action_name = 'delete_products';
+
+	/**
 	 * Index breadcrumb shape used by withHeader().
 	 *
 	 * @return array
@@ -166,19 +174,25 @@ class ProductsController extends AdminController {
 	 * Render the SPA view for products.
 	 */
 	protected function renderSpaView() {
-		$this->enqueueSpaScripts( ProductScriptsController::class );
+		$this->enqueueSpaScripts( $this->scripts_controller_class );
 
 		$bulk_action_service = new BulkActionService();
 		$bulk_action_service->bootstrap();
 
+		$bulk_action_name = $this->bulk_action_name;
 		add_action(
 			'admin_notices',
-			function () use ( $bulk_action_service ) {
-				$bulk_action_service->showBulkActionAdminNotice( 'delete_products' );
+			function () use ( $bulk_action_service, $bulk_action_name ) {
+				$bulk_action_service->showBulkActionAdminNotice( $bulk_action_name );
 			}
 		);
 
-		return $this->renderSpaShell( 'admin/products/spa', 'products', __( 'Products', 'surecart' ) );
+		// Derive the SPA-shell breadcrumb from the same source the legacy
+		// header uses, so subclasses only override indexBreadcrumb() once.
+		$breadcrumb = $this->indexBreadcrumb();
+		$key        = array_key_first( $breadcrumb );
+
+		return $this->renderSpaShell( $this->view_prefix . '/spa', $key, $breadcrumb[ $key ]['title'] );
 	}
 
 	/**
@@ -267,7 +281,7 @@ class ProductsController extends AdminController {
 			: [];
 
 		if ( empty( $product_ids ) ) {
-			return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=sc-products' ) ) );
+			return \SureCart::redirect()->to( esc_url_raw( admin_url( 'admin.php?page=' . $this->page_slug ) ) );
 		}
 
 		// get all posts where the sc_id meta key is in the product_ids using wp_query.
@@ -297,7 +311,7 @@ class ProductsController extends AdminController {
 
 		// create bulk action.
 		$action = \SureCart::bulkAction()->createBulkAction(
-			'delete_products',
+			$this->bulk_action_name,
 			$product_ids
 		);
 
@@ -401,7 +415,7 @@ class ProductsController extends AdminController {
 			);
 		}
 
-		return $this->renderSpaShell( 'admin/products/spa' );
+		return $this->renderSpaShell( $this->view_prefix . '/spa' );
 	}
 
 	/**

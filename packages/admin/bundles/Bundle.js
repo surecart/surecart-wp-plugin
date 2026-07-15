@@ -1,13 +1,12 @@
-import { store } from '@surecart/data';
-import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useState } from 'react';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import CreateBundle from './CreateBundle';
 import EditProduct from '../products/EditProduct';
 
 /**
- * Returns the bundle edit URL.
+ * Returns the bundle edit URL. Bundles are products with `bundle: true`, so the
+ * shared EditProduct UI is reused; only the list/create wrappers differ.
  *
  * @param {number} id Bundle ID.
  *
@@ -20,7 +19,7 @@ export function getEditURL({ id, ...query }) {
 	});
 }
 
-export default () => {
+export default ({ navigation }) => {
 	const [history, setHistory] = useState(null);
 
 	const setBrowserURL = (args) => {
@@ -31,14 +30,20 @@ export default () => {
 		setHistory(args);
 	};
 
-	const id = useSelect((select) => select(store).selectPageId());
+	// Get the id from the navigation hook (SPA routing).
+	const id = navigation?.id;
 
 	return id ? (
-		<EditProduct id={id} setBrowserURL={setBrowserURL} />
+		<EditProduct
+			id={id}
+			setBrowserURL={setBrowserURL}
+			navigation={navigation}
+		/>
 	) : (
 		<CreateBundle
+			navigation={navigation}
 			onCreateProduct={(id) => {
-				window.location.assign(getEditURL({ id, status: 'publish' }));
+				navigation.goToEdit(id, { status: 'publish' });
 			}}
 		/>
 	);
