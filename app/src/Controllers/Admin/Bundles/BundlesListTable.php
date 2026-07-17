@@ -41,7 +41,7 @@ class BundlesListTable extends ProductsListTable {
 	 *
 	 * @var bool
 	 */
-	protected $table_bundle_filter = true;
+	protected $is_bundle = true;
 
 	/**
 	 * Extra `with` expansions specific to this screen.

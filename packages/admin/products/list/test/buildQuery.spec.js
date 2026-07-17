@@ -25,6 +25,7 @@ describe('buildProductsQuery', () => {
 		const args = buildProductsQuery(baseView);
 		expect(args).toEqual({
 			expand_mode: 'replace',
+			bundle: false,
 			archived: false,
 			expand: BASE_EXPANDS,
 		});

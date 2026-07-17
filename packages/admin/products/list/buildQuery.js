@@ -79,6 +79,7 @@ export const buildProductsQuery = (view) => {
 	// verbatim; extensions that add relations augment it additively.
 	return {
 		expand_mode: 'replace',
+		bundle: false,
 		expand: buildProductsExpand(view),
 		...buildFilterArgsFromView({
 			view,

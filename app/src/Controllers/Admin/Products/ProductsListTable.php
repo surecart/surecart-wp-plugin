@@ -90,7 +90,7 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @var bool
 	 */
-	protected $table_bundle_filter = false;
+	protected $is_bundle = false;
 
 	/**
 	 * Extra `with` expansions specific to this screen.
@@ -442,7 +442,7 @@ class ProductsListTable extends ListTable {
 		$product_query = Product::where(
 			array(
 				'archived' => $is_archived,
-				'bundle'   => $this->table_bundle_filter,
+				'bundle'   => $this->is_bundle,
 				'query'    => $this->get_search_query(),
 				'cached'   => false,
 			)
