@@ -189,7 +189,7 @@ export default ({
 							<ModelSelector
 								label={__('Product Collection', 'surecart')}
 								help={__(
-									'If a product belongs to multiple collections with overrides for the same region, the oldest override will be used.',
+									'If a product belongs to multiple collections with overrides for the same region, the override created first will be applied. To change which rate applies, remove and re-add the overrides in the desired order.',
 									'surecart'
 								)}
 								name="product-collection"
