@@ -55,6 +55,11 @@
 		gap: 0.125em;
 		color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
 
+		// Defer the muted default to an editor-chosen text color on the block wrapper.
+		.has-text-color & {
+			color: inherit;
+		}
+
 		&[hidden] {
 			display: none !important;
 		}

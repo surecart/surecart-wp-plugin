@@ -39,3 +39,21 @@
 		}
 	}
 }
+
+// When a text color is set on this block or its details container, let it cascade over the defaults above.
+.has-text-color .wp-block-surecart-cart-line-item-variant:not(.has-text-color) {
+	color: inherit;
+}
+
+.wp-block-surecart-cart-line-item-variant.has-text-color
+	.sc-cart-line-item-variant__qty,
+.wp-block-surecart-cart-line-item-variant.has-text-color
+	.sc-cart-line-item-variant__name,
+.has-text-color
+	.wp-block-surecart-cart-line-item-variant
+	.sc-cart-line-item-variant__qty,
+.has-text-color
+	.wp-block-surecart-cart-line-item-variant
+	.sc-cart-line-item-variant__name {
+	color: inherit;
+}
