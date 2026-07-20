@@ -196,7 +196,7 @@ export class ScProductLineItem {
     const bundleCount = this.bundleComponents?.length || 0;
     const hasDescriptionDetails = !!this.variant || !!this.price || !!this.sku || !!this.purchasableStatus;
     const hasTrialFeesDetails = !!this.trial || (this.fees || []).some(fee => fee?.display_amount || fee?.description);
-    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails || !!this.note;
+    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails;
 
     return (
       <div class="base" part="base">
@@ -247,7 +247,6 @@ export class ScProductLineItem {
                     </div>
                   )}
                   {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                  {!!this.note && <sc-product-line-item-note note={this.note} exportparts="base:note" />}
                 </div>
 
                 <div class="item__description" part="trial-fees">
@@ -264,6 +263,13 @@ export class ScProductLineItem {
             )}
 
             {this.renderDetails()}
+
+            {/* Below the details region to match the cart's order: variant/bundle details first, note last. */}
+            {!!this.note && (
+              <div class="item__description">
+                <sc-product-line-item-note note={this.note} exportparts="base:note" />
+              </div>
+            )}
 
             <div class="item__row stick-bottom">
               {this.editable ? (
