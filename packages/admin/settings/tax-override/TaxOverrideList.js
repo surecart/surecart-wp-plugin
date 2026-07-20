@@ -119,6 +119,20 @@ export default ({
 						: __('Product Overrides', 'surecart')}
 				</ScText>
 
+				{type === 'product' && (
+					<ScText
+						css={css`
+							color: var(--sc-color-gray-600);
+							opacity: 0.85;
+						`}
+					>
+						{__(
+							'If a product belongs to multiple collections with overrides for the same region, the oldest override will be used.',
+							'surecart'
+						)}
+					</ScText>
+				)}
+
 				{!availableZones?.length && !loading ? (
 					<ScAlert type="primary" open>
 						{__(
