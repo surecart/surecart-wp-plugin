@@ -26,6 +26,7 @@
 | `reviewButtonLink`     | `review-button-link`     | The review button link. If set, a review button will be shown linking to this URL.                                          | `string`          | `''`        |
 | `scratch`              | `scratch`                | The line item scratch amount                                                                                                | `string`          | `undefined` |
 | `scratchDisplayAmount` | `scratch-display-amount` | Product scratch display amount                                                                                              | `string`          | `undefined` |
+| `separator`            | `separator`              | Separator between a bundle component's name and its variant options.                                                        | `string`          | `'·'`       |
 | `showAllBundleItems`   | `show-all-bundle-items`  | Show every bundle component (default), or only those with a selected variant when set to `false`.                           | `boolean`         | `true`      |
 | `sku`                  | `sku`                    | The SKU.                                                                                                                    | `string`          | `''`        |
 | `trial`                | `trial`                  | Trial text                                                                                                                  | `string`          | `undefined` |
@@ -84,6 +85,7 @@
 ### Depends on
 
 - [sc-icon](../icon)
+- [sc-product-line-item-note](../product-line-item-note)
 - [sc-quantity-select](../quantity-select)
 - [sc-button](../button)
 
@@ -91,8 +93,10 @@
 ```mermaid
 graph TD;
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-button
+  sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-button --> sc-spinner
   sc-line-items --> sc-product-line-item

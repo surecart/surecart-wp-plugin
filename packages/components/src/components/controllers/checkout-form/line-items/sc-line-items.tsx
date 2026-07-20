@@ -30,6 +30,11 @@ import { groupBundleLineItems } from '../../../../functions/line-items';
  * @part line-item__quantity-plus - The line item quantity plus
  * @part line-item__quantity-plus-icon - The line item quantity plus icon
  * @part line-item__quantity-input - The line item quantity input
+ * @part line-item__details - The collapsible details region (bundle components)
+ * @part line-item__details-component - A single bundle component row
+ * @part line-item__details-variant - The variant options within a bundle component row
+ * @part line-item__details-toggle - The details expand/collapse toggle button
+ * @part line-item__note - The line item note
  */
 
 @Component({
@@ -121,7 +126,7 @@ export class ScLineItems {
                 removable={!item?.locked && this.removable}
                 onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}
                 onScRemove={() => removeCheckoutLineItem(item?.id)}
-                exportparts="base:line-item, product-line-item, image:line-item__image, placeholder__image: line-item__placeholder-image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, description:line-item__description, trial-fees:line-item__trial-fees, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input"
+                exportparts="base:line-item, product-line-item, image:line-item__image, placeholder__image: line-item__placeholder-image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, description:line-item__description, trial-fees:line-item__trial-fees, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, details:line-item__details, details__component:line-item__details-component, details__variant:line-item__details-variant, details__toggle:line-item__details-toggle, note:line-item__note"
               />
               {!isBundle && <sc-swap lineItem={item} />}
             </div>

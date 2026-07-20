@@ -1,7 +1,6 @@
 :host {
   display: block;
   font-family: var(--sc-font-sans);
-  --sc-product-line-item-line-gap: 6px;
 }
 
 .item {
@@ -22,7 +21,7 @@
     min-width: 0px;
     display: flex;
     flex-direction: column;
-    gap: var(--sc-product-line-item-line-gap);
+    gap: var(--sc-product-line-item-line-gap, 6px);
     justify-content: space-between;
     align-items: stretch;
     width: 100%;
@@ -90,7 +89,7 @@
 
 .item__text-details {
   display: grid;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
 }
 
 .item__title {
@@ -143,7 +142,7 @@
   text-align: right;
   max-width: 100%;
   display: grid;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
 }
 
 .item__description {
@@ -153,7 +152,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
   text-wrap: pretty;
 
   &:last-child {

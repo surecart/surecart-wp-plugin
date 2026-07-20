@@ -1,6 +1,9 @@
 import { Component, h, Prop, State, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * @part base - The note container
+ */
 @Component({
   tag: 'sc-product-line-item-note',
   styleUrl: 'sc-product-line-item-note.scss',

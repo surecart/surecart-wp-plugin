@@ -29,7 +29,9 @@ const COLLAPSE_AFTER = 2;
  * @part line-item__price-description - The line item price description
  * @part details - The collapsible details region (bundle components + note)
  * @part details__toggle - The details expand/collapse toggle button
- * @part component - A single bundle component row
+ * @part details__component - A single bundle component row
+ * @part details__variant - The variant options within a bundle component row
+ * @part note - The line item note
  */
 @Component({
   tag: 'sc-product-line-item',
@@ -157,11 +159,11 @@ export class ScProductLineItem {
       >
         <div class="line-item-details__content">
           {rows.map(row => (
-            <div class="line-item-details__row" part="component" key={row.id}>
+            <div class="line-item-details__row" part="details__component" key={row.id}>
               {row.qty > 1 && <span class="line-item-details__qty">{row.qty} ×</span>}
               <span class="line-item-details__name">{row.name}</span>
               {!!row.variants && (
-                <span class="line-item-details__variant">
+                <span class="line-item-details__variant" part="details__variant">
                   {sep} {row.variants}
                 </span>
               )}
@@ -245,7 +247,7 @@ export class ScProductLineItem {
                     </div>
                   )}
                   {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                  {!!this.note && <sc-product-line-item-note note={this.note} />}
+                  {!!this.note && <sc-product-line-item-note note={this.note} exportparts="base:note" />}
                 </div>
 
                 <div class="item__description" part="trial-fees">
