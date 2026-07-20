@@ -47,6 +47,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/products/index.js'
 		),
+		['admin/bundles']: path.resolve(
+			__dirname,
+			'packages/admin/bundles/index.js'
+		),
 		['admin/customers']: path.resolve(
 			__dirname,
 			'packages/admin/customers/index.js'

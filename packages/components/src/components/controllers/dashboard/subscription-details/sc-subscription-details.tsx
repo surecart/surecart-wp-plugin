@@ -1,10 +1,11 @@
 import { Component, h, Prop, State, Watch } from '@stencil/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
-import { License, Price, Product, Purchase, Subscription } from '../../../../types';
+import { getBundleComponentRowsFromBundleItems } from '../../../../functions/line-items';
+import { BundleItem, License, Price, Product, Purchase, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 import { formatNumber } from '../../../../../../admin/util';
 @Component({
@@ -20,6 +21,7 @@ export class ScSubscriptionDetails {
   @State() activationsModal: boolean;
   @State() loading: boolean;
   @State() hasPendingUpdate: boolean;
+  @State() bundleExpanded: boolean = false;
 
   renderName() {
     if (typeof this.subscription?.price?.product !== 'string') {
@@ -188,6 +190,61 @@ export class ScSubscriptionDetails {
     );
   }
 
+  /**
+   * Bundle items attached to the subscription's product (if it is a bundle).
+   * Bundle is a Product attribute post-refactor — read it via price.product.
+   */
+  getBundleItems(): BundleItem[] {
+    const product = (this.subscription?.price as Price)?.product as Product;
+    if (!product?.bundle) return [];
+    return (product?.bundle_items?.data || []) as BundleItem[];
+  }
+
+  renderBundleComponents() {
+    const rows = getBundleComponentRowsFromBundleItems(this.getBundleItems());
+    if (!rows.length) return null;
+
+    return (
+      <div>
+        <button
+          type="button"
+          class="subscription-details__bundle-toggle"
+          aria-expanded={this.bundleExpanded ? 'true' : 'false'}
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.bundleExpanded = !this.bundleExpanded;
+          }}
+        >
+          <sc-icon name={this.bundleExpanded ? 'chevron-up' : 'chevron-down'}></sc-icon>
+          {sprintf(
+            /* translators: %d: number of bundle component items */
+            _n('Includes %d item', 'Includes %d items', rows.length, 'surecart'),
+            rows.length,
+          )}
+        </button>
+        {this.bundleExpanded && (
+          <div class="subscription-details__bundle-components">
+            {rows.map(row => (
+              <div class="bundle-component subscription-details__bundle-component" key={row.id}>
+                <span class="bundle-component__label">{row.name}</span>
+                {row.qty > 1 && (
+                  <span class="bundle-component__qty subscription-details__bundle-qty">
+                    {sprintf(
+                      /* translators: %d: quantity */
+                      __('× %d', 'surecart'),
+                      row.qty,
+                    )}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   showWarning() {
     // no payment method.
     if (this.subscription?.payment_method || this.subscription?.manual_payment) {
@@ -231,6 +288,8 @@ export class ScSubscriptionDetails {
         </sc-flex>
 
         {!this.hideRenewalText && <div>{this.renderRenewalText()} </div>}
+
+        {this.renderBundleComponents()}
 
         <slot />
 

@@ -6,8 +6,10 @@ import {
 } from '@wordpress/components';
 import { moreHorizontal, inbox, trash, addCard } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
-import DuplicateModel from '../DuplicateModel';
 import { addQueryArgs } from '@wordpress/url';
+
+import DuplicateModel from '../DuplicateModel';
+import useBundleLabels from '../../hooks/useBundleLabels';
 
 export default ({
 	product,
@@ -18,6 +20,7 @@ export default ({
 }) => {
 	const [modal, setModal] = useState(null);
 	const [confirmMessage, setConfirmMessage] = useState(null);
+	const labels = useBundleLabels(product);
 
 	if (!product?.id) {
 		return '';
@@ -46,8 +49,8 @@ export default ({
 								onClick={() => setModal('archive')}
 							>
 								{product?.archived
-									? __('Un-Archive Product', 'surecart')
-									: __('Archive Product', 'surecart')}
+									? labels.unarchiveLabel
+									: labels.archiveLabel}
 							</MenuItem>
 						)}
 						{!!onDelete && (
@@ -56,7 +59,7 @@ export default ({
 								iconPosition="left"
 								onClick={() => setModal('delete')}
 							>
-								{__('Delete Product', 'surecart')}
+								{labels.deleteLabel}
 							</MenuItem>
 						)}
 						<DuplicateModel
@@ -65,12 +68,9 @@ export default ({
 							onConfirm={hasDirtyRecords ? onSubmit : null}
 							onSuccess={(duplicate) => {
 								window.location.assign(
-									addQueryArgs(
-										'admin.php?page=sc-products&action=edit',
-										{
-											id: duplicate?.id,
-										}
-									)
+									addQueryArgs(labels.editIndexHref, {
+										id: duplicate?.id,
+									})
 								);
 							}}
 							message={confirmMessage}
@@ -95,7 +95,7 @@ export default ({
 									}}
 									iconPosition="left"
 								>
-									{__('Duplicate Product', 'surecart')}
+									{labels.duplicateLabel}
 								</MenuItem>
 							)}
 						</DuplicateModel>
@@ -115,7 +115,7 @@ export default ({
 						'Permanently delete %s? You cannot undo this action.',
 						'surecart'
 					),
-					product?.name || 'Product'
+					product?.name || labels.entityLabel
 				)}
 			</ConfirmDialog>
 
@@ -133,14 +133,14 @@ export default ({
 								'Un-Archive %s? This will make the product purchaseable again.',
 								'surecart'
 							),
-							product?.name || 'Product'
+							product?.name || labels.entityLabel
 					  )
 					: sprintf(
 							__(
 								'Archive %s? This product will not be purchaseable and all unsaved changes will be lost.',
 								'surecart'
 							),
-							product?.name || 'Product'
+							product?.name || labels.entityLabel
 					  )}
 			</ConfirmDialog>
 		</>

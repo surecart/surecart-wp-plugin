@@ -12,6 +12,7 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies.
  */
 import {
+	ScAlert,
 	ScButton,
 	ScDropdown,
 	ScIcon,
@@ -22,6 +23,21 @@ import Box from '../../../ui/Box';
 import Type from './Type';
 
 export default ({ loading, product, updateProduct }) => {
+	// Bundles derive tax from their component products, so the bundle's own tax
+	// settings are bypassed in checkout. Show a notice instead of controls.
+	if (product?.bundle) {
+		return (
+			<Box loading={loading} title={__('Tax', 'surecart')}>
+				<ScAlert type="info" open>
+					{__(
+						'Tax for a bundle is determined by the products inside it. Set tax on each of those products.',
+						'surecart'
+					)}
+				</ScAlert>
+			</Box>
+		);
+	}
+
 	return (
 		<Box
 			loading={loading}

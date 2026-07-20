@@ -20,7 +20,7 @@ class Product extends Model implements PageModel {
 	use HasPurchases;
 	use HasCommissionStructure;
 	use HasDates;
-	use canDuplicate {
+	use CanDuplicate {
 		duplicate as protected originalDuplicate;
 	}
 
@@ -29,7 +29,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @var array
 	 */
-	protected $sync_expands = array( 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
+	protected $sync_expands = array( 'prices', 'bundle_items', 'bundle_items.component_product', 'product_medias', 'product_media.media', 'variants', 'variant_options', 'product_collections', 'featured_product_media', 'reviews_breakdown' );
 
 	/**
 	 * Rest API endpoint
@@ -58,6 +58,38 @@ class Product extends Model implements PageModel {
 	 * @var string
 	 */
 	protected $cache_key = 'products';
+
+	/**
+	 * Hydrate the bundle_items collection from API expansion.
+	 *
+	 * @param array $value Bundle items payload.
+	 * @return void
+	 */
+	public function setBundleItemsAttribute( $value ) {
+		$this->setCollection( 'bundle_items', $value, BundleItem::class );
+	}
+
+	/**
+	 * Expands needed to render a product on the storefront with live component
+	 * stock. Shared by the buy page and the live bundle PDP fetch so the two
+	 * can't drift. Bundle expands are harmless for non-bundles (no bundle_items).
+	 *
+	 * @return array
+	 */
+	public static function storefrontExpands(): array {
+		return array(
+			'image',
+			'prices',
+			'product_medias',
+			'product_media.media',
+			'variants',
+			'variant_options',
+			'bundle_items',
+			'bundle_items.component_product',
+			'bundle_items.component_variants',
+			'bundle_items.component_variant_options',
+		);
+	}
 
 	/**
 	 * Create a new model
@@ -844,11 +876,13 @@ class Product extends Model implements PageModel {
 	 */
 	public function getInStockVariantsAttribute() {
 		if ( ! $this->has_unlimited_stock && ! empty( $this->variants->data ) ) {
-			return array_map(
-				function ( $variant ) {
-					return $variant->available_stock > 0;
-				},
-				$this->variants->data,
+			return array_values(
+				array_filter(
+					$this->variants->data,
+					function ( $variant ) {
+						return $variant->available_stock > 0;
+					}
+				)
 			);
 		}
 		return $this->variants->data ?? null;

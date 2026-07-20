@@ -48,7 +48,7 @@ class AbilityPermissionsTest extends SureCartUnitTestCase {
 	public function test_read_abilities_allow_admin_access() {
 		$admin = self::factory()->user->create( array( 'role' => 'administrator' ) );
 
-		// Grant SureCart capabilities to admin.
+		// Grant SureCart capabilities to admin user.
 		$user = get_user_by( 'id', $admin );
 		$user->add_cap( 'manage_sc_shop_settings' );
 		$user->add_cap( 'read_sc_products' );

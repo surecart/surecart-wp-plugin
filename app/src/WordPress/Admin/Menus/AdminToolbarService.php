@@ -165,6 +165,16 @@ class AdminToolbarService {
 				)
 			);
 
+			// Add Bundle link.
+			$wp_admin_bar->add_node(
+				array(
+					'parent' => 'new-sc-product',
+					'id'     => 'new-sc-bundle',
+					'title'  => __( 'Bundle', 'surecart' ),
+					'href'   => esc_url( \SureCart::getUrl()->edit( 'bundle' ) ),
+				)
+			);
+
 			// Add Product Collection link.
 			$wp_admin_bar->add_node(
 				array(
@@ -269,22 +279,25 @@ class AdminToolbarService {
 		</style>
 
 		<?php
-		$product = sc_get_product();
+		$product   = sc_get_product();
+		$is_bundle = ! empty( $product->bundle );
+		$url_key   = $is_bundle ? 'bundle' : 'product';
+
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'surecart-toolbar',
-				'title' => __( 'Edit Product', 'surecart' ),
+				'title' => $is_bundle ? __( 'Edit Bundle', 'surecart' ) : __( 'Edit Product', 'surecart' ),
 				'href'  => '#',
 			]
 		);
 
-		// Add product edit link.
+		// Add product/bundle edit link.
 		$wp_admin_bar->add_node(
 			[
 				'id'     => 'surecart-edit-product',
 				'parent' => 'surecart-toolbar',
-				'title'  => 'Product Details',
-				'href'   => \SureCart::getUrl()->edit( 'product', $product->id ),
+				'title'  => $is_bundle ? __( 'Bundle Details', 'surecart' ) : __( 'Product Details', 'surecart' ),
+				'href'   => \SureCart::getUrl()->edit( $url_key, $product->id ),
 			]
 		);
 

@@ -174,6 +174,10 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
 				'type'        => 'boolean',
 			],
+			'bundle'                 => [
+				'description' => esc_html__( 'Only return bundle products (true) or non-bundle products (false).', 'surecart' ),
+				'type'        => 'boolean',
+			],
 			'query'                  => [
 				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',

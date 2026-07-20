@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
+	ScAlert,
 	ScButton,
 	ScDropdown,
 	ScIcon,
@@ -22,6 +23,21 @@ const WEIGHT_UNIT_TYPES = [
 ];
 
 export default ({ loading, product, updateProduct }) => {
+	// Bundles derive shipping from their component products, so the bundle's own
+	// shipping settings are bypassed in checkout. Show a notice instead of controls.
+	if (product?.bundle) {
+		return (
+			<Box loading={loading} title={__('Shipping', 'surecart')}>
+				<ScAlert type="info" open>
+					{__(
+						'Shipping for a bundle is determined by the products inside it. Set shipping on each of those products.',
+						'surecart'
+					)}
+				</ScAlert>
+			</Box>
+		);
+	}
+
 	return (
 		<Box loading={loading} title={__('Shipping', 'surecart')}>
 			<ScToggle

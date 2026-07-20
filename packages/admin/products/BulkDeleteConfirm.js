@@ -16,12 +16,15 @@ const addIdsToPath = (base, ids, extras = {}) => {
 	return `${base}?${params.toString()}`;
 };
 
-const editProductUrl = (productId) => {
+// Bundles are products with `bundle: true`; they route through this same
+// confirm screen but under `?page=sc-bundles`, so the entity page slug is read
+// from navigation rather than hardcoded.
+const editEntityUrl = (pageSlug, entityId) => {
 	const url = new URL(window.location.href);
 	url.search = new URLSearchParams({
-		page: 'sc-products',
+		page: pageSlug,
 		action: 'edit',
-		id: productId,
+		id: entityId,
 	}).toString();
 	return url.toString();
 };
@@ -29,7 +32,8 @@ const editProductUrl = (productId) => {
 export default function BulkDeleteConfirm({ navigation }) {
 	// Default to [] so the first paint can safely read `.length`/`.map` before
 	// the redirect effect below has had a chance to bounce us back to the list.
-	const { bulkDeleteIds = [], goToList } = navigation;
+	const { bulkDeleteIds = [], goToList, pageSlug } = navigation;
+	const isBundles = pageSlug === 'sc-bundles';
 
 	const [products, setProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +65,10 @@ export default function BulkDeleteConfirm({ navigation }) {
 			.catch((error) => {
 				if (cancelled) return;
 				setLoadError(
-					error?.message || __('Failed to load products.', 'surecart')
+					error?.message ||
+						(isBundles
+							? __('Failed to load bundles.', 'surecart')
+							: __('Failed to load products.', 'surecart'))
 				);
 			})
 			.finally(() => {
@@ -79,7 +86,7 @@ export default function BulkDeleteConfirm({ navigation }) {
 
 		const form = document.createElement('form');
 		form.method = 'POST';
-		form.action = `${window.location.pathname}?page=sc-products`;
+		form.action = `${window.location.pathname}?page=${pageSlug}`;
 
 		const append = (name, value) => {
 			const input = document.createElement('input');
@@ -186,21 +193,35 @@ export default function BulkDeleteConfirm({ navigation }) {
 							) : (
 								<>
 									<sc-heading size="large">
-										{_n(
-											'Delete Product',
-											'Delete Products',
-											count || 1,
-											'surecart'
-										)}
+										{isBundles
+											? _n(
+													'Delete Bundle',
+													'Delete Bundles',
+													count || 1,
+													'surecart'
+											  )
+											: _n(
+													'Delete Product',
+													'Delete Products',
+													count || 1,
+													'surecart'
+											  )}
 									</sc-heading>
 
 									<sc-text>
-										{_n(
-											'Are you sure you want to permanently delete this product? This cannot be undone.',
-											'Are you sure you want to permanently delete these products? This cannot be undone.',
-											count || 1,
-											'surecart'
-										)}
+										{isBundles
+											? _n(
+													'Are you sure you want to permanently delete this bundle? This cannot be undone.',
+													'Are you sure you want to permanently delete these bundles? This cannot be undone.',
+													count || 1,
+													'surecart'
+											  )
+											: _n(
+													'Are you sure you want to permanently delete this product? This cannot be undone.',
+													'Are you sure you want to permanently delete these products? This cannot be undone.',
+													count || 1,
+													'surecart'
+											  )}
 									</sc-text>
 
 									{loadError && (
@@ -237,7 +258,8 @@ export default function BulkDeleteConfirm({ navigation }) {
 										{products.map((product) => (
 											<li key={product.id}>
 												<a
-													href={editProductUrl(
+													href={editEntityUrl(
+														pageSlug,
 														product.id
 													)}
 													target="_blank"

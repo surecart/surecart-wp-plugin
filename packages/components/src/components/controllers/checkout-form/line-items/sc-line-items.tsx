@@ -6,6 +6,7 @@ import { LineItem, Product, Variant } from '../../../../types';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
+import { groupBundleLineItems } from '../../../../functions/line-items';
 
 /**
  * @part base - The component base
@@ -29,6 +30,11 @@ import { getMaxStockQuantity } from '../../../../functions/quantity';
  * @part line-item__quantity-plus - The line item quantity plus
  * @part line-item__quantity-plus-icon - The line item quantity plus icon
  * @part line-item__quantity-input - The line item quantity input
+ * @part line-item__details - The collapsible details region (bundle components)
+ * @part line-item__details-component - A single bundle component row
+ * @part line-item__details-variant - The variant options within a bundle component row
+ * @part line-item__details-toggle - The details expand/collapse toggle button
+ * @part line-item__note - The line item note
  */
 
 @Component({
@@ -46,6 +52,15 @@ export class ScLineItems {
    * Is the line item removable?
    */
   @Prop() removable: boolean;
+
+  /**
+   * Show every bundle component (default), or only those with a selected
+   * variant when set to `false`.
+   */
+  @Prop() showAllBundleItems: boolean = true;
+
+  /** Separator between a bundle component's name and its variant options. */
+  @Prop() separator: string = '·';
 
   /**
    * Is the line item editable?
@@ -78,16 +93,21 @@ export class ScLineItems {
       return bHasSwap - aHasSwap;
     });
 
+    // Group bundle parents and their components, then render parents first.
+    const { regular, bundleParents, componentsByParent } = groupBundleLineItems(sortedItems as LineItem[]);
+    const orderedItems = [...bundleParents, ...regular];
+
     return (
       <div class="line-items" part="base" tabindex="0">
-        {sortedItems.map(item => {
-          const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
+        {orderedItems.map(item => {
+          const product = item?.price?.product as Product;
+          const isBundle = !!product?.bundle;
+          const max = getMaxStockQuantity(product, item?.variant as Variant);
           return (
-            <div class={`line-item ${item?.is_swappable ? 'line-item--has-swap' : ''}`}>
+            <div class={`line-item ${item?.is_swappable ? 'line-item--has-swap' : ''}`} key={item.id}>
               <sc-product-line-item
-                key={item.id}
                 image={item?.image}
-                name={(item?.price?.product as Product)?.name}
+                name={product?.name}
                 price={item?.price?.name}
                 variant={item?.variant_display_options}
                 fees={item?.fees?.data}
@@ -98,14 +118,17 @@ export class ScLineItems {
                 quantity={item.quantity}
                 purchasableStatus={item?.purchasable_status_display}
                 note={item?.display_note}
+                bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
+                showAllBundleItems={this.showAllBundleItems}
+                separator={this.separator}
                 {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={!item?.locked && this.removable}
                 onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}
                 onScRemove={() => removeCheckoutLineItem(item?.id)}
-                exportparts="base:line-item, product-line-item, image:line-item__image, placeholder__image: line-item__placeholder-image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, description:line-item__description, trial-fees:line-item__trial-fees, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input"
+                exportparts="base:line-item, product-line-item, image:line-item__image, placeholder__image: line-item__placeholder-image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, description:line-item__description, trial-fees:line-item__trial-fees, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, details:line-item__details, details__component:line-item__details-component, details__variant:line-item__details-variant, details__toggle:line-item__details-toggle, note:line-item__note"
               />
-              <sc-swap lineItem={item} />
+              {!isBundle && <sc-swap lineItem={item} />}
             </div>
           );
         })}

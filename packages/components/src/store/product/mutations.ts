@@ -18,6 +18,9 @@ export const submitCartForm = async (productId: string) => {
       ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
       variant: productState.selectedVariant?.id,
       ...(productState.note ? { note: productState.note } : {}),
+      ...(productState.bundleComponentVariants && Object.keys(productState.bundleComponentVariants).length
+        ? { bundle_component_variants: productState.bundleComponentVariants }
+        : {}),
     });
     toggleCart(true);
     setProduct(productId, { dialog: null });
@@ -48,6 +51,9 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
         ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
         ...(productState.selectedVariant?.id ? { variant: productState.selectedVariant?.id } : {}),
         ...(productState.note ? { note: productState.note } : {}),
+        ...(productState.bundleComponentVariants && Object.keys(productState.bundleComponentVariants).length
+          ? { bundle_component_variants: productState.bundleComponentVariants }
+          : {}),
       },
     ],
     ...query,

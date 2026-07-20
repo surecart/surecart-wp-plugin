@@ -9,7 +9,10 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
 import { __ } from '@wordpress/i18n';
 import { TextControl, ExternalLink } from '@wordpress/components';
 
+import useBundleLabels from '../../hooks/useBundleLabels';
+
 export default ({ product, updateProduct, onClose }) => {
+	const { viewPageLabel } = useBundleLabels(product);
 	return (
 		<div
 			css={css`
@@ -58,7 +61,7 @@ export default ({ product, updateProduct, onClose }) => {
 					display: block;
 				`}
 			>
-				{__('View Product', 'surecart')}
+				{viewPageLabel}
 			</h3>
 
 			<p>

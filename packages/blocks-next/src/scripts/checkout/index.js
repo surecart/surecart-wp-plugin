@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { store, getContext, getElement, withSyncEvent } from '@wordpress/interactivity';
+import {
+	store,
+	getContext,
+	getElement,
+	withSyncEvent,
+} from '@wordpress/interactivity';
 const { __, sprintf, _n } = wp.i18n;
 const LOCAL_STORAGE_KEY = 'surecart-local-storage';
 let announceTimeout = null;
@@ -73,10 +78,10 @@ const { state, actions } = store('surecart/checkout', {
 		oldCheckout: {},
 
 		/**
-		 * Get the number of items in checkout.
+		 * Get the number of user-visible line items in checkout.
 		 */
 		get itemsCount() {
-			return state.checkout?.line_items_count || 0;
+			return state.cartLineItems.length;
 		},
 
 		/**
@@ -158,6 +163,166 @@ const { state, actions } = store('surecart/checkout', {
 				const bHasSwap = b?.price?.current_swap || b?.swap ? 1 : 0;
 				return bHasSwap - aHasSwap;
 			});
+		},
+
+		/**
+		 * Non-component line items for cart display; components render nested
+		 * under their parent.
+		 */
+		get cartLineItems() {
+			return state.checkoutLineItems.filter(
+				(item) => !item.component_line_item
+			);
+		},
+
+		/**
+		 * Is the context line item a bundle parent? Components are never parents.
+		 */
+		get isBundleParent() {
+			const { line_item } = getContext();
+			if (line_item?.component_line_item) return false;
+			return !!line_item?.price?.product?.bundle;
+		},
+
+		/**
+		 * Get the bundle components for the current line item (from context).
+		 *
+		 * Every component is shown by default. When the block sets
+		 * `showBundleVariantsOnly` in context, only components with a variant
+		 * selection are listed.
+		 */
+		get bundleComponents() {
+			const ctx = getContext();
+			const { line_item } = ctx;
+			if (!line_item?.price?.product?.bundle) return [];
+			const components = [
+				...(line_item?.component_line_items?.data || []),
+			].sort((a, b) => (a?.position ?? 0) - (b?.position ?? 0));
+			if (ctx?.showBundleVariantsOnly !== true) return components;
+			return components.filter((component) => {
+				const display = (
+					component?.variant_display_options || ''
+				).trim();
+				const options = (component?.variant_options || []).filter(
+					Boolean
+				);
+				return !!display || options.length > 0;
+			});
+		},
+
+		/**
+		 * Get the count of bundle components.
+		 */
+		get bundleComponentsCount() {
+			return state.bundleComponents.length;
+		},
+
+		/**
+		 * "(N)" suffix shown next to a bundle's name — the number of products
+		 * the bundle contains. Empty for non-bundle line items.
+		 */
+		get lineItemBundleCount() {
+			if (!state.isBundleParent) return '';
+			const count = state.bundleComponentsCount;
+			return count > 0 ? sprintf('(%d)', count) : '';
+		},
+
+		/**
+		 * Whether the current line item has bundle components to display.
+		 */
+		get hasBundleComponents() {
+			return state.bundleComponentsCount > 0;
+		},
+
+		/**
+		 * Whether the line item has any extra details (variant or bundle
+		 * components) for the `cart-line-item-details` block to show. The
+		 * block hides itself when there's nothing to render. The note is a
+		 * standalone block again, so it's intentionally excluded here.
+		 */
+		get hasLineItemDetails() {
+			return !!state.lineItemVariant || state.hasBundleComponents;
+		},
+
+		/**
+		 * Product name for a bundle component row (shown in the default color).
+		 */
+		get lineItemBundleComponentName() {
+			const { bundle_component } = getContext();
+			return bundle_component?.price?.product?.name || '';
+		},
+
+		/**
+		 * Variant options for a bundle component row, joined by ' · ' and
+		 * prefixed with the separator so it reads "· Red · Large". Rendered
+		 * muted after the name. Empty when there's no variant.
+		 */
+		get lineItemBundleComponentVariant() {
+			const ctx = getContext();
+			const { bundle_component } = ctx;
+			if (!bundle_component) return '';
+			const sep = (ctx?.bundleSeparator || '·').trim() || '·';
+			const options = (bundle_component?.variant_options || []).filter(
+				Boolean
+			);
+			const variants = options.length
+				? options.join(` ${sep} `)
+				: (bundle_component?.variant_display_options || '').trim();
+			return variants ? `${sep} ${variants}` : '';
+		},
+
+		/**
+		 * "N ×" prefix for a bundle component row (per-bundle quantity). Hidden
+		 * for a quantity of one, since the multiplier adds nothing there.
+		 */
+		get lineItemBundleComponentQty() {
+			const { line_item, bundle_component } = getContext();
+			const total = Math.max(Number(bundle_component?.quantity) || 1, 1);
+			const parentQty = Math.max(Number(line_item?.quantity) || 1, 1);
+			const qty = Math.max(Math.round(total / parentQty), 1);
+			return qty > 1 ? `${qty} ×` : '';
+		},
+
+		/**
+		 * Get the bundle components label text.
+		 */
+		get bundleComponentsLabel() {
+			const count = state.bundleComponentsCount;
+			return count > 0
+				? sprintf(
+						_n(
+							'Includes %d item',
+							'Includes %d items',
+							count,
+							'surecart'
+						),
+						count
+				  )
+				: '';
+		},
+
+		/**
+		 * Label for the details expand/collapse toggle.
+		 *
+		 * `hiddenCount` is measured from the rendered rows (see the
+		 * `line-item-details` store), so it already reflects the variants-only
+		 * filter and is exact for bundles. Collapsed bundles show "+N more";
+		 * anything else that overflows shows a generic "Show more".
+		 */
+		get detailsToggleLabel() {
+			const detailsCtx = getContext('surecart/line-item-details');
+			if (detailsCtx?.detailsExpanded) {
+				return __('Show less', 'surecart');
+			}
+			const hidden = Math.max(Number(detailsCtx?.hiddenCount) || 0, 0);
+			if (hidden > 0) {
+				return sprintf(
+					/* translators: %d: number of hidden bundle items */
+					__('+%d more', 'surecart'),
+					hidden
+				);
+			}
+			return __('Show more', 'surecart');
 		},
 
 		/**
@@ -346,11 +511,19 @@ const { state, actions } = store('surecart/checkout', {
 		},
 
 		/**
+		 * Whether the variant block has anything to render — the variant
+		 * options for regular products, or the included items for bundles.
+		 */
+		get hasLineItemVariantContent() {
+			return !!state.lineItemVariant || state.hasBundleComponents;
+		},
+
+		/**
 		 * Get the line item variant.
 		 */
 		get lineItemPriceName() {
 			const { line_item } = getContext();
-			return line_item.price.name ?? '';
+			return line_item?.price?.name ?? '';
 		},
 
 		/**
@@ -481,7 +654,7 @@ const { state, actions } = store('surecart/checkout', {
 		/**
 		 * Toggle the discount input.
 		 */
-		toggleDiscountInput: withSyncEvent(function(e) {
+		toggleDiscountInput: withSyncEvent(function (e) {
 			// check if keydown event and not enter/space key.
 			if (isNotKeySubmit(e)) {
 				return true;
@@ -529,7 +702,7 @@ const { state, actions } = store('surecart/checkout', {
 		 * We're handling it additionally here to maintain an order with
 		 * escape key calling for this input and cart drawer.
 		 */
-		maybeApplyDiscountOnKeyChange: withSyncEvent(function(e) {
+		maybeApplyDiscountOnKeyChange: withSyncEvent(function (e) {
 			if (e.key === 'Escape' || e.key === 'Enter') {
 				e.preventDefault();
 				e.stopPropagation();

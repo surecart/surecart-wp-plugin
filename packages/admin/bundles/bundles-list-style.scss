@@ -1,0 +1,14 @@
+@import "../components/dataview-list/dataview-list-common.scss";
+
+// Name column: two-line titles; keep DataViews' vertical centering on the row.
+.sc-dataview-list-wrapper .dataviews-view-table {
+	td:has(.sc-product-name-cell) {
+		white-space: normal;
+		overflow: visible;
+		text-overflow: unset;
+
+		> .dataviews-view-table__cell-content-wrapper {
+			white-space: normal;
+		}
+	}
+}

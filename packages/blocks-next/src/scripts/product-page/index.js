@@ -11,18 +11,20 @@ import {
 /**
  * Internal dependencies.
  */
+import {
+	getVariantScope,
+	getVariantFromValues,
+	isProductVariantOptionSoldOut,
+	hasEffectiveUnlimitedStock,
+	isAnyBundleComponentSoldOut,
+} from './variant-scope';
+
 const { actions: checkoutActions } = store('surecart/checkout');
 const { actions: cartActions, state: cartState } = store('surecart/cart');
 
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 const { sprintf, __ } = wp.i18n;
 const { scProductViewed } = require('./events');
-
-/**
- * Check if stock is effectively unlimited for a variant, falling back to product.
- */
-const hasEffectiveUnlimitedStock = (variant, product) =>
-	variant?.has_unlimited_stock ?? product?.has_unlimited_stock ?? false;
 
 /**
  * Check if the key is not submit key.
@@ -123,38 +125,37 @@ const { state, actions } = store('surecart/product-page', {
 
 		/**
 		 * Is the option unavailable due to missing variants or stock.
+		 * Scope-aware: page product or bundle component.
 		 */
 		get isOptionUnavailable() {
 			const context = getContext();
 			if (!context) {
 				return true;
 			}
-			const {
-				optionNumber,
-				option_value,
-				product,
-				variants,
-				variantValues,
-			} = context;
+			const { optionNumber, option_value } = context;
+			const scope = getVariantScope(context);
+
 			return isProductVariantOptionSoldOut(
 				parseInt(optionNumber),
 				option_value,
-				variantValues,
-				variants,
-				product
+				scope.values,
+				scope.variants,
+				scope.product,
+				scope.missingMeansUnavailable
 			);
 		},
 
 		/**
-		 * Is the option selected?
+		 * Is the option selected? Scope-aware: page product or bundle component.
 		 */
 		get isOptionSelected() {
 			const context = getContext();
 			if (!context) {
 				return true;
 			}
-			const { optionNumber, option_value, variantValues } = context;
-			return variantValues?.[`option_${optionNumber}`] === option_value;
+			const { optionNumber, option_value } = context;
+			const { values } = getVariantScope(context);
+			return values?.[`option_${optionNumber}`] === option_value;
 		},
 
 		/**
@@ -229,9 +230,17 @@ const { state, actions } = store('surecart/product-page', {
 			if (!context) {
 				return true;
 			}
-			const { buttonText, outOfStockText, unavailableText } = context;
-			if (state.isSoldOut) {
+			const {
+				buttonText,
+				outOfStockText,
+				unavailableText,
+				selectComponentOptionsText,
+			} = context;
+			if (state.isSoldOut || state.isBundleComponentSoldOut) {
 				return outOfStockText;
+			}
+			if (state.isBundleIncomplete) {
+				return selectComponentOptionsText || buttonText;
 			}
 			if (state.isUnavailable) {
 				return unavailableText;
@@ -252,7 +261,37 @@ const { state, actions } = store('surecart/product-page', {
 			return (
 				!!product?.archived || // archived.
 				!!state?.isSoldOut || // sold out.
-				!!(variants?.length && !state.selectedVariant?.id) // no selected variant.
+				!!(variants?.length && !state.selectedVariant?.id) || // no selected variant.
+				!!state.isBundleIncomplete || // bundle has variable components still unselected.
+				!!state.isBundleComponentSoldOut // a chosen bundle component variant is sold out.
+			);
+		},
+
+		/**
+		 * Bundle PDP: any variable component that still has no selection
+		 * blocks Add to cart. See ProductPageBlock::context() for the seed
+		 * list of variable component product IDs.
+		 */
+		get isBundleIncomplete() {
+			const context = getContext();
+			if (!context) return false;
+			const variableIds = context.bundleVariableComponentIds || [];
+			if (!variableIds.length) return false;
+			const selections = context.bundleComponentVariants || {};
+			return variableIds.some((id) => !selections?.[id]);
+		},
+
+		/**
+		 * Bundle PDP: a non-variable component is sold out, OR the shopper
+		 * has picked a variant for a component and that variant is sold out.
+		 * Sourced from ProductPageBlock::getBundleComponents().
+		 */
+		get isBundleComponentSoldOut() {
+			const context = getContext();
+			if (!context) return false;
+			return isAnyBundleComponentSoldOut(
+				context.bundleComponents,
+				context.bundleComponentVariants
 			);
 		},
 
@@ -282,8 +321,22 @@ const { state, actions } = store('surecart/product-page', {
 		 * Line item to add to cart.
 		 */
 		get lineItem() {
-			const { adHocAmount, selectedPrice, note, noteLabel } =
-				getContext();
+			const {
+				adHocAmount,
+				selectedPrice,
+				note,
+				noteLabel,
+				bundleComponentVariants,
+			} = getContext();
+
+			// Filter the bundle variant map to ID values only — context may
+			// hold a stdClass-shaped object server-side hydrated as {}.
+			const componentVariants = Object.entries(
+				bundleComponentVariants || {}
+			).reduce((acc, [k, v]) => {
+				if (v) acc[k] = v;
+				return acc;
+			}, {});
 
 			return {
 				price: selectedPrice?.id,
@@ -304,6 +357,9 @@ const { state, actions } = store('surecart/product-page', {
 						: note || '',
 				...(state.selectedVariant?.id
 					? { variant: state.selectedVariant?.id }
+					: {}),
+				...(Object.keys(componentVariants).length
+					? { bundle_component_variants: componentVariants }
 					: {}),
 			};
 		},
@@ -431,7 +487,9 @@ const { state, actions } = store('surecart/product-page', {
 		}),
 
 		/**
-		 * Set the option.
+		 * Set the option. The active scope (page product or bundle component)
+		 * owns how the selection is committed and how its URL key is built, so
+		 * this stays free of scope-specific branching.
 		 */
 		setOption: withSyncEvent((e) => {
 			if (isNotKeySubmit(e)) {
@@ -440,16 +498,13 @@ const { state, actions } = store('surecart/product-page', {
 
 			e.preventDefault();
 
-			// Get context values and option data
-			const { variantValues, optionNumber, urlPrefix, product } =
-				getContext();
+			const context = getContext();
 
-			// get data from select element or context.
-			let optionData = e?.target?.selectedOptions?.[0]?.dataset?.wpContext
-				? JSON.parse(
-						e?.target?.selectedOptions?.[0]?.dataset?.wpContext
-				  )
-				: getContext();
+			// get data from select element (dropdown) or context (pill).
+			const optionData = e?.target?.selectedOptions?.[0]?.dataset
+				?.wpContext
+				? JSON.parse(e.target.selectedOptions[0].dataset.wpContext)
+				: context;
 
 			const {
 				option_value,
@@ -461,22 +516,12 @@ const { state, actions } = store('surecart/product-page', {
 			// get the value.
 			const value = option_value || e?.target?.value;
 
-			// first we set the option to optimistically update all the ui.
-			variantValues[`option_${optionNumber}`] = value;
+			// Commit the selection into the active scope (writes the right state
+			// slice and runs any scope side-effects).
+			const scope = getVariantScope(context);
+			scope.commit(context.optionNumber, value);
 
-			// Sync variant selection to Stencil product store (needed for upsell flow).
-			if (product?.id) {
-				document.dispatchEvent(
-					new CustomEvent('scVariantValuesUpdated', {
-						detail: {
-							productId: product.id,
-							variantValues: { ...variantValues },
-						},
-					})
-				);
-			}
-
-			// if we have the name and value, update the url.
+			// if we don't have the name and value, skip the url update.
 			if (!option_value || !option_name) {
 				return;
 			}
@@ -485,8 +530,7 @@ const { state, actions } = store('surecart/product-page', {
 				{},
 				'',
 				addQueryArgs(window.location.href, {
-					[`${urlPrefix ? urlPrefix + '-' : ''}${option_name_slug}`]:
-						option_value_slug,
+					[scope.urlKey(option_name_slug)]: option_value_slug,
 				})
 			);
 		}),
@@ -608,71 +652,5 @@ const { state, actions } = store('surecart/product-page', {
 	},
 });
 
-/**
- * Get the variant from provided values.
- */
-export const getVariantFromValues = ({ variants, values }) => {
-	const variantValueKeys = Object.keys(values || {});
-
-	for (const variant of variants) {
-		const variantValues = ['option_1', 'option_2', 'option_3']
-			.map((option) => variant[option])
-			.filter((value) => value !== null && value !== undefined);
-
-		if (
-			variantValues?.length === variantValueKeys?.length &&
-			variantValueKeys.every((key) => variantValues.includes(values[key]))
-		) {
-			return variant;
-		}
-	}
-	return null;
-};
-
-/**
- * Is this variant option sold out.
- */
-export const isProductVariantOptionSoldOut = (
-	optionNumber,
-	option,
-	variantValues,
-	variants = [],
-	product = null
-) => {
-	const getEffectiveStock = (variant) => {
-		if (hasEffectiveUnlimitedStock(variant, product)) return Infinity;
-		return variant.available_stock;
-	};
-
-	const isGroupSoldOut = (items) => {
-		if (!items.length) return false;
-		return Math.max(...items.map(getEffectiveStock)) <= 0;
-	};
-
-	// if this is option 1, check to see if there are any variants with this option.
-	if (optionNumber === 1) {
-		const items = (variants || []).filter?.(
-			(variant) => variant.option_1 === option
-		);
-		return isGroupSoldOut(items);
-	}
-
-	// if this is option 2, check to see if there are any variants with this option and option 1
-	if (optionNumber === 2) {
-		const items = (variants || []).filter(
-			(variant) =>
-				variant?.option_1 === variantValues.option_1 &&
-				variant.option_2 === option
-		);
-		return isGroupSoldOut(items);
-	}
-
-	// if this is option 3, check to see if there are any variants with all the options.
-	const items = (variants || []).filter(
-		(variant) =>
-			variant?.option_1 === variantValues.option_1 &&
-			variant?.option_2 === variantValues.option_2 &&
-			variant.option_3 === option
-	);
-	return isGroupSoldOut(items);
-};
+// Re-exported for backwards compatibility; defined in ./variant-scope.
+export { getVariantFromValues, isProductVariantOptionSoldOut } from './variant-scope';

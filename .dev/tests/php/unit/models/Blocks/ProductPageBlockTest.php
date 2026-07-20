@@ -202,4 +202,327 @@ class ProductPageBlockTest extends SureCartUnitTestCase {
 
 		$this->assertFalse( $result );
 	}
+
+	/**
+	 * Build a ProductPageBlock with a stub URL service. Bypasses the
+	 * constructor's container lookup so we can drive findBundleComponentVariantFromUrl
+	 * directly with controlled URL args.
+	 */
+	private function buildBlockWithUrlArgs( array $args ): ProductPageBlock {
+		$block = ( new \ReflectionClass( ProductPageBlock::class ) )->newInstanceWithoutConstructor();
+
+		$url = new class( $args ) {
+			private $args;
+			public function __construct( array $args ) {
+				$this->args = $args;
+			}
+			public function getArg( $name ) {
+				return $this->args[ $name ] ?? null;
+			}
+		};
+
+		$prop = new \ReflectionProperty( ProductPageBlock::class, 'url' );
+		$prop->setAccessible( true );
+		$prop->setValue( $block, $url );
+
+		return $block;
+	}
+
+	public function test_find_bundle_variant_from_url_matches_single_option() {
+		$component = (object) array(
+			'id'              => 'comp-1',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium', 'Large' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+					(object) array(
+						'id'       => 'v-m',
+						'option_1' => 'Medium',
+					),
+					(object) array(
+						'id'       => 'v-l',
+						'option_1' => 'Large',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-1-size' => 'medium' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-m', $result->id );
+	}
+
+	public function test_find_bundle_variant_from_url_matches_by_slug() {
+		$component = (object) array(
+			'id'              => 'comp-slug-1',
+			'slug'            => 'cool-shirt',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium', 'Large' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+					(object) array(
+						'id'       => 'v-m',
+						'option_1' => 'Medium',
+					),
+				),
+			),
+		);
+
+		// The key is built from the slug, not the id.
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-cool-shirt-size' => 'medium' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-m', $result->id );
+	}
+
+	public function test_find_bundle_variant_from_url_ignores_id_key_when_slug_present() {
+		$component = (object) array(
+			'id'              => 'comp-slug-2',
+			'slug'            => 'cool-shirt',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		// Clean swap: when a slug is present the old UUID-based key no longer resolves.
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-slug-2-size' => 'small' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	public function test_find_bundle_variant_from_url_matches_two_options() {
+		$component = (object) array(
+			'id'              => 'comp-2',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Color',
+						'values' => array( 'Sand', 'Forest' ),
+					),
+					(object) array(
+						'name'   => 'Temp',
+						'values' => array( '10°C', '0°C', '-10°C' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-a',
+						'option_1' => 'Sand',
+						'option_2' => '10°C',
+					),
+					(object) array(
+						'id'       => 'v-b',
+						'option_1' => 'Sand',
+						'option_2' => '0°C',
+					),
+					(object) array(
+						'id'       => 'v-c',
+						'option_1' => 'Forest',
+						'option_2' => '10°C',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array(
+				'bundle-comp-2-color' => 'forest',
+				'bundle-comp-2-temp'  => '10c',
+			)
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		// sanitize_title turns "10°C" into "10c" — the slug match handles that.
+		$this->assertNotNull( $result );
+		$this->assertSame( 'v-c', $result->id );
+	}
+
+	public function test_find_bundle_variant_from_url_returns_null_when_no_match() {
+		$component = (object) array(
+			'id'              => 'comp-3',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small', 'Medium' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-3-size' => 'extra-large' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	public function test_find_bundle_variant_from_url_returns_null_when_no_args() {
+		$component = (object) array(
+			'id'              => 'comp-4',
+			'variant_options' => (object) array(
+				'data' => array(
+					(object) array(
+						'name'   => 'Size',
+						'values' => array( 'Small' ),
+					),
+				),
+			),
+			'variants'        => (object) array(
+				'data' => array(
+					(object) array(
+						'id'       => 'v-s',
+						'option_1' => 'Small',
+					),
+				),
+			),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs( array() );
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	public function test_find_bundle_variant_from_url_returns_null_when_no_variants() {
+		$component = (object) array(
+			'id'              => 'comp-5',
+			'variant_options' => (object) array( 'data' => array() ),
+			'variants'        => (object) array( 'data' => array() ),
+		);
+
+		$block  = $this->buildBlockWithUrlArgs(
+			array( 'bundle-comp-5-size' => 'small' )
+		);
+		$result = $block->findBundleComponentVariantFromUrl( $component );
+
+		$this->assertNull( $result );
+	}
+
+	/**
+	 * Build a bundle component object with the given variants.
+	 *
+	 * @param array $variants  List of variant arrays (id/available_stock/option_1).
+	 * @param bool  $unlimited Whether the component has unlimited stock.
+	 */
+	private function bundleComponent( array $variants, bool $unlimited = false ): object {
+		return (object) array(
+			'id'                  => 'comp',
+			'has_unlimited_stock' => $unlimited,
+			'variant_options'     => (object) array( 'data' => array() ),
+			'variants'            => (object) array(
+				'data' => array_map( fn( $v ) => (object) $v, $variants ),
+			),
+		);
+	}
+
+	/**
+	 * Seeds the first in-stock variant.
+	 */
+	public function test_initial_variant_picks_first_in_stock() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 4, 'option_1' => 'B' ),
+			)
+		);
+
+		$this->assertSame( 'v2', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * Unlimited-stock component seeds the first variant.
+	 */
+	public function test_initial_variant_unlimited_stock_uses_first_variant() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 0, 'option_1' => 'B' ),
+			),
+			true
+		);
+
+		$this->assertSame( 'v1', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * All variants sold out → falls back to the first variant.
+	 */
+	public function test_initial_variant_all_out_of_stock_falls_back_to_first() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent(
+			array(
+				array( 'id' => 'v1', 'available_stock' => 0, 'option_1' => 'A' ),
+				array( 'id' => 'v2', 'available_stock' => 0, 'option_1' => 'B' ),
+			)
+		);
+
+		$this->assertSame( 'v1', $block->findInitialBundleComponentVariant( $component )->id );
+	}
+
+	/**
+	 * No variants → null (nothing to seed).
+	 */
+	public function test_initial_variant_returns_null_when_no_variants() {
+		$block     = $this->buildBlockWithUrlArgs( array() );
+		$component = $this->bundleComponent( array() );
+
+		$this->assertNull( $block->findInitialBundleComponentVariant( $component ) );
+	}
 }

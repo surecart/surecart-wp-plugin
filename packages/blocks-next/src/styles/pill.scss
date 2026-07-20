@@ -4,6 +4,9 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--sc-pill-option-gap, var(--sc-spacing-x-small));
+		// Inline custom props here (e.g. --sc-pill-option-active-border-color)
+		// trip WP's :where([style*="border-color"]) rule, adding a stray border.
+		border-style: none;
 	}
 }
 

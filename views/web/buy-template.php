@@ -21,17 +21,34 @@
 			</sc-prose>
 		<?php endif; ?>
 
+		<?php if ( ! empty( $product->bundle ) ) : ?>
+			<div>
+				<sc-checkout-product-bundle-component-variants
+					id="sc-checkout-product-bundle-component-variants-<?php echo esc_attr( $product->id ); ?>"
+				></sc-checkout-product-bundle-component-variants>
+				<?php
+				\SureCart::assets()->addComponentData(
+					'sc-checkout-product-bundle-component-variants',
+					'#sc-checkout-product-bundle-component-variants-' . $product->id,
+					array(
+						'product' => $product->toArray(),
+					)
+				);
+				?>
+			</div>
+		<?php endif; ?>
+
 		<div>
-		<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-checkout-product-price-variant-selector>
-		<?php
-		\SureCart::assets()->addComponentData(
-			'sc-checkout-product-price-variant-selector',
-			'#sc-product-price-variant-selector-' . $product->id,
-			array(
-				'product' => $product->toArray(),
-			)
-		);
-		?>
+			<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( $product->id ); ?>"></sc-checkout-product-price-variant-selector>
+			<?php
+			\SureCart::assets()->addComponentData(
+				'sc-checkout-product-price-variant-selector',
+				'#sc-product-price-variant-selector-' . $product->id,
+				array(
+					'product' => $product->toArray(),
+				)
+			);
+			?>
 		</div>
 
 	</sc-column>

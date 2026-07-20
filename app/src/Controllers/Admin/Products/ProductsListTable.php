@@ -58,6 +58,145 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
+	 * Admin page slug.
+	 *
+	 * @var string
+	 */
+	protected $page_slug = 'sc-products';
+
+	/**
+	 * URL key for \SureCart::getUrl()->edit() and related helpers.
+	 *
+	 * @var string
+	 */
+	protected $url_key = 'product';
+
+	/**
+	 * Per-page screen option key passed to get_items_per_page().
+	 *
+	 * @var string
+	 */
+	protected $per_page_key = 'products';
+
+	/**
+	 * User-meta key holding hidden columns for this screen.
+	 *
+	 * @var string
+	 */
+	protected $hidden_columns_meta_key = 'managesurecart_page_sc-productscolumnshidden';
+
+	/**
+	 * `bundle` value sent to Product::where() in table_data().
+	 *
+	 * @var bool
+	 */
+	protected $is_bundle = false;
+
+	/**
+	 * Extra `with` expansions specific to this screen.
+	 *
+	 * @var array
+	 */
+	protected $table_extra_with = array();
+
+	/**
+	 * WP action fired before the Filter button in extra_tablenav top.
+	 *
+	 * @var string
+	 */
+	protected $restrict_manage_hook = 'restrict_manage_products';
+
+	/**
+	 * WP action fired after the closing actions div in extra_tablenav.
+	 *
+	 * @var string
+	 */
+	protected $extra_tablenav_hook = 'manage_products_extra_tablenav';
+
+	/**
+	 * Filter to disable the collection dropdown.
+	 *
+	 * @var string
+	 */
+	protected $collection_dropdown_disable_filter = 'surecart/disable_product_collection_dropdown';
+
+	/**
+	 * Screen-reader label for the row checkbox. Subclasses may override.
+	 *
+	 * @return string
+	 */
+	protected function selectAriaLabel() {
+		return __( 'Select product', 'surecart' );
+	}
+
+	/**
+	 * Display label for the "No items" empty state.
+	 *
+	 * @return string
+	 */
+	protected function noItemsLabel() {
+		return __( 'No products found.', 'surecart' );
+	}
+
+	/**
+	 * Aria-label used on the row "Edit" link.
+	 *
+	 * @return string
+	 */
+	protected function entityLabelEdit() {
+		return __( 'Edit Product', 'surecart' );
+	}
+
+	/**
+	 * Confirmation prompt shown when restoring (un-archiving) an item.
+	 *
+	 * @return string
+	 */
+	protected function archiveConfirmRestore() {
+		return __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' );
+	}
+
+	/**
+	 * Confirmation prompt shown when archiving an item.
+	 *
+	 * @return string
+	 */
+	protected function archiveConfirmArchive() {
+		return __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
+	}
+
+	/**
+	 * Aria-label on the toggle-archive action.
+	 *
+	 * @return string
+	 */
+	protected function archiveAriaLabel() {
+		return __( 'Toggle Product Archive', 'surecart' );
+	}
+
+	/**
+	 * Build the toggle-archive URL for a row.
+	 *
+	 * @param object $item The row model.
+	 *
+	 * @return string
+	 */
+	protected function toggleArchiveUrl( $item ) {
+		return \SureCart::getUrl()->toggleArchive( $this->url_key, $item->id );
+	}
+
+	/**
+	 * Build the duplicate URL for a row.
+	 *
+	 * @param object $item The row model.
+	 *
+	 * @return string
+	 */
+	protected function duplicateUrl( $item ) {
+		return \SureCart::getUrl()->duplicate( $this->url_key, $item->id );
+	}
+
+	/**
 	 * Prepare the items for the table to process
 	 *
 	 * @return void
@@ -80,11 +219,11 @@ class ProductsListTable extends ListTable {
 		$this->set_pagination_args(
 			array(
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'products' ),
+				'per_page'    => $this->get_items_per_page( $this->per_page_key ),
 			)
 		);
 
-		$this->items = $query->data;
+		$this->items = is_array( $query->data ) ? $query->data : array();
 	}
 
 	/**
@@ -102,7 +241,7 @@ class ProductsListTable extends ListTable {
 		);
 
 		foreach ( $statuses as $status => $label ) {
-			$link                    = admin_url( 'admin.php?page=sc-products' );
+			$link                    = admin_url( 'admin.php?page=' . $this->page_slug );
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -139,22 +278,29 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array_merge(
-			array_filter(
-				array(
-					'cb'                  => '<input type="checkbox" />',
-					'name'                => __( 'Name', 'surecart' ),
-					'price'               => __( 'Price', 'surecart' ),
-					'commission_amount'   => __( 'Commission Amount', 'surecart' ),
-					'quantity'            => __( 'Stock', 'surecart' ),
-					'integrations'        => __( 'Integrations', 'surecart' ),
-					'product_collections' => __( 'Collections', 'surecart' ),
-					'status'              => __( 'Product Page', 'surecart' ),
-					'featured'            => __( 'Featured', 'surecart' ),
-					'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
-					'date'                => __( 'Created', 'surecart' ),
-				)
-			),
+			array_filter( $this->entityColumns() ),
 			parent::get_columns()
+		);
+	}
+
+	/**
+	 * Entity-specific column map.
+	 *
+	 * @return array
+	 */
+	protected function entityColumns() {
+		return array(
+			'cb'                  => '<input type="checkbox" />',
+			'name'                => __( 'Name', 'surecart' ),
+			'price'               => __( 'Price', 'surecart' ),
+			'commission_amount'   => __( 'Commission Amount', 'surecart' ),
+			'quantity'            => __( 'Stock', 'surecart' ),
+			'integrations'        => __( 'Integrations', 'surecart' ),
+			'product_collections' => __( 'Collections', 'surecart' ),
+			'status'              => __( 'Product Page', 'surecart' ),
+			'featured'            => __( 'Featured', 'surecart' ),
+			'sync_status'         => isset( $_GET['debug'] ) ? __( 'Sync Status', 'surecart' ) : null,
+			'date'                => __( 'Created', 'surecart' ),
 		);
 	}
 
@@ -165,9 +311,9 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_cb( $product ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php echo esc_html( $this->selectAriaLabel() ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="bulk_action_product_ids[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
-			<?php
+		<?php
 	}
 
 	/**
@@ -222,7 +368,7 @@ class ProductsListTable extends ListTable {
 		$product_collections_tags = array();
 
 		foreach ( $product_collections as $product_collection ) {
-			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) ) . '">' . esc_html( $product_collection['name'] ) . '</a>';
+			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=' . $this->page_slug . '&sc_collection=' . $product_collection['id'] ) ) . '">' . esc_html( $product_collection['name'] ) . '</a>';
 		}
 
 		return implode( ', ', $product_collections_tags );
@@ -242,7 +388,8 @@ class ProductsListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return ( is_array( get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) ) ) ? get_user_meta( get_current_user_id(), 'managesurecart_page_sc-productscolumnshidden', true ) : array();
+		$meta = get_user_meta( get_current_user_id(), $this->hidden_columns_meta_key, true );
+		return is_array( $meta ) ? $meta : array();
 	}
 
 	/**
@@ -277,15 +424,10 @@ class ProductsListTable extends ListTable {
 	 *
 	 * @return array|\WP_Error
 	 */
-	private function table_data() {
-		$is_archived   = $this->getArchiveStatus();
-		$product_query = Product::where(
-			array(
-				'archived' => $is_archived,
-				'query'    => $this->get_search_query(),
-				'cached'   => false,
-			)
-		)->with(
+	protected function table_data() {
+		$is_archived = $this->getArchiveStatus();
+
+		$with = array_merge(
 			array(
 				'prices',
 				'product_collections',
@@ -293,8 +435,18 @@ class ProductsListTable extends ListTable {
 				'product.product_medias',
 				'product_media.media',
 				'commission_structure',
-			)
+			),
+			$this->table_extra_with
 		);
+
+		$product_query = Product::where(
+			array(
+				'archived' => $is_archived,
+				'bundle'   => $this->is_bundle,
+				'query'    => $this->get_search_query(),
+				'cached'   => false,
+			)
+		)->with( $with );
 
 		// Check if there is any sc_collection. If so, query by taxonomy.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -322,7 +474,7 @@ class ProductsListTable extends ListTable {
 
 		return $product_query->paginate(
 			array(
-				'per_page' => $this->get_items_per_page( 'products' ),
+				'per_page' => $this->get_items_per_page( $this->per_page_key ),
 				'page'     => $this->get_pagenum(),
 			)
 		);
@@ -338,7 +490,7 @@ class ProductsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No products found.', 'surecart' );
+		echo esc_html( $this->noItemsLabel() );
 	}
 
 	/**
@@ -467,7 +619,7 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-			<?php if ( ! empty( $product->featured_image ) ) { ?>
+		<?php if ( ! empty( $product->featured_image ) ) { ?>
 				<?php
 				echo wp_kses_post( $product->featured_image->html( 'thumbnail' ) );
 				?>
@@ -479,16 +631,16 @@ class ProductsListTable extends ListTable {
 			</div>
 			<?php } ?>
 		<div>
-		<a class="row-title" aria-label="<?php esc_attr_e( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
-			<?php echo esc_html( $product->name ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr( $this->entityLabelEdit() ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( $this->url_key, $product->id ) ); ?>">
+				<?php echo esc_html( $product->name ); ?>
 		</a>
 
-		<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
+			<?php echo wp_kses_post( $this->getRowActions( $product, $bulk_status ) ); ?>
 		</div>
 
 		</div>
-		<?php
-		return ob_get_clean();
+			<?php
+			return ob_get_clean();
 	}
 
 	/**
@@ -511,11 +663,11 @@ class ProductsListTable extends ListTable {
 		return $this->row_actions(
 			array_filter(
 				[
-					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( $this->url_key, $product->id ) ) . '" aria-label="' . esc_attr( $this->entityLabelEdit() ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'trash'        => $this->action_toggle_archive( $product ),
-					'sync'         => isset( $_GET['debug'] ) ? '<a href="' . esc_url( \SureCart::getUrl()->sync( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>' : null,
+					'sync'         => isset( $_GET['debug'] ) ? '<a href="' . esc_url( \SureCart::getUrl()->sync( $this->url_key, $product->id ) ) . '" aria-label="' . esc_attr__( 'Sync Product', 'surecart' ) . '">' . esc_html__( 'Sync', 'surecart' ) . '</a>' : null,
 					'view_product' => ! empty( $product->permalink ) ? '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>' : null,
-					'duplicate'    => '<a href="' . esc_url( \SureCart::getUrl()->duplicate( 'product', $product->id ) ) . '" aria-label="' . esc_attr__( 'Duplicate', 'surecart' ) . '">' . esc_html__( 'Duplicate', 'surecart' ) . '</a>',
+					'duplicate'    => '<a href="' . esc_url( $this->duplicateUrl( $product ) ) . '" aria-label="' . esc_attr__( 'Duplicate', 'surecart' ) . '">' . esc_html__( 'Duplicate', 'surecart' ) . '</a>',
 				]
 			)
 		);
@@ -529,14 +681,14 @@ class ProductsListTable extends ListTable {
 	 */
 	public function action_toggle_archive( $product ) {
 		$text            = $product->archived ? __( 'Un-Archive', 'surecart' ) : __( 'Archive', 'surecart' );
-		$confirm_message = $product->archived ? __( 'Are you sure you want to restore this product? This will be be available to purchase.', 'surecart' ) : __( 'Are you sure you want to archive this product? This will be unavailable for purchase.', 'surecart' );
-		$link            = \SureCart::getUrl()->toggleArchive( 'product', $product->id );
+		$confirm_message = $product->archived ? $this->archiveConfirmRestore() : $this->archiveConfirmArchive();
+		$link            = $this->toggleArchiveUrl( $product );
 
 		return sprintf(
 			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
 			esc_attr( $confirm_message ),
 			esc_url( $link ),
-			esc_attr__( 'Toggle Product Archive', 'surecart' ),
+			esc_attr( $this->archiveAriaLabel() ),
 			esc_html( $text )
 		);
 	}
@@ -550,12 +702,12 @@ class ProductsListTable extends ListTable {
 	 * @return Mixed
 	 */
 	public function column_default( $product, $column_name ) {
-		// Call the parent method to handle custom columns
+		// Call the parent method to handle custom columns.
 		parent::column_default( $product, $column_name );
 
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '">' . esc_html( $product->name ) . '</a>';
+				return '<a href="' . esc_url( \SureCart::getUrl()->edit( $this->url_key, $product->id ) ) . '">' . esc_html( $product->name ) . '</a>';
 			case 'description':
 				return esc_html( $product->$column_name ?? '' );
 		}
@@ -568,7 +720,7 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
-		<input type="hidden" name="page" value="sc-products" />
+		<input type="hidden" name="page" value="<?php echo esc_attr( $this->page_slug ); ?>" />
 
 		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
@@ -581,17 +733,12 @@ class ProductsListTable extends ListTable {
 			$this->product_collection_dropdown();
 
 			/**
-			 * Fires before the Filter button on the product list tables.
-			 *
-			 * The Filter button allows sorting by date and/or category on the
-			 * Posts list table, and sorting by date on the Pages list table.
+			 * Fires before the Filter button on the product/bundle list tables.
 			 *
 			 * @param string $post_type The post type slug.
-			 * @param string $which     The location of the extra table nav markup:
-			 *                          'top' or 'bottom' for WP_Posts_List_Table,
-			 *                          'bar' for WP_Media_List_Table.
+			 * @param string $which     The location of the extra table nav markup.
 			 */
-			do_action( 'restrict_manage_products', $this->screen->post_type, $which );
+			do_action( $this->restrict_manage_hook, $this->screen->post_type, $which );
 
 			$output = ob_get_clean();
 
@@ -605,12 +752,12 @@ class ProductsListTable extends ListTable {
 
 		<?php
 		/**
-		 * Fires immediately following the closing "actions" div in the tablenav
-		 * for the products list table.
+		 * Fires immediately following the closing "actions" div in the tablenav.
+		 * Subclasses override `extraTablenavHook()` to fire their own variant.
 		 *
-		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 * @param string $which The location of the extra table nav markup.
 		 */
-		do_action( 'manage_products_extra_tablenav', $which );
+		do_action( $this->extra_tablenav_hook, $which );
 	}
 
 	/**
@@ -642,11 +789,11 @@ class ProductsListTable extends ListTable {
 	 */
 	protected function product_collection_dropdown() {
 		/**
-		 * Filters whether to remove the 'Formats' drop-down from the product list table.
+		 * Filter whether to remove the collection dropdown from the list table.
 		 *
-		 * @param bool   $disable   Whether to disable the drop-down. Default false.
+		 * @param bool $disable Whether to disable the drop-down. Default false.
 		 */
-		if ( apply_filters( 'surecart/disable_product_collection_dropdown', false ) ) {
+		if ( apply_filters( $this->collection_dropdown_disable_filter, false ) ) {
 			return;
 		}
 

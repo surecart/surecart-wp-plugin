@@ -1,4 +1,4 @@
-import { calculateInitialLineItems, getSessionId } from '../index';
+import { calculateInitialLineItems, getSessionId, getPerBundleQuantity, getBundleComponentRowsFromLineItems, groupBundleLineItems } from '../index';
 
 const prices = [
   {
@@ -37,6 +37,78 @@ describe('Line items functions', () => {
     ]);
     expect(calculateInitialLineItems(prices, 'multiple')).toEqual([{ price_id: 'price1', quantity: 1 }]);
     expect(calculateInitialLineItems(prices, 'single')).toEqual([{ price_id: 'price1', quantity: 1 }]);
+  });
+
+  describe('getPerBundleQuantity', () => {
+    it('divides the component total by the parent quantity', () => {
+      // 2 bundles, component total 2 -> 1 per bundle.
+      expect(getPerBundleQuantity({ quantity: 2 } as any, 2)).toBe(1);
+      // 2 bundles, component total 4 -> 2 per bundle.
+      expect(getPerBundleQuantity({ quantity: 4 } as any, 2)).toBe(2);
+    });
+
+    it('defaults the parent quantity to 1 and never returns below 1', () => {
+      expect(getPerBundleQuantity({ quantity: 3 } as any)).toBe(3);
+      expect(getPerBundleQuantity({ quantity: 0 } as any, 5)).toBe(1);
+    });
+  });
+
+  describe('getBundleComponentRowsFromLineItems', () => {
+    const components = [
+      { id: 'c1', quantity: 4, variant_options: ['Red', 'XL'], price: { product: { name: 'Air Beats' } } },
+      { id: 'c2', quantity: 2, variant_display_options: '10°C', price: { product: { name: 'Sleeping Bag' } } },
+      { id: 'c3', quantity: 2, variant_options: [], price: { product: { name: 'No Variant' } } },
+    ];
+
+    it('builds per-bundle rows: options joined by " · ", display string fallback, all shown by default', () => {
+      const rows = getBundleComponentRowsFromLineItems(components as any, 2);
+      expect(rows).toEqual([
+        { id: 'c1', name: 'Air Beats', variants: 'Red · XL', qty: 2 },
+        { id: 'c2', name: 'Sleeping Bag', variants: '10°C', qty: 1 },
+        { id: 'c3', name: 'No Variant', variants: '', qty: 1 },
+      ]);
+    });
+
+    it('drops components without a variant selection in variants-only mode', () => {
+      const rows = getBundleComponentRowsFromLineItems(components as any, 2, false);
+      expect(rows.map(r => r.id)).toEqual(['c1', 'c2']);
+    });
+  });
+
+  describe('groupBundleLineItems', () => {
+    it('orders bundle components by position, regardless of payload order', () => {
+      const items = [
+        {
+          id: 'bundle',
+          price: { product: { bundle: true } },
+          component_line_items: {
+            data: [
+              { id: 'c-third', position: 2 },
+              { id: 'c-first', position: 0 },
+              { id: 'c-second', position: 1 },
+            ],
+          },
+        },
+      ];
+
+      const { componentsByParent } = groupBundleLineItems(items as any);
+      expect(componentsByParent.bundle.map(c => c.id)).toEqual(['c-first', 'c-second', 'c-third']);
+    });
+
+    it('preserves payload order when position is missing', () => {
+      const items = [
+        {
+          id: 'bundle',
+          price: { product: { bundle: true } },
+          component_line_items: {
+            data: [{ id: 'a' }, { id: 'b' }, { id: 'c' }],
+          },
+        },
+      ];
+
+      const { componentsByParent } = groupBundleLineItems(items as any);
+      expect(componentsByParent.bundle.map(c => c.id)).toEqual(['a', 'b', 'c']);
+    });
   });
 
   describe('getSessionId', () => {

@@ -50,11 +50,13 @@ class BuyPageController extends BasePageController {
 		if ( empty( $this->model->id ) ) {
 			return;
 		}
+		$is_bundle = ! empty( $this->model->bundle );
+		$url_key   = $is_bundle ? 'bundle' : 'product';
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
-				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->model->id ) ),
+				'title' => $is_bundle ? __( 'Edit Bundle', 'surecart' ) : __( 'Edit Product', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( $url_key, $this->model->id ) ),
 			]
 		);
 	}
@@ -68,10 +70,14 @@ class BuyPageController extends BasePageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		// The route always passes a product slug here.
 		$id = get_query_var( 'sc_checkout_product_id' );
 
-		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $id );
+		// fetch the product by id/slug. Bundle expands carry live component
+		// variant stock, so the buy page renders fresh availability in one fetch.
+		$this->model = \SureCart\Models\Product::with(
+			\SureCart\Models\Product::storefrontExpands()
+		)->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -113,6 +119,16 @@ class BuyPageController extends BasePageController {
 				],
 				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
 			);
+
+			// Bundles require a variant selection per variable component on checkout creation.
+			if ( ! empty( $this->model->bundle ) ) {
+				$bundle_component_variants = (array) ( new \SureCart\Models\Blocks\ProductPageBlock() )
+					->getInitialBundleComponentVariants( $this->model );
+				if ( ! empty( $bundle_component_variants ) ) {
+					$line_item['bundle_component_variants'] = $bundle_component_variants;
+				}
+			}
+
 			sc_initial_state(
 				[
 					'checkout' => [
