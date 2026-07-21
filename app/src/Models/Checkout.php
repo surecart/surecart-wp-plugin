@@ -296,6 +296,37 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Count of line items excluding bundle containers.
+	 *
+	 * A bundle serializes as a container line item plus one line item per
+	 * component; only the components are delivered, so counting raw line
+	 * items reads N+1. Containers are found via `is_bundle_parent` when
+	 * `price.product` is expanded, or via the parent ids components carry
+	 * in `bundle_line_item` when it isn't.
+	 *
+	 * @return int
+	 */
+	public function getDeliveredItemsCountAttribute() {
+		$items = $this->line_items->data ?? [];
+		$total = $this->line_items->pagination->count ?? count( $items );
+
+		$container_ids = [];
+		foreach ( $items as $item ) {
+			if ( ! empty( $item->component_line_item ) && ! empty( $item->bundle_line_item ) ) {
+				$parent_id = is_object( $item->bundle_line_item ) ? $item->bundle_line_item->id : $item->bundle_line_item;
+				if ( $parent_id ) {
+					$container_ids[ $parent_id ] = true;
+				}
+			}
+			if ( ! empty( $item->is_bundle_parent ) ) {
+				$container_ids[ $item->id ] = true;
+			}
+		}
+
+		return max( $total - count( $container_ids ), 0 );
+	}
+
+	/**
 	 * Get the has recurring attribute.
 	 *
 	 * Do any line items have a recurring price?

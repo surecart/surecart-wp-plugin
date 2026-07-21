@@ -45,9 +45,12 @@ export default ({
 		[orderId]
 	);
 
-	// filter unfulfilled items
+	// filter unfulfilled items; bundle containers are never fulfillable.
 	const unfulfilled = (checkout?.line_items?.data || []).filter((item) => {
-		return item?.quantity !== item?.fulfilled_quantity;
+		return (
+			!item?.is_bundle_parent &&
+			item?.quantity !== item?.fulfilled_quantity
+		);
 	});
 
 	if (loading || loadingOrder) {

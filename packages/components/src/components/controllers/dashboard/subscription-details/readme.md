@@ -54,19 +54,19 @@ graph TD;
   sc-subscription-details --> sc-flex
   sc-subscription-details --> sc-tag
   sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-icon
   sc-subscription-details --> sc-dialog
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
-  sc-subscription-details --> sc-icon
   sc-subscription-status-badge --> sc-tag
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-product-line-item --> sc-icon
   sc-product-line-item --> sc-product-line-item-note
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-button
-  sc-product-line-item --> sc-icon
   sc-product-line-item-note --> sc-icon
   sc-quantity-select --> sc-icon
   sc-manual-payment-method --> sc-prose

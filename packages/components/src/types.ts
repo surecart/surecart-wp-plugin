@@ -425,6 +425,16 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<VariantOption>;
   };
+  /**
+   * Whether this product is a bundle. Set on create, immutable thereafter.
+   * A bundle product owns BundleItems pointing at component products.
+   */
+  bundle?: boolean;
+  bundle_items?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<BundleItem>;
+  };
   product_medias: {
     object: 'list';
     pagination: Pagination;
@@ -489,6 +499,7 @@ export interface LineItemData extends Object {
   quantity: number;
   ad_hoc_amount?: number;
   variant?: string;
+  bundle_component_variants?: Record<string, string>;
 }
 
 export type LineItemsData = {
@@ -557,6 +568,17 @@ export interface LineItem extends Object {
   is_swappable?: boolean;
   note?: string;
   display_note?: string;
+  component_line_item?: boolean;
+  component_line_items?: { data: LineItem[] };
+  /** Sort order within the bundle, mirroring the bundle item's position. */
+  position?: number;
+  /** Id of the bundle parent line item (set on bundle component line items). */
+  bundle_line_item?: string | null;
+  bundle_component_variants?: Record<string, string>;
+  bundle_allocated_unit_amount?: number;
+  is_bundle_parent?: boolean;
+  is_bundle_component?: boolean;
+  tax_rate?: number;
 }
 
 export interface DeletedItem {
@@ -576,6 +598,45 @@ export interface Fee {
   line_item: string | LineItem;
   created_at: number;
   updated_at: number;
+}
+
+/**
+ * BundleItem — a join between a bundle Product and one of its component Products.
+ *
+ * Variant selection is NOT pinned here; the shopper picks at checkout via
+ * `bundle_component_variants` on the bundle line item. Components are always
+ * Products, never Prices or Variants.
+ */
+export interface BundleItem {
+  id: string;
+  object: 'bundle_item';
+  /** The parent bundle product (the one with bundle: true). */
+  bundle_product: string | Product;
+  /** The component product included in the bundle. Must not itself be a bundle. */
+  component_product: string | Product;
+  /**
+   * Shortcut association: the component product's variants with live stock,
+   * one level shallower than the (dropped) component_product.variants expand.
+   */
+  component_variants?: { object: 'list'; pagination?: Pagination; data: Variant[] };
+  /** Shortcut association: the component product's variant option dimensions. */
+  component_variant_options?: { object: 'list'; pagination?: Pagination; data: VariantOption[] };
+  quantity: number;
+  /** Optional weighting input (cents) for tax allocation. Nil → even split by quantity. */
+  basis_amount?: number | null;
+  position: number;
+  /** Whether this is the current version of the bundle item. */
+  current_version?: boolean;
+  metadata?: { [key: string]: string };
+  created_at: number;
+  updated_at: number;
+}
+
+export interface BundleComponentRow {
+  id: string;
+  name: string;
+  variants: string;
+  qty: number;
 }
 
 export interface InvoiceItem extends LineItem {}
@@ -750,6 +811,8 @@ export interface Checkout extends Object {
   number?: string;
   amount_due?: number;
   amount_due_display_amount?: string;
+  /** PHP model accessor: line item count excluding bundle containers. */
+  delivered_items_count?: number;
   amount_due_default_currency_display_amount?: string;
   remaining_amount_due?: number;
   remaining_amount_due_display_amount?: string;
@@ -1436,6 +1499,7 @@ export interface ProductState {
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
   note?: string;
+  bundleComponentVariants?: Record<string, string>;
 }
 export interface FeaturedProductMediaAttributes {
   alt: string;

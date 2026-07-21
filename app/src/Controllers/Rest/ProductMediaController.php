@@ -2,12 +2,15 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\RestrictsAnonymousReads;
 use SureCart\Models\ProductMedia;
 
 /**
  * Handle ProductMedia requests through the REST API
  */
 class ProductMediaController extends RestController {
+	use RestrictsAnonymousReads;
+
 	/**
 	 * Always fetch with these subcollections.
 	 *
@@ -21,6 +24,27 @@ class ProductMediaController extends RestController {
 	 * @var string
 	 */
 	protected $class = ProductMedia::class;
+
+	/**
+	 * Capability that unlocks unrestricted reads.
+	 *
+	 * @var string
+	 */
+	protected $edit_capability = 'edit_sc_products';
+
+	/**
+	 * Expands safe to forward for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_expands = [ 'media' ];
+
+	/**
+	 * Query filters forced for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_scope = [];
 
 	/**
 	 * Download a media file.

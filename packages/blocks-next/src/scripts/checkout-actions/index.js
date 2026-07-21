@@ -39,6 +39,7 @@ export const expand = [
 	'manual_payment_method',
 	'shipping_choices',
 	'shipping_choice.shipping_method',
+	'line_item.component_line_items',
 ];
 
 export const parsePath = (id, endpoint = '') => {

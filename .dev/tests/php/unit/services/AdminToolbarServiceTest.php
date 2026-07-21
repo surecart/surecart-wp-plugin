@@ -94,11 +94,12 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		$wp_admin_bar = \Mockery::mock('WP_Admin_Bar');
 
 		// Create an admin user with proper capabilities.
-		$user = $this->factory()->user->create_and_get(['role' => 'administrator']);
+		$user_id = $this->factory()->user->create(['role' => 'administrator']);
+		$user    = get_user_by('id', $user_id);
 		$user->add_cap('edit_sc_products');
 		$user->add_cap('edit_sc_coupons');
 		$user->add_cap('edit_sc_invoices');
-		wp_set_current_user($user->ID);
+		wp_set_current_user($user_id);
 
 		// Mock account service as connected.
 		$account_mock = \Mockery::mock();
@@ -110,6 +111,7 @@ class AdminToolbarServiceTest extends SureCartUnitTestCase {
 		// Mock URL service to handle the invoice URL creation.
 		$url_mock = \Mockery::mock();
 		$url_mock->shouldReceive('create')->with('invoices')->andReturn('http://example.com/invoices/create');
+		$url_mock->shouldReceive('edit')->with('bundle')->andReturn('http://example.com/bundle/edit');
 		\SureCart::alias('getUrl', function () use ($url_mock) {
 			return $url_mock;
 		});

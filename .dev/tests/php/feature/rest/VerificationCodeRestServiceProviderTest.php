@@ -238,6 +238,156 @@ class VerificationCodeRestServiceProviderTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * The transient key for an email's resend window.
+	 *
+	 * @param string $email Email address.
+	 * @param string $mode  Checkout mode.
+	 * @return string
+	 */
+	protected function resendKey( $email, $mode = 'live' ) {
+		return \SureCart\Controllers\Rest\VerificationCodeController::resendTransientKey( $email, $mode );
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_resumes_window_without_hitting_platform() {
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		// While inside the resend window, the platform must NOT be contacted.
+		$requests->shouldReceive('makeRequest')->never();
+
+		$user = self::factory()->user->create_and_get();
+		set_transient( $this->resendKey( $user->user_email ), time() + 120, 120 );
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([ 'login' => $user->user_email ]);
+		$response = rest_do_request( $request );
+
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertFalse( $data['email_sent'], 'No email should be sent while inside the window.' );
+		$this->assertGreaterThan(0, $data['resend_available_in']);
+		$this->assertLessThanOrEqual(120, $data['resend_available_in']);
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_persists_platform_resend_window() {
+		$available_at = time() + 240;
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) [
+			'id'                  => 'vc_123',
+			'resend_available_at' => $available_at,
+		]);
+
+		$user = self::factory()->user->create_and_get();
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([ 'login' => $user->user_email ]);
+		$response = rest_do_request( $request );
+
+		$this->assertSame(200, $response->get_status());
+		$data = $response->get_data();
+		$this->assertTrue( $data['email_sent'] );
+		$this->assertGreaterThan(0, $data['resend_available_in']);
+		$this->assertSame( $available_at, (int) get_transient( $this->resendKey( $user->user_email ) ), 'Resend window should be persisted.' );
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_captures_blocked_duplicate_backoff() {
+		$user = self::factory()->user->create_and_get();
+
+		$error = new \WP_Error(
+			'verification_code.invalid',
+			'Failed to save verification code',
+			[ 'status' => 422 ]
+		);
+		$error->add(
+			'verification_code.email.blocked_duplicate',
+			'Email has already been sent a verification code in the last 240 seconds',
+			[ 'options' => [ 'seconds' => '240' ] ]
+		);
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn($error);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([ 'login' => $user->user_email ]);
+		$response = rest_do_request( $request );
+
+		$this->assertTrue( $response->is_error() );
+		$stored = (int) get_transient( $this->resendKey( $user->user_email ) );
+		$this->assertGreaterThan( time() + 230, $stored, 'Backoff window from the platform error should be stored.' );
+		$this->assertLessThanOrEqual( time() + 240, $stored );
+	}
+
+	/**
+	 * @group login
+	 */
+	public function test_create_accepts_iso_resend_window() {
+		$available_at = time() + 180;
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) [
+			'id'                  => 'vc_123',
+			'resend_available_at' => gmdate( 'c', $available_at ), // ISO 8601 string.
+		]);
+
+		$user = self::factory()->user->create_and_get();
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes');
+		$request->set_body_params([ 'login' => $user->user_email ]);
+		$response = rest_do_request( $request );
+
+		$this->assertSame(200, $response->get_status());
+		$this->assertSame( $available_at, (int) get_transient( $this->resendKey( $user->user_email ) ), 'ISO 8601 windows should normalize to a timestamp.' );
+	}
+
+	/**
+	 * A consumed code must not leave a stale resend window behind — otherwise a
+	 * user who verifies and later needs a new code is told to wait for a code
+	 * that no longer exists.
+	 *
+	 * @group login
+	 */
+	public function test_verify_success_clears_resend_window() {
+		$user = self::factory()->user->create_and_get();
+		set_transient( $this->resendKey( $user->user_email, 'live' ), time() + 240, 240 );
+		set_transient( $this->resendKey( $user->user_email, 'test' ), time() + 240, 240 );
+
+		$requests = \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->once()->andReturn((object) ['verified' => true]);
+
+		$request = new \WP_REST_Request('POST', '/surecart/v1/verification_codes/verify');
+		$request->set_body_params([
+			'login' => $user->user_email,
+			'code'  => 'test_code',
+		]);
+		$response = rest_do_request( $request );
+
+		$this->assertSame(200, $response->get_status());
+		$this->assertFalse( get_transient( $this->resendKey( $user->user_email, 'live' ) ), 'Live resend window should be cleared after verification.' );
+		$this->assertFalse( get_transient( $this->resendKey( $user->user_email, 'test' ) ), 'Test resend window should be cleared after verification.' );
+	}
+
+	/**
 	 * @group login
 	 */
 	public function test_verify_returns_404_for_unknown_user() {

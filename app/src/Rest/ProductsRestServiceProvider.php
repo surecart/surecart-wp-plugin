@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Concerns\StripsPrivateCatalogFields;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\ProductsController;
 
@@ -9,6 +10,8 @@ use SureCart\Controllers\Rest\ProductsController;
  * Service provider for Price Rest Requests
  */
 class ProductsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use StripsPrivateCatalogFields;
+
 	/**
 	 * Endpoint.
 	 *
@@ -22,6 +25,13 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @var string
 	 */
 	protected $controller = ProductsController::class;
+
+	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
 
 	/**
 	 * Register Additional REST Routes
@@ -125,6 +135,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				'metadata'        => [
 					'description' => esc_html__( 'Stored product metadata', 'surecart' ),
 					'type'        => 'object',
+					'context'     => [ 'edit' ],
 					'properties'  => [
 						'wp_created_by' => [
 							'type'     => 'integer',
@@ -132,6 +143,81 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 							'readonly' => true,
 						],
 					],
+				],
+				'available_stock' => [
+					'description' => esc_html__( 'The available stock for the product.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'held_stock'      => [
+					'description' => esc_html__( 'The held stock for the product.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'stock'           => [
+					'description' => esc_html__( 'The stock for the product.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'status'          => [
+					'description' => esc_html__( 'The status of the product.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
+				'archived'        => [
+					'description' => esc_html__( 'Whether the product is archived.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'edit' ],
+				],
+				'archived_at'     => [
+					'description' => esc_html__( 'Archived at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'discarded_at'    => [
+					'description' => esc_html__( 'Discarded at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'cataloged_at'    => [
+					'description' => esc_html__( 'Cataloged at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'sku'             => [
+					'description' => esc_html__( 'The product SKU.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
+				'dimensions'      => [
+					'description' => esc_html__( 'The product shipping dimensions.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
+				],
+				'weight'          => [
+					'description' => esc_html__( 'The product shipping weight.', 'surecart' ),
+					'type'        => 'number',
+					'context'     => [ 'edit' ],
+				],
+				'weight_unit'     => [
+					'description' => esc_html__( 'The product shipping weight unit.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
+				'tax_category'    => [
+					'description' => esc_html__( 'The product tax category.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'edit' ],
+				],
+				'tax_enabled'     => [
+					'description' => esc_html__( 'Whether tax is enabled for the product.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'edit' ],
+				],
+				'purchase_limit'  => [
+					'description' => esc_html__( 'The purchase limit for the product.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
 				],
 				'metrics'         => [
 					'description' => esc_html__( 'Top level metrics for the product.', 'surecart' ),
@@ -151,7 +237,8 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 							'type' => 'integer',
 						],
 					],
-					'context'     => [ 'edit' ],
+					// public price aggregates — the product list renders price ranges from these.
+					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 			],
 		];
@@ -172,6 +259,10 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			],
 			'recurring'              => [
 				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
+				'type'        => 'boolean',
+			],
+			'bundle'                 => [
+				'description' => esc_html__( 'Only return bundle products (true) or non-bundle products (false).', 'surecart' ),
 				'type'        => 'boolean',
 			],
 			'query'                  => [
@@ -249,12 +340,9 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_products' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		return true;
@@ -267,12 +355,9 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
-			return new \WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit products.', 'surecart' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_products' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
 		}
 
 		if ( $request['archived'] ) {
@@ -326,13 +411,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function filter_response_by_context( $model, $context ) {
 		$response = parent::filter_response_by_context( $model, $context );
 
-		if ( 'edit' === $context && is_array( $response ) && ! empty( $response['id'] ) ) {
+		if ( ! is_array( $response ) || empty( $response['id'] ) ) {
+			return $response;
+		}
+
+		if ( 'edit' === $context ) {
 			// Process the variants, it's in a data column, so we need to pull it out.
 			$response['variants'] = ! empty( $response['variants']['data'] ) ? $response['variants']['data'] : [];
 			// Process the variant_options, it's in a data column, so we need to pull it out.
 			$response['variant_options'] = ! empty( $response['variant_options']['data'] ) ? $response['variant_options']['data'] : [];
+			return $response;
 		}
 
-		return $response;
+		// view/embed: strip private data the schema can't reach on expansions.
+		return $this->stripPrivateProductFields( $response );
 	}
 }

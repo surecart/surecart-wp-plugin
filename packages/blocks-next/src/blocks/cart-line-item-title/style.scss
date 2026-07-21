@@ -1,4 +1,12 @@
 .wp-block-surecart-cart-line-item-title {
-    color: var(--sc-cart-main-label-text-color);
-    text-wrap: wrap;
+	color: var(--sc-cart-main-label-text-color);
+	text-wrap: wrap;
+}
+
+.sc-cart-line-item-title__count {
+	margin-inline-start: 0.25em;
+
+	&[hidden] {
+		display: none !important;
+	}
 }

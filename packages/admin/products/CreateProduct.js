@@ -54,7 +54,14 @@ export default ({ id, onCreateProduct, navigation }) => {
 			</ScAlert>
 
 			<Box title={__('Create New Product', 'surecart')}>
-				<ScForm onScSubmit={onSubmit}>
+				<ScForm
+					onScSubmit={onSubmit}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							onSubmit(e);
+						}
+					}}
+				>
 					<div
 						css={css`
 							display: grid;
@@ -65,9 +72,7 @@ export default ({ id, onCreateProduct, navigation }) => {
 							label={__('Product Name', 'surecart')}
 							className="sc-product-name hydrated"
 							help={__('A name for your product.', 'surecart')}
-							onScChange={(e) => {
-								setName(e.target.value);
-							}}
+							onScInput={(e) => setName(e.target.value)}
 							value={name}
 							name="name"
 							required
@@ -75,7 +80,7 @@ export default ({ id, onCreateProduct, navigation }) => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`display: flex; gap: var(--sc-spacing-small);`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}

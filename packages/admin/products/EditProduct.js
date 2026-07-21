@@ -15,6 +15,7 @@ import apiFetch from '@wordpress/api-fetch';
 import Error from '../components/Error';
 import { useNavigationConfirm } from '../router';
 import useEntity from '../hooks/useEntity';
+import useBundleLabels from './hooks/useBundleLabels';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
@@ -22,6 +23,7 @@ import SaveButton from './components/product/SaveButton';
 import BuyLink from './modules/BuyLink';
 
 import Advanced from './modules/Advanced';
+import BundleItems from './modules/BundleItems';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
 import Media from './modules/Media';
@@ -48,7 +50,8 @@ export default ({ id, setBrowserURL, navigation }) => {
 	const [saving, setSaving] = useState(false);
 	const [confirmUrl, setConfirmUrl] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, invalidateResolution } =
+		useDispatch(coreStore);
 	const { setEditedPost } = useDispatch('core/editor');
 	const { requestNavigation, setDefaultSuccessMessage } =
 		useNavigationConfirm();
@@ -63,7 +66,16 @@ export default ({ id, setBrowserURL, navigation }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id);
+	} = useEntity('product', id, {
+		expand: [
+			'bundle_items',
+			'bundle_items.component_product',
+			'bundle_items.component_product.featured_product_media',
+			'bundle_items.component_product.product_medias',
+		],
+	});
+
+	const labels = useBundleLabels(product);
 
 	const saveSuccessMessage = product?.id
 		? __('Product updated.', 'surecart')
@@ -86,9 +98,9 @@ export default ({ id, setBrowserURL, navigation }) => {
 			);
 		} else {
 			// Non-SPA context: navigate directly. Dirty-record check is SPA-only.
-			window.location.href = 'admin.php?page=sc-products';
+			window.location.href = labels.indexHref;
 		}
-	}, [requestNavigation, navigation, saveSuccessMessage]);
+	}, [requestNavigation, navigation, saveSuccessMessage, labels.indexHref]);
 
 	const currentPost = useSelect((select) =>
 		select('core/editor').getCurrentPost()
@@ -212,7 +224,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 			setBrowserURL({ id });
 
 			// save success.
-			createSuccessNotice(__('Product updated.', 'surecart'), {
+			createSuccessNotice(labels.updatedNotice, {
 				type: 'snackbar',
 			});
 
@@ -233,6 +245,17 @@ export default ({ id, setBrowserURL, navigation }) => {
 	 */
 	const onDeleteProduct = async () => {
 		setError(null);
+
+		const { deletedNotice, indexHref } = labels;
+
+		// Invalidate the in-flight post lookup before the delete so core-data's
+		// REMOVE_ITEMS reducer has a clean queryItems entry to operate on.
+		invalidateResolution('getEntityRecords', [
+			'postType',
+			'sc_product',
+			{ sc_id: [id], per_page: 1 },
+		]);
+
 		try {
 			await deleteProduct({ throwOnError: true });
 		} catch (e) {
@@ -249,19 +272,20 @@ export default ({ id, setBrowserURL, navigation }) => {
 				setError(e);
 				return;
 			}
+			// Log the swallowed error so it stays visible in monitoring.
+			console.warn(
+				'[surecart] tolerated WP core-data REMOVE_ITEMS TypeError after product delete:',
+				e
+			);
 		}
 
-		createSuccessNotice(__('Product deleted.', 'surecart'), {
-			type: 'snackbar',
-		});
+		createSuccessNotice(deletedNotice, { type: 'snackbar' });
 
 		// Navigate back to products list.
 		if (navigation) {
 			navigation.goToList();
 		} else {
-			window.location.href = addQueryArgs('admin.php', {
-				page: 'sc-products',
-			});
+			window.location.href = indexHref;
 		}
 	};
 
@@ -331,9 +355,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 						<ScButton
 							circle
 							size="small"
-							{...(navigation
-								? {}
-								: { href: 'admin.php?page=sc-products' })}
+							{...(navigation ? {} : { href: labels.indexHref })}
 							onClick={backToList}
 						>
 							<sc-icon name="arrow-left"></sc-icon>
@@ -344,7 +366,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<a
-									href="admin.php?page=sc-products"
+									href={labels.indexHref}
 									onClick={(e) => {
 										if (navigation) {
 											e.preventDefault();
@@ -359,12 +381,12 @@ export default ({ id, setBrowserURL, navigation }) => {
 										}
 									`}
 								>
-									{__('Products', 'surecart')}
+									{labels.entitiesLabel}
 								</a>
 							</sc-breadcrumb>
 							<sc-breadcrumb>
 								<sc-flex style={{ gap: '1em' }}>
-									{__('Edit Product', 'surecart')}
+									{labels.editLabel}
 									{renderStatusBadge()}
 								</sc-flex>
 							</sc-breadcrumb>
@@ -391,7 +413,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 						{!!product?.permalink && (
 							<Button
 								icon={external}
-								label={__('View Product Page', 'surecart')}
+								label={labels.viewPageLabel}
 								href={product?.permalink}
 								showTooltip={true}
 								size="compact"
@@ -415,7 +437,7 @@ export default ({ id, setBrowserURL, navigation }) => {
 						>
 							{willPublish()
 								? __('Save & Publish', 'surecart')
-								: __('Save Product', 'surecart')}
+								: labels.saveLabel}
 						</SaveButton>
 					</div>
 				}
@@ -494,6 +516,14 @@ export default ({ id, setBrowserURL, navigation }) => {
 						loading={!hasLoadedProduct}
 					/>
 
+					{product?.bundle && (
+						<BundleItems
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+					)}
+
 					<Media
 						productId={id}
 						product={product}
@@ -514,12 +544,14 @@ export default ({ id, setBrowserURL, navigation }) => {
 						loading={!hasLoadedProduct}
 					/>
 
-					<Variations
-						productId={id}
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
+					{!product?.bundle && (
+						<Variations
+							productId={id}
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+					)}
 
 					<Integrations id={id} product={product} />
 

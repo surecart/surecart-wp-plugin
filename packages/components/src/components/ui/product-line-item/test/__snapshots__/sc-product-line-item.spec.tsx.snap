@@ -15,10 +15,6 @@ exports[`sc-product-line-item renders 1`] = `
               <div class="price__description" part="price__description"></div>
             </div>
           </div>
-          <div class="item__row">
-            <div class="item__description" part="description"></div>
-            <div class="item__description" part="trial-fees"></div>
-          </div>
           <div class="item__row stick-bottom">
             <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="Infinity" size="small"></sc-quantity-select>
           </div>

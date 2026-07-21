@@ -179,6 +179,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Bundles
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-bundles' )
+->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
+->middleware( 'assets.admin_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Bundles\\' )
+->group(
+	function () {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'BundlesController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'delete', 'action' )->handle( 'BundlesController@confirmBulkDelete' );
+		\SureCart::route()->post()->middleware( 'nonce:bulk_delete_nonce' )->handle( 'BundlesController@bulkDelete' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'BundlesController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'duplicate', 'action' )->middleware( 'nonce:duplicate_bundle' )->handle( 'BundlesController@duplicate' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_archive', 'action' )->middleware( 'archive_model:bundle,edit_sc_products' )->handle( 'BundlesController@toggleArchive' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'sync_all', 'action' )->middleware( 'nonce:sync_bundles' )->handle( 'BundlesController@syncAll' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'sync', 'action' )->middleware( 'nonce:sync_bundle' )->handle( 'BundlesController@sync' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Coupons
 |--------------------------------------------------------------------------
 */

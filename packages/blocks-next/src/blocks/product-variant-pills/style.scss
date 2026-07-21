@@ -5,3 +5,22 @@
 		color: inherit !important;
 	}
 }
+
+// Bundle products render one picker per component option, each scoped in its
+// own Interactivity context wrapper. The only visual difference from a normal
+// variant picker is the option label (Product Name – Option × Qty).
+//
+// Every option row — across all components — shares one vertical rhythm so the
+// spacing is uniform: a single gap on the outer container and the same gap
+// between option rows within a component. No per-row margins.
+// `.sc-bundle-picker` is the block wrapper element itself (it also carries
+// `.wp-block-surecart-product-variant-pills`), so it must be matched directly —
+// not as a descendant. Same flex/gap on the picker and each component item gives
+// one uniform vertical rhythm between components AND between option rows.
+.sc-bundle-picker,
+.sc-bundle-picker .sc-bundle-item {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sc-spacing-medium, 1rem);
+	width: 100%;
+}

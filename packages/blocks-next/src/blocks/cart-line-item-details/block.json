@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/cart-line-item-details",
+	"title": "Line item details",
+	"description": "Collapsible container for the line item's extra details (variant, bundle items, note) shown under a cart line item.",
+	"version": "1.0.0",
+	"category": "surecart-cart",
+	"ancestor": [
+		"surecart/slide-out-cart-items",
+		"surecart/slide-out-cart-line-items"
+	],
+	"attributes": {
+		"expanded": {
+			"type": "boolean",
+			"default": false
+		},
+		"collapseAfter": {
+			"type": "number",
+			"default": 2
+		}
+	},
+	"example": {},
+	"supports": {
+		"interactivity": true,
+		"anchor": true,
+		"color": {
+			"gradients": true,
+			"text": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"text": true,
+				"background": true
+			}
+		},
+		"spacing": {
+			"padding": true,
+			"margin": ["top", "bottom"],
+			"blockGap": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textAlign": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	},
+	"render": "file:./view.php",
+	"textdomain": "surecart",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"viewScriptModule": ["@surecart/line-item-details"]
+}

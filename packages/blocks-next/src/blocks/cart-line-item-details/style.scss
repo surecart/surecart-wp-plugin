@@ -1,0 +1,82 @@
+.sc-cart-line-item-details {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25em;
+	background: transparent;
+	outline: none;
+	// Pin the line box to the child rows' size so the collapsed clamp equals exactly one row.
+	font-size: var(--sc-font-size-small, 14px);
+	line-height: 1.4;
+
+	&[hidden] {
+		display: none !important;
+	}
+
+	// Cursor affordance only when there's something to expand.
+	&--is-collapsible,
+	&--is-expanded {
+		cursor: pointer;
+	}
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		background: transparent;
+	}
+
+	&__content {
+		width: 100%;
+		min-width: 0;
+	}
+
+	// Collapsed: clamp to the configured number of lines (`1lh` where supported, `1.4em` fallback).
+	&:not(.sc-cart-line-item-details--is-expanded) &__content {
+		max-height: calc(
+			var(--sc-line-item-details-collapse-lines, 2) * 1.4em +
+				(var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px
+		);
+		max-height: calc(
+			var(--sc-line-item-details-collapse-lines, 2) * 1lh +
+				(var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px
+		);
+		overflow: hidden;
+	}
+
+	&--is-expanded &__content {
+		max-height: none;
+		overflow: visible;
+	}
+
+	&__toggle {
+		align-self: flex-start;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.125em;
+		color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+
+		// Defer the muted default to an editor-chosen text color on the block wrapper.
+		.has-text-color & {
+			color: inherit;
+		}
+
+		&[hidden] {
+			display: none !important;
+		}
+	}
+
+	&__toggle-label {
+		line-height: 1.4;
+	}
+
+	&__toggle-icon {
+		display: inline-flex;
+		align-items: center;
+		transition: transform 0.2s ease;
+		will-change: transform;
+
+		&--rotated {
+			transform: rotate(180deg);
+		}
+	}
+}

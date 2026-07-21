@@ -38,7 +38,7 @@ const { state, onChange, on, set, get, dispose, reset } = createStore<Store>(
     captureGeoAddressEnabled: false,
     geoCapture: null,
     geoCoordinates: null,
-    showLoginPrompt: true,
+    showLoginPrompt: false,
     initialLineItems: [],
     isCheckoutPage: false,
     validateStock: false,

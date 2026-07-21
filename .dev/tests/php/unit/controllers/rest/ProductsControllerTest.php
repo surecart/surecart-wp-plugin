@@ -12,10 +12,17 @@ class ProductsControllerTest extends SureCartUnitTestCase {
 
 	/**
 	 * Set up a new app instance to use for tests.
+	 *
+	 * These tests assert the edit-context expand contract, which presumes a
+	 * capable user — otherwise RestrictsAnonymousReads strips client expands.
 	 */
 	public function setUp(): void {
 		\SureCart::make()->bootstrap( [ 'providers' => [] ], false );
 		parent::setUp();
+
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap( 'edit_sc_products' );
+		wp_set_current_user( $user->ID );
 	}
 
 	/**

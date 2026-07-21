@@ -1,7 +1,8 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Checkout, Product } from '../../../../types';
+import { Checkout, LineItem, Product } from '../../../../types';
+import { groupBundleLineItems } from '../../../../functions/line-items';
 
 @Component({
   tag: 'sc-order-confirmation-line-items',
@@ -25,16 +26,21 @@ export class ScOrderConfirmationLineItems {
       );
     }
 
+    const items = (this.order?.line_items?.data || []) as LineItem[];
+    const { regular, bundleParents, componentsByParent } = groupBundleLineItems(items);
+    const orderedItems = [...bundleParents, ...regular];
+
     return (
       <div class={{ 'confirmation-summary': true }}>
         <div class="line-items" part="line-items">
-          {this.order?.line_items?.data.map(item => {
+          {orderedItems.map(item => {
+            const product = item?.price?.product as Product;
+            const isBundle = !!product?.bundle;
             return (
-              <div class="line-item">
+              <div class="line-item" key={item.id}>
                 <sc-product-line-item
-                  key={item.id}
-                  image={(item?.price?.product as Product)?.line_item_image}
-                  name={`${(item?.price?.product as Product)?.name}`}
+                  image={product?.line_item_image}
+                  name={product?.name}
                   price={item?.price?.name}
                   variant={item?.variant_display_options}
                   editable={false}
@@ -48,6 +54,7 @@ export class ScOrderConfirmationLineItems {
                   interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
                   purchasableStatus={item?.purchasable_status_display}
                   sku={item?.sku}
+                  bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
                 ></sc-product-line-item>
               </div>
             );

@@ -25,6 +25,13 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	protected $controller = ProductGroupsController::class;
 
 	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post
@@ -43,16 +50,26 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'      => [
+				'id'          => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
 				],
-				'content' => array(
+				'content'     => array(
 					'description' => esc_html__( 'The content for the object.', 'surecart' ),
 					'type'        => 'string',
 				),
+				'metadata'    => [
+					'description' => esc_html__( 'Set of key-value pairs for custom data.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
+				],
+				'archived_at' => [
+					'description' => esc_html__( 'Archived at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
 			],
 		];
 
@@ -66,6 +83,11 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_products' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		return true;
 	}
 
@@ -76,6 +98,11 @@ class ProductGroupsRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_products' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		if ( ! empty( $request['ids'] ) && true !== $request['archived'] ) {
 			return true;
 		}

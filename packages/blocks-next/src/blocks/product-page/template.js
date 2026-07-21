@@ -66,7 +66,10 @@ export default [
 									style: {
 										spacing: {
 											blockGap: '0.5em',
-											padding: { right: '0px', left: '0px' },
+											padding: {
+												right: '0px',
+												left: '0px',
+											},
 										},
 									},
 									layout: {
@@ -138,7 +141,10 @@ export default [
 									style: {
 										spacing: {
 											blockGap: '0.5em',
-											padding: { right: '0px', left: '0px' },
+											padding: {
+												right: '0px',
+												left: '0px',
+											},
 										},
 									},
 									layout: {
@@ -212,7 +218,10 @@ export default [
 											style: {
 												spacing: {
 													blockGap: '0px',
-													padding: { right: '0px', left: '0px' },
+													padding: {
+														right: '0px',
+														left: '0px',
+													},
 												},
 											},
 											layout: {
@@ -228,7 +237,10 @@ export default [
 													style: {
 														spacing: {
 															blockGap: '0.5rem',
-															padding: { right: '0px', left: '0px' },
+															padding: {
+																right: '0px',
+																left: '0px',
+															},
 														},
 													},
 													layout: {

@@ -12,6 +12,7 @@ import { speak } from '@wordpress/a11y';
 import { state as userState, resetUser, VERIFYING, VERIFIED, UNVERIFIED, CODE_EXPIRED } from '@store/user';
 import { state as checkoutState } from '@store/checkout';
 import { isRateLimited } from '../../../../functions/util';
+import { secondsUntil, getBlockedDuplicateSeconds, resendAnchorFrom, RESEND_COOLDOWN_SECONDS, VerificationCodeResponse } from '../../../../functions/verification';
 
 @Component({
   tag: 'sc-customer-login',
@@ -132,7 +133,7 @@ export class ScCustomerLogin {
       this.error = '';
       this.codeResending = true;
       speak(__('Sending code...', 'surecart'), 'assertive');
-      await apiFetch({
+      const response = await apiFetch<VerificationCodeResponse>({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
@@ -141,8 +142,11 @@ export class ScCustomerLogin {
         },
       });
 
-      speak(__('Code sent', 'surecart'), 'assertive');
+      // An in-window request resumes the existing code — don't announce a new email.
+      speak(response?.email_sent === false ? __('A code was already sent to your email.', 'surecart') : __('Code sent', 'surecart'), 'assertive');
       userState.verificationStatus = UNVERIFIED;
+      // Always anchor a fresh window (falls back to default if platform omits it).
+      userState.resendAvailableAt = resendAnchorFrom(response?.resend_available_in);
       this.startCooldown();
     } catch (e) {
       console.error(e);
@@ -162,20 +166,40 @@ export class ScCustomerLogin {
       return;
     }
 
+    const blockedSeconds = getBlockedDuplicateSeconds(error);
+
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
-        this.error = e?.message || __('A code was just sent to you, please wait a minute before resending.', 'surecart');
+        this.error = e?.message || __('A code was recently sent to you. Please wait before requesting another.', 'surecart');
+        // Resume from the platform's reported backoff window (default if absent).
+        userState.resendAvailableAt = resendAnchorFrom(blockedSeconds);
         this.startCooldown();
       }
     });
   }
 
+  /** Seconds left in the cooldown, always derived from the (decaying) anchor timestamp. */
+  private remainingCooldown(): number {
+    return secondsUntil(userState.resendAvailableAt);
+  }
+
   startCooldown() {
     clearInterval(this.cooldownInterval);
-    this.resendCooldown = 60;
 
+    // Guarantee a concrete anchor so the countdown always decays to 0 and the
+    // resend link returns — never a stuck constant.
+    if (userState.resendAvailableAt == null) {
+      userState.resendAvailableAt = resendAnchorFrom(RESEND_COOLDOWN_SECONDS);
+    }
+
+    this.resendCooldown = this.remainingCooldown();
+
+    if (this.resendCooldown <= 0) return;
+
+    // Recompute from the anchor each tick so the timer stays correct even if the
+    // tab was backgrounded (throttled intervals) or the page was reloaded.
     this.cooldownInterval = setInterval(() => {
-      this.resendCooldown--;
+      this.resendCooldown = this.remainingCooldown();
 
       if (this.resendCooldown <= 0) {
         clearInterval(this.cooldownInterval);

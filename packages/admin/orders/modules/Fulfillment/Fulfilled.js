@@ -27,12 +27,14 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	let total = (fulfillment?.fulfillment_items?.data || []).reduce(
-		(accumulator, item) => {
-			return accumulator + item?.quantity;
-		},
-		0
-	);
+	// Older fulfillments may include the bundle container; hide it here too.
+	const fulfillmentItems = (
+		fulfillment?.fulfillment_items?.data || []
+	).filter((item) => !item?.line_item?.is_bundle_parent);
+
+	let total = fulfillmentItems.reduce((accumulator, item) => {
+		return accumulator + item?.quantity;
+	}, 0);
 
 	const cancelFulfillment = async () => {
 		try {
@@ -62,7 +64,7 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 		}
 	};
 
-	const shippable = (fulfillment?.fulfillment_items?.data || []).some(
+	const shippable = fulfillmentItems.some(
 		(item) => item?.line_item?.price?.product?.shipping_enabled
 	);
 
@@ -258,7 +260,7 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 							gap: var(--sc-spacing-large);
 						`}
 					>
-						{(fulfillment?.fulfillment_items?.data || []).map(
+						{fulfillmentItems.map(
 							({ id, line_item, quantity }) => (
 								<ProductLineItem
 									key={id}

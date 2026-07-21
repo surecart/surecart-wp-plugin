@@ -6,7 +6,7 @@ wp_enqueue_style( 'surecart-select' );
 ?>
 
 <label class="sc-form-label" for="sc-select-option-<?php echo esc_attr( sanitize_title( $option->name . '-' . $option_id ) ); ?>">
-	<?php echo wp_kses_post( $option->name ); ?>
+	<?php echo wp_kses_post( $pill_group_label ?? $option->name ); ?>
 </label>
 
 <div class="sc-select-option__wrapper">

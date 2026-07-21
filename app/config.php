@@ -59,6 +59,7 @@ return array(
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\BundleItemsRestServiceProvider::class,
 		\SureCart\Rest\UpsellFunnelRestServiceProvider::class,
 		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,

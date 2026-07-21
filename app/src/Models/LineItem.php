@@ -43,6 +43,63 @@ class LineItem extends Model {
 	}
 
 	/**
+	 * The component line items belonging to this bundle parent (expandable).
+	 *
+	 * @param object|array $value Collection payload.
+	 * @return void
+	 */
+	public function setComponentLineItemsAttribute( $value ) {
+		$this->setCollection( 'component_line_items', $value, self::class );
+	}
+
+	/**
+	 * Per-component variant selections, keyed by component_product_id.
+	 *
+	 * Lives on the bundle parent line item only. Backend uses this to materialize
+	 * component line items with the chosen variant. Stored as a raw map — there's
+	 * no relation hydration here.
+	 *
+	 * @param array $value Map of component_product_id => variant_id.
+	 * @return void
+	 */
+	public function setBundleComponentVariantsAttribute( $value ) {
+		// Coerce both arrays and decoded JSON objects (stdClass) to a map; a
+		// stdClass would otherwise be dropped, losing the component selections.
+		$this->attributes['bundle_component_variants'] = ( is_array( $value ) || is_object( $value ) ) ? (array) $value : array();
+	}
+
+	/**
+	 * Whether this line item is a bundle parent (priced row that owns components).
+	 *
+	 * A parent has `component_line_item: false` AND its price's product is a
+	 * bundle product. Requires the `price.product` expansion to be present;
+	 * otherwise returns false.
+	 *
+	 * @return bool
+	 */
+	public function getIsBundleParentAttribute() {
+		if ( ! empty( $this->component_line_item ) ) {
+			return false;
+		}
+		if ( empty( $this->price ) || ! is_a( $this->price, Price::class ) ) {
+			return false;
+		}
+		$product = $this->price->product ?? null;
+		return ! empty( $product ) && is_a( $product, Product::class ) && ! empty( $product->bundle );
+	}
+
+	/**
+	 * Whether this line item is a bundle component (auto-generated child).
+	 *
+	 * Friendly alias for the API's direct `component_line_item` boolean.
+	 *
+	 * @return bool
+	 */
+	public function getIsBundleComponentAttribute() {
+		return ! empty( $this->component_line_item );
+	}
+
+	/**
 	 * Get the variant attribute.
 	 *
 	 * @return string
@@ -360,7 +417,7 @@ class LineItem extends Model {
 	 */
 	public function getPurchasableStatusDisplayAttribute() {
 		if ( 'purchasable' === $this->purchasable_status ) {
-			return;
+			return '';
 		}
 
 		// translations for purchaseable status.

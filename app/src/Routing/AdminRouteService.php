@@ -17,6 +17,8 @@ class AdminRouteService {
 	protected $page_names = [
 		'product'                 => 'sc-products',
 		'products'                => 'sc-products',
+		'bundle'                  => 'sc-bundles',
+		'bundles'                 => 'sc-bundles',
 		'order'                   => 'sc-orders',
 		'orders'                  => 'sc-orders',
 		'checkout'                => 'sc-checkouts',

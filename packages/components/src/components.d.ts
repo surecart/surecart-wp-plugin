@@ -557,6 +557,17 @@ export namespace Components {
     }
     interface ScCheckoutPaystackPaymentProvider {
     }
+    /**
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
+     */
+    interface ScCheckoutProductBundleComponentVariants {
+        /**
+          * The bundle product (must include bundle_items.component_variants + component_variant_options).
+         */
+        "product": Product;
+    }
     interface ScCheckoutProductPriceVariantSelector {
         /**
           * The label for the price.
@@ -1874,6 +1885,14 @@ export namespace Components {
           * Is the line item removable?
          */
         "removable": boolean;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator": string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems": boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -3168,6 +3187,10 @@ export namespace Components {
          */
         "amount": string;
         /**
+          * Bundle component line items, rendered as a read-only nested list under the main row when this line item is a bundle parent.
+         */
+        "bundleComponents": LineItem[];
+        /**
           * Product display amount
          */
         "displayAmount": string;
@@ -3227,6 +3250,14 @@ export namespace Components {
           * Product scratch display amount
          */
         "scratchDisplayAmount": string;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator": string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems": boolean;
         /**
           * The SKU.
          */
@@ -4951,6 +4982,17 @@ declare global {
     var HTMLScCheckoutPaystackPaymentProviderElement: {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
+    };
+    /**
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
+     */
+    interface HTMLScCheckoutProductBundleComponentVariantsElement extends Components.ScCheckoutProductBundleComponentVariants, HTMLStencilElement {
+    }
+    var HTMLScCheckoutProductBundleComponentVariantsElement: {
+        prototype: HTMLScCheckoutProductBundleComponentVariantsElement;
+        new (): HTMLScCheckoutProductBundleComponentVariantsElement;
     };
     interface HTMLScCheckoutProductPriceVariantSelectorElement extends Components.ScCheckoutProductPriceVariantSelector, HTMLStencilElement {
     }
@@ -7006,6 +7048,7 @@ declare global {
         "sc-checkout-geo-permission": HTMLScCheckoutGeoPermissionElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-product-bundle-component-variants": HTMLScCheckoutProductBundleComponentVariantsElement;
         "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-razorpay-payment-provider": HTMLScCheckoutRazorpayPaymentProviderElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
@@ -7796,6 +7839,17 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    /**
+     * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+     * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+     * selection straight into the bundle line item's `bundle_component_variants`.
+     */
+    interface ScCheckoutProductBundleComponentVariants {
+        /**
+          * The bundle product (must include bundle_items.component_variants + component_variant_options).
+         */
+        "product"?: Product;
     }
     interface ScCheckoutProductPriceVariantSelector {
         /**
@@ -9275,6 +9329,14 @@ declare namespace LocalJSX {
           * Is the line item removable?
          */
         "removable"?: boolean;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator"?: string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems"?: boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -10625,6 +10687,10 @@ declare namespace LocalJSX {
          */
         "amount"?: string;
         /**
+          * Bundle component line items, rendered as a read-only nested list under the main row when this line item is a bundle parent.
+         */
+        "bundleComponents"?: LineItem[];
+        /**
           * Product display amount
          */
         "displayAmount"?: string;
@@ -10692,6 +10758,14 @@ declare namespace LocalJSX {
           * Product scratch display amount
          */
         "scratchDisplayAmount"?: string;
+        /**
+          * Separator between a bundle component's name and its variant options.
+         */
+        "separator"?: string;
+        /**
+          * Show every bundle component (default), or only those with a selected variant when set to `false`.
+         */
+        "showAllBundleItems"?: boolean;
         /**
           * The SKU.
          */
@@ -11955,6 +12029,7 @@ declare namespace LocalJSX {
         "sc-checkout-geo-permission": ScCheckoutGeoPermission;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-product-bundle-component-variants": ScCheckoutProductBundleComponentVariants;
         "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-razorpay-payment-provider": ScCheckoutRazorpayPaymentProvider;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
@@ -12208,6 +12283,12 @@ declare module "@stencil/core" {
             "sc-checkout-geo-permission": LocalJSX.ScCheckoutGeoPermission & JSXBase.HTMLAttributes<HTMLScCheckoutGeoPermissionElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            /**
+             * Checkout-side picker for bundle component variants. Mirrors the PDP bundle
+             * picker (the scope-aware `surecart/product-variant-pills` block) but writes the
+             * selection straight into the bundle line item's `bundle_component_variants`.
+             */
+            "sc-checkout-product-bundle-component-variants": LocalJSX.ScCheckoutProductBundleComponentVariants & JSXBase.HTMLAttributes<HTMLScCheckoutProductBundleComponentVariantsElement>;
             "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
             "sc-checkout-razorpay-payment-provider": LocalJSX.ScCheckoutRazorpayPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutRazorpayPaymentProviderElement>;
             /**

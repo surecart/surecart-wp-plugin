@@ -1,3 +1,59 @@
 .wp-block-surecart-cart-line-item-variant {
-    color: var(--sc-input-help-text-color);
+	color: var(--sc-input-help-text-color);
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	&[hidden] {
+		display: none !important;
+	}
+
+	.sc-cart-line-item-variant {
+		&__option[hidden],
+		&__bundle-item[hidden] {
+			display: none !important;
+		}
+
+		// Inline text flow (not flex) so a long name wraps like a paragraph instead of orphaning the "N ×" prefix on its own line.
+		// Spacing between spans comes from the markup whitespace.
+		&__bundle-item {
+			display: block;
+		}
+
+		// Quantity prefix ("2 ×") and name share the darker label color.
+		&__qty,
+		&__name {
+			color: var(
+				--sc-cart-main-label-text-color,
+				var(--sc-input-label-color)
+			);
+		}
+
+		&__qty:empty {
+			display: none;
+		}
+
+		// Variant options ("· Red · Large") stay muted (block's help-text color).
+		&__variant:empty {
+			display: none;
+		}
+	}
+}
+
+// When a text color is set on this block or its details container, let it cascade over the defaults above.
+.has-text-color .wp-block-surecart-cart-line-item-variant:not(.has-text-color) {
+	color: inherit;
+}
+
+.wp-block-surecart-cart-line-item-variant.has-text-color
+	.sc-cart-line-item-variant__qty,
+.wp-block-surecart-cart-line-item-variant.has-text-color
+	.sc-cart-line-item-variant__name,
+.has-text-color
+	.wp-block-surecart-cart-line-item-variant
+	.sc-cart-line-item-variant__qty,
+.has-text-color
+	.wp-block-surecart-cart-line-item-variant
+	.sc-cart-line-item-variant__name {
+	color: inherit;
 }

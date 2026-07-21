@@ -17,6 +17,13 @@ class VerificationCodeController extends RestController {
 	protected $class = VerificationCode::class;
 
 	/**
+	 * Transient key prefix for the per-email resend window.
+	 *
+	 * @var string
+	 */
+	const RESEND_TRANSIENT_PREFIX = 'sc_vcode_resend_';
+
+	/**
 	 * Create model.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -36,11 +43,144 @@ class VerificationCodeController extends RestController {
 			return new \WP_Error( 'user_not_found', __( 'The user could not be found.', 'surecart' ), [ 'status' => 404 ] );
 		}
 
-		return $model->where( $request->get_query_params() )->create(
+		$email = $user->user_email;
+		$mode  = $request->get_param( 'checkout_mode' );
+
+		// A code was already sent and we're still inside the platform's resend
+		// window. Resume that countdown instead of asking the platform again —
+		// this is what stops duplicate verification emails on page reload, tab
+		// switch, or re-entering the same email via "Change".
+		$available_at = $this->getResendWindow( $email, $mode );
+		if ( $available_at ) {
+			return new VerificationCode(
+				[
+					'email'               => $email,
+					'email_sent'          => false,
+					'resend_available_at' => $available_at,
+					'resend_available_in' => max( 0, $available_at - time() ),
+				]
+			);
+		}
+
+		$created = $model->where( $request->get_query_params() )->create(
 			[
-				'email' => $user->user_email,
+				'email' => $email,
 			]
 		);
+
+		if ( is_wp_error( $created ) ) {
+			// Platform blocked the send as a duplicate. Mirror its backoff window
+			// locally so the UI countdown stays accurate on the next request.
+			$this->storeResendWindowFromError( $created, $email, $mode );
+			return $created;
+		}
+
+		// Persist the platform-provided window so a reload or tab switch can
+		// resume the countdown without triggering another send.
+		$available_at = $this->normalizeToTimestamp( $created->resend_available_at ?? null );
+		if ( $available_at ) {
+			$this->setResendWindow( $email, $mode, $available_at );
+			$created->resend_available_in = max( 0, $available_at - time() );
+		}
+		$created->email_sent = true;
+
+		return $created;
+	}
+
+	/**
+	 * Build the transient key for an email + checkout mode.
+	 *
+	 * @param string $email Normalized against case so the key is stable.
+	 * @param string $mode  Checkout mode (live/test) to avoid cross-mode collisions.
+	 *
+	 * @return string
+	 */
+	public static function resendTransientKey( $email, $mode ) {
+		return self::RESEND_TRANSIENT_PREFIX . md5( strtolower( $email ) . '|' . ( $mode ?: 'live' ) );
+	}
+
+	/**
+	 * Get the stored resend-available timestamp if it is still in the future.
+	 *
+	 * @param string $email Email address.
+	 * @param string $mode  Checkout mode.
+	 *
+	 * @return int|false Unix timestamp, or false when no active window.
+	 */
+	protected function getResendWindow( $email, $mode ) {
+		$available_at = (int) get_transient( self::resendTransientKey( $email, $mode ) );
+		return $available_at > time() ? $available_at : false;
+	}
+
+	/**
+	 * Store the resend-available timestamp, expiring the transient when it lapses.
+	 *
+	 * @param string $email        Email address.
+	 * @param string $mode         Checkout mode.
+	 * @param int    $available_at Unix timestamp the next resend is allowed.
+	 *
+	 * @return void
+	 */
+	protected function setResendWindow( $email, $mode, $available_at ) {
+		$ttl = $available_at - time();
+		if ( $ttl <= 0 ) {
+			return;
+		}
+		set_transient( self::resendTransientKey( $email, $mode ), $available_at, $ttl );
+	}
+
+	/**
+	 * Clear the resend window for an email across both checkout modes.
+	 *
+	 * @param string $email Email address.
+	 *
+	 * @return void
+	 */
+	protected function clearResendWindow( $email ) {
+		foreach ( [ 'live', 'test' ] as $mode ) {
+			delete_transient( self::resendTransientKey( $email, $mode ) );
+		}
+	}
+
+	/**
+	 * Pull the backoff window out of a platform "blocked duplicate" error and store it.
+	 *
+	 * @param \WP_Error $error The translated platform error.
+	 * @param string    $email Email address.
+	 * @param string    $mode  Checkout mode.
+	 *
+	 * @return void
+	 */
+	protected function storeResendWindowFromError( $error, $email, $mode ) {
+		foreach ( $error->get_error_codes() as $code ) {
+			if ( 'verification_code.email.blocked_duplicate' !== $code ) {
+				continue;
+			}
+			$data    = $error->get_error_data( $code );
+			$seconds = (int) ( $data['options']['seconds'] ?? 0 );
+			if ( $seconds > 0 ) {
+				$this->setResendWindow( $email, $mode, time() + $seconds );
+			}
+			return;
+		}
+	}
+
+	/**
+	 * Normalize a platform timestamp (unix int or ISO 8601 string) to a unix timestamp.
+	 *
+	 * @param mixed $value Raw value from the platform.
+	 *
+	 * @return int|null
+	 */
+	protected function normalizeToTimestamp( $value ) {
+		if ( empty( $value ) ) {
+			return null;
+		}
+		if ( is_numeric( $value ) ) {
+			return (int) $value;
+		}
+		$parsed = strtotime( (string) $value );
+		return $parsed ? $parsed : null;
 	}
 
 	/**
@@ -85,6 +225,13 @@ class VerificationCodeController extends RestController {
 		if ( empty( $verify->verified ) ) {
 			return new \WP_Error( 'invalid_code', __( 'Invalid verification code', 'surecart' ), [ 'status' => 400 ] );
 		}
+
+		// The code was consumed — clear the local resend window so a later
+		// request gets a fresh code instead of resuming a countdown for a code
+		// that no longer exists. Verify requests don't carry checkout_mode, so
+		// clear both modes; if a genuine platform window remains, the next
+		// create re-stores it from the blocked_duplicate error.
+		$this->clearResendWindow( $user->user_email );
 
 		// get the user based on the login value.
 		$user = $this->getUser( $request->get_param( 'login' ) );
