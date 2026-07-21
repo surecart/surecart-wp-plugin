@@ -14,9 +14,9 @@
 
 ## Shadow Parts
 
-| Part     | Description |
-| -------- | ----------- |
-| `"base"` |             |
+| Part     | Description        |
+| -------- | ------------------ |
+| `"base"` | The note container |
 
 
 ## Dependencies

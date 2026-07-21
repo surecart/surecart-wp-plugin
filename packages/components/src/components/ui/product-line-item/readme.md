@@ -46,12 +46,14 @@
 | Part                             | Description                                               |
 | -------------------------------- | --------------------------------------------------------- |
 | `"base"`                         | The component base                                        |
-| `"component"`                    | A single bundle component row                             |
 | `"description"`                  |                                                           |
 | `"details"`                      | The collapsible details region (bundle components + note) |
+| `"details__component"`           | A single bundle component row                             |
 | `"details__toggle"`              | The details expand/collapse toggle button                 |
+| `"details__variant"`             | The variant options within a bundle component row         |
 | `"image"`                        | The product image                                         |
 | `"line-item__price-description"` | The line item price description                           |
+| `"note"`                         | The line item note                                        |
 | `"placeholder__image"`           |                                                           |
 | `"price"`                        | The product price                                         |
 | `"price__amount"`                | The product price amount                                  |

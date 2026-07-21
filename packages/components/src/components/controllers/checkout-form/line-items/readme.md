@@ -20,7 +20,12 @@
 | `"base"`                           | The component base                                   |
 | `"line-item"`                      | The line item                                        |
 | `"line-item__description"`         | The line item description (variant, price name, SKU) |
+| `"line-item__details"`             | The collapsible details region (bundle components)   |
+| `"line-item__details-component"`   | A single bundle component row                        |
+| `"line-item__details-toggle"`      | The details expand/collapse toggle button            |
+| `"line-item__details-variant"`     | The variant options within a bundle component row    |
 | `"line-item__image"`               | The line item image                                  |
+| `"line-item__note"`                | The line item note                                   |
 | `"line-item__price"`               | The line item price                                  |
 | `"line-item__price-amount"`        | The line item price amount                           |
 | `"line-item__price-description"`   | The line item price description                      |
