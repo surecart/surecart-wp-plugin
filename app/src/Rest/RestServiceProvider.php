@@ -17,6 +17,18 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	protected $converts_currency = false;
 
 	/**
+	 * Whether index responses get each item filtered by schema context.
+	 *
+	 * Off by default — most providers declared edit-only schema fields long
+	 * before lists were ever context-filtered, so enforcing this globally
+	 * would silently strip untested view-context list responses. Hardened
+	 * catalog endpoints opt in.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = false;
+
+	/**
 	 * Mark specific properties that need additional permissions checks
 	 * before modifying. We don't want customers being able to modify these.
 	 *
@@ -236,6 +248,28 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				return $model;
 			}
 
+			// index responses wrap a list of models the schema filter can't reach — filter each item.
+			if ( $model instanceof \WP_REST_Response ) {
+				if ( $this->filters_list_items && 'edit' !== $context && is_array( $model->get_data() ) ) {
+					$model->set_data(
+						array_map(
+							function ( $item ) use ( $context ) {
+								if ( ! is_a( $item, Model::class ) ) {
+									return $item;
+								}
+								// remove wp_created_by to prevent user ids from being leaked.
+								if ( ! empty( $item->metadata->wp_created_by ) ) {
+									unset( $item->metadata->wp_created_by );
+								}
+								return $this->filter_response_by_context( $item->toArray(), $context );
+							},
+							$model->get_data()
+						)
+					);
+				}
+				return $model;
+			}
+
 			// remove wp_created_by to prevent user ids from being leaked.
 			if ( 'edit' !== $context && ! empty( $model->metadata->wp_created_by ) ) {
 				unset( $model->metadata->wp_created_by );
@@ -267,6 +301,32 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Reject edit-context reads from callers without the capability.
+	 *
+	 * @param \WP_REST_Request $request    Full details about the request.
+	 * @param string|array     $capability Capability that unlocks edit context. Any one of an array is enough.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function forbidEditContextWithout( $request, $capability ) {
+		if ( 'edit' !== $request['context'] ) {
+			return true;
+		}
+
+		foreach ( (array) $capability as $cap ) {
+			if ( current_user_can( $cap ) ) {
+				return true;
+			}
+		}
+
+		return new \WP_Error(
+			'rest_forbidden_context',
+			__( 'Sorry, you are not allowed to edit this resource.', 'surecart' ),
+			[ 'status' => rest_authorization_required_code() ]
+		);
 	}
 
 	/**

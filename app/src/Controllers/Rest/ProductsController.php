@@ -2,18 +2,55 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Concerns\RestrictsAnonymousReads;
 use SureCart\Models\Product;
 
 /**
  * Handle Product requests through the REST API
  */
 class ProductsController extends RestController {
+	use RestrictsAnonymousReads;
+
 	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
 	 */
 	protected $class = Product::class;
+
+	/**
+	 * Capability that unlocks unrestricted reads.
+	 *
+	 * @var string
+	 */
+	protected $edit_capability = 'edit_sc_products';
+
+	/**
+	 * Expands safe to forward for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_expands = [ 'prices', 'variants', 'variant_options', 'product_medias', 'product_media.media', 'product_collections', 'featured_product_media' ];
+
+	/**
+	 * Query filters forced for anonymous callers.
+	 *
+	 * Archived products stay readable on find — grandfathered subscriptions
+	 * reference them when switching plans on the customer dashboard.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_scope = [
+		'archived' => false,
+		'status'   => [ 'published' ],
+	];
+
+	/**
+	 * Only published products are visible on find for anonymous callers.
+	 *
+	 * @var array
+	 */
+	protected $anonymous_visible_statuses = [ 'published' ];
 
 	/**
 	 * Resource slug for the dynamic list filter hooks
@@ -33,7 +70,7 @@ class ProductsController extends RestController {
 	const EDIT_EXPANDS = [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections', 'commission_structure', 'product_medias', 'product_media.media' ];
 
 	/**
-	 * Run some middleware to run before request.
+	 * Controller-specific middleware hook, run after the anonymous restriction.
 	 *
 	 * Expand contract for edit-context/write requests:
 	 * - Collection GET with `expand_mode=replace`: the client's `expand` is used
@@ -49,7 +86,7 @@ class ProductsController extends RestController {
 	 *
 	 * @return \SureCart\Models\Model
 	 */
-	protected function middleware( $class, \WP_REST_Request $request ) {
+	protected function catalogMiddleware( $class, \WP_REST_Request $request ) {
 		$is_write      = in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ], true );
 		$client_expand = array_values( array_unique( array_filter( (array) ( $request['expand'] ?? [] ) ) ) );
 
@@ -65,7 +102,7 @@ class ProductsController extends RestController {
 			);
 		}
 
-		return parent::middleware( $class, $request );
+		return $class;
 	}
 
 	/**

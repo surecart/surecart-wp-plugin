@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Concerns\StripsPrivateCatalogFields;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\PricesController;
 
@@ -9,6 +10,7 @@ use SureCart\Controllers\Rest\PricesController;
  * Service provider for Price Rest Requests
  */
 class PriceRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+	use StripsPrivateCatalogFields;
 
 	/**
 	 * Endpoint.
@@ -23,6 +25,13 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @var string
 	 */
 	protected $controller = PricesController::class;
+
+	/**
+	 * Filter index list items by schema context.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
 
 	/**
 	 * Register Additional REST Routes
@@ -60,16 +69,31 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'      => [
+				'id'           => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit', 'embed' ),
 					'readonly'    => true,
 				],
-				'content' => array(
+				'content'      => array(
 					'description' => esc_html__( 'The content for the object.', 'surecart' ),
 					'type'        => 'string',
 				),
+				'metadata'     => [
+					'description' => esc_html__( 'Set of key-value pairs for custom data.', 'surecart' ),
+					'type'        => 'object',
+					'context'     => [ 'edit' ],
+				],
+				'archived_at'  => [
+					'description' => esc_html__( 'Archived at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
+				'discarded_at' => [
+					'description' => esc_html__( 'Discarded at timestamp.', 'surecart' ),
+					'type'        => 'integer',
+					'context'     => [ 'edit' ],
+				],
 			],
 		];
 
@@ -129,6 +153,11 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		return true;
 	}
 
@@ -139,6 +168,11 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_prices' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		if ( $request['archived'] ) {
 			return current_user_can( 'edit_sc_prices' );
 		}
@@ -174,5 +208,39 @@ class PriceRestServiceProvider extends RestServiceProvider implements RestServic
 	 */
 	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'delete_sc_prices' );
+	}
+
+	/**
+	 * Strip private product data from expanded products in view/embed context.
+	 *
+	 * @param \SureCart\Models\Price|array $model Price model or response data.
+	 * @param string                       $context The context of the request.
+	 *
+	 * @return array The filtered response.
+	 */
+	public function filter_response_by_context( $model, $context ) {
+		$response = parent::filter_response_by_context( $model, $context );
+
+		if ( 'edit' === $context || ! is_array( $response ) || empty( $response['id'] ) ) {
+			return $response;
+		}
+
+		if ( ! empty( $response['product'] ) && is_array( $response['product'] ) ) {
+			// draft product content must not leak through the expand — collapse to the id.
+			// a missing status counts as published: archived products keep their name for
+			// grandfathered plans on customer dashboards.
+			if ( 'published' !== ( $response['product']['status'] ?? 'published' ) ) {
+				// keep the key two-shaped: id string when collapsed, object when published.
+				if ( empty( $response['product']['id'] ) ) {
+					unset( $response['product'] );
+				} else {
+					$response['product'] = $response['product']['id'];
+				}
+			} else {
+				$response['product'] = $this->stripPrivateProductFields( $response['product'] );
+			}
+		}
+
+		return $response;
 	}
 }

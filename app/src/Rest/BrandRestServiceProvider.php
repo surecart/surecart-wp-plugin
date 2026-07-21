@@ -118,12 +118,12 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				'email'            => [
 					'description' => esc_html__( 'The email address that will be shown to customers for support, on invoices, etc.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'edit' ],
 				],
 				'phone'            => [
 					'description' => esc_html__( 'The phone number that will be shown to customers for support, on invoices, etc.', 'surecart' ),
 					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'edit' ],
 				],
 				'website'          => [
 					'description' => esc_html__( 'The website that will be shown to customers for support, on invoices, etc.', 'surecart' ),
@@ -159,7 +159,7 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 				'address'          => [
 					'description' => esc_html__( 'The associated address.', 'surecart' ),
 					'type'        => 'object',
-					'context'     => [ 'view', 'edit' ],
+					'context'     => [ 'edit' ],
 				],
 				'statement_memo'   => [
 					'description' => esc_html__( 'The default memo for invoices and receipts.', 'surecart' ),
@@ -184,6 +184,12 @@ class BrandRestServiceProvider extends RestServiceProvider implements RestServic
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
+		// block-editor users need the edit-context read for the store logo block.
+		$check = $this->forbidEditContextWithout( $request, [ 'edit_posts', 'manage_options' ] );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		return true;
 	}
 
