@@ -21,6 +21,8 @@ interface Store {
   name: string;
   avatarUrl: string;
   verificationStatus: 'code_sent' | 'verifying' | 'verified' | 'unverified' | 'code_expired' | null;
+  /** Absolute client-side timestamp (ms) when the next code resend is allowed. Anchors the cooldown across reload, tab switch, and "Change". */
+  resendAvailableAt: number | null;
 }
 
 const { state, onChange, dispose } = createStore<Store>({
@@ -29,6 +31,7 @@ const { state, onChange, dispose } = createStore<Store>({
   name: '',
   avatarUrl: '',
   verificationStatus: null,
+  resendAvailableAt: null,
   ...user,
 });
 
@@ -38,6 +41,7 @@ export const resetUser = () => {
   state.name = '';
   state.avatarUrl = '';
   state.verificationStatus = null;
+  state.resendAvailableAt = null;
 };
 
 export default state;
