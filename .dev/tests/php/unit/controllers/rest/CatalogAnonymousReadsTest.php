@@ -84,6 +84,7 @@ class CatalogAnonymousReadsTest extends SureCartUnitTestCase {
 					public function findByModelId( $id ) {
 						return null;
 					}
+					public function primeByModelIds( $model_ids ) {}
 				};
 			}
 		);
