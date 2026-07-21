@@ -1,0 +1,495 @@
+$padding-size: 20px;
+
+body:has(.sc-dataview-list-wrapper) {
+	overflow: hidden;
+}
+
+// Workspace shell — desktop only; JS suppresses it on mobile.
+@media screen and (min-width: 783px) {
+	body.is-fullscreen-mode.sc-enhanced-view {
+		#sc-admin-header,
+		#wpfooter {
+			display: none !important;
+		}
+
+		overflow: hidden;
+		height: 100vh;
+
+		#wpbody-content {
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+
+		.wrap {
+			margin: 0;
+			padding: 0;
+		}
+
+		.sc-dataview-list-wrapper[data-enhanced-view="on"] {
+			height: 100vh;
+		}
+	}
+
+	html:has(body.is-fullscreen-mode.sc-enhanced-view) {
+		margin-top: 0 !important;
+		height: 100vh;
+		overflow: hidden;
+	}
+}
+
+.sc-dataview-list-wrapper {
+	// Sticky thead offset — pages can override per layout for taller headers.
+	--sc-list-header-height: 72px;
+
+	.dataviews-view-table {
+		// Always show selection checkboxes (upstream defaults to hover-reveal).
+		tr td .components-checkbox-control__input-container,
+		thead th .components-checkbox-control__input-container,
+		tr
+			.components-checkbox-control__input.components-checkbox-control__input,
+		thead
+			.components-checkbox-control__input.components-checkbox-control__input {
+			opacity: 1;
+		}
+	}
+
+	.dataviews-view-table {
+		width: 100%;
+
+		th,
+		td {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		tr {
+			td,
+			th {
+				&:first-child {
+					padding-left: $padding-size;
+				}
+
+				&:last-child {
+					padding-right: $padding-size;
+				}
+			}
+		}
+	}
+
+	.dataviews__view-actions,
+	.dataviews-footer,
+	.dataviews-filters__container {
+		padding-left: $padding-size;
+		padding-right: $padding-size;
+	}
+
+	.dataviews-wrapper {
+		--wp-components-color-gray-100: var(--sc-color-brand-main-background);
+		border-radius: 8px;
+	}
+
+	.dataviews-view-table tr.is-hovered {
+		background-color: var(--sc-color-brand-main-background);
+	}
+
+	td.dataviews-view-table__checkbox-column
+		.dataviews-view-table__cell-content-wrapper {
+		min-height: 43px;
+	}
+
+	// Hide isPrimary action icons until row hover/focus.
+	.dataviews-view-table__row
+		.dataviews-item-actions
+		.components-button:not(.dataviews-all-actions-button) {
+		visibility: hidden;
+	}
+
+	// Size buttons to fit the SVG — upstream lets icons overflow narrow buttons.
+	.dataviews-view-table .dataviews-item-actions {
+		gap: 8px;
+
+		.components-button:not(.dataviews-all-actions-button) {
+			min-width: 24px;
+			width: 24px;
+			padding: 0;
+
+			svg {
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
+	.dataviews-view-table__row:hover .dataviews-item-actions .components-button,
+	.dataviews-view-table__row:focus-within
+		.dataviews-item-actions
+		.components-button {
+		visibility: visible;
+	}
+
+	@media (hover: none) {
+		.dataviews-view-table__row .dataviews-item-actions .components-button {
+			visibility: visible;
+		}
+	}
+
+	.dataviews-footer {
+		min-height: 48px;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+
+	// Room for 3 digits in the page-number select.
+	.dataviews-pagination__page-select .components-select-control__input {
+		width: auto;
+		line-height: 1;
+	}
+
+	// The table stays in normal flow; the WP content column (`#wpcontent`) is
+	// the scroll surface in off-mode (see below). That gives the natural
+	// travel-and-catch on vertical scroll and keeps horizontal scroll beside
+	// the admin menu instead of dragging the whole page.
+	.dataviews-wrapper {
+		overflow: visible;
+		height: auto;
+		min-height: calc(100vh - 130px);
+	}
+
+	// Inner-scroll only inside the enhanced fullscreen canvas, where a
+	// self-contained scroll surface fits the fixed-frame UX. Height comes
+	// from `useHorizontalScrollState` since CSS can't measure the wrapper's
+	// natural top (varies with admin bar, notices, etc.).
+	&[data-enhanced-view="on"]
+		.dataviews-wrapper[data-horizontal-scroll="true"] {
+		overflow: auto;
+		height: var(
+			--sc-dvw-inner-scroll-height,
+			calc(100vh - 32px - var(--sc-list-header-height))
+		);
+		min-height: 0;
+
+		.dataviews__view-actions {
+			background: #fff;
+		}
+
+		.dataviews-view-table thead th {
+			top: 0;
+		}
+
+		.dataviews-footer {
+			position: sticky;
+			bottom: 16px;
+			left: 0;
+			z-index: 10;
+			background: #fff;
+		}
+	}
+
+	// Hide upstream's `--stuck` actions-column divider — it can render without
+	// real overflow due to subpixel column widths, and the column carries its
+	// own background so content never shows through.
+	th.dataviews-view-table__actions-column--stuck::after,
+	td.dataviews-view-table__actions-column--stuck::after {
+		display: none;
+	}
+
+	// Full-width white so the gray body can't show through on horizontal
+	// scroll (off-mode desktop caps it to the scrollport — see below).
+	// `!important` beats upstream's inline `width: fit-content`.
+	.dataviews-filters__container {
+		width: 100% !important;
+		box-sizing: border-box;
+		background: #fff;
+	}
+
+	// Override the global `.sc-list-header { margin: 20px ... }` so the sticky
+	// background spans the full card width.
+	.sc-list-header {
+		margin: 0 0 -1px 0;
+		padding: 16px 20px;
+		border-bottom: 1px solid #f0f0f0;
+		position: sticky;
+		top: 0;
+		z-index: 11;
+		background: #fff;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+	}
+
+	// Stacked inset+outset shadows — a single 1px hairline rasterizes to <1px
+	// alpha on sticky cells at fractional y. Stacking guarantees one paints.
+	.dataviews-view-table thead th {
+		position: sticky;
+		top: var(--sc-list-header-height);
+		z-index: 9;
+		background: #fff;
+		box-shadow: inset 0 1px 0 #f0f0f0, 0 -1px 0 #f0f0f0,
+			inset 0 -1px 0 #f0f0f0, 0 1px 0 #f0f0f0;
+	}
+
+	// Upstream's per-tr `border-top` would double the thead's bottom divider.
+	.dataviews-view-table tbody tr:first-child {
+		border-top: 0;
+	}
+
+	.dataviews-bulk-actions-footer__container {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.dataviews-loading,
+	.dataviews-no-results {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 200px;
+	}
+
+	// Refetches over stale rows use our dimmed overlay (DataViewListLayout);
+	// upstream's extra under-table spinner would double up.
+	.dataviews-loading-more {
+		display: none;
+	}
+}
+
+.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+	background: #fff;
+	margin: -10px -20px;
+	box-sizing: border-box;
+	// No top border here — this wrapper scrolls with the table, so the line
+	// would slide off. It lives on `#sc-admin-header` instead (below).
+}
+
+// Off-mode (desktop): make the WP content column the scroll surface. Vertical
+// scroll then gives the natural travel-and-catch and the footer is reached at
+// the end, while horizontal scroll stays contained beside the fixed admin menu
+// rather than dragging the whole page under it. `#wpcontent`'s top is always
+// the admin-bar bottom, so the height is a fixed calc — no JS measurement.
+// Sticky offsets stay at their base values (`.sc-list-header` top:0, thead
+// top:--sc-list-header-height) because they are now relative to `#wpcontent`,
+// which already sits below the admin bar. Mobile keeps page-scroll (below).
+@media screen and (min-width: 783px) {
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpcontent {
+		overflow: auto;
+		height: calc(100vh - 32px);
+		// Sticky insets resolve against the scroller's CONTENT edge, so any
+		// scroller padding would displace every pinned bar by that much.
+		// Keep the 20px gutter on #wpbody-content (not a scroller) instead.
+		padding-inline-start: 0;
+	}
+
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpbody-content {
+		padding-inline-start: 20px;
+		padding-bottom: 0;
+		// WP core gives it `width: 100%` in content-box sizing — without
+		// this the padding widens the box by 20px instead of insetting it.
+		box-sizing: border-box;
+	}
+
+	// WP core's `.wrap` margin-inline (2px/20px) would offset the card from
+	// the scrollport edge — the bars would twitch 2px when sticky engages
+	// and the page would gain 2px of phantom horizontal overflow.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		.wrap:has(> .sc-dataview-list-wrapper[data-enhanced-view="off"]) {
+		margin-inline: 0;
+	}
+
+	// Divider below the breadcrumb. It's here (not the list wrapper) because the
+	// admin header stays pinned on scroll, so the line keeps its full width.
+	// The pin itself is plain sticky: as a direct child of the `#wpcontent`
+	// scroller, its sticky travel spans the full scrollable overflow.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#sc-admin-header {
+		border-bottom: 1px solid #f0f0f0;
+		position: sticky;
+		// Sticky traps descendants (the view-toggle tooltip) in this stacking
+		// context at level 0, letting `.sc-list-header` (z 11) slice them.
+		// The two bars never overlap on scroll, so painting above is safe.
+		z-index: 12;
+		inset-inline-start: 0;
+		// The partial's width/margin compensate for #wpcontent's padding,
+		// which is removed here.
+		width: 100%;
+		margin-inline-start: 0;
+	}
+
+	// Overlay scrollbars (Chromium's default on newer OSes) float over the
+	// scrollport, where the sticky footer sits pinned — the footer then wins
+	// pointer hit-testing and the horizontal scrollbar can't be dragged.
+	// Styling the scrollbar opts Chromium out of overlay mode, giving it
+	// reserved space below the footer where nothing can cover it.
+	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
+			.is-fullscreen-mode
+		)
+		#wpcontent {
+		&::-webkit-scrollbar {
+			width: 12px;
+			height: 12px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(0, 0, 0, 0.3);
+			border-radius: 6px;
+			// Transparent border + padding-box clip fakes a track inset so the
+			// thumb doesn't touch the content edge.
+			border: 3px solid transparent;
+			background-clip: padding-box;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+
+	// Horizontal pinning for the in-app bars, compositor-native. Sticky can
+	// only travel within its containing block, so grow the wrappers to the
+	// full scroll width, then cap each bar back to the visible scrollport
+	// (--sc-dvw-viewport-w, set by `useHorizontalScrollState` on resize only).
+	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+		width: max-content;
+		// 100% = scrollport minus #wpbody-content's one-sided 20px gutter
+		// (see above); +20px plus the -20px side margins land the card edges
+		// exactly on the scrollport edges (both directions).
+		min-width: calc(100% + 20px);
+
+		.dataviews-wrapper {
+			width: max-content;
+			min-width: 100%;
+			// Upstream's `container: inline-size` containment would compute
+			// max-content as if the wrapper were empty. Its @container queries
+			// are all ≤560px — never matched at desktop widths — so safe.
+			container: none;
+		}
+
+		// view-actions/filters/footer already carry upstream's
+		// `position: sticky; left: 0` (flipped by the RTL vendor stylesheet);
+		// the page header has sticky top only, so add the inline pin.
+		.sc-list-header {
+			inset-inline-start: 0;
+		}
+
+		.sc-list-header,
+		.dataviews__view-actions,
+		.dataviews-footer {
+			// Upstream footer lacks border-box, and width is explicit now.
+			box-sizing: border-box;
+			width: var(--sc-dvw-viewport-w, 100%);
+		}
+
+		.dataviews-filters__container {
+			width: var(--sc-dvw-viewport-w, 100%) !important;
+		}
+	}
+}
+
+// Action label rendering — pseudo lives outside the wrapper so it reaches
+// the menu portal at body level. See `dataview-list/iconLabel.js`.
+.dataviews-action-icon {
+	display: none;
+}
+.dataviews-item-actions .components-button:not(.dataviews-all-actions-button) {
+	.dataviews-action-icon {
+		display: inline-flex;
+	}
+	.dataviews-action-label {
+		display: none;
+	}
+}
+
+// Mobile (≤782px). Workspace is suppressed in JS; off-mode layout takes over.
+@media screen and (max-width: 782px) {
+	.sc-dataview-list-wrapper[data-enhanced-view="off"] {
+		margin: -10px -10px;
+
+		.sc-list-header {
+			position: static;
+			padding: 12px 16px;
+		}
+
+		.sc-list-header .wp-heading-inline {
+			font-size: 18px;
+		}
+
+		.dataviews-view-table thead th {
+			top: 46px;
+		}
+	}
+
+	.sc-dataview-list-wrapper .dataviews-wrapper {
+		min-height: auto;
+		overflow-x: auto;
+	}
+
+	.sc-dataview-list-wrapper .dataviews-view-table {
+		width: max-content;
+		min-width: 100%;
+	}
+
+	.sc-dataview-list-wrapper
+		.dataviews-view-table__row
+		.dataviews-item-actions
+		.components-button {
+		visibility: visible;
+	}
+}
+
+// Outside the wrapper — WP Popover renders as a portal at body level.
+.dataviews-view-config {
+	width: 320px;
+	max-width: 320px;
+}
+
+.sc-list-header {
+	padding-bottom: 0;
+	margin: 20px 20px 0 20px;
+
+	.sc-list-header__bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		flex-wrap: wrap;
+		// Keep the bar tall enough for `--sc-list-header-height: 72px`
+		// even when no action button is present (e.g. Reviews).
+		min-height: 40px;
+	}
+
+	.wp-heading-inline {
+		margin-right: 0;
+		padding: 0;
+	}
+
+	.sc-list-header__action {
+		flex-shrink: 0;
+	}
+
+	.wp-header-end {
+		display: none;
+	}
+}
+
+// Astra et al. leak oversized modal close buttons into WP admin — restore.
+body[class*="surecart_page_"] {
+	.components-modal__header .components-button.has-icon {
+		width: 32px;
+		height: 32px;
+		min-width: 32px;
+		min-height: 32px;
+	}
+}

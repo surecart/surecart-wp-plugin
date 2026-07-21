@@ -125,7 +125,7 @@ export default ({
 						{sprintf(
 							__(
 								'This will automatically pause the subscription on %s. Please choose a restoration date.',
-								'surecart '
+								'surecart'
 							),
 							currentPeriodEndAtDate
 						)}

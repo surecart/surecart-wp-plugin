@@ -9,7 +9,7 @@ import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 
-export default ({ id, onCreateProduct }) => {
+export default ({ id, onCreateProduct, navigation }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default ({ id, onCreateProduct }) => {
 				throw {
 					message: __(
 						'Could not create product. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}
@@ -54,7 +54,14 @@ export default ({ id, onCreateProduct }) => {
 			</ScAlert>
 
 			<Box title={__('Create New Product', 'surecart')}>
-				<ScForm onScSubmit={onSubmit}>
+				<ScForm
+					onScSubmit={onSubmit}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							onSubmit(e);
+						}
+					}}
+				>
 					<div
 						css={css`
 							display: grid;
@@ -65,9 +72,7 @@ export default ({ id, onCreateProduct }) => {
 							label={__('Product Name', 'surecart')}
 							className="sc-product-name hydrated"
 							help={__('A name for your product.', 'surecart')}
-							onScChange={(e) => {
-								setName(e.target.value);
-							}}
+							onScInput={(e) => setName(e.target.value)}
 							value={name}
 							name="name"
 							required
@@ -75,14 +80,24 @@ export default ({ id, onCreateProduct }) => {
 						/>
 
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`display: flex; gap: var(--sc-spacing-small);`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-products'}
+								{...(navigation
+									? {}
+									: { href: 'admin.php?page=sc-products' })}
 								type="text"
+								onClick={() => {
+									if (navigation) {
+										navigation.goToList();
+									} else {
+										window.location.href =
+											'admin.php?page=sc-products';
+									}
+								}}
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>

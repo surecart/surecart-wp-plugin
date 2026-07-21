@@ -168,7 +168,7 @@ export default ({
 										{__(
 											'Add a custom sales tax rate for a collection of products.',
 											'surecart'
-										)}
+										)}{' '}
 										{__(
 											'Select an existing collection or ',
 											'surecart'
@@ -188,6 +188,10 @@ export default ({
 						{type === 'product' && !taxOverride?.id && (
 							<ModelSelector
 								label={__('Product Collection', 'surecart')}
+								help={__(
+									'If a product belongs to multiple collections with overrides for the same region, the override created first will be applied. To change which rate applies, remove and re-add the overrides in the desired order.',
+									'surecart'
+								)}
 								name="product-collection"
 								value={data?.product_collection}
 								onSelect={(product_collection) =>

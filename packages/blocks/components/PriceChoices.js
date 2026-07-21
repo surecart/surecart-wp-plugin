@@ -10,12 +10,12 @@ export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 		return (
 			<sc-card no-padding>
 				<sc-table>
-					<sc-table-cell slot="head">{__('Product')}</sc-table-cell>
+					<sc-table-cell slot="head">{__('Product', 'surecart')}</sc-table-cell>
 					<sc-table-cell slot="head" style={{ width: '70px' }}>
-						{__('Quantity')}
+						{__('Quantity', 'surecart')}
 					</sc-table-cell>
 					<sc-table-cell style={{ textAlign: 'center' }} slot="head">
-						{__('Total')}
+						{__('Total', 'surecart')}
 					</sc-table-cell>
 					<sc-table-cell
 						style={{

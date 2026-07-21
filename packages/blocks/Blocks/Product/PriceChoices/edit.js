@@ -43,7 +43,8 @@ export default ({ attributes, setAttributes, context }) => {
 					{columns > 3 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
+								'This column count exceeds the recommended amount and may cause visual breakage.',
+								'surecart'
 							)}
 						</Notice>
 					)}

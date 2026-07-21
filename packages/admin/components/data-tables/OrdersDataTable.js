@@ -30,7 +30,8 @@ export default ({
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ checkout, number, id, created_at_date, status }) => {
-					const { line_items, amount_due, currency } = checkout;
+					const { amount_due, currency } = checkout;
+					const itemsCount = checkout?.delivered_items_count || 0;
 					return {
 						number: (
 							<ScText
@@ -54,10 +55,10 @@ export default ({
 									_n(
 										'%s item',
 										'%s items',
-										line_items?.pagination?.count || 0,
+										itemsCount,
 										'surecart'
 									),
-									line_items?.pagination?.count || 0
+									itemsCount
 								)}
 							</ScText>
 						),

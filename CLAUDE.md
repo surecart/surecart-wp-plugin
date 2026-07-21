@@ -97,7 +97,7 @@ add_filter('surecart/checkout/finduser', '__return_false');
 -   Text domain: `surecart` for all i18n calls
 -   Stencil tags: `sc-{name}`, classes: `Sc{Name}`
 -   Block names: `surecart/{block-name}`
--   Comments: explain the *why* or a non-obvious edge, not what the code already says, and keep them short — long comments go unread. Keep the docblocks WordPress coding standards / PHPCS require (PHP functions, classes, hooks, `@param`/`@return`); just make their summary line meaningful instead of restating the function name.
+-   Comments: explain the _why_ or a non-obvious edge, not what the code already says, and keep them short — long comments go unread. Keep the docblocks WordPress coding standards / PHPCS require (PHP functions, classes, hooks, `@param`/`@return`); just make their summary line meaningful instead of restating the function name.
 
 ## Entity Relationships
 
@@ -138,9 +138,14 @@ When working on a PR that introduces user-facing changes, add feature documentat
 
 Use the `/surecart-feature-doc` skill to auto-generate and update the PR description from the branch diff. It analyzes changes, generates the documentation, and updates the PR via `gh pr edit`.
 
+## Comments
+
+PHP gets full WP-style docblocks (class, method, property, `@var`/`@param`/`@return`) — non-negotiable for phpcs. JS/TS comments must add information the code, function name, or variable names don't already convey; restating the code is a smell. Keep kept comments to 1–2 lines.
+
 ## Git
 
-- **Never add `Co-Authored-By` lines to commit messages.** Commits should use the developer's git account only.
+-   Never commit without the user's explicit request to add and commit. Always ask for a review before committing.
+-   **Never add `Co-Authored-By` lines to commit messages.** Commits should use the developer's git account only.
 
 ## Critical Gotchas
 

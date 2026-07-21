@@ -147,7 +147,8 @@ export class ScOrdersList {
     return this.orders.map(order => {
       const { checkout, created_at_date, id } = order;
       if (!checkout) return null;
-      const { line_items, amount_due_display_amount, charge } = checkout as Checkout;
+      const { amount_due_display_amount, charge, delivered_items_count } = checkout as Checkout;
+      const itemsCount = delivered_items_count || 0;
       return (
         <sc-stacked-list-row
           href={addQueryArgs(window.location.href, {
@@ -166,7 +167,7 @@ export class ScOrdersList {
                 '--color': 'var(--sc-color-gray-500)',
               }}
             >
-              {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'surecart'), line_items?.pagination?.count || 0)}
+              {sprintf(_n('%s item', '%s items', itemsCount, 'surecart'), itemsCount)}
             </sc-text>
           </div>
           <div class="orders-list__status">

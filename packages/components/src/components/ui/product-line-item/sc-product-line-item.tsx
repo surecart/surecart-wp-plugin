@@ -1,7 +1,11 @@
-import { Component, h, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, ImageAttributes } from '../../../types';
+import { getBundleComponentRowsFromLineItems } from '../../../functions/line-items';
+import { Fee, ImageAttributes, LineItem } from '../../../types';
+
+/** Number of detail rows shown before the region collapses (matches the cart block default). */
+const COLLAPSE_AFTER = 2;
 
 /**
  * @part base - The component base
@@ -23,6 +27,11 @@ import { Fee, ImageAttributes } from '../../../types';
  * @part quantity__plus-icon - The product quantity plus icon
  * @part quantity__input - The product quantity input
  * @part line-item__price-description - The line item price description
+ * @part details - The collapsible details region (bundle components + note)
+ * @part details__toggle - The details expand/collapse toggle button
+ * @part details__component - A single bundle component row
+ * @part details__variant - The variant options within a bundle component row
+ * @part note - The line item note
  */
 @Component({
   tag: 'sc-product-line-item',
@@ -89,14 +98,105 @@ export class ScProductLineItem {
   /** The review button link. If set, a review button will be shown linking to this URL. */
   @Prop() reviewButtonLink: string = '';
 
+  /**
+   * Bundle component line items, rendered as a read-only nested list under
+   * the main row when this line item is a bundle parent.
+   */
+  @Prop() bundleComponents: LineItem[] = [];
+
+  /**
+   * Show every bundle component (default), or only those with a selected
+   * variant when set to `false`.
+   */
+  @Prop() showAllBundleItems: boolean = true;
+
+  /** Separator between a bundle component's name and its variant options. */
+  @Prop() separator: string = '·';
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scRemove: EventEmitter<void>;
 
+  /** Collapse the bundle-items details region to the first two lines by default (matches the cart block). */
+  @State() detailsExpanded = false;
+
+  toggleDetails() {
+    this.detailsExpanded = !this.detailsExpanded;
+  }
+
+  /**
+   * Bundle items render in a single collapsible region. Collapsed, only the
+   * first `COLLAPSE_AFTER` rows show; bundle components render one row each, so
+   * the hidden count is exact ("+N more").
+   */
+  renderDetails() {
+    const sep = (this.separator || '·').trim() || '·';
+    const rows = getBundleComponentRowsFromLineItems(this.bundleComponents, this.quantity, this.showAllBundleItems, sep);
+    if (!rows.length) return null;
+
+    const bundleHidden = rows.length > COLLAPSE_AFTER ? rows.length - COLLAPSE_AFTER : 0;
+    // Row count is authoritative for bundles (avoids a wrapped row falsely
+    // triggering a toggle).
+    const collapsible = this.detailsExpanded || bundleHidden > 0;
+
+    const toggleLabel = this.detailsExpanded
+      ? __('Show less', 'surecart')
+      : bundleHidden > 0
+      ? sprintf(/* translators: %d: number of hidden bundle items */ __('+%d more', 'surecart'), bundleHidden)
+      : __('Show more', 'surecart');
+
+    return (
+      <div
+        class={{
+          'line-item-details': true,
+          'line-item-details--clickable': collapsible,
+          'line-item-details--is-expanded': this.detailsExpanded,
+        }}
+        part="details"
+        onClick={() => collapsible && this.toggleDetails()}
+      >
+        <div class="line-item-details__content">
+          {rows.map(row => (
+            <div class="line-item-details__row" part="details__component" key={row.id}>
+              {row.qty > 1 && <span class="line-item-details__qty">{row.qty} ×</span>}
+              <span class="line-item-details__name">{row.name}</span>
+              {!!row.variants && (
+                <span class="line-item-details__variant" part="details__variant">
+                  {sep} {row.variants}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {collapsible && (
+          <button
+            class="line-item-details__toggle"
+            type="button"
+            part="details__toggle"
+            aria-expanded={this.detailsExpanded ? 'true' : 'false'}
+            onClick={e => {
+              e.stopPropagation();
+              this.toggleDetails();
+            }}
+          >
+            <span class="line-item-details__toggle-label">{toggleLabel}</span>
+            <sc-icon class="line-item-details__toggle-icon" name="chevron-down" aria-hidden="true" style={{ width: '16px', height: '16px' }}></sc-icon>
+          </button>
+        )}
+      </div>
+    );
+  }
+
   render() {
     const isImageFallback = this.image?.type === 'fallback';
+    // Number of products a bundle contains — shown as "(N)" next to the name.
+    const bundleCount = this.bundleComponents?.length || 0;
+    const hasDescriptionDetails = !!this.variant || !!this.price || !!this.sku || !!this.purchasableStatus;
+    const hasTrialFeesDetails = !!this.trial || (this.fees || []).some(fee => fee?.display_amount || fee?.description);
+    const hasMetaRow = hasDescriptionDetails || hasTrialFeesDetails;
 
     return (
       <div class="base" part="base">
@@ -120,6 +220,12 @@ export class ScProductLineItem {
             <div class="item__row">
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
+                {bundleCount > 0 && (
+                  <span class="item__title-count" aria-hidden="true">
+                    ({bundleCount})
+                  </span>
+                )}
+                {bundleCount > 0 && <span class="visually-hidden">{sprintf(_n('Includes %d item', 'Includes %d items', bundleCount, 'surecart'), bundleCount)}</span>}
               </div>
               <div class="price" part="price__amount">
                 {!!this.scratch && this.scratch !== this.amount && <span class="item__scratch-price">{this.scratch}</span>}
@@ -130,30 +236,40 @@ export class ScProductLineItem {
               </div>
             </div>
 
-            <div class="item__row">
-              <div class="item__description" part="description">
-                {this.variant && <div>{this.variant}</div>}
-                {this.price && <div>{this.price}</div>}
-                {this.sku && (
-                  <div>
-                    {__('SKU:', 'surecart')} {this.sku}
-                  </div>
-                )}
-                {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
-                {!!this.note && <sc-product-line-item-note note={this.note} />}
-              </div>
-
-              <div class="item__description" part="trial-fees">
-                {!!this.trial && <div>{this.trial}</div>}
-                {(this.fees || []).map(fee => {
-                  return (
+            {hasMetaRow && (
+              <div class="item__row">
+                <div class="item__description" part="description">
+                  {this.variant && <div>{this.variant}</div>}
+                  {this.price && <div>{this.price}</div>}
+                  {this.sku && (
                     <div>
-                      {fee?.display_amount} {fee?.description}
+                      {__('SKU:', 'surecart')} {this.sku}
                     </div>
-                  );
-                })}
+                  )}
+                  {!!this.purchasableStatus && <div>{this.purchasableStatus}</div>}
+                </div>
+
+                <div class="item__description" part="trial-fees">
+                  {!!this.trial && <div>{this.trial}</div>}
+                  {(this.fees || []).map(fee => {
+                    return (
+                      <div>
+                        {fee?.display_amount} {fee?.description}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
+
+            {this.renderDetails()}
+
+            {/* Below the details region to match the cart's order: variant/bundle details first, note last. */}
+            {!!this.note && (
+              <div class="item__description">
+                <sc-product-line-item-note note={this.note} exportparts="base:note" />
+              </div>
+            )}
 
             <div class="item__row stick-bottom">
               {this.editable ? (

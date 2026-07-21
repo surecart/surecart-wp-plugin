@@ -1,11 +1,32 @@
 <?php
+// The composed (page) layout saves an inner product-variant-pill block.
+// The bundle component layout reuses this picker without composed inner blocks,
+// so synthesize a default pill so the markup/JS stay identical in both scopes.
+$has_saved_inner = ! empty( $block->parsed_block['innerBlocks'] );
+
+$inner_blocks = $has_saved_inner
+	? $block->parsed_block['innerBlocks']
+	: array(
+		array(
+			'blockName'    => 'surecart/product-variant-pill',
+			'attrs'        => array(),
+			'innerBlocks'  => array(),
+			'innerHTML'    => '',
+			'innerContent' => array(),
+		),
+	);
+
+$inner_content = $has_saved_inner
+	? ( $block->parsed_block['innerContent'] ?? array( null ) )
+	: array( null );
+
 // Get highlight styles from the inner product-variant-pill block.
-$pill_block       = wp_get_first_block( $block->parsed_block['innerBlocks'], 'surecart/product-variant-pill' );
-$pill_block_attrs = $pill_block['attrs'] ?? [];
+$pill_block       = wp_get_first_block( $inner_blocks, 'surecart/product-variant-pill' );
+$pill_block_attrs = $pill_block['attrs'] ?? array();
 ?>
 
 <label class="sc-form-label">
-	<?php echo wp_kses_post( $option->name ); ?>
+	<?php echo wp_kses_post( $pill_group_label ?? $option->name ); ?>
 </label>
 
 <div
@@ -35,7 +56,9 @@ echo wp_kses_data(
 
 		// Set the block name to one that does not correspond to an existing registered block.
 		// This ensures that for the inner instances of the Post Template block, we do not render any block supports.
-		$block_instance['blockName'] = 'core/null';
+		$block_instance['blockName']    = 'core/null';
+		$block_instance['innerBlocks']  = $inner_blocks;
+		$block_instance['innerContent'] = $inner_content;
 
 		$filter_block_context = static function ( $context ) use ( $value, $option ) {
 			$context['value'] = $value;

@@ -20,6 +20,14 @@
 		"editable": {
 			"type": "boolean",
 			"default": true
+		},
+		"showAllBundleItems": {
+			"type": "boolean",
+			"default": true
+		},
+		"separator": {
+			"type": "string",
+			"default": "·"
 		}
 	}
 }

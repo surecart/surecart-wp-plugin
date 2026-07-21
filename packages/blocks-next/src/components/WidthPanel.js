@@ -11,7 +11,7 @@ export default ({ selectedWidth, setAttributes, ariaLabel }) => {
 	}
 
 	return (
-		<PanelBody title={__('Width settings')}>
+		<PanelBody title={__('Width settings', 'surecart')}>
 			<ButtonGroup aria-label={ariaLabel}>
 				{[25, 50, 75, 100].map((widthValue) => {
 					return (

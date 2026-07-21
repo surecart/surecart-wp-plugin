@@ -73,7 +73,7 @@ export default ({ attributes, setAttributes }) => {
 			</BlockControls>
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Color Settings')}
+					title={__('Color Settings', 'surecart')}
 					colorSettings={[
 						{
 							value: backgroundColor,
@@ -138,8 +138,8 @@ export default ({ attributes, setAttributes }) => {
 								/>
 							</div>
 							<RichText
-								aria-label={__('Help text')}
-								placeholder={__('Add help text...')}
+								aria-label={__('Help text', 'surecart')}
+								placeholder={__('Add help text...', 'surecart')}
 								value={help}
 								onChange={(help) => setAttributes({ help })}
 								tagName="div"
@@ -165,8 +165,8 @@ export default ({ attributes, setAttributes }) => {
 						>
 							<span className="sc-button__link-text">
 								<RichText
-									aria-label={__('Button text')}
-									placeholder={__('Add text…')}
+									aria-label={__('Button text', 'surecart')}
+									placeholder={__('Add text…', 'surecart')}
 									value={button_text}
 									onChange={(button_text) =>
 										setAttributes({ button_text })

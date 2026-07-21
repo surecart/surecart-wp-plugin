@@ -56,7 +56,7 @@ export default ({ className, attributes, setAttributes }) => {
 			</BlockControls>
 			<InspectorControls>
 				<PanelColorSettings
-					title={__('Color Settings')}
+					title={__('Color Settings', 'surecart')}
 					colorSettings={[
 						{
 							value: backgroundColor,
@@ -101,8 +101,8 @@ export default ({ className, attributes, setAttributes }) => {
 				>
 					<span className="sc-button__link-text">
 						<RichText
-							aria-label={__('Button text')}
-							placeholder={__('Add text…')}
+							aria-label={__('Button text', 'surecart')}
+							placeholder={__('Add text…', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 							withoutInteractiveFormatting

@@ -134,7 +134,7 @@ export class ScImageSlider {
                   >
                     <img
                       src={src}
-                      alt={sprintf(__('Product image number %d, %s', 'sc-image-slider'), index + 1, alt)}
+                      alt={sprintf(__('Product image number %d, %s', 'surecart'), index + 1, alt)}
                       {...(title ? { title } : {})}
                       srcset={srcset}
                       width={width}

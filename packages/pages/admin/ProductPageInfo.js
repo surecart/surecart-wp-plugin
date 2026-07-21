@@ -39,7 +39,7 @@ export default () => {
 				title={post?.title}
 				className="product-page-info"
 			>
-				{__('This editor controls the content of the product page.')}
+				{__('This editor controls the content of the product page.', 'surecart')}
 			</PluginDocumentSettingPanel>
 			<ConfirmDialog
 				isOpen={isOpen}
@@ -58,7 +58,8 @@ export default () => {
 			>
 				<div style={{ maxWidth: '350px' }}>
 					{__(
-						'This product\'s template is missing the "Post Content" block. It must be added to display the content.'
+						'This product\'s template is missing the "Post Content" block. It must be added to display the content.',
+						'surecart'
 					)}
 				</div>
 			</ConfirmDialog>

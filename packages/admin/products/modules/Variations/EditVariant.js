@@ -22,6 +22,10 @@ export default ({
 	updateVariant,
 	variantOptions,
 	onRequestClose,
+	// Fires on Done click. The parent runs its save in the background
+	// (fire-and-forget); we close the drawer immediately for snappier
+	// perceived performance.
+	onDone,
 }) => {
 	const [open, setOpen] = useState(true);
 	const { getValue } = useVariantValue({ variant, product });
@@ -67,6 +71,9 @@ export default ({
 			onScFormSubmit={(e) => {
 				e.preventDefault();
 				e.stopImmediatePropagation();
+				if (typeof onDone === 'function') {
+					onDone();
+				}
 				setOpen(false);
 			}}
 		>

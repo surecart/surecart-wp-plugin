@@ -9,7 +9,10 @@ import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '
 import { __ } from '@wordpress/i18n';
 import { TextControl, ExternalLink } from '@wordpress/components';
 
+import useBundleLabels from '../../hooks/useBundleLabels';
+
 export default ({ product, updateProduct, onClose }) => {
+	const { viewPageLabel } = useBundleLabels(product);
 	return (
 		<div
 			css={css`
@@ -28,27 +31,19 @@ export default ({ product, updateProduct, onClose }) => {
 				}
 			`}
 		>
-			<InspectorPopoverHeader title={__('URL')} onClose={onClose} />
+			<InspectorPopoverHeader
+				title={__('URL', 'surecart')}
+				onClose={onClose}
+			/>
 
 			<TextControl
 				__next40pxDefaultSize
 				__nextHasNoMarginBottom
-				label={__('Permalink')}
+				label={__('Permalink', 'surecart')}
 				value={product?.slug}
 				autoComplete="off"
 				spellCheck="false"
-				help={
-					<>
-						{__('The last part of the URL.')}{' '}
-						{/* <ExternalLink
-							href={__(
-								'https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink'
-							)}
-						>
-							{__('Learn more.')}
-						</ExternalLink> */}
-					</>
-				}
+				help={__('The last part of the URL.', 'surecart')}
 				onChange={(slug) => updateProduct({ slug })}
 				onBlur={(event) =>
 					updateProduct({
@@ -66,7 +61,7 @@ export default ({ product, updateProduct, onClose }) => {
 					display: block;
 				`}
 			>
-				{__('View Product')}
+				{viewPageLabel}
 			</h3>
 
 			<p>

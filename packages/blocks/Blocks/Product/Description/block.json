@@ -4,6 +4,7 @@
 	"title": "Product Description",
 	"description": "Display the product description",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"attributes": {
 		"textAlign": {
 			"type": "string",

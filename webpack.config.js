@@ -47,6 +47,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/products/index.js'
 		),
+		['admin/bundles']: path.resolve(
+			__dirname,
+			'packages/admin/bundles/index.js'
+		),
 		['admin/customers']: path.resolve(
 			__dirname,
 			'packages/admin/customers/index.js'
@@ -259,6 +263,23 @@ module.exports = {
 				{
 					from: './packages/components/docs/kses.json',
 					to: '../app/src/Support/kses.json',
+				},
+				{
+					from: path.resolve(
+						__dirname,
+						'node_modules/@wordpress/dataviews/build-style/style.css'
+					),
+					to: path.resolve(__dirname, 'dist/vendor/dataviews.css'),
+				},
+				{
+					from: path.resolve(
+						__dirname,
+						'node_modules/@wordpress/dataviews/build-style/style-rtl.css'
+					),
+					to: path.resolve(
+						__dirname,
+						'dist/vendor/dataviews-rtl.css'
+					),
 				},
 			],
 		}),

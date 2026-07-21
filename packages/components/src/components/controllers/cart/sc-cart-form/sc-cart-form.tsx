@@ -11,6 +11,7 @@ const query = {
   expand: [
     'line_items',
     'line_item.price',
+    'line_item.component_line_items',
     'price.product',
     'customer',
     'customer.shipping_address',

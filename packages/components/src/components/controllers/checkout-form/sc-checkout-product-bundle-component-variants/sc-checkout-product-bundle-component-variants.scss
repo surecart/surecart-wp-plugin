@@ -1,0 +1,51 @@
+// Mirrors the PDP bundle picker styling (packages/blocks-next/src/blocks/product-variant-pills)
+// so the buy page's bundle pickers read identically to the PDP.
+sc-checkout-product-bundle-component-variants {
+  display: block;
+}
+
+.sc-bundle-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-form-row-spacing, var(--sc-spacing-medium, 1rem));
+  width: 100%;
+}
+
+.sc-bundle-item__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-input-label-margin, var(--sc-spacing-xx-small, 0.25rem));
+}
+
+.sc-bundle-item__row-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1.35;
+}
+
+.sc-bundle-item__product-name,
+.sc-bundle-item__variant-name {
+  display: inline;
+  font-weight: var(--sc-input-label-font-weight, var(--sc-font-weight-normal, 400));
+  font-size: var(--sc-font-size-medium, 1rem);
+  color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
+}
+
+.sc-bundle-item__variant-name {
+  white-space: nowrap;
+}
+
+.sc-bundle-item__qty {
+  color: var(--sc-input-label-color, var(--sc-color-gray-600, #4b5563));
+  font-size: var(--sc-font-size-small, 0.875rem);
+  font-weight: var(--sc-font-weight-medium, 500);
+  white-space: nowrap;
+}
+
+.sc-bundle-item__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sc-spacing-x-small, 0.5rem);
+}

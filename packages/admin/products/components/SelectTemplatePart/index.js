@@ -122,7 +122,7 @@ export default function SelectTemplatePart({
 						label:
 							templatePartCreated.title?.rendered ||
 							templatePartCreated.title ||
-							__('(no title)'),
+							__('(no title)', 'surecart'),
 					},
 					...options,
 				].filter(Boolean)}

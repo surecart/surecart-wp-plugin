@@ -313,7 +313,7 @@ export function HierarchicalTermSelector({ slug }) {
 				: __('Term', 'surecart');
 		const termAddedMessage = sprintf(
 			/* translators: %s: taxonomy name */
-			_x('%s added', 'term'),
+			_x('%s added', 'term', 'surecart'),
 			taxonomy?.labels?.singular_name ?? defaultName
 		);
 		speak(termAddedMessage, 'assertive');
@@ -344,7 +344,7 @@ export function HierarchicalTermSelector({ slug }) {
 		const resultCount = getResultCount(newFilteredTermsTree);
 		const resultsFoundMessage = sprintf(
 			/* translators: %d: number of results */
-			_n('%d result found.', '%d results found.', resultCount),
+			_n('%d result found.', '%d results found.', resultCount, 'surecart'),
 			resultCount
 		);
 

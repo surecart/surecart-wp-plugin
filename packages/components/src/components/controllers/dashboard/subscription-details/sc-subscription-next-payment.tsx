@@ -3,7 +3,8 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
+import { groupBundleLineItems } from '../../../../functions/line-items';
+import { Checkout, LineItem, Period, Product, ResponseError, Subscription, ManualPaymentMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-next-payment',
@@ -56,6 +57,7 @@ export class ScSubscriptionNextPayment {
             'payment_method.bank_account',
             'line_item.price',
             'line_item.fees',
+            'line_item.component_line_items',
             'price.product',
             'period.subscription',
           ],
@@ -112,24 +114,35 @@ export class ScSubscriptionNextPayment {
           </span>
 
           <sc-card noPadding borderless>
-            {checkout?.line_items?.data.map(item => (
-              <sc-product-line-item
-                image={(item.price?.product as Product)?.line_item_image}
-                name={(item.price?.product as Product)?.name}
-                price={item?.price?.name}
-                variant={item?.variant_display_options}
-                editable={false}
-                removable={false}
-                note={item?.display_note}
-                scratchDisplayAmount={item?.scratch_display_amount}
-                displayAmount={item?.subtotal_display_amount}
-                quantity={item?.quantity}
-                amount={item?.subtotal_display_amount}
-                interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
-                purchasableStatus={item?.purchasable_status_display}
-                fees={item?.fees?.data}
-              ></sc-product-line-item>
-            ))}
+            {(() => {
+              const items = (checkout?.line_items?.data || []) as LineItem[];
+              const { regular, bundleParents, componentsByParent } = groupBundleLineItems(items);
+              const orderedItems = [...bundleParents, ...regular];
+              return orderedItems.map(item => {
+                const product = item?.price?.product as Product;
+                const isBundle = !!product?.bundle;
+                return (
+                  <sc-product-line-item
+                    key={item.id}
+                    image={product?.line_item_image}
+                    name={product?.name}
+                    price={item?.price?.name}
+                    variant={item?.variant_display_options}
+                    editable={false}
+                    removable={false}
+                    note={item?.display_note}
+                    scratchDisplayAmount={item?.scratch_display_amount}
+                    displayAmount={item?.subtotal_display_amount}
+                    quantity={item?.quantity}
+                    amount={item?.subtotal_display_amount}
+                    interval={`${item?.price?.short_interval_text} ${item?.price?.short_interval_count_text}`}
+                    purchasableStatus={item?.purchasable_status_display}
+                    fees={item?.fees?.data}
+                    bundleComponents={isBundle ? componentsByParent[item.id] || [] : []}
+                  ></sc-product-line-item>
+                );
+              });
+            })()}
 
             <sc-line-item>
               <span slot="description">{__('Subtotal', 'surecart')}</span>

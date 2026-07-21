@@ -48,7 +48,10 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 					expand: [
 						'prices',
 						'featured_product_media',
-						'product.product_medias',
+						// `product_medias` (unprefixed) — the prefixed form is
+						// invalid on the products endpoint and only worked
+						// while the middleware force-merged the full set.
+						'product_medias',
 						'product_media.media',
 					],
 					sort: 'updated_at:asc',

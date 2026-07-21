@@ -109,7 +109,8 @@ export default ({
 					{columns > 1 && isContainerSmall && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
-								'This block will only show multiple columns if the width of the container is over 600px.'
+								'This block will only show multiple columns if the width of the container is over 600px.',
+								'surecart'
 							)}
 						</Notice>
 					)}

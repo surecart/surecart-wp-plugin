@@ -4,6 +4,7 @@ import { Checkout, LineItemData, Product } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
 import { updateCheckout } from '@services/session';
 import { currentFormState } from '@store/form/getters';
+import { buildStockAdjustedLineItems, buildStockAlertRows, getBundleComponentVariants, getBundleQuantityReductions, getOutOfStockLineItems } from '../../../../../functions/stock';
 
 /**
  * This component listens for stock requirements and displays a dialog to the user.
@@ -26,86 +27,85 @@ export class ScCheckoutStockAlert {
   /** Update stock error. */
   @State() error: string;
 
-  /** Get the out of stock line items. */
-  getOutOfStockLineItems() {
-    return (checkoutState.checkout?.line_items?.data || []).filter(lineItem => {
-      const product = lineItem.price?.product as Product;
-
-      // this item is not out of stock, don't include it.
-      if (lineItem?.purchasable_status !== 'out_of_stock') return false;
-
-      // check the variant stock.
-      if (lineItem?.variant?.id) {
-        return lineItem?.variant?.available_stock < lineItem.quantity;
-      }
-
-      return product?.available_stock < lineItem.quantity;
-    });
+  /** Current checkout line items. */
+  get lineItems() {
+    return checkoutState.checkout?.line_items?.data || [];
   }
 
   /**
-   * Build line items with adjusted quantities for out-of-stock items.
+   * Update the checkout to the max available stock.
    *
-   * Returns all line items, with out-of-stock items adjusted to max available stock.
-   */
-  getStockAdjustedLineItems() {
-    // Get the IDs of out-of-stock line items and their adjusted quantities.
-    const outOfStockItemsMap = new Map<string, number>();
-    this.getOutOfStockLineItems().forEach(lineItem => {
-      const product = lineItem.price?.product as Product;
-      const adjustedQuantity = lineItem?.variant?.id ? Math.max(lineItem?.variant?.available_stock || 0, 0) : Math.max(product?.available_stock || 0, 0);
-      outOfStockItemsMap.set(lineItem.id, adjustedQuantity);
-    });
-
-    // Build the complete line items array with all items, adjusting only the out-of-stock ones.
-    return (checkoutState.checkout?.line_items?.data || []).map(lineItem => {
-      const adjustedQuantity = outOfStockItemsMap.get(lineItem.id);
-      return {
-        id: lineItem.id,
-        price_id: lineItem.price?.id,
-        quantity: adjustedQuantity !== undefined ? adjustedQuantity : lineItem.quantity,
-        ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
-      };
-    });
-  }
-
-  /**
-   * Update the checkout line items stock to the max available.
+   * Bundle shortages reduce the whole bundle quantity (a bundle is atomic). A
+   * bundle that can't make even one unit (reduced to 0) is first rescued by
+   * swapping a gone variant to an in-stock sibling when one exists; otherwise
+   * the unfulfillable bundle is dropped from the cart, matching the "→ 0" the
+   * dialog already shows.
    */
   async onSubmit() {
+    let attemptedBundleSwap = false;
     try {
       this.busy = true;
+      this.error = null;
+
+      const items = this.lineItems;
+      const reductions = getBundleQuantityReductions(items);
+
+      // Only bundles reduced to 0 need rescuing — try swapping the gone
+      // variant to an in-stock sibling so we don't drop a recoverable bundle.
+      // If no swap exists the bundle stays at 0 and is removed below.
+      const parentOverrides = new Map<string, Record<string, string>>();
+      getOutOfStockLineItems(items).forEach(oos => {
+        if (!oos.component_line_item || !oos.bundle_line_item) return;
+        const parent = items.find(li => li.id === oos.bundle_line_item);
+        if (!parent?.id || (reductions.get(parent.id) ?? 0) >= 1) return;
+
+        const product = oos.price?.product as Product;
+        if (!product?.id) return;
+        const swap = (product?.variants?.data || []).find(v => v.id !== oos.variant?.id && (v.available_stock ?? 0) > 0);
+        if (!swap?.id) return;
+
+        // Rebuild the full selection from the component line items (the parent
+        // field reads back empty), then swap the gone variant — posting only the
+        // swapped component would fail the platform's per-component requirement.
+        const map = parentOverrides.get(parent.id) || getBundleComponentVariants(parent.id, items);
+        map[product.id] = swap.id;
+        parentOverrides.set(parent.id, map);
+      });
+
+      attemptedBundleSwap = parentOverrides.size > 0;
+
+      // Bundles still capped at 0 (no in-stock swap) fall to quantity 0 and are
+      // filtered out here — the unfulfillable bundle is simply removed.
+      const lineItems = buildStockAdjustedLineItems(items, parentOverrides).filter(lineItem => !!lineItem.quantity);
+
       checkoutState.checkout = (await updateCheckout({
         id: checkoutState.checkout.id,
-        data: {
-          line_items: this.getStockAdjustedLineItems().filter(lineItem => !!lineItem.quantity),
-        },
+        data: { line_items: lineItems },
       })) as Checkout;
     } catch (error) {
-      const additionalErrors = (error?.additional_errors || []).map(error => error?.message).filter(n => n);
-      this.error = `${error?.message || __('Something went wrong.', 'surecart')} ${additionalErrors?.length && ` ${additionalErrors.join('. ')}`}`;
+      // A rejected bundle swap surfaces as a generic 500 — show an actionable
+      // message so the shopper can remove the item or pick another bundle.
+      if (attemptedBundleSwap) {
+        this.error = __('We could not automatically update an out-of-stock bundle item. Please remove it or choose a different bundle.', 'surecart');
+      } else {
+        // Build the message defensively — `additionalErrors?.length && ...`
+        // used to evaluate to the literal `0` when there were no additional
+        // errors, which then got stringified into the displayed error.
+        const additionalErrors = (error?.additional_errors || []).map(e => e?.message).filter(Boolean);
+        const parts = [error?.message || __('Something went wrong.', 'surecart')];
+        if (additionalErrors.length) parts.push(additionalErrors.join('. '));
+        this.error = parts.join(' ');
+      }
     } finally {
       this.busy = false;
     }
   }
 
   render() {
-    // stock errors.
-    const stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
-      const product = lineItem.price?.product as Product;
-      const available_stock = lineItem?.variant?.id ? lineItem?.variant?.available_stock : product?.available_stock;
+    const stockErrors = buildStockAlertRows(this.lineItems);
 
-      return {
-        name: product?.name,
-        variant: lineItem?.variant_display_options,
-        image: lineItem?.image,
-        quantity: lineItem.quantity,
-        available_stock,
-      };
-    });
-
-    // we have at least one quantity change.
-    const hasOutOfStockItems = stockErrors?.some(item => item?.available_stock < 1);
+    // we have at least one fully out-of-stock item.
+    const hasOutOfStockItems = stockErrors?.some(item => item?.to < 1);
 
     return (
       <Host>
@@ -148,7 +148,7 @@ export class ScCheckoutStockAlert {
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>
                         <span class="stock-alert__quantity">
-                          <span>{item?.quantity}</span> <sc-icon name="arrow-right" /> <span>{Math.max(item?.available_stock, 0)}</span>
+                          <span>{item?.from}</span> <sc-icon name="arrow-right" /> <span>{Math.max(item?.to, 0)}</span>
                         </span>
                       </sc-table-cell>
                     </sc-table-row>

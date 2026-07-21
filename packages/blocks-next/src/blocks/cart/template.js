@@ -274,30 +274,44 @@ export const TEMPLATE = [
 																		},
 																	],
 																	[
-																		'surecart/cart-line-item-variant',
-																		{
-																			style: {
-																				typography:
-																					{
-																						fontSize:
-																							'14px',
-																						lineHeight:
-																							'1.4',
+																		'surecart/cart-line-item-details',
+																		{},
+																		[
+																			[
+																				'surecart/cart-line-item-variant',
+																				{
+																					style: {
+																						color: {
+																							text: '#828c99',
+																						},
+																						elements:
+																							{
+																								link: {
+																									color: {
+																										text: '#828c99',
+																									},
+																								},
+																							},
+																						typography:
+																							{
+																								fontSize:
+																									'14px',
+																								lineHeight:
+																									'1.4',
+																							},
 																					},
-																			},
-																		},
+																				},
+																			],
+																		],
 																	],
 																	[
 																		'surecart/cart-line-item-note',
 																		{
 																			style: {
-																				typography:
-																					{
-																						fontSize:
-																							'14px',
-																						lineHeight:
-																							'1.4',
-																					},
+																				typography: {
+																					fontSize: '14px',
+																					lineHeight: '1.4',
+																				},
 																			},
 																		},
 																	],

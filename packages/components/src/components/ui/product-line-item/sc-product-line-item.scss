@@ -1,7 +1,6 @@
 :host {
   display: block;
   font-family: var(--sc-font-sans);
-  --sc-product-line-item-line-gap: 6px;
 }
 
 .item {
@@ -22,7 +21,7 @@
     min-width: 0px;
     display: flex;
     flex-direction: column;
-    gap: var(--sc-product-line-item-line-gap);
+    gap: var(--sc-product-line-item-line-gap, 6px);
     justify-content: space-between;
     align-items: stretch;
     width: 100%;
@@ -90,7 +89,7 @@
 
 .item__text-details {
   display: grid;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
 }
 
 .item__title {
@@ -143,7 +142,7 @@
   text-align: right;
   max-width: 100%;
   display: grid;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
 }
 
 .item__description {
@@ -153,7 +152,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  gap: var(--sc-product-line-item-line-gap);
+  gap: var(--sc-product-line-item-line-gap, 6px);
   text-wrap: pretty;
 
   &:last-child {
@@ -245,4 +244,143 @@ sc-quantity-select::part(input),
 sc-quantity-select::part(plus),
 sc-quantity-select::part(minus) {
   background-color: transparent;
+}
+
+// Line item details — collapsible region shared by bundle components and the note.
+.line-item-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  gap: 0.25em;
+  margin-top: var(--sc-spacing-xx-small);
+  color: var(--sc-input-label-color);
+  font-size: var(--sc-font-size-small);
+  line-height: 1.4;
+  background: transparent;
+  outline: none;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    background: transparent;
+  }
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  &__content {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  // Collapsed: clamp to N lines (default 2) plus the 2px row gaps — `1lh` where supported, `1.4em` fallback.
+  &:not(.line-item-details--is-expanded) &__content {
+    max-height: calc(var(--sc-line-item-details-collapse-lines, 2) * 1.4em + (var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px);
+    max-height: calc(var(--sc-line-item-details-collapse-lines, 2) * 1lh + (var(--sc-line-item-details-collapse-lines, 2) - 1) * 2px);
+    overflow: hidden;
+  }
+
+  &--is-expanded &__content {
+    max-height: none;
+    overflow: visible;
+  }
+
+  // Inline text flow (not flex) so a long name wraps like a paragraph instead of orphaning the "N ×" prefix on its own line.
+  &__row {
+    &:empty {
+      display: none;
+    }
+  }
+
+  // Quantity prefix ("2 ×") — only rendered when > 1, same color as the name.
+  &__qty {
+    margin-inline-end: 0.35em;
+  }
+
+  // Variant options ("· Red · Large") — muted, after the name.
+  &__variant {
+    margin-inline-start: 0.35em;
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+  }
+
+  &__note {
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  &__toggle {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    color: var(--sc-color-gray-500, var(--sc-input-help-text-color));
+    cursor: pointer;
+    border-radius: var(--sc-border-radius-small);
+    transition: color 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
+      box-shadow: none;
+      color: var(--sc-color-gray-700, var(--sc-input-label-color));
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sc-color-primary-500);
+      outline-offset: 2px;
+    }
+  }
+
+  // Match the design's text-sm (14px / 20px). Don't use --sc-font-size-small
+  // here: it's 0.875em and compounds against the container, rendering the
+  // label far too small (~11px).
+  &__toggle-label {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  // Don't override sc-icon's host display — it breaks its --width/--height sizing.
+  &__toggle-icon {
+    transition: transform 0.2s ease;
+    will-change: transform;
+  }
+
+  &--is-expanded &__toggle-icon {
+    transform: rotate(180deg);
+  }
+}
+
+// Bundle product count next to the name — inherits the title's color/size (Figma).
+.item__title-count {
+  margin-inline-start: 0.25em;
+}
+
+// Screen-reader-only text (shadow DOM can't reach the global helper class).
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

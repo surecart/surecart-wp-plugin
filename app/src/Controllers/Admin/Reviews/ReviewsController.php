@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\Reviews;
 
 use SureCart\Controllers\Admin\AdminController;
+use SureCart\Controllers\Admin\RendersEnhancedAdminView;
 use SureCart\Models\Review;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
@@ -10,25 +11,28 @@ use SureCartVendors\Psr\Http\Message\ResponseInterface;
  * Handle the reviews admin page.
  */
 class ReviewsController extends AdminController {
+	use RendersEnhancedAdminView;
+
 	/**
-	 * Index.
+	 * Render the legacy WP_List_Table view.
 	 *
-	 * @return string
+	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
-	public function index() {
+	protected function renderWpListView() {
 		$table = new ReviewsListTable();
 		$table->prepare_items();
+
 		$this->withHeader(
 			array(
-				'breadcrumbs' => [
+				'breadcrumbs'         => [
 					'reviews' => [
 						'title' => __( 'Product Reviews', 'surecart' ),
 					],
 				],
+				'enhanced_view_promo' => admin_url( 'admin.php?page=sc-reviews' ),
 			)
 		);
 
-		// add notices.
 		$this->withNotices(
 			array(
 				'published'   => __( 'Review approved.', 'surecart' ),
@@ -41,18 +45,35 @@ class ReviewsController extends AdminController {
 	}
 
 	/**
-	 * Edit.
+	 * Render the SPA view for reviews.
 	 *
-	 * @return string
+	 * @return \SureCartCore\Responses\ResponseInterface
 	 */
-	public function edit() {
-		$id = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	protected function renderSpaView() {
+		$this->enqueueSpaScripts( ReviewsScriptsController::class );
+		return $this->renderSpaShell(
+			'admin/reviews/spa',
+			'reviews',
+			__( 'Reviews', 'surecart' )
+		);
+	}
+
+	/**
+	 * Edit a review (SPA edit screen).
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\ResponseInterface|string
+	 */
+	public function edit( $request ) {
+		$id = sanitize_text_field( wp_unslash( $request->query( 'id' ) ?? '' ) );
+
+		// No id — redirect to the list rather than wp_die.
 		if ( ! $id ) {
-			wp_die( esc_html__( 'Please provide a review id.', 'surecart' ) );
+			return \SureCart::redirect()->to( admin_url( 'admin.php?page=sc-reviews' ) );
 		}
 
-		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ReviewsScriptsController::class, 'enqueue' ) );
+		$this->enqueueSpaScripts( ReviewsScriptsController::class );
 
 		$this->preloadPaths(
 			[
@@ -63,12 +84,11 @@ class ReviewsController extends AdminController {
 			]
 		);
 
-		// return view.
-		return '<div id="app"></div>';
+		return $this->renderSpaShell( 'admin/reviews/spa' );
 	}
 
 	/**
-	 * Publish a review.
+	 * Publish a review (legacy GET action — still used by the WP_List_Table row links).
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 *
@@ -91,7 +111,7 @@ class ReviewsController extends AdminController {
 	}
 
 	/**
-	 * Unpublish a review.
+	 * Unpublish a review (legacy GET action — still used by the WP_List_Table row links).
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 *
@@ -114,7 +134,7 @@ class ReviewsController extends AdminController {
 	}
 
 	/**
-	 * Delete a review.
+	 * Delete a review (legacy GET action — still used by the WP_List_Table row links).
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 *

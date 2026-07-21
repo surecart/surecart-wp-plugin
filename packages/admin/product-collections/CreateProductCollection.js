@@ -24,7 +24,7 @@ import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import Permalink from '../components/Permalink';
 
-export default ({ id, setId }) => {
+export default ({ id, setId, navigation }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -53,7 +53,7 @@ export default ({ id, setId }) => {
 				throw {
 					message: __(
 						'Could not create product collection. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}
@@ -134,14 +134,21 @@ export default ({ id, setId }) => {
 							name="description"
 						/>
 						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
+							css={css`display: flex; gap: var(--sc-spacing-small);`}
 						>
 							<ScButton type="primary" submit loading={isSaving}>
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-products'}
+								{...(navigation ? {} : { href: 'admin.php?page=sc-product-collections' })}
 								type="text"
+								onClick={() => {
+									if (navigation) {
+										navigation.goToList();
+									} else {
+										window.location.href = 'admin.php?page=sc-product-collections';
+									}
+								}}
 							>
 								{__('Cancel', 'surecart')}
 							</ScButton>

@@ -33,6 +33,40 @@ class IntegrationCatalog extends ExternalApiModel {
 	protected $base_url = 'https://integrations-catalog.surecart.com/';
 
 	/**
+	 * Get the install source attribute.
+	 *
+	 * Records that carry a GitHub download URL install from GitHub; everything
+	 * else installs through the WordPress.org plugin directory.
+	 *
+	 * @return string
+	 */
+	public function getSourceAttribute() {
+		return ! empty( $this->acf['download_url'] ) ? 'github' : 'wordpress';
+	}
+
+	/**
+	 * Get the GitHub download URL attribute.
+	 *
+	 * Optional ACF field — null when the integration does not install from GitHub.
+	 *
+	 * @return string|null
+	 */
+	public function getDownloadUrlAttribute() {
+		return $this->acf['download_url'] ?? null;
+	}
+
+	/**
+	 * Get the GitHub repository URL attribute.
+	 *
+	 * Optional ACF field used by the frontend error fallback link — null when absent.
+	 *
+	 * @return string|null
+	 */
+	public function getGithubRepoUrlAttribute() {
+		return $this->acf['github_repo_url'] ?? null;
+	}
+
+	/**
 	 * Get the activation type attribute.
 	 *
 	 * @return string

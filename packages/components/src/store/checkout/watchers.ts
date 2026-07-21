@@ -62,12 +62,12 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   const couponCodeRemoved = checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code && !checkout?.discount?.promotion?.code;
 
   const messages = [
-    ...(couponCodeRemoved ? [__('Coupon code removed.', 'sc-coupon-form')] : []),
+    ...(couponCodeRemoved ? [__('Coupon code removed.', 'surecart')] : []),
     ...(couponCodeAdded
       ? [
           sprintf(
             // Translators: %1$s is the coupon code, %2$s is the human readable discount.
-            __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+            __('Coupon code %1$s added. %2$s applied.', 'surecart'),
             checkout?.discount?.promotion?.code,
             getHumanDiscount(checkout?.discount?.coupon),
           ),

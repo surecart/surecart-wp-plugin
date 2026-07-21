@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasDates;
 use SureCart\Support\Currency;
 
 /**
@@ -9,6 +10,8 @@ use SureCart\Support\Currency;
  */
 
 class Variant extends Model {
+	use HasDates;
+
 	/**
 	 * Rest API endpoint
 	 *

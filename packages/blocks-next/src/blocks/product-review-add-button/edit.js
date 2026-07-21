@@ -49,8 +49,8 @@ export default ({ attributes, setAttributes }) => {
 					<PlainText
 						__experimentalVersion={2}
 						tagName="span"
-						aria-label={__('Write a Review button')}
-						placeholder={__('Write a Review')}
+						aria-label={__('Write a Review button', 'surecart')}
+						placeholder={__('Write a Review', 'surecart')}
 						value={label}
 						onChange={(newLabel) =>
 							setAttributes({ label: newLabel })

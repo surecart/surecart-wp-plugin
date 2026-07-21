@@ -1,6 +1,90 @@
 import { getQueryArg } from '@wordpress/url';
 
-import { Bump, Checkout, ChoiceType, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+import { Bump, BundleComponentRow, BundleItem, Checkout, ChoiceType, LineItem, LineItemData, lineItems, Price, PriceChoice, Product, RecursivePartial } from '../../types';
+
+// Order bundle items by their `position` (the order set in the bundle).
+const byPosition = <T extends { position?: number }>(items: T[] = []): T[] => [...items].sort((a, b) => (a?.position ?? 0) - (b?.position ?? 0));
+
+/**
+ * A bundle component's line item `quantity` is the total across the whole
+ * purchase (per-bundle count × bundle quantity). Divide it back out by the
+ * parent quantity to get the per-bundle count the bundle actually defines.
+ */
+export const getPerBundleQuantity = (component: LineItem, parentQuantity = 1): number => {
+  const parentQty = Math.max(Number(parentQuantity) || 1, 1);
+  const total = Math.max(Number(component?.quantity) || 1, 1);
+  return Math.max(Math.round(total / parentQty), 1);
+};
+
+/**
+ * Build display rows from bundle component line items.
+ *
+ * By default every component is shown (variant items render `Name - Variant`,
+ * plain items render just `Name`). Pass `showAll = false` for variants-only
+ * mode, which lists only the components that have a variant selection.
+ */
+export const getBundleComponentRowsFromLineItems = (components: LineItem[] = [], parentQuantity = 1, showAll = true, separator = '·'): BundleComponentRow[] => {
+  const sep = (separator || '·').trim() || '·';
+  return (components || [])
+    .map(component => {
+      // Prefer the raw options array so we can join with the separator; fall back to the pre-joined display string when it's absent.
+      const options = (component?.variant_options || []).filter(Boolean);
+      const variants = options.length ? options.join(` ${sep} `) : (component?.variant_display_options || '').trim();
+      // Variants-only mode: drop components without a selection.
+      if (!showAll && !variants) return null;
+      const componentProduct = (component?.price as Price)?.product as Product;
+      const name = componentProduct?.name || '';
+      if (!name) return null;
+      const qty = getPerBundleQuantity(component, parentQuantity);
+      return { id: component?.id, name, variants, qty };
+    })
+    .filter(Boolean) as BundleComponentRow[];
+};
+
+/**
+ * Build a list of display rows from BundleItems attached to a Product
+ * (subscription detail panel — no LineItems exist for components there,
+ * only the bundle definition).
+ */
+export const getBundleComponentRowsFromBundleItems = (items: BundleItem[] = []): BundleComponentRow[] => {
+  return byPosition(items)
+    .map(item => {
+      const componentProduct = item?.component_product as Product;
+      const name = componentProduct?.name || '';
+      const qty = Math.max(Number(item?.quantity) || 1, 1);
+      if (!name) return null;
+      // Bundle definitions carry no variant selection.
+      return { id: item?.id, name, variants: '', qty };
+    })
+    .filter(Boolean) as BundleComponentRow[];
+};
+
+/**
+ * Group line items into bundle parents (with components nested) and regulars.
+ */
+export const groupBundleLineItems = (items: LineItem[] = []) => {
+  const regular: LineItem[] = [];
+  const bundleParents: LineItem[] = [];
+  const componentsByParent: Record<string, LineItem[]> = {};
+
+  (items || []).forEach(item => {
+    // Skip components surfaced at the top level — they're rendered nested.
+    if (item?.component_line_item) {
+      return;
+    }
+
+    const product = (item?.price as Price)?.product as Product | undefined;
+    if (product?.bundle) {
+      bundleParents.push(item);
+      componentsByParent[item.id] = byPosition(item?.component_line_items?.data || []);
+      return;
+    }
+
+    regular.push(item);
+  });
+
+  return { regular, bundleParents, componentsByParent };
+};
 
 // Get only enabled price choices.
 export const getEnabledPriceChoices = (choices: Array<PriceChoice>): Array<PriceChoice> => {
@@ -22,14 +106,16 @@ export const convertLineItemsToLineItemData = (
   quantity: number;
   variant_id?: string;
 }> => {
-  return (lineItems?.data || []).map(item => {
-    return {
-      ...(!!item?.id ? { id: item.id } : {}),
-      price_id: item.price.id,
-      quantity: item.quantity,
-      variant_id: item.variant?.id,
-    };
-  });
+  return (lineItems?.data || [])
+    .filter(item => !item?.component_line_item)
+    .map(item => {
+      return {
+        ...(!!item?.id ? { id: item.id } : {}),
+        price_id: item.price.id,
+        quantity: item.quantity,
+        variant_id: item.variant?.id,
+      };
+    });
 };
 
 export const addLineItem = (lineItems: RecursivePartial<lineItems>, data: { price_id: string; quantity: number }) => {

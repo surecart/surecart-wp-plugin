@@ -1,6 +1,4 @@
-import { store } from '@surecart/data';
 import { useState } from 'react';
-import { useSelect } from '@wordpress/data';
 import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import CreateProduct from './CreateProduct';
@@ -21,7 +19,7 @@ export function getEditURL({ id, ...query }) {
 	});
 }
 
-export default () => {
+export default ({ navigation }) => {
 	const [history, setHistory] = useState(null);
 
 	/**
@@ -46,15 +44,20 @@ export default () => {
 		setHistory(args);
 	};
 
-	// get the id from the store.
-	const id = useSelect((select) => select(store).selectPageId());
+	// Get the id from the navigation hook (SPA routing).
+	const id = navigation?.id;
 
 	return id ? (
-		<EditProduct id={id} setBrowserURL={setBrowserURL} />
+		<EditProduct
+			id={id}
+			setBrowserURL={setBrowserURL}
+			navigation={navigation}
+		/>
 	) : (
 		<CreateProduct
+			navigation={navigation}
 			onCreateProduct={(id) => {
-				window.location.assign(getEditURL({ id, status: 'publish' }));
+				navigation.goToEdit(id, { status: 'publish' });
 			}}
 		/>
 	);

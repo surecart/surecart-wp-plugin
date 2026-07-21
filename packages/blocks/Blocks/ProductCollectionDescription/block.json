@@ -4,6 +4,7 @@
 	"title": "Product Collection Description",
 	"description": "Display the product collection description",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["description"],
 	"supports": {
 		"reusable": false,

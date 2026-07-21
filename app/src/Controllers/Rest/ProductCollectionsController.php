@@ -52,4 +52,12 @@ class ProductCollectionsController extends RestController {
 	 * @var boolean
 	 */
 	protected $anonymous_hides_archived = true;
+
+	/**
+	 * Resource slug for the dynamic list filter hooks
+	 * (`surecart/product_collections/list/query_args`, `.../list/response`).
+	 *
+	 * @var string
+	 */
+	protected $resource = 'product_collections';
 }

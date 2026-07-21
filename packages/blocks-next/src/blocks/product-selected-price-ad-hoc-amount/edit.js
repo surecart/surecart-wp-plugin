@@ -33,10 +33,10 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Custom Amount Settings')}>
+				<PanelBody title={__('Custom Amount Settings', 'surecart')}>
 					<UnitControl
 						__next40pxDefaultSize
-						label={__('Width')}
+						label={__('Width', 'surecart')}
 						labelPosition="edge"
 						__unstableInputWidth="80px"
 						value={width || ''}

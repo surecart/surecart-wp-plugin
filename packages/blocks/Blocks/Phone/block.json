@@ -4,6 +4,7 @@
 	"title": "Phone",
 	"description": "Display a phone number collection field.",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"keywords": ["phone", "tel", "customer"],
 	"ancestor": ["surecart/form"],
 	"supports": {

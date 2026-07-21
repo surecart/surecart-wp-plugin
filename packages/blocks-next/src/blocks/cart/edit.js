@@ -121,7 +121,8 @@ export default ({
 			{isOldTemplate && (
 				<Notice status="warning" isDismissible={false}>
 					{__(
-						'The current template for cart is outdated. Please upgrade to a newer version by clicking '
+						'The current template for cart is outdated. Please upgrade to a newer version by clicking ',
+						'surecart'
 					)}
 					<Button
 						onClick={() => {

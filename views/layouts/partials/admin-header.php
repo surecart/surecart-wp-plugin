@@ -2,7 +2,8 @@
 	#sc-admin-header {
 		background-color: #fff;
 		width: calc(100% + 20px);
-		margin-left: -20px;
+		/* Logical: covers #wpcontent's inline-start padding in RTL too. */
+		margin-inline-start: -20px;
 	}
 
 	#sc-admin-container {
@@ -24,6 +25,16 @@
 		justify-content: flex-end;
 		gap: 1em;
 	}
+
+	/* Mobile: the 16rem suffix slot squeezes the breadcrumb onto two lines. */
+	@media screen and (max-width: 782px) {
+		#sc-admin-container {
+			padding: 10px 12px;
+		}
+		.sc-admin-suffix {
+			display: none;
+		}
+	}
 </style>
 
 <div id="sc-admin-header">
@@ -41,11 +52,21 @@
 				<?php endforeach; ?>
 			</sc-breadcrumbs>
 		<?php endif; ?>
-		<?php if ( ! empty( $suffix ) || ! empty( $report_url ) ) : ?>
+		<?php if ( ! empty( $suffix ) || ! empty( $report_url ) || ! empty( $enhanced_view_promo ) ) : ?>
 		<div class="sc-admin-suffix">
 			<?php
 			if ( ! empty( $suffix ) ) {
 				echo wp_kses_post( $suffix );
+			}
+			?>
+			<?php
+			if ( ! empty( $enhanced_view_promo ) ) {
+				\SureCart::render(
+					'layouts/partials/enhanced-views-promo',
+					[
+						'return_url' => is_string( $enhanced_view_promo ) ? $enhanced_view_promo : admin_url(),
+					]
+				);
 			}
 			?>
 			<?php

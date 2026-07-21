@@ -55,11 +55,11 @@ graph TD;
   sc-subscription-details --> sc-flex
   sc-subscription-details --> sc-tag
   sc-subscription-details --> sc-text
+  sc-subscription-details --> sc-icon
   sc-subscription-details --> sc-dialog
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
-  sc-subscription-details --> sc-icon
   sc-subscription-status-badge --> sc-tag
   sc-dialog --> sc-button
   sc-dialog --> sc-icon

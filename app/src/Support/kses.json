@@ -300,6 +300,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-geo-permission": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-mollie-payment": {
     "method": true,
     "processor-id": true,
@@ -309,6 +315,13 @@
     "slot": true
   },
   "sc-checkout-paystack-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-product-bundle-component-variants": {
+    "product": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1040,6 +1053,8 @@
   "sc-line-items": {
     "editable": true,
     "removable": true,
+    "separator": true,
+    "show-all-bundle-items": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1775,6 +1790,7 @@
   },
   "sc-product-line-item": {
     "amount": true,
+    "bundle-components": true,
     "display-amount": true,
     "editable": true,
     "fees": true,
@@ -1790,6 +1806,8 @@
     "review-button-link": true,
     "scratch": true,
     "scratch-display-amount": true,
+    "separator": true,
+    "show-all-bundle-items": true,
     "sku": true,
     "trial": true,
     "variant": true,
@@ -2435,6 +2453,7 @@
     "freeze": true,
     "open": true,
     "padding": true,
+    "placement": true,
     "text": true,
     "type": true,
     "width": true,

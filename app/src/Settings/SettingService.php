@@ -10,12 +10,86 @@ use SureCart\Routing\PermalinksSettingsService;
  */
 class SettingService {
 	/**
+	 * Per-user meta key for the "Introducing Modern View" onboarding modal
+	 * dismissal flag. Stored as user_meta (not a site option) so each admin
+	 * dismisses for themselves — onboarding is inherently per-user.
+	 */
+	const MODERN_VIEW_INTRO_DISMISSED_META = 'surecart_modern_view_intro_dismissed';
+
+	/**
 	 * Boostrap settings.
 	 *
 	 * @return void
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerSettings' ] );
+		add_action( 'admin_post_sc_set_enhanced_admin_views', [ $this, 'handleSetEnhancedAdminViews' ] );
+		add_action( 'wp_ajax_sc_dismiss_modern_view_intro', [ $this, 'handleDismissModernViewIntro' ] );
+	}
+
+	/**
+	 * Handle setting enhanced admin views.
+	 *
+	 * @return void
+	 */
+	public function handleSetEnhancedAdminViews() {
+		check_admin_referer( 'sc_set_enhanced_admin_views' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to change this setting.', 'surecart' ), '', [ 'response' => 403 ] );
+		}
+
+		$value = isset( $_POST['value'] ) ? (bool) absint( wp_unslash( $_POST['value'] ) ) : false;
+		update_option( 'surecart_enhanced_admin_views', $value );
+
+		$redirect = isset( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : admin_url();
+		wp_safe_redirect( $redirect );
+		exit;
+	}
+
+	/**
+	 * Mark the Modern View intro modal as dismissed for the current user.
+	 *
+	 * @return void
+	 */
+	public function handleDismissModernViewIntro() {
+		check_admin_referer( 'sc_dismiss_modern_view_intro' );
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( [ 'message' => __( 'Not logged in.', 'surecart' ) ], 401 );
+		}
+
+		update_user_meta( get_current_user_id(), self::MODERN_VIEW_INTRO_DISMISSED_META, 1 );
+
+		wp_send_json_success( [ 'dismissed' => true ] );
+	}
+
+	/**
+	 * Whether the current user has dismissed the Modern View intro modal.
+	 *
+	 * @return bool
+	 */
+	public static function isModernViewIntroDismissed(): bool {
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
+		return (bool) get_user_meta( get_current_user_id(), self::MODERN_VIEW_INTRO_DISMISSED_META, true );
+	}
+
+	/**
+	 * Build the `modern_view_intro` data bag consumed by the React modal.
+	 *
+	 * @return array
+	 */
+	public static function getModernViewIntroData(): array {
+		return [
+			'enabled'       => (bool) get_option( 'surecart_enhanced_admin_views', true ),
+			'dismissed'     => self::isModernViewIntroDismissed(),
+			'image_url'     => trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/dataview/modern-view-change.svg',
+			'toggle_id'     => 'sc-enhanced-views-toggle',
+			'dismiss_url'   => admin_url( 'admin-ajax.php' ),
+			'dismiss_nonce' => wp_create_nonce( 'sc_dismiss_modern_view_intro' ),
+		];
 	}
 
 	/**
@@ -225,6 +299,42 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'checkout_geo_capture_title',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_content',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => [ $this, 'sanitizeRichContent' ],
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_allow_label',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'checkout_geo_capture_decline_label',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
 			'shop_admin_menu',
 			[
 				'type'              => 'boolean',
@@ -420,6 +530,17 @@ class SettingService {
 				'autoload'          => false,
 			]
 		);
+		$this->register(
+			'surecart',
+			'enhanced_admin_views',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+				'autoload'          => true,
+			]
+		);
 	}
 	/**
 	 * Register a setting.
@@ -443,6 +564,32 @@ class SettingService {
 	public function register( $option_group, $option_name, $args = [] ) {
 		$service = new RegisterSettingService( $option_group, $option_name, $args );
 		return $service->register();
+	}
+
+	/**
+	 * Sanitize rich (post) content, normalizing "visually empty" editor output
+	 * (e.g. "<p></p>") to an empty string.
+	 *
+	 * The block/rich text editor submits "<p></p>" for an empty field, which
+	 * wp_kses_post preserves as a non-empty string. That breaks empty-value
+	 * default fallbacks. Collapsing it to '' keeps the emptiness contract
+	 * consistent with the plain-text settings sanitized via sanitize_text_field.
+	 *
+	 * @param string $value Raw setting value.
+	 * @return string Sanitized content, or '' when visually empty.
+	 */
+	public function sanitizeRichContent( $value ) {
+		$value = wp_kses_post( (string) $value );
+
+		// Keep media-only content (no text) as non-empty.
+		if ( preg_match( '/<(img|iframe|video|audio|embed|object|svg)\b/i', $value ) ) {
+			return $value;
+		}
+
+		// Collapse "<p></p>", "<p><br></p>", "&nbsp;" and whitespace to ''.
+		$text = trim( wp_strip_all_tags( str_replace( '&nbsp;', ' ', $value ) ) );
+
+		return '' === $text ? '' : $value;
 	}
 
 	/**

@@ -10,7 +10,7 @@
 	role="list"
 >
 	<template
-		data-wp-each--line_item="state.checkoutLineItems"
+		data-wp-each--line_item="state.cartLineItems"
 		data-wp-each-key="context.line_item.id"
 	>
 		<div class="sc-product-line-item" role="listitem">
@@ -91,6 +91,33 @@
 								</div>
 							</div>
 						<?php endif; ?>
+
+						<!-- Bundle components (nested items) -->
+						<div
+							class="sc-bundle-components"
+							data-wp-bind--hidden="!state.isBundleParent"
+							hidden
+						>
+							<div class="sc-bundle-components__label">
+								<span data-wp-text="state.bundleComponentsLabel"></span>
+							</div>
+							<template
+								data-wp-each--component="state.bundleComponents"
+								data-wp-each-key="context.component.id"
+							>
+								<div class="sc-bundle-components__item">
+									<img
+										class="sc-bundle-components__item-image"
+										data-wp-bind--hidden="!context.component.image.src"
+										data-wp-bind--src="context.component.image.src"
+										data-wp-bind--alt="context.component.price.product.name"
+										loading="lazy"
+										alt=""
+									/>
+									<span class="sc-bundle-components__item-name" data-wp-text="context.component.price.product.name"></span>
+								</div>
+							</template>
+						</div>
 					</div>
 				</div>
 

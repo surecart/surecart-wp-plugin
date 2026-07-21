@@ -1,0 +1,37 @@
+@import "../components/dataview-list/dataview-list-common.scss";
+
+// Name column: two-line titles; keep DataViews' vertical centering on the row.
+.sc-dataview-list-wrapper .dataviews-view-table {
+	td:has(.sc-product-name-cell),
+	td:has(.sc-product-name-row) {
+		white-space: normal;
+		overflow: visible;
+		text-overflow: unset;
+
+		> .dataviews-view-table__cell-content-wrapper {
+			white-space: normal;
+		}
+	}
+}
+
+.sc-variant-cell {
+	line-height: 1.4;
+}
+
+.dataviews-view-table tbody tr:has(.sc-variant-cell) {
+	background: var(--sc-color-gray-50, #f9fafb);
+
+	.components-checkbox-control,
+	.components-checkbox-control__input-container {
+		visibility: hidden;
+	}
+
+	// Keep the actions column's background color consistent with the rest of the row when sticky.
+	.dataviews-view-table__actions-column--sticky {
+		background-color: inherit;
+	}
+}
+
+.dataviews-view-table tbody tr:has(.sc-variant-cell):hover {
+	background: var(--sc-color-gray-100, #f3f4f6);
+}
