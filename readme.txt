@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: ecommerce, online store, subscriptions, stripe, payments
 Requires at least: 6.8
 Tested up to: 7.0
-Stable tag: 4.6.0
+Stable tag: 4.6.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -422,7 +422,10 @@ Accessibility is a huge priority for the entire team building SureCart. As you k
 
 == Changelog ==
 
-= 4.6.0 - July 21st, 2026 = 
+= 4.6.1 - July 22nd, 2026 =
+- Fix: Bundle item basis amount not persisting when edited from the bundle item drawer.
+
+= 4.6.0 - July 21st, 2026 =
 - New: Product Bundles let you combine multiple products, prices, and variants into a single purchasable package.
 - Improvement: Sync checkout verification code cooldown to platform to prevent multiple emails.
 - Improvement: Harden security of plugin.
