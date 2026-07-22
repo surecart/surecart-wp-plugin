@@ -1,7 +1,13 @@
 $padding-size: 20px;
 
-body:has(.sc-dataview-list-wrapper) {
-	overflow: hidden;
+// Freeze the page on desktop only — that's where an inner scroller
+// (#wpcontent or the workspace shell) takes over. Mobile keeps native page
+// scroll. `clip` rather than `hidden`: hidden still lets keyboard focus and
+// find-in-page shift the page and break the pinned bars.
+@media screen and (min-width: 783px) {
+	body:has(.sc-dataview-list-wrapper) {
+		overflow: clip;
+	}
 }
 
 // Workspace shell — desktop only; JS suppresses it on mobile.
@@ -12,7 +18,7 @@ body:has(.sc-dataview-list-wrapper) {
 			display: none !important;
 		}
 
-		overflow: hidden;
+		overflow: clip;
 		height: 100vh;
 
 		#wpbody-content {
@@ -33,7 +39,7 @@ body:has(.sc-dataview-list-wrapper) {
 	html:has(body.is-fullscreen-mode.sc-enhanced-view) {
 		margin-top: 0 !important;
 		height: 100vh;
-		overflow: hidden;
+		overflow: clip;
 	}
 }
 
@@ -271,6 +277,14 @@ body:has(.sc-dataview-list-wrapper) {
 // top:--sc-list-header-height) because they are now relative to `#wpcontent`,
 // which already sits below the admin bar. Mobile keeps page-scroll (below).
 @media screen and (min-width: 783px) {
+	// Same guard for the viewport itself; a tall admin menu stays reachable through `useAdminMenuScroll`.
+	html:has(
+			body:not(.is-fullscreen-mode)
+				.sc-dataview-list-wrapper[data-enhanced-view="off"]
+		) {
+		overflow: clip;
+	}
+
 	body:has(.sc-dataview-list-wrapper[data-enhanced-view="off"]):not(
 			.is-fullscreen-mode
 		)

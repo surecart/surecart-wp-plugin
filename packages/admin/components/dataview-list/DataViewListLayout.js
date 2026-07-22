@@ -9,6 +9,7 @@ import Notifications from '../Notifications';
 import EnhancedViewToggle from './EnhancedViewToggle';
 import useEnhancedView from './useEnhancedView';
 import useHorizontalScrollState from './useHorizontalScrollState';
+import useAdminMenuScroll from './useAdminMenuScroll';
 
 export default ({
 	header,
@@ -31,6 +32,7 @@ export default ({
 	const { enabled, toggle } = useEnhancedView();
 	const listRootRef = useRef(null);
 	useHorizontalScrollState(listRootRef);
+	useAdminMenuScroll();
 
 	// Reset scroll when the page number changes — pagination lives in the
 	// footer, so without this the user lands at the bottom of the new page.
