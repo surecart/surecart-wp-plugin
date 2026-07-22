@@ -207,7 +207,7 @@ export default ({ item, currency, isOpen, onClose, onSave }) => {
 								}
 								placeholder={__('Optional', 'surecart')}
 								value={basis === null ? '' : basis}
-								onScChange={(e) => setBasis(e.detail)}
+								onScChange={(e) => setBasis(e.target.value)}
 							/>
 							<div
 								css={css`
