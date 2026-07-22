@@ -265,7 +265,7 @@ export class ScProductCheckoutSelectVariantOption {
   render() {
     return (
       <sc-form-control class="sc-checkout-product-price-variant-selector" label={this.selectorTitle}>
-        {(this.product.variant_options.data || []).map(({ name, values, display_type }, index) => {
+        {(this.product?.variant_options?.data || []).map(({ name, values, display_type }, index) => {
           if (display_type === 'dropdown') {
             return this.renderDropdown({ name, values, index });
           }
@@ -273,7 +273,7 @@ export class ScProductCheckoutSelectVariantOption {
         })}
 
         {this.product?.prices?.data?.length > 1 && (
-          <sc-form-control label={!!this.product.variant_options.data?.length ? this.label : null}>
+          <sc-form-control label={!!this.product?.variant_options?.data?.length ? this.label : null}>
             <sc-choices>
               {(this.product.prices.data || [])
                 .sort((a, b) => a?.position - b?.position)
