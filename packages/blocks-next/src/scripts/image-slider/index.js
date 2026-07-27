@@ -2,7 +2,9 @@
  * Wordpress dependencies
  */
 import { store, getElement, getContext } from '@wordpress/interactivity';
-const { __ } = wp.i18n;
+
+// Resolve wp.i18n lazily — script optimizer plugins can evaluate this module before the wp-i18n script, and a top-level destructure would throw and kill the slider entirely.
+const __ = (text, domain) => window.wp?.i18n?.__(text, domain) ?? text;
 
 /**
  * External dependencies
@@ -39,10 +41,10 @@ const mapLightboxIndexToSliderIndex = (lightboxImageIndex) => {
 
 // controls the slider
 const { state, actions } = store('surecart/image-slider', {
+	// `active` is intentionally not declared here — the server sets it to true (see product-media/controller.php) and a client-side `false` would override it, flashing the gallery layout whenever this module evaluates after hydration (e.g. delay-JS optimizer plugins).
 	state: {
 		thumbsSwiper: null,
 		swiper: null,
-		active: false,
 	},
 	actions: {
 		updateSlider: () => {
@@ -124,6 +126,8 @@ const { state, actions } = store('surecart/image-slider', {
 				new Swiper(thumbs, {
 					modules: [Navigation],
 					direction: 'horizontal',
+					observer: true,
+					observeParents: true,
 					navigation: {
 						nextEl:
 							thumbsContainer.querySelector(
@@ -165,6 +169,8 @@ const { state, actions } = store('surecart/image-slider', {
 				{
 					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
+					observer: true,
+					observeParents: true,
 					loop: false,
 					centeredSlides: true,
 					a11y,
@@ -207,3 +213,12 @@ const { state, actions } = store('surecart/image-slider', {
 		},
 	},
 });
+
+// If hydration ran before this module evaluated (delay-JS optimizer plugins), the fire-once
+// data-wp-init already no-opped and the slider was never built. Re-kick init through the
+// data-wp-on-window--sc-image-slider-load directive so each instance runs with its own scope.
+if (
+	document.querySelector('.sc-image-media .swiper:not(.swiper-initialized)')
+) {
+	window.dispatchEvent(new Event('sc-image-slider-load'));
+}
