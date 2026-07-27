@@ -233,7 +233,7 @@ class Media extends \Bricks\Element {
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => $thumbnails_per_page,
 				'desktop_gallery'     => 'gallery' === $desktop_gallery,
-				'show_thumbs'         => (bool) ! empty( $this->settings['show_thumbs'] ),
+				'show_thumbnails'     => (bool) ! empty( $this->settings['show_thumbs'] ),
 			]
 		);
 	}
