@@ -42,6 +42,7 @@ const { state, actions } = store('surecart/image-slider', {
 	state: {
 		thumbsSwiper: null,
 		swiper: null,
+		active: false,
 	},
 	actions: {
 		updateSlider: () => {
@@ -123,8 +124,6 @@ const { state, actions } = store('surecart/image-slider', {
 				new Swiper(thumbs, {
 					modules: [Navigation],
 					direction: 'horizontal',
-					observer: true,
-					observeParents: true,
 					navigation: {
 						nextEl:
 							thumbsContainer.querySelector(
@@ -166,8 +165,6 @@ const { state, actions } = store('surecart/image-slider', {
 				{
 					modules: [Thumbs, A11y, Navigation, Pagination],
 					direction: 'horizontal',
-					observer: true,
-					observeParents: true,
 					loop: false,
 					centeredSlides: true,
 					a11y,
@@ -210,12 +207,3 @@ const { state, actions } = store('surecart/image-slider', {
 		},
 	},
 });
-
-// If hydration ran before this module evaluated (delay-JS optimizer plugins), the fire-once
-// data-wp-init already no-opped and the slider was never built. Re-kick init through the
-// data-wp-on-window--sc-image-slider-load directive so each instance runs with its own scope.
-if (
-	document.querySelector('.sc-image-media .swiper:not(.swiper-initialized)')
-) {
-	window.dispatchEvent(new Event('sc-image-slider-load'));
-}
