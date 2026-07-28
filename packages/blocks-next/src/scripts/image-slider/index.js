@@ -2,9 +2,7 @@
  * Wordpress dependencies
  */
 import { store, getElement, getContext } from '@wordpress/interactivity';
-
-// Resolve wp.i18n lazily — script optimizer plugins can evaluate this module before the wp-i18n script, and a top-level destructure would throw and kill the slider entirely.
-const __ = (text, domain) => window.wp?.i18n?.__(text, domain) ?? text;
+const { __ } = wp.i18n;
 
 /**
  * External dependencies
@@ -41,7 +39,6 @@ const mapLightboxIndexToSliderIndex = (lightboxImageIndex) => {
 
 // controls the slider
 const { state, actions } = store('surecart/image-slider', {
-	// `active` is intentionally not declared here — the server sets it to true (see product-media/controller.php) and a client-side `false` would override it, flashing the gallery layout whenever this module evaluates after hydration (e.g. delay-JS optimizer plugins).
 	state: {
 		thumbsSwiper: null,
 		swiper: null,
