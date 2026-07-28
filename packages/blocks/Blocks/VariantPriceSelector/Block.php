@@ -74,7 +74,7 @@ class Block extends BaseBlock {
 			->id( 'sc-checkout-product-price-variant-selector-' . (int) self::$instance )
 			->with(
 				[
-					'product'       => $product,
+					'product'       => sc_public_product_data( $product ),
 					'label'         => ! empty( $attributes['label'] ) ? $attributes['label'] : '',
 					'selectorTitle' => ! empty( $attributes['selectorTitle'] ) ? $attributes['selectorTitle'] : '',
 				]

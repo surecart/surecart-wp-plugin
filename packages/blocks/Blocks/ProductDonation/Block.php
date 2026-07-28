@@ -48,11 +48,11 @@ class Block extends BaseBlock {
 				),
 				'productDonation' => array(
 					$attributes['product_id'] => array(
-						'product'       => $product->toArray(),
+						'product'       => sc_public_product_data( $product ),
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => null,
 						'custom_amount' => null,
-						'selectedPrice' => ( $product->active_prices || array() )[0] ?? null,
+						'selectedPrice' => sc_public_price_data( ( $product->active_prices || array() )[0] ?? null ),
 					),
 				),
 			)

@@ -42,8 +42,8 @@ class Block extends BaseBlock {
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
 			[
-				'price'   => $price->toArray(),
-				'product' => $price->product->toArray(),
+				'price'   => sc_public_price_data( $price ),
+				'product' => sc_public_product_data( $price->product ),
 			]
 		);
 

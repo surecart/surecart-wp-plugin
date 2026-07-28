@@ -1198,6 +1198,9 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the product page initial state
 	 *
+	 * This is serialized into public page HTML, so catalog data is stripped
+	 * of private fields (see \SureCart\Support\PublicCatalogData).
+	 *
 	 * @param array $args Array of arguments.
 	 *
 	 * @return array
@@ -1210,13 +1213,13 @@ class Product extends Model implements PageModel {
 			[
 				'formId'          => $form->ID,
 				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
-				'product'         => $this,
-				'prices'          => $this->active_prices,
-				'selectedPrice'   => ( $this->active_prices ?? [] )[0] ?? null,
+				'product'         => sc_public_product_data( $this ),
+				'prices'          => array_map( 'sc_public_price_data', $this->active_prices ?? [] ),
+				'selectedPrice'   => sc_public_price_data( ( $this->active_prices ?? [] )[0] ?? null ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-				'variant_options' => $this->variant_options->data ?? [],
-				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->initial_variant ?? null,
+				'variant_options' => array_map( 'sc_public_variant_option_data', $this->variant_options->data ?? [] ),
+				'variants'        => array_map( 'sc_public_variant_data', $this->variants->data ?? [] ),
+				'selectedVariant' => sc_public_variant_data( $this->initial_variant ?? null ),
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);
