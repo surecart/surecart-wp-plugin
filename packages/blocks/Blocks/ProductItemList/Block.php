@@ -2,8 +2,7 @@
 
 namespace SureCartBlocks\Blocks\ProductItemList;
 
-use SureCart\Models\Collection;
-use SureCart\Models\Product;
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\BaseBlock;
 /**
  * ProductItemList block
@@ -271,7 +270,7 @@ class Block extends BaseBlock {
 		// get the product for each post, stripped for public serialization.
 		$products = array_map(
 			function ( $post ) {
-				return sc_public_product_data( sc_get_product( $post ) );
+				return PublicCatalogData::product( sc_get_product( $post ) );
 			},
 			$product_query->posts ?? []
 		);

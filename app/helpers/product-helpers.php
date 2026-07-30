@@ -70,63 +70,6 @@ if ( ! function_exists( 'sc_get_product' ) ) {
 	}
 }
 
-if ( ! function_exists( 'sc_public_product_data' ) ) {
-	/**
-	 * Get product data safe to serialize into public page HTML.
-	 *
-	 * Strips private catalog fields (metadata, sku, stock, downloads, files,
-	 * etc.) the same way the anonymous catalog REST endpoints do — including
-	 * nested prices, variants and bundle component products. Every product
-	 * serialized into component data or initial state must go through this.
-	 *
-	 * @param \SureCart\Models\Product|array|object|null $product The product.
-	 *
-	 * @return array|mixed The stripped product array.
-	 */
-	function sc_public_product_data( $product ) {
-		return ( new \SureCart\Support\PublicCatalogData() )->product( $product );
-	}
-}
-
-if ( ! function_exists( 'sc_public_price_data' ) ) {
-	/**
-	 * Get price data safe to serialize into public page HTML.
-	 *
-	 * @param \SureCart\Models\Price|array|object|null $price The price.
-	 *
-	 * @return array|mixed The stripped price array.
-	 */
-	function sc_public_price_data( $price ) {
-		return ( new \SureCart\Support\PublicCatalogData() )->price( $price );
-	}
-}
-
-if ( ! function_exists( 'sc_public_variant_data' ) ) {
-	/**
-	 * Get variant data safe to serialize into public page HTML.
-	 *
-	 * @param \SureCart\Models\Variant|array|object|null $variant The variant.
-	 *
-	 * @return array|mixed The stripped variant array.
-	 */
-	function sc_public_variant_data( $variant ) {
-		return ( new \SureCart\Support\PublicCatalogData() )->variant( $variant );
-	}
-}
-
-if ( ! function_exists( 'sc_public_variant_option_data' ) ) {
-	/**
-	 * Get variant option data safe to serialize into public page HTML.
-	 *
-	 * @param \SureCart\Models\VariantOption|array|object|null $option The variant option.
-	 *
-	 * @return array|mixed The stripped variant option array.
-	 */
-	function sc_public_variant_option_data( $option ) {
-		return ( new \SureCart\Support\PublicCatalogData() )->variantOption( $option );
-	}
-}
-
 if ( ! function_exists( 'sc_get_products' ) ) {
 	/**
 	 * Standard way of retrieving products based on certain parameters.

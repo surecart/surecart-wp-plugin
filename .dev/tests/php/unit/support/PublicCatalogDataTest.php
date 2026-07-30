@@ -389,7 +389,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	 * @group public-catalog-serialization
 	 */
 	public function test_product_serialization_omits_private_fields() {
-		$product = ( new PublicCatalogData() )->product( $this->privateProductFixture() );
+		$product = PublicCatalogData::product( $this->privateProductFixture() );
 
 		foreach ( [ 'metadata', 'sku', 'stock', 'held_stock', 'status', 'cataloged_at', 'dimensions', 'weight', 'weight_unit', 'tax_category', 'tax_enabled', 'commission_structure', 'downloads', 'current_release_download', 'files', 'shipping_profile' ] as $field ) {
 			$this->assertArrayNotHasKey( $field, $product, "product.$field should be stripped" );
@@ -415,7 +415,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	 * @group public-catalog-serialization
 	 */
 	public function test_product_serialization_keeps_public_and_storefront_fields() {
-		$product = ( new PublicCatalogData() )->product( $this->privateProductFixture() );
+		$product = PublicCatalogData::product( $this->privateProductFixture() );
 
 		// public catalog fields.
 		$this->assertSame( 'Test Product', $product['name'] );
@@ -441,7 +441,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	 * @group public-catalog-serialization
 	 */
 	public function test_bundle_component_product_is_stripped() {
-		$product = ( new PublicCatalogData() )->product( $this->bundleProductFixture() );
+		$product = PublicCatalogData::product( $this->bundleProductFixture() );
 
 		$item = $product['bundle_items']['data'][0];
 
@@ -466,7 +466,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	 * @group public-catalog-serialization
 	 */
 	public function test_price_serialization_strips_price_and_expanded_product() {
-		$price = ( new PublicCatalogData() )->price(
+		$price = PublicCatalogData::price(
 			[
 				'id'           => 'price_123',
 				'object'       => 'price',
@@ -494,7 +494,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	 * @group public-catalog-serialization
 	 */
 	public function test_variant_serialization_keeps_available_stock() {
-		$variant = ( new PublicCatalogData() )->variant(
+		$variant = PublicCatalogData::variant(
 			[
 				'id'              => 'variant_123',
 				'object'          => 'variant',
@@ -513,17 +513,71 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * The guest checkout routes accept anonymous callers and honour
+	 * `expand=price.product`, so a product reaches the response without a
+	 * purchase. Same strip as the page output, minus the buyer's own fields.
+	 *
+	 * @group public-catalog-serialization
+	 */
+	public function test_checkout_line_items_strip_expanded_catalog_data() {
+		$checkout = PublicCatalogData::lineItems(
+			[
+				'id'         => 'checkout_123',
+				'object'     => 'checkout',
+				'line_items' => [
+					'data' => [
+						[
+							'id'       => 'li_123',
+							'object'   => 'line_item',
+							'quantity' => 1,
+							'price'    => [
+								'id'       => 'price_123',
+								'object'   => 'price',
+								'amount'   => 1500,
+								'metadata' => [ 'internal_note' => 'price_meta_secret_123' ],
+								'product'  => $this->privateProductFixture(),
+							],
+							'variant'  => [
+								'id'              => 'variant_123',
+								'object'          => 'variant',
+								'option_1'        => 'Small',
+								'available_stock' => 2,
+								'sku'             => 'sk_variant_secret_123',
+								'metadata'        => [ 'internal_note' => 'variant_meta_secret_123' ],
+							],
+						],
+					],
+				],
+			]
+		);
+
+		$item = $checkout['line_items']['data'][0];
+
+		$this->assertArrayNotHasKey( 'metadata', $item['price'] );
+		$this->assertArrayNotHasKey( 'metadata', $item['price']['product'] );
+		$this->assertArrayNotHasKey( 'sku', $item['price']['product'] );
+		$this->assertArrayNotHasKey( 'sku', $item['variant'] );
+
+		// the cart renders from these.
+		$this->assertSame( 1, $item['quantity'] );
+		$this->assertSame( 1500, $item['price']['amount'] );
+		$this->assertSame( 'Test Product', $item['price']['product']['name'] );
+		$this->assertSame( 4, $item['price']['product']['available_stock'] );
+		$this->assertSame( 2, $item['variant']['available_stock'] );
+
+		$this->assertNoPrivateSentinels( $checkout );
+	}
+
+	/**
 	 * Null and non-array inputs pass through untouched.
 	 *
 	 * @group public-catalog-serialization
 	 */
 	public function test_non_array_input_passes_through() {
-		$service = new PublicCatalogData();
-
-		$this->assertNull( $service->product( null ) );
-		$this->assertNull( $service->price( null ) );
-		$this->assertNull( $service->variant( null ) );
-		$this->assertSame( 'price_123', $service->price( 'price_123' ) );
+		$this->assertNull( PublicCatalogData::product( null ) );
+		$this->assertNull( PublicCatalogData::price( null ) );
+		$this->assertNull( PublicCatalogData::variant( null ) );
+		$this->assertSame( 'price_123', PublicCatalogData::price( 'price_123' ) );
 	}
 
 	/**
@@ -573,7 +627,7 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	public function test_helper_strips_product_model() {
 		$this->mockDisplayCurrencyRequestsOnly();
 
-		$product = sc_public_product_data( new Product( json_decode( wp_json_encode( $this->bundleProductFixture() ) ) ) );
+		$product = PublicCatalogData::product( new Product( json_decode( wp_json_encode( $this->bundleProductFixture() ) ) ) );
 
 		$this->assertIsArray( $product );
 		$this->assertArrayNotHasKey( 'metadata', $product );
