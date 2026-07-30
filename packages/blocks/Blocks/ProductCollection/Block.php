@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\ProductCollection;
 
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\ProductItemList\Block as ProductItemListBlock;
 
 /**
@@ -78,7 +79,7 @@ class Block extends ProductItemListBlock {
 		// get the product for each post, stripped for public serialization.
 		$products = array_map(
 			function ( $post ) {
-				return sc_public_product_data( sc_get_product( $post ) );
+				return PublicCatalogData::product( sc_get_product( $post ) );
 			},
 			$product_query->posts ?? []
 		);

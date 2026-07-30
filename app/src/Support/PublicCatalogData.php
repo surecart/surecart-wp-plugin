@@ -5,16 +5,19 @@ namespace SureCart\Support;
 use SureCart\Concerns\StripsPrivateCatalogFields;
 
 /**
- * Strips private catalog data from models serialized into public page HTML.
+ * Strips private catalog fields from models serialized into public page HTML.
  *
- * Component data scripts and the initial state store (`#sc-store-data`)
- * serialize full catalog models into storefront and checkout pages for
- * anonymous visitors. Every one of those serializations must go through this
- * class so it carries the same protection as the anonymous catalog REST
- * endpoints, instead of each call site remembering to strip.
+ * Storefront and checkout pages serialize catalog models into component data
+ * scripts and the `#sc-store-data` initial state, where any anonymous visitor
+ * can read them. This runs the same strip as the anonymous catalog REST routes,
+ * so the two paths cannot drift apart.
  *
- * Use the `sc_public_product_data` / `sc_public_price_data` /
- * `sc_public_variant_data` helpers from views and blocks.
+ * Nothing enforces this at the output boundary yet: a new serialization of a
+ * product, price or variant into page HTML is unprotected until it is routed
+ * through here.
+ *
+ * @see \SureCart\Concerns\StripsPrivateCatalogFields Field lists and the
+ *      `surecart/rest/private_catalog_fields` filter.
  */
 class PublicCatalogData {
 	use StripsPrivateCatalogFields;
@@ -47,8 +50,8 @@ class PublicCatalogData {
 	 *
 	 * @return array|mixed The stripped product array. Non-object/array input passes through untouched.
 	 */
-	public function product( $product ) {
-		return $this->stripPrivateProductFields( $this->toDataArray( $product ) );
+	public static function product( $product ) {
+		return ( new self() )->stripPrivateProductFields( self::toDataArray( $product ) );
 	}
 
 	/**
@@ -60,8 +63,8 @@ class PublicCatalogData {
 	 *
 	 * @return array|mixed The stripped price array. Non-object/array input passes through untouched.
 	 */
-	public function price( $price ) {
-		return $this->stripPrivatePriceFields( $this->toDataArray( $price ) );
+	public static function price( $price ) {
+		return ( new self() )->stripPrivatePriceFields( self::toDataArray( $price ) );
 	}
 
 	/**
@@ -71,8 +74,8 @@ class PublicCatalogData {
 	 *
 	 * @return array|mixed The stripped variant array. Non-object/array input passes through untouched.
 	 */
-	public function variant( $variant ) {
-		return $this->stripPrivateVariantFields( $this->toDataArray( $variant ) );
+	public static function variant( $variant ) {
+		return ( new self() )->stripPrivateVariantFields( self::toDataArray( $variant ) );
 	}
 
 	/**
@@ -82,8 +85,8 @@ class PublicCatalogData {
 	 *
 	 * @return array|mixed The stripped variant option array. Non-object/array input passes through untouched.
 	 */
-	public function variantOption( $option ) {
-		return $this->stripPrivateVariantOptionFields( $this->toDataArray( $option ) );
+	public static function variantOption( $option ) {
+		return ( new self() )->stripPrivateVariantOptionFields( self::toDataArray( $option ) );
 	}
 
 	/**
@@ -94,7 +97,7 @@ class PublicCatalogData {
 	 *
 	 * @return array|mixed
 	 */
-	private function toDataArray( $data ) {
+	private static function toDataArray( $data ) {
 		if ( null === $data || is_scalar( $data ) ) {
 			return $data;
 		}

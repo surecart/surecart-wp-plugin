@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\Form;
 
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
@@ -53,7 +54,7 @@ class Block extends BaseBlock {
 						'formId'                   => $attributes['form_id'] ?? $sc_form_id,
 						'mode'                     => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 						// Serialized into public page state — strip private catalog fields.
-						'product'                  => sc_public_product_data( $attributes['product'] ?? [] ),
+						'product'                  => PublicCatalogData::product( $attributes['product'] ?? [] ),
 						'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
 						'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 						'abandonedCheckoutEnabled' => ! is_admin(),
