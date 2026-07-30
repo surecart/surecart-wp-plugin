@@ -5,12 +5,12 @@ namespace SureCart\Support;
 use SureCart\Concerns\StripsPrivateCatalogFields;
 
 /**
- * Strips private catalog fields from models serialized into public page HTML.
+ * Strips private catalog fields from anything an anonymous visitor can read.
  *
  * Storefront and checkout pages serialize catalog models into component data
- * scripts and the `#sc-store-data` initial state, where any anonymous visitor
- * can read them. This runs the same strip as the anonymous catalog REST routes,
- * so the two paths cannot drift apart.
+ * scripts and the `#sc-store-data` initial state, and the guest checkout routes
+ * return products expanded onto line items. This runs the same strip as the
+ * anonymous catalog REST routes on all of them, so the paths cannot drift apart.
  *
  * Nothing enforces this at the output boundary yet: a new serialization of a
  * product, price or variant into page HTML is unprotected until it is routed
@@ -87,6 +87,47 @@ class PublicCatalogData {
 	 */
 	public static function variantOption( $option ) {
 		return ( new self() )->stripPrivateVariantOptionFields( self::toDataArray( $option ) );
+	}
+
+	/**
+	 * Strip catalog data expanded onto a checkout's line items.
+	 *
+	 * The checkout routes accept anonymous callers by design (guest checkout),
+	 * and `expand=price.product` pulls a full product into the response — the
+	 * same data the page output strips, reachable without a purchase. Applied
+	 * to the view context only, so the owner and the matching customer still
+	 * get the full record.
+	 *
+	 * @param array|mixed $data Checkout response data. Anything else passes through untouched.
+	 *
+	 * @return array|mixed
+	 */
+	public static function lineItems( $data ) {
+		if ( ! is_array( $data ) || empty( $data['line_items']['data'] ) || ! is_array( $data['line_items']['data'] ) ) {
+			return $data;
+		}
+
+		$data['line_items']['data'] = array_map(
+			function ( $item ) {
+				if ( ! is_array( $item ) ) {
+					return $item;
+				}
+
+				// the price strip recurses into its expanded product.
+				if ( ! empty( $item['price'] ) && is_array( $item['price'] ) ) {
+					$item['price'] = self::price( $item['price'] );
+				}
+
+				if ( ! empty( $item['variant'] ) && is_array( $item['variant'] ) ) {
+					$item['variant'] = self::variant( $item['variant'] );
+				}
+
+				return $item;
+			},
+			$data['line_items']['data']
+		);
+
+		return $data;
 	}
 
 	/**

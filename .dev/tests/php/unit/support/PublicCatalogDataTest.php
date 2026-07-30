@@ -513,6 +513,62 @@ class PublicCatalogDataTest extends SureCartUnitTestCase {
 	}
 
 	/**
+	 * The guest checkout routes accept anonymous callers and honour
+	 * `expand=price.product`, so a product reaches the response without a
+	 * purchase. Same strip as the page output, minus the buyer's own fields.
+	 *
+	 * @group public-catalog-serialization
+	 */
+	public function test_checkout_line_items_strip_expanded_catalog_data() {
+		$checkout = PublicCatalogData::lineItems(
+			[
+				'id'         => 'checkout_123',
+				'object'     => 'checkout',
+				'line_items' => [
+					'data' => [
+						[
+							'id'       => 'li_123',
+							'object'   => 'line_item',
+							'quantity' => 1,
+							'price'    => [
+								'id'       => 'price_123',
+								'object'   => 'price',
+								'amount'   => 1500,
+								'metadata' => [ 'internal_note' => 'price_meta_secret_123' ],
+								'product'  => $this->privateProductFixture(),
+							],
+							'variant'  => [
+								'id'              => 'variant_123',
+								'object'          => 'variant',
+								'option_1'        => 'Small',
+								'available_stock' => 2,
+								'sku'             => 'sk_variant_secret_123',
+								'metadata'        => [ 'internal_note' => 'variant_meta_secret_123' ],
+							],
+						],
+					],
+				],
+			]
+		);
+
+		$item = $checkout['line_items']['data'][0];
+
+		$this->assertArrayNotHasKey( 'metadata', $item['price'] );
+		$this->assertArrayNotHasKey( 'metadata', $item['price']['product'] );
+		$this->assertArrayNotHasKey( 'sku', $item['price']['product'] );
+		$this->assertArrayNotHasKey( 'sku', $item['variant'] );
+
+		// the cart renders from these.
+		$this->assertSame( 1, $item['quantity'] );
+		$this->assertSame( 1500, $item['price']['amount'] );
+		$this->assertSame( 'Test Product', $item['price']['product']['name'] );
+		$this->assertSame( 4, $item['price']['product']['available_stock'] );
+		$this->assertSame( 2, $item['variant']['available_stock'] );
+
+		$this->assertNoPrivateSentinels( $checkout );
+	}
+
+	/**
 	 * Null and non-array inputs pass through untouched.
 	 *
 	 * @group public-catalog-serialization
