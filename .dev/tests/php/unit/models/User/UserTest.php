@@ -62,6 +62,53 @@ class UserTest extends SureCartUnitTestCase {
 
 	/**
 	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_findByCustomerId_does_not_match_on_substring() {
+		$user_id = $this->factory->user->create();
+		User::find($user_id)->setCustomerId('cus_ABCDEF', 'live');
+
+		$this->assertFalse(User::findByCustomerId('cus_ABC'));
+	}
+
+	/**
+	 * Ambiguity must fail closed — never pick a winner between two users sharing an id.
+	 *
+	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_findByCustomerId_returns_false_when_two_users_share_an_id() {
+		$user_id = $this->factory->user->create();
+		$user_id_2 = $this->factory->user->create();
+
+		// write meta directly to simulate pre-existing duplicate data.
+		update_user_meta($user_id, 'sc_customer_ids', ['live' => 'cus_shared']);
+		update_user_meta($user_id_2, 'sc_customer_ids', ['live' => 'cus_shared']);
+
+		$this->assertFalse(User::findByCustomerId('cus_shared'));
+	}
+
+	/**
+	 * An id whose value equals a mode key serializes like the key itself,
+	 * so the lookup must not resolve via another user's 'test' slot key.
+	 *
+	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_findByCustomerId_ignores_mode_key_collision() {
+		$holder_id = $this->factory->user->create();
+		$other_id = $this->factory->user->create();
+
+		// holder's live id is literally the string 'test'.
+		update_user_meta($holder_id, 'sc_customer_ids', ['live' => 'test']);
+		// another user has an id stored under the 'test' mode key.
+		update_user_meta($other_id, 'sc_customer_ids', ['test' => 'cus_other']);
+
+		$this->assertSame($holder_id, User::findByCustomerId('test')->ID);
+	}
+
+	/**
+	 * @group user-model
 	 */
 	public function test_setCustomerId() {
 		$user_id = $this->factory->user->create();
@@ -75,6 +122,55 @@ class UserTest extends SureCartUnitTestCase {
 
 		$this->assertNotWPError($model->setCustomerId('somethingelse', 'live', true));
 		$this->assertNotWPError($model->setCustomerId('somethingelse', 'test', true));
+	}
+
+	/**
+	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_setCustomerId_refuses_id_held_by_another_user() {
+		$user_a = $this->factory->user->create();
+		$user_b = $this->factory->user->create();
+
+		User::find($user_a)->setCustomerId('cus_x', 'live');
+
+		$result = User::find($user_b)->setCustomerId('cus_x', 'live');
+		$this->assertWPError($result);
+		$this->assertSame('customer_id_in_use', $result->get_error_code());
+		$this->assertEmpty(get_user_meta($user_b, 'sc_customer_ids', true));
+	}
+
+	/**
+	 * The cross-user check is strictly "held by a different user" —
+	 * an id resolving back to the same user must not block the write.
+	 *
+	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_setCustomerId_allows_reassigning_same_id_to_same_user() {
+		$user_id = $this->factory->user->create();
+
+		$model = User::find($user_id);
+		$model->setCustomerId('cus_same', 'live');
+
+		// same id into the empty test slot — holder resolves to this same user.
+		$this->assertNotWPError($model->setCustomerId('cus_same', 'test'));
+	}
+
+	/**
+	 * @group user-model
+	 * @group rest-authz-hardening
+	 */
+	public function test_setCustomerId_with_force_overrides_cross_user_check() {
+		$user_a = $this->factory->user->create();
+		$user_b = $this->factory->user->create();
+
+		User::find($user_a)->setCustomerId('cus_x', 'live');
+
+		$this->assertNotWPError(User::find($user_b)->setCustomerId('cus_x', 'live', true));
+
+		$meta = get_user_meta($user_b, 'sc_customer_ids', true);
+		$this->assertSame('cus_x', $meta['live']);
 	}
 
 	/**

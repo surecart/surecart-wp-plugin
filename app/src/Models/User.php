@@ -178,8 +178,10 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Set the customer id in the user meta.
 	 *
-	 * @param string $id Customer id.
-	 * @return $this|bool
+	 * @param string  $id Customer id.
+	 * @param string  $mode Customer mode (live or test).
+	 * @param boolean $force Overwrite an existing link.
+	 * @return $this|\WP_Error
 	 */
 	protected function setCustomerId( $id, $mode = 'live', $force = false ) {
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
@@ -191,6 +193,14 @@ class User implements ArrayAccess, JsonSerializable {
 				// if we have not passed force = true.
 				if ( ! $force ) {
 					return new \WP_Error( 'already_linked', __( 'This user is already linked to a customer.', 'surecart' ) );
+				}
+			}
+
+			// prevent a second account binding a customer id another user already holds (account takeover vector).
+			if ( ! $force ) {
+				$holder = ( new static() )->findByCustomerId( $id );
+				if ( $holder && (int) $holder->ID !== (int) $this->user->ID ) {
+					return new \WP_Error( 'customer_id_in_use', __( 'This customer is already linked to another user.', 'surecart' ) );
 				}
 			}
 		}
@@ -503,32 +513,46 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Find the user by customer id.
 	 *
+	 * Fails closed when more than one user holds the id — resolving an
+	 * ambiguous id to an arbitrary user is an account takeover vector.
+	 *
 	 * @param string $id Customer id string.
-	 * @return $this
+	 * @return $this|false This object on success, false if not found or ambiguous.
 	 */
 	protected function findByCustomerId( $id ) {
 		if ( ! is_string( $id ) || empty( $id ) ) {
 			return false;
 		}
 
+		// anchor on the serialized value delimiters (s:<len>:"<value>";) so 'cus_ABC' cannot match 'cus_ABCDEF'.
 		$users = new \WP_User_Query(
 			[
+				'number'     => 2, // two rows is enough to detect ambiguity.
+				'fields'     => 'ID',
 				'meta_query' => [
 					[
 						'key'     => $this->customer_id_key,
-						'value'   => $id,
+						'value'   => ':"' . $id . '";',
 						'compare' => 'LIKE',
 					],
 				],
 			]
 		);
 
-		if ( empty( $users->results ) ) {
+		// verify in PHP — the LIKE can also match a serialized mode key (e.g. an id literally named 'test').
+		$verified = [];
+		foreach ( (array) $users->get_results() as $user_id ) {
+			if ( ( new static() )->find( $user_id )->hasCustomerId( $id ) ) {
+				$verified[] = (int) $user_id;
+			}
+		}
+
+		if ( 1 !== count( $verified ) ) {
 			return false;
 		}
 
-		$this->user = $users->results[0];
-		return $this;
+		$this->user = get_user_by( 'id', $verified[0] );
+		return $this->user ? $this : false;
 	}
 
 	/**
