@@ -106,25 +106,64 @@ class CustomerController extends RestController {
 	/**
 	 * Edit model.
 	 *
+	 * Platform first — the linked WordPress user is only synced from the
+	 * response the platform actually accepted, never from raw request input.
+	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return \SureCart\Models\Customer|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		$wp_user = User::findByCustomerId( $request['id'] );
+		$customer = parent::edit( $request );
 
-		if ( ! empty( $wp_user->ID ) ) {
-			wp_update_user(
-				[
-					'ID'         => $wp_user->ID,
-					'user_email' => ! empty( $request['email'] ) ? $request['email'] : $wp_user->user_email,
-					'first_name' => ! empty( $request['first_name'] ) ? $request['first_name'] : $wp_user->first_name,
-					'last_name'  => ! empty( $request['last_name'] ) ? $request['last_name'] : $wp_user->last_name,
-					'phone'      => ! empty( $request['phone'] ) ? $request['phone'] : $wp_user->phone,
-				]
-			);
+		if ( is_wp_error( $customer ) || empty( $customer ) ) {
+			return $customer;
 		}
 
-		return parent::edit( $request );
+		$this->syncWPUser( $customer );
+
+		return $customer;
+	}
+
+	/**
+	 * Sync the linked WordPress user's profile from an updated customer.
+	 *
+	 * Best-effort — the platform write has already succeeded, so a failed
+	 * local update must not fail the request.
+	 *
+	 * @param \SureCart\Models\Customer $customer The updated customer returned by the platform.
+	 *
+	 * @return void
+	 */
+	protected function syncWPUser( $customer ) {
+		$wp_user = User::findByCustomerId( $customer->id );
+		if ( ! $wp_user || empty( $wp_user->ID ) ) {
+			return;
+		}
+
+		// a caller without customer edit rights may only write their own profile.
+		if ( ! current_user_can( 'edit_sc_customers' ) && get_current_user_id() !== (int) $wp_user->ID ) {
+			return;
+		}
+
+		// prevent the profile_update listener from echoing this update back to the platform.
+		$users_service = \SureCart::resolve( 'surecart.users' );
+		if ( $users_service ) {
+			remove_action( 'profile_update', array( $users_service, 'syncUserProfile' ), 10 );
+		}
+
+		// Intentionally NOT syncing user_email from the platform response — CVE-2026-7655 (account takeover via lost-password).
+		wp_update_user(
+			[
+				'ID'         => $wp_user->ID,
+				'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
+				'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
+				'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
+			]
+		);
+
+		if ( $users_service ) {
+			add_action( 'profile_update', array( $users_service, 'syncUserProfile' ), 10, 3 );
+		}
 	}
 }
