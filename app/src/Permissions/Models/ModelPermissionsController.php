@@ -73,18 +73,26 @@ abstract class ModelPermissionsController {
 	 * Is ths user listing their own customer ids.
 	 *
 	 * @param \SureCart\Models\User $user User model.
-	 * @param array                 $customer_ids Array of customer ids.
+	 * @param mixed                 $customer_ids Requested customer ids — only a sequential list of id strings authorizes.
 	 * @return boolean
 	 */
 	protected function isListingOwnCustomerIds( $user, $customer_ids ) {
 		// must have list.
-		if ( empty( $customer_ids ) ) {
+		if ( empty( $customer_ids ) || ! is_array( $customer_ids ) ) {
 			return false;
 		}
 
+		// only authorize a sequential list — the platform ignores (rather than filters on)
+		// associative customer_ids, so this guard and the platform must agree on the encoding.
+		if ( array_keys( $customer_ids ) !== range( 0, count( $customer_ids ) - 1 ) ) {
+			return false;
+		}
+
+		$owned = (array) $user->customerIds();
+
 		// check each one.
 		foreach ( $customer_ids as $id ) {
-			if ( ! $id || ! in_array( $id, (array) $user->customerIds() ) ) {
+			if ( ! is_string( $id ) || '' === $id || ! in_array( $id, $owned, true ) ) {
 				return false; // this id does not belong to the user.
 			}
 		}
