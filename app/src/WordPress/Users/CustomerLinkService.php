@@ -37,7 +37,7 @@ class CustomerLinkService {
 	/**
 	 * Link the user to the checkout.
 	 *
-	 * @return \SureCart\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error|false
 	 */
 	public function link() {
 		// if the customer already linked.
@@ -133,10 +133,15 @@ class CustomerLinkService {
 	/**
 	 * Create the user and link it.
 	 *
-	 * @return \SureCart\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error|false
 	 */
 	protected function linkNewUser() {
 		global $wpdb;
+
+		// lets a store honor its own registration policy (e.g. users_can_register), which the plugin otherwise ignores.
+		if ( ! apply_filters( 'surecart/checkout/create-account', true, $this->checkout ) ) {
+			return false;
+		}
 
 		if ( email_exists( $this->checkout->customer->email ?? $this->checkout->email ?? null ) ) {
 			return false;
