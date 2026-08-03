@@ -13,9 +13,6 @@ use SureCart\WordPress\Users\CustomerLinkService;
  * independently attacker-controlled on an unauthenticated draft checkout, so
  * the link must be justified by the customer record's own email instead.
  *
- * Also pins the surecart/checkout/create-account filter: it gates only
- * linkNewUser() — never linkUserWithEmail() — and defaults to true.
- *
  * @group users
  * @group rest-authz-hardening
  */
@@ -275,8 +272,7 @@ class CustomerLinkServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * Regression guard for the surecart/checkout/create-account filter: by
-	 * default a guest checkout still creates, links and logs in a WP user.
+	 * A guest checkout creates, links and logs in a WP user.
 	 */
 	public function test_link_new_user_creates_user_by_default() {
 		wp_set_current_user( 0 );
@@ -296,63 +292,6 @@ class CustomerLinkServiceTest extends SureCartUnitTestCase {
 
 		$meta = (array) get_user_meta( $user->ID, 'sc_customer_ids', true );
 		$this->assertSame( $checkout->customer->id, $meta['live'] ?? null );
-	}
-
-	/**
-	 * A store can honor its own registration policy: when the filter returns
-	 * false no WordPress user is created for the checkout.
-	 */
-	public function test_link_new_user_is_skipped_when_create_account_filter_is_false() {
-		add_filter( 'surecart/checkout/create-account', '__return_false' );
-
-		$result = $this->linkNewUser( $this->newUserCheckout( 'no-account@example.test' ) );
-
-		remove_filter( 'surecart/checkout/create-account', '__return_false' );
-
-		$this->assertFalse( $result );
-		$this->assertFalse( get_user_by( 'email', 'no-account@example.test' ) );
-	}
-
-	/**
-	 * The filter receives the checkout so a merchant can decide per-checkout
-	 * (by product, by mode, by total).
-	 */
-	public function test_create_account_filter_receives_the_checkout() {
-		$received = null;
-		$callback = function ( $create, $checkout ) use ( &$received ) {
-			$received = $checkout;
-			return false;
-		};
-		add_filter( 'surecart/checkout/create-account', $callback, 10, 2 );
-
-		$checkout = $this->newUserCheckout( 'args@example.test' );
-		$this->linkNewUser( $checkout );
-
-		remove_filter( 'surecart/checkout/create-account', $callback );
-
-		$this->assertSame( $checkout, $received );
-	}
-
-	/**
-	 * Disabling account *creation* must not disable linking an existing user —
-	 * a store with closed registration still wants a returning customer's
-	 * purchases attributed to their account. Pins that linkUserWithEmail()
-	 * is never gated by surecart/checkout/create-account.
-	 */
-	public function test_link_user_with_email_still_links_when_create_account_is_disabled() {
-		$user_id = self::factory()->user->create( array( 'user_email' => 'returning@example.test' ) );
-
-		add_filter( 'surecart/checkout/create-account', '__return_false' );
-
-		$linked = ( new CustomerLinkService( $this->newUserCheckout( 'returning@example.test' ) ) )->link();
-
-		remove_filter( 'surecart/checkout/create-account', '__return_false' );
-
-		$this->assertNotFalse( $linked );
-		$this->assertSame( $user_id, $linked->ID );
-
-		$meta = (array) get_user_meta( $user_id, 'sc_customer_ids', true );
-		$this->assertSame( 'cust_' . md5( 'returning@example.test' ), $meta['live'] ?? null );
 	}
 
 	/**

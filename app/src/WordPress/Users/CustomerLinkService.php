@@ -138,11 +138,6 @@ class CustomerLinkService {
 	protected function linkNewUser() {
 		global $wpdb;
 
-		// lets a store honor its own registration policy (e.g. users_can_register), which the plugin otherwise ignores.
-		if ( ! apply_filters( 'surecart/checkout/create-account', true, $this->checkout ) ) {
-			return false;
-		}
-
 		if ( email_exists( $this->checkout->customer->email ?? $this->checkout->email ?? null ) ) {
 			return false;
 		}
