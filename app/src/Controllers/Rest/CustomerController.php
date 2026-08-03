@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Customer;
 use SureCart\Models\User;
+use SureCart\Permissions\Models\CustomerPermissionsController;
 
 /**
  * Handle Customer related REST API requests.
@@ -143,8 +144,8 @@ class CustomerController extends RestController {
 			return;
 		}
 
-		// a caller without customer edit rights may only write their own profile.
-		if ( ! current_user_can( 'edit_sc_customers' ) && get_current_user_id() !== (int) $wp_user->ID ) {
+		// reuse the same self-or-owns-record rule the edit_sc_customer meta cap already enforces.
+		if ( ! current_user_can( 'edit_sc_customers' ) && ! ( new CustomerPermissionsController() )->customerIdMatches( User::current(), $customer->id ) ) {
 			return;
 		}
 
