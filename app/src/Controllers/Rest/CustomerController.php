@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Rest;
 
 use SureCart\Models\Customer;
 use SureCart\Models\User;
-use SureCart\Permissions\Models\CustomerPermissionsController;
 
 /**
  * Handle Customer related REST API requests.
@@ -144,8 +143,9 @@ class CustomerController extends RestController {
 			return;
 		}
 
-		// reuse the same self-or-owns-record rule the edit_sc_customer meta cap already enforces.
-		if ( ! current_user_can( 'edit_sc_customers' ) && ! ( new CustomerPermissionsController() )->customerIdMatches( User::current(), $customer->id ) ) {
+		// dispatch through the edit_sc_customer meta cap so this stays in sync with the
+		// user_has_cap filtering the rest of the codebase relies on for ownership checks.
+		if ( ! current_user_can( 'edit_sc_customer', $customer->id, [] ) ) {
 			return;
 		}
 

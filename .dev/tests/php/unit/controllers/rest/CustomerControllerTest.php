@@ -5,6 +5,7 @@ namespace SureCart\Tests\Controllers\Rest;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Controllers\Rest\CustomerController;
 use SureCart\Models\User;
+use SureCart\Permissions\Models\CustomerPermissionsController;
 use WP_REST_Request;
 
 class CustomerControllerTest extends SureCartUnitTestCase
@@ -20,11 +21,16 @@ class CustomerControllerTest extends SureCartUnitTestCase
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
-			'providers' => [
+			'providers'              => [
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Support\Errors\ErrorsServiceProvider::class,
-				\SureCart\WordPress\PluginServiceProvider::class
-			]
+				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Permissions\PermissionsServiceProvider::class,
+			],
+			// wires the user_has_cap handler syncWPUser()'s edit_sc_customer check runs through.
+			'permission_controllers' => [
+				CustomerPermissionsController::class,
+			],
 		], false);
 
 		parent::setUp();
