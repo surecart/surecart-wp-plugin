@@ -32,25 +32,41 @@ class UsersService {
 		$wp_user = \SureCart\Models\User::findByCustomerId( $customer->id );
 
 		if ( ! empty( $wp_user->ID ) ) {
-			// prevent potential infinite loop of catching a webhook and updating again.
-			remove_action( 'profile_update', array( $this, 'syncUserProfile' ), 10 );
-
-			// update user.
-			// Intentionally NOT syncing user_email from the webhook payload — CVE-2026-7655 (account takeover via lost-password).
-			wp_update_user(
-				array(
-					'ID'         => $wp_user->ID,
-					'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
-					'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
-					'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
-				)
-			);
-
-			// re-add profile_update in case it is done in the same request somewhere.
-			add_action( 'profile_update', array( $this, 'syncUserProfile' ), 10 );
+			$this->applyCustomerToWPUser( $wp_user, $customer );
 		}
 
 		return $wp_user;
+	}
+
+	/**
+	 * Apply a customer's profile fields to its linked WP user.
+	 *
+	 * Shared by the webhook-driven syncCustomerProfile() and the REST-driven
+	 * customer edit flow so the "never sync email" rule lives in one place.
+	 * Intentionally NOT syncing user_email — CVE-2026-7655 (account takeover via lost-password).
+	 *
+	 * @param \WP_User $wp_user  The linked WP user.
+	 * @param object   $customer Customer data.
+	 *
+	 * @return int|\WP_Error The updated user ID or a WP_Error.
+	 */
+	public function applyCustomerToWPUser( $wp_user, $customer ) {
+		// prevent potential infinite loop of catching a webhook/request and updating again.
+		remove_action( 'profile_update', array( $this, 'syncUserProfile' ), 10 );
+
+		$result = wp_update_user(
+			array(
+				'ID'         => $wp_user->ID,
+				'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
+				'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
+				'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
+			)
+		);
+
+		// re-add profile_update in case it is done in the same request somewhere.
+		add_action( 'profile_update', array( $this, 'syncUserProfile' ), 10 );
+
+		return $result;
 	}
 
 	/**
