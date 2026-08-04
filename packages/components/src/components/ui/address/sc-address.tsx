@@ -164,12 +164,14 @@ export class ScAddress {
   }
 
   clearAddress() {
+    // Only reset fields whose format depends on country (region list, postal code pattern).
+    // Keep line_1/line_2 — they're free text, and clearing them silently discards what the buyer already typed.
     this.address = {
       name: this.address?.name,
+      line_1: this.address?.line_1,
+      line_2: this.address?.line_2,
       country: null,
       city: null,
-      line_1: null,
-      line_2: null,
       postal_code: null,
       state: null,
     };
@@ -208,6 +210,12 @@ export class ScAddress {
 
   @Method()
   async reportValidity() {
+    // Collapsed fields render as not-required (see render()), so expand before validating —
+    // otherwise a required address can be bypassed by leaving line_1 empty.
+    if (this.required && !this.isFieldsExpanded()) {
+      this.toggleAddressFieldsVisibility(true);
+      await new Promise(resolve => requestAnimationFrame(resolve));
+    }
     return reportChildrenValidity(this.el);
   }
 

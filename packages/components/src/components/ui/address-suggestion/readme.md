@@ -27,6 +27,20 @@
 | `scShowAddressFields` | Event to show address fields manually                        | `CustomEvent<void>`    |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+Delegates to the inner sc-input so this field participates in form validation
+(it was previously skipped entirely, allowing required addresses through empty).
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Shadow Parts
 
 | Part                 | Description |
