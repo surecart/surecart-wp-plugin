@@ -210,12 +210,14 @@ export class ScAddress {
 
   @Method()
   async reportValidity() {
-    // Collapsed fields render as not-required (see render()), so expand before validating —
-    // otherwise a required address can be bypassed by leaving line_1 empty.
+    // Collapsed city/state/postal fields render as not-required (see isFieldIncluded/render) so they don't
+    // block submission while hidden. Expand them first so a required address can't be bypassed by leaving
+    // line_1 empty (fields never having shown) or clearing it after the fact.
     if (this.required && !this.isFieldsExpanded()) {
       this.toggleAddressFieldsVisibility(true);
       await new Promise(resolve => requestAnimationFrame(resolve));
     }
+
     return reportChildrenValidity(this.el);
   }
 
