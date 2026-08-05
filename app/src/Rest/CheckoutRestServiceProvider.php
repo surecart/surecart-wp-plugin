@@ -33,6 +33,14 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	protected $converts_currency = true;
 
 	/**
+	 * Filter each index item by schema context, so the edit-only customer
+	 * fields are not emitted on view-context lists.
+	 *
+	 * @var boolean
+	 */
+	protected $filters_list_items = true;
+
+	/**
 	 * Methods allowed for the model.
 	 *
 	 * @var array
@@ -295,6 +303,11 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
+		$check = $this->forbidEditContextWithout( $request, 'edit_sc_checkouts' );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
 		return current_user_can( 'read_sc_checkouts', $request->get_params() );
 	}
 

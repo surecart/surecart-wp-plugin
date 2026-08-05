@@ -206,7 +206,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			'user_email' => 'usernotyetcustomer@email.com'
 		]));
 		$this->assertNotEmpty($user_not_yet_customer->user_email);
-		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer' => 'anewcustomerid', 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
+		// the customer record's own email must match the user — a bare id or mismatched email no longer links (SUR-5621).
+		$user = (new CheckoutsController())->linkCustomerId(new Checkout(['customer' => ['id' => 'anewcustomerid', 'email' => $user_not_yet_customer->user_email], 'email' => $user_not_yet_customer->user_email, 'live_mode' => true]), new WP_REST_Request());
 		$this->assertSame($user_not_yet_customer->ID, $user->ID, 'An existing user should be linked to an checkout based on email.');
 		$this->assertSame($user_not_yet_customer->customerId(), 'anewcustomerid', 'An existing user is not given a customer id.');
 

@@ -2,6 +2,7 @@
 
 namespace SureCart\WordPress\Users;
 
+use SureCart\Models\Customer;
 use SureCart\Models\User;
 
 /**
@@ -36,7 +37,7 @@ class CustomerLinkService {
 	/**
 	 * Link the user to the checkout.
 	 *
-	 * @return \SureCart\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error|false
 	 */
 	public function link() {
 		// if the customer already linked.
@@ -73,23 +74,66 @@ class CustomerLinkService {
 		// next check if email has a user.
 		$existing = User::getUserBy( 'email', $this->checkout->email );
 
-		// We have a user, link it.
-		if ( $existing ) {
-			$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
-			// maybe add the customer id for the user if it's not yet set.
-			if ( ! $existing->customerId( $mode ) ) {
-				$existing->setCustomerId( $this->checkout->customer_id, $mode );
-				return $existing;
+		// no user for this email.
+		if ( ! $existing ) {
+			return false;
+		}
+
+		$mode = ! empty( $this->checkout->live_mode ) ? 'live' : 'test';
+
+		// the user already has a customer id for this mode.
+		if ( $existing->customerId( $mode ) ) {
+			return false;
+		}
+
+		// the checkout's email and customer are independently attacker-controlled — only link when the customer record's own email matches this user.
+		$customer_email = $this->getCustomerEmail();
+		if ( empty( $customer_email ) ) {
+			error_log( 'SureCart: Could not determine the customer email for checkout ' . $this->checkout->id . ' - refusing to link a user by email.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return false;
+		}
+		if ( strtolower( $customer_email ) !== strtolower( $existing->user_email ) ) {
+			error_log( 'SureCart: Customer ' . $this->checkout->customer_id . ' email does not match the user matched by checkout ' . $this->checkout->id . ' email - refusing to link.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return false;
+		}
+
+		// a failed link (e.g. the id is already held by another user) must not report success.
+		$linked = $existing->setCustomerId( $this->checkout->customer_id, $mode );
+		if ( is_wp_error( $linked ) ) {
+			error_log( 'SureCart: Could not link customer ' . $this->checkout->customer_id . ' for checkout ' . $this->checkout->id . ' - ' . $linked->get_error_message() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			return false;
+		}
+
+		return $existing;
+	}
+
+	/**
+	 * Get the checkout customer's email, fetching the customer when not expanded.
+	 *
+	 * @return string|null
+	 */
+	protected function getCustomerEmail() {
+		$email = $this->checkout->customer->email ?? null;
+		if ( ! empty( $email ) ) {
+			return $email;
+		}
+
+		// not expanded (or expanded without an email) — fetch by id so the link is justified by platform data, failing closed only as a last resort.
+		$id = $this->checkout->customer_id;
+		if ( is_string( $id ) && ! empty( $id ) ) {
+			$customer = Customer::find( $id );
+			if ( ! is_wp_error( $customer ) && ! empty( $customer->email ) ) {
+				return $customer->email;
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
 	 * Create the user and link it.
 	 *
-	 * @return \SureCart\Models\User|\WP_Error
+	 * @return \SureCart\Models\User|\WP_Error|false
 	 */
 	protected function linkNewUser() {
 		global $wpdb;
