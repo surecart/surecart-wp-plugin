@@ -150,6 +150,7 @@ class Media extends \Bricks\Element {
 			'type'        => 'number',
 			'default'     => 5,
 			'min'         => 2,
+			'max'         => 12,
 			'placeholder' => 5,
 			'required'    => [
 				[ 'desktop_gallery', '=', 'slider' ],
@@ -177,7 +178,7 @@ class Media extends \Bricks\Element {
 	public function render() {
 		$product             = sc_get_product();
 		$settings            = $this->settings;
-		$thumbnails_per_page = ! empty( $settings['thumbnails_per_page'] ) ? (int) $settings['thumbnails_per_page'] : 5;
+		$thumbnails_per_page = max( 2, min( 12, ! empty( $settings['thumbnails_per_page'] ) ? (int) $settings['thumbnails_per_page'] : 5 ) );
 		$desktop_gallery     = ! empty( $settings['desktop_gallery'] ) ? $settings['desktop_gallery'] : 'slider';
 
 		if ( $this->is_admin_editor() ) {
@@ -233,7 +234,7 @@ class Media extends \Bricks\Element {
 				'width'               => esc_html( $this->settings['max_image_width'] ?? null ),
 				'thumbnails_per_page' => $thumbnails_per_page,
 				'desktop_gallery'     => 'gallery' === $desktop_gallery,
-				'show_thumbs'         => (bool) ! empty( $this->settings['show_thumbs'] ),
+				'show_thumbnails'     => (bool) ! empty( $this->settings['show_thumbs'] ),
 			]
 		);
 	}

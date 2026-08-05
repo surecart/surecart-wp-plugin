@@ -232,6 +232,8 @@ class Media extends \Elementor\Widget_Base {
 			[
 				'label'       => esc_html__( 'Thumbnails per Page', 'surecart' ),
 				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'min'         => 2,
+				'max'         => 12,
 				'default'     => 5,
 				'description' => esc_html__( 'Set the number of thumbnails to show per page.', 'surecart' ),
 				'condition'   => [
@@ -292,13 +294,13 @@ class Media extends \Elementor\Widget_Base {
 		$height      = ! $auto_height ? ( ! empty( $settings['slider_height']['size'] ) ? $settings['slider_height']['size'] . $settings['slider_height']['unit'] : '' ) : '';
 
 		$attributes = array(
-			'thumbnails_per_page' => $settings['thumbnails_per_page'],
+			'thumbnails_per_page' => $this->get_thumbnails_per_page( $settings ),
 			'auto_height'         => $auto_height,
 			'height'              => $height,
 			'width'               => ! empty( $settings['slider_max_image_width']['size'] ) ? $settings['slider_max_image_width']['size'] . $settings['slider_max_image_width']['unit'] : '',
 			'lightbox'            => 'yes' === $settings['lightbox'],
 			'desktop_gallery'     => 'gallery' === $settings['desktop_gallery'],
-			'show_thumbs'         => 'yes' === $settings['show_thumbs'],
+			'show_thumbnails'     => 'yes' === $settings['show_thumbs'],
 		);
 
 		?>
@@ -306,6 +308,18 @@ class Media extends \Elementor\Widget_Base {
 			<!-- wp:surecart/product-media <?php echo wp_json_encode( $attributes ); ?> /-->
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get the thumbnails per page setting, clamped to the 2-12 range the thumbnail styles support.
+	 *
+	 * Values saved before the control had a minimum can be out of range (e.g. 1).
+	 *
+	 * @param array $settings Widget settings.
+	 * @return int
+	 */
+	protected function get_thumbnails_per_page( $settings ) {
+		return max( 2, min( 12, ! empty( $settings['thumbnails_per_page'] ) ? (int) $settings['thumbnails_per_page'] : 5 ) );
 	}
 
 	/**
@@ -398,7 +412,7 @@ class Media extends \Elementor\Widget_Base {
 	 * @return void
 	 */
 	protected function render_slider_view( $images, $settings ) {
-		$thumbnails_per_page = $settings['thumbnails_per_page'];
+		$thumbnails_per_page = $this->get_thumbnails_per_page( $settings );
 		$show_thumbs         = 'yes' === $settings['show_thumbs'];
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>

@@ -83,6 +83,5 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": ["surecart-image-slider"],
-	"style": ["file:./style-index.css"],
-	"viewScriptModule": "@surecart/product-media"
+	"style": ["file:./style-index.css"]
 }
