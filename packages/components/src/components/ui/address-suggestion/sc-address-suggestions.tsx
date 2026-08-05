@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { debounce } from 'lodash';
 
@@ -19,6 +19,10 @@ import { highlightMatch, fetchAddressSuggestions, fetchPlaceDetails } from './ut
 })
 export class ScAddressSuggestions {
   @Element() el: HTMLScAddressSuggestionsElement;
+
+  /** Reference to the inner sc-input so we can delegate validation to it — the browser's native constraint
+   *  validation can't see this input since it isn't form-associated. */
+  private input: HTMLScInputElement;
 
   private boundHandleKeyDown: (e: KeyboardEvent) => void;
   private boundHandleOutsideClick: (e: Event) => void;
@@ -83,6 +87,13 @@ export class ScAddressSuggestions {
 
   /** Focused index for keyboard navigation */
   @State() focusedIndex: number = -1;
+
+  /** Delegates to the inner sc-input so this field participates in form validation
+   *  (it was previously skipped entirely, allowing required addresses through empty). */
+  @Method()
+  async reportValidity() {
+    return this.input ? this.input.reportValidity() : true;
+  }
 
   /** Whether Google Maps autocomplete is active. */
   isGoogleMapsActive(): boolean {
@@ -404,6 +415,7 @@ export class ScAddressSuggestions {
         {this.isGoogleMapsActive() && <span class="sr-only">{__('Start typing to see address suggestions, or select one to auto-fill your address.', 'surecart')}</span>}
 
         <sc-input
+          ref={el => (this.input = el as HTMLScInputElement)}
           exportparts="base:input__base, input, form-control, label, help-text"
           value={this?.value}
           onScInput={(e: any) => this.handleInputChange(e)}

@@ -71,6 +71,10 @@ export namespace Components {
          */
         "regions": Array<{ value: string; label: string }>;
         /**
+          * Delegates to the inner sc-input so this field participates in form validation (it was previously skipped entirely, allowing required addresses through empty).
+         */
+        "reportValidity": () => Promise<boolean>;
+        /**
           * If the address is required
          */
         "required": boolean;
