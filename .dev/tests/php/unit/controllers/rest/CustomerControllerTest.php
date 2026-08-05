@@ -26,6 +26,8 @@ class CustomerControllerTest extends SureCartUnitTestCase
 				\SureCart\Support\Errors\ErrorsServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Permissions\PermissionsServiceProvider::class,
+				// registers the surecart.users service edit() delegates the WP user sync to.
+				\SureCart\WordPress\Users\UsersServiceProvider::class,
 			],
 			// wires the user_has_cap handler syncWPUser()'s edit_sc_customer check runs through.
 			'permission_controllers' => [
