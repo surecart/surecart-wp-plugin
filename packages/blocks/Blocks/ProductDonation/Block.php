@@ -3,6 +3,7 @@
 namespace SureCartBlocks\Blocks\ProductDonation;
 
 use SureCart\Models\Product;
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
@@ -48,11 +49,11 @@ class Block extends BaseBlock {
 				),
 				'productDonation' => array(
 					$attributes['product_id'] => array(
-						'product'       => $product->toArray(),
+						'product'       => PublicCatalogData::product( $product ),
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => null,
 						'custom_amount' => null,
-						'selectedPrice' => ( $product->active_prices || array() )[0] ?? null,
+						'selectedPrice' => PublicCatalogData::price( ( $product->active_prices || array() )[0] ?? null ),
 					),
 				),
 			)

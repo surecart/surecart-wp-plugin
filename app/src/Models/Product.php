@@ -10,6 +10,7 @@ use SureCart\Models\Traits\CanDuplicate;
 use SureCart\Support\Contracts\GalleryItem;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
+use SureCart\Support\PublicCatalogData;
 use SureCart\Support\TimeDate;
 
 /**
@@ -1198,6 +1199,9 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the product page initial state
 	 *
+	 * This is serialized into public page HTML, so catalog data is stripped
+	 * of private fields (see PublicCatalogData).
+	 *
 	 * @param array $args Array of arguments.
 	 *
 	 * @return array
@@ -1210,13 +1214,13 @@ class Product extends Model implements PageModel {
 			[
 				'formId'          => $form->ID,
 				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
-				'product'         => $this,
-				'prices'          => $this->active_prices,
-				'selectedPrice'   => ( $this->active_prices ?? [] )[0] ?? null,
+				'product'         => PublicCatalogData::product( $this ),
+				'prices'          => array_map( [ PublicCatalogData::class, 'price' ], $this->active_prices ?? [] ),
+				'selectedPrice'   => PublicCatalogData::price( ( $this->active_prices ?? [] )[0] ?? null ),
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-				'variant_options' => $this->variant_options->data ?? [],
-				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->initial_variant ?? null,
+				'variant_options' => array_map( [ PublicCatalogData::class, 'variantOption' ], $this->variant_options->data ?? [] ),
+				'variants'        => array_map( [ PublicCatalogData::class, 'variant' ], $this->variants->data ?? [] ),
+				'selectedVariant' => PublicCatalogData::variant( $this->initial_variant ?? null ),
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);

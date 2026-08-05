@@ -6,6 +6,7 @@ use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Form\FormValidationService;
 use SureCart\Models\User;
+use SureCart\Support\PublicCatalogData;
 
 /**
  * Service provider for Price Rest Requests
@@ -282,7 +283,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 			}
 		}
 
-		return rest_filter_response_by_context( $data, $schema, 'view' );
+		return rest_filter_response_by_context( PublicCatalogData::lineItems( $data ), $schema, 'view' );
 	}
 
 

@@ -31,7 +31,7 @@
 					'sc-checkout-product-bundle-component-variants',
 					'#sc-checkout-product-bundle-component-variants-' . $product->id,
 					array(
-						'product' => $product->toArray(),
+						'product' => \SureCart\Support\PublicCatalogData::product( $product ),
 					)
 				);
 				?>
@@ -45,7 +45,7 @@
 				'sc-checkout-product-price-variant-selector',
 				'#sc-product-price-variant-selector-' . $product->id,
 				array(
-					'product' => $product->toArray(),
+					'product' => \SureCart\Support\PublicCatalogData::product( $product ),
 				)
 			);
 			?>

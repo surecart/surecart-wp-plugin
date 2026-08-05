@@ -2,6 +2,8 @@
 
 namespace SureCart\Controllers\Web;
 
+use SureCart\Support\PublicCatalogData;
+
 /**
  * Handles Upsell Page requests for frontend.
  */
@@ -92,16 +94,22 @@ class UpsellPageController extends BasePageController {
 		// add the filters.
 		$this->filters();
 
+		// the upsell expands its price — strip catalog data before it hits public state.
+		$upsell = json_decode( wp_json_encode( $this->model ), true );
+		if ( ! empty( $upsell['price'] ) && is_array( $upsell['price'] ) ) {
+			$upsell['price'] = PublicCatalogData::price( $upsell['price'] );
+		}
+
 		// Set initial state.
 		sc_initial_state(
 			[
 				'product' => [
 					// we need to force the selected price.
-					$this->product->id => $this->product->getInitialPageState( [ 'selectedPrice' => $this->model->price->toArray() ] ),
+					$this->product->id => $this->product->getInitialPageState( [ 'selectedPrice' => PublicCatalogData::price( $this->model->price ) ] ),
 				],
 				'upsell'  => [
-					'product'     => $this->product,
-					'upsell'      => $this->model,
+					'product'     => PublicCatalogData::product( $this->product ),
+					'upsell'      => $upsell,
 					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
 					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
 					'text'        => $this->getCheckoutText( (int) $request->query( 'sc_form_id' ) ?? '' ),

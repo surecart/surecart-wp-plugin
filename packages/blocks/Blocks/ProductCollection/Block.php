@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\ProductCollection;
 
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\ProductItemList\Block as ProductItemListBlock;
 
 /**
@@ -75,10 +76,10 @@ class Block extends ProductItemListBlock {
 			)
 		);
 
-		// get the product for each post.
+		// get the product for each post, stripped for public serialization.
 		$products = array_map(
 			function ( $post ) {
-				return sc_get_product( $post );
+				return PublicCatalogData::product( sc_get_product( $post ) );
 			},
 			$product_query->posts ?? []
 		);
@@ -100,7 +101,7 @@ class Block extends ProductItemListBlock {
 				'paginationAutoScroll' => wp_validate_boolean( $attributes['pagination_auto_scroll'] ),
 				'searchEnabled'        => wp_validate_boolean( $attributes['search_enabled'] ),
 				'sortEnabled'          => wp_validate_boolean( $attributes['sort_enabled'] ),
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products,
 				'collectionEnabled'    => false,
 				'collectionId'         => $this->getCollectionId( $attributes ),
 				'pageTitle'            => get_the_title(),

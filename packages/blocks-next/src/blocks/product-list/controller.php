@@ -12,8 +12,11 @@ wp_interactivity_state(
 );
 
 // For Analytics.
-$query    = sc_product_list_query( $block );
-$products = $query->products;
+$query = sc_product_list_query( $block );
+
+$products = is_array( $query->products ?? null )
+	? array_map( [ \SureCart\Support\PublicCatalogData::class, 'product' ], $query->products )
+	: $query->products;
 
 // return the view.
 return 'file:./view.php';

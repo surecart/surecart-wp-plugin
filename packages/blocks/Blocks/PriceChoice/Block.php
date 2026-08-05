@@ -3,6 +3,7 @@
 namespace SureCartBlocks\Blocks\PriceChoice;
 
 use SureCart\Models\Price;
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
@@ -42,8 +43,8 @@ class Block extends BaseBlock {
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
 			[
-				'price'   => $price->toArray(),
-				'product' => $price->product->toArray(),
+				'price'   => PublicCatalogData::price( $price ),
+				'product' => PublicCatalogData::product( $price->product ),
 			]
 		);
 

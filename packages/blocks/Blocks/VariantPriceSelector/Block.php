@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\VariantPriceSelector;
 
 use SureCart\Models\Component;
 use SureCart\Models\Product;
+use SureCart\Support\PublicCatalogData;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
@@ -74,7 +75,7 @@ class Block extends BaseBlock {
 			->id( 'sc-checkout-product-price-variant-selector-' . (int) self::$instance )
 			->with(
 				[
-					'product'       => $product,
+					'product'       => PublicCatalogData::product( $product ),
 					'label'         => ! empty( $attributes['label'] ) ? $attributes['label'] : '',
 					'selectorTitle' => ! empty( $attributes['selectorTitle'] ) ? $attributes['selectorTitle'] : '',
 				]
